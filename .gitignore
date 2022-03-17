@@ -41,11 +41,4 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
 pubspec.lock
-pubspec.lock
-pubspec.lock
-ios/Runner.xcodeproj/project.pbxproj
-ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme
