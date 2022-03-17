@@ -8,28 +8,28 @@ class OnBoardingPage extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'Dobrodošel na aplikaciji ŠCVApp!',
+              title: 'Dobrodošel/a na aplikaciji ŠCVApp!',
               body: '',
               image: buildImage('assets/school_logo.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Featured Books',
-              body: 'Available right at your fingerprints',
-              // image: buildImage('assets/readingbook.png'),
+              title: 'Vsa orodja na enem mestu.',
+              body: 'Vsa orodja, potrebna za šolanje na enem mestu.',
+              image: buildImage('assets/orodja.png'),
               decoration: getPageDecoration(),
             ),
+            // PageViewModel(
+            //   title: 'Simple UI',
+            //   body: 'For enhanced reading experience',
+            //   // image: buildImage('assets/manthumbs.png'),
+            //   decoration: getPageDecoration(),
+            // ),
             PageViewModel(
-              title: 'Simple UI',
-              body: 'For enhanced reading experience',
-              // image: buildImage('assets/manthumbs.png'),
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Today a reader, tomorrow a leader',
-              body: 'Start your journey',
-              
-              // image: buildImage('assets/learn.png'),
+              title: 'Preprosto. Varno.',
+              body:
+                  'Prijavi se z šolskim računom in dostopaj do vseh funkcij ŠCVAppa!',
+              image: buildImage('assets/microsoft.png'),
               decoration: getPageDecoration(),
             ),
           ],
@@ -74,6 +74,6 @@ class OnBoardingPage extends StatelessWidget {
         bodyTextStyle: TextStyle(fontSize: 20),
         descriptionPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
-        pageColor: Colors.white,
+        pageColor: Color.fromARGB(255, 236, 236, 236),
       );
 }
