@@ -4,7 +4,14 @@ import 'package:scv_app/domov.dart';
 
 class OnBoardingPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => SafeArea(
+  Widget build(BuildContext context){
+
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: Color.fromARGB(255, 236, 236, 236),
+      elevation: 0,
+    ),
+    body: SafeArea(
         child: IntroductionScreen(
           pages: [
             PageViewModel(
@@ -37,7 +44,6 @@ class OnBoardingPage extends StatelessWidget {
           onDone: () => goToHome(context),
           showSkipButton: true,
           skip: Text('Preskoči'),
-          onSkip: () => goToHome(context),
           next: Icon(Icons.arrow_forward),
           dotsDecorator: getDotDecoration(),
           onChange: (index) => print('Page $index selected'),
@@ -50,7 +56,10 @@ class OnBoardingPage extends StatelessWidget {
           // freeze: true,
           // animationDuration: 1000,
         ),
-      );
+      ),
+    );
+  
+  }
 
   void goToHome(context) => Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => DomovPage()),
