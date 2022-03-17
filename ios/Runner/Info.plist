@@ -50,6 +50,21 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+	    <dict>
+	    <key>CFBundleTypeRole</key>
+	    <string>Editor</string>
+	    <key>CFBundleURLName</key>
+	    <string>app.scv.si</string>
+	    <key>CFBundleURLSchemes</key>
+	    <array>
+	    <string>app</string>
+	    </array>
+	    </dict>
+	</array>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 </dict>

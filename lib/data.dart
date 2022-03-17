@@ -17,6 +17,18 @@ class Sola{
   }
 }
 
+class UserData {
+  final String id;
+  final String displayName;
+  final String givenName;
+  final String mail;
+  final String mobilePhone;
+  final String surname;
+  final String userPrincipalName;
+
+  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName);
+}
+
 class Data{
 
   List<Sola> sole = [

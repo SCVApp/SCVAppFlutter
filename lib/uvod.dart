@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:scv_app/domov.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:scv_app/prijava.dart';
 
 class OnBoardingPage extends StatelessWidget {
   @override
@@ -41,7 +43,7 @@ class OnBoardingPage extends StatelessWidget {
             ),
           ],
           done: Text('Prijava', style: TextStyle(fontWeight: FontWeight.w600)),
-          onDone: () => goToHome(context),
+          onDone: () => goToHome(),
           showSkipButton: true,
           skip: Text('Preskoči'),
           next: Icon(Icons.arrow_forward),
@@ -61,9 +63,9 @@ class OnBoardingPage extends StatelessWidget {
   
   }
 
-  void goToHome(context) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => DomovPage()),
-      );
+  void goToHome() async{
+    await signInUser();
+  }
 
   Widget buildImage(String path) =>
       Center(child: Image.asset(path, width: 350));
