@@ -45,6 +45,7 @@ dependencies:
 
   flutter_picker:
     git: git://github.com/yangyxd/flutter_picker.git
+  ff_navigation_bar: ^0.1.5
 
 dev_dependencies:
   flutter_test:

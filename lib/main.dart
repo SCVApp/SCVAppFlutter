@@ -7,6 +7,7 @@ import 'domov.dart';
 import 'urnik.dart';
 import 'data.dart';
 import 'isci.dart';
+import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
     return DarkLightTheme();
   }
 }
@@ -46,7 +46,9 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       //   // is not restarted.
       //   primarySwatch: Colors.blue,
       // ),
-      home: OnBoardingPage(),
+      home: MyHomePage(
+        title: "SCVApp",
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -75,17 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Data data = new Data();
 
-  final List<Widget> _childrenWidgets =[];
+  final List<Widget> _childrenWidgets = [];
 
-  _MyHomePageState(){
-    _childrenWidgets.add(new DomovPage(data:data));
+  _MyHomePageState() {
+    _childrenWidgets.add(new DomovPage(data: data));
     _childrenWidgets.add(new MalicePage());
     _childrenWidgets.add(new IsciPage());
     _childrenWidgets.add(new UrnikPage(data: data));
     _childrenWidgets.add(new NastavitvePage(data: data));
   }
 
-  void changeView(int index){
+  void changeView(int index) {
     setState(() {
       selectedIndex = index;
     });
@@ -99,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
+    /* return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -107,19 +109,85 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: data.izbranaSola.color,
       ),
       body: _childrenWidgets[selectedIndex],
-       // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black.withOpacity(0.1), //here set your transparent level
+        backgroundColor:
+            Colors.black.withOpacity(0.1), //here set your transparent level
         elevation: 0,
-        selectedItemColor:  data.izbranaSola.color,
+        selectedItemColor: data.izbranaSola.color,
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
-        
-        items: [BottomNavigationBarItem(icon: Icon(Icons.home_rounded),label: "Domov"),BottomNavigationBarItem(icon: Icon(Icons.fastfood),label: "Malice"),BottomNavigationBarItem(icon: Icon(Icons.person_search),label: "Poišči osebe"),BottomNavigationBarItem(icon: Icon(Icons.calendar_today_rounded),label: "Urnik"),BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Nastavitve")]
-        ,//selectedItemColor: Colors.black,
+
+
+       
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded), label: "Domov"),
+          BottomNavigationBarItem(icon: Icon(Icons.fastfood), label: "Malice"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_search), label: "Poišči osebe"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today_rounded), label: "Urnik"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Nastavitve")
+        ], //selectedItemColor: Colors.black,
         //unselectedItemColor: Colors.black,
         currentIndex: selectedIndex,
-        onTap: changeView,),
+        onTap: changeView,
+      ),
+    ); */
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Demonstration',
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: FFNavigationBar(
+        theme: FFNavigationBarTheme(
+          barBackgroundColor: Colors.white,
+          selectedItemBorderColor: Colors.white,
+          selectedItemBackgroundColor: data.izbranaSola.color,
+          selectedItemIconColor: Colors.white,
+          selectedItemLabelColor: Colors.black,
+        ),
+        selectedIndex: selectedIndex,
+        onSelectTab: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        items: [
+          FFNavigationBarItem(
+            iconData: Icons.home_rounded,
+            label: 'Domov',
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.fastfood,
+            label: 'Malice',
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.person_search,
+            label: 'P.O.',
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.calendar_today_rounded,
+            label: 'Urnik',
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.settings,
+            label: 'Nastavitve',
+          ),
+        ],
+      ),
     );
   }
 }
