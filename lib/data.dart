@@ -83,7 +83,7 @@ class Data{
   UserData user = new UserData("","","","","","","");
 
   Data(){
-    loadData();
+    // loadData();
   }
 
   loadSavedData() async{

@@ -8,7 +8,6 @@ import 'package:scv_app/main.dart';
 import 'package:scv_app/prijava.dart';
 
 class OnBoardingPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context){
 

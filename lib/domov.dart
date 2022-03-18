@@ -5,11 +5,12 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'data.dart';
 
 class DomovPage extends StatefulWidget{
-  DomovPage({Key key, this.title,this.data}) : super(key: key);
+  DomovPage({Key key, this.title,this.data,this.schoolUrl}) : super(key: key);
 
   final String title;
 
   final Data data;
+  String schoolUrl;
 
   _DomovPageState createState() => _DomovPageState();
 }
