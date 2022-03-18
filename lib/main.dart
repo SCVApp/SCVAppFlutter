@@ -91,52 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    /* return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-        backgroundColor: data.izbranaSola.color,
-      ),
-      body: _childrenWidgets[selectedIndex],
-      // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:
-            Colors.black.withOpacity(0.1), //here set your transparent level
-        elevation: 0,
-        selectedItemColor: data.izbranaSola.color,
-        unselectedItemColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-
-
-       
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded), label: "Domov"),
-          BottomNavigationBarItem(icon: Icon(Icons.fastfood), label: "Malice"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_search), label: "Poišči osebe"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_rounded), label: "Urnik"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Nastavitve")
-        ], //selectedItemColor: Colors.black,
-        //unselectedItemColor: Colors.black,
-        currentIndex: selectedIndex,
-        onTap: changeView,
-      ),
-    ); */
 
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
+      backgroundColor: selectedIndex==0? Color.fromRGBO(0, 148, 217, 1):Colors.white,
       body: Center(
         child: SafeArea(child: _childrenWidgets[selectedIndex])
       ),

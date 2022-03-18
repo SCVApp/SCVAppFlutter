@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/prijava.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'data.dart';
 
 class NastavitvePage extends StatefulWidget{
@@ -18,12 +20,18 @@ class _NastavitvePageState extends State<NastavitvePage>{
 
   int selectedPickerItem = 0;
 
-  void odjava(){
-
-  }
-
   @override
   Widget build(BuildContext context){
+
+      Future<void> odjava() async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove(keyForAccessToken);
+        prefs.remove(keyForRefreshToken);
+        prefs.remove(keyForExpiresOn);
+
+        
+      }
+
       return Scaffold(
         key:_scaffoldKey,
         body: Center(
