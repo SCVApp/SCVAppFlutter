@@ -20,19 +20,9 @@ class _MalicePageState extends State<MalicePage>{
 
   @override
   Widget build(BuildContext context){
-      return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+      return Scaffold(body:WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
         _myController = c;
-      },onPageFinished: (String url){
-          readJS();
-      },);
-  }
-
-
-  void readJS() async{
-    await _myController.evaluateJavascript("let arr=[]");
-    await _myController.evaluateJavascript("document.querySelectorAll(\"div\").forEach(e=>{\nif(!e.firstElementChild){\n  arr.push(e.innerText);\n}\n})");
-    var html = await _myController.evaluateJavascript("arr.find(e=>e.includes(\"PIN\"))");
-    print(html);
+      }));
   }
 }
 

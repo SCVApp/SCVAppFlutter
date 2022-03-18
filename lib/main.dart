@@ -46,9 +46,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       //   // is not restarted.
       //   primarySwatch: Colors.blue,
       // ),
-      home: MyHomePage(
-        title: "SCVApp",
-      ),
+      home: OnBoardingPage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -142,14 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Demonstration',
-            ),
-          ],
-        ),
+        child: _childrenWidgets[selectedIndex]
       ),
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
