@@ -82,25 +82,27 @@ class Data{
   SchoolData schoolData = new SchoolData();
   UserData user = new UserData("","","","","","","");
 
-  Data(){
-    // loadData();
-  }
-
   loadSavedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.schoolData.schoolUrl = prefs.getString("schoolUrl");
     print(prefs.getString("schoolUrl"));
   }
 
-  loadData() async{
+  Future<bool> loadData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await refreshToken(prefs);
     final accessToken = prefs.getString(keyForAccessToken);
+    if(accessToken == null){
+      return false;
+    }
     this.user = await fetchUserData(accessToken);
     if(user == null){
-      return;
+      return false;
     }
     await this.schoolData.getData(accessToken);
     prefs.setString("schoolUrl", this.schoolData.schoolUrl);
+
+    return true;
   }
 }
 

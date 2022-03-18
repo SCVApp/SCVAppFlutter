@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
   Data data = new Data();
   bool isLoading = true;
+  bool noUser = false;
 
   final List<Widget> _childrenWidgets = [];
 
@@ -83,7 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void loadDataToScreen() async{
-    await this.data.loadData();
+    if(!await this.data.loadData()){
+      setState(() {
+        noUser = true;
+      });
+      return;
+    }
     setState(() {
       _childrenWidgets.add(new DomovPage(data: data));
       _childrenWidgets.add(new MalicePage());
@@ -104,14 +111,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
+    if(noUser){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnBoardingPage()));
+    }
+
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       backgroundColor: selectedIndex==0? data.schoolData.schoolColor:Colors.white,
-      body: Center(
-        child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+         value: SystemUiOverlayStyle.dark,                
+         child: Center(
+            child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
+          ),
       ),
+
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
           barBackgroundColor: Colors.white,

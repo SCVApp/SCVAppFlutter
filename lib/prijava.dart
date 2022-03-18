@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 
+// final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
 
 final String keyForAccessToken = "key_AccessToken";
@@ -41,12 +42,49 @@ Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expires
   print("Uporabnik shranjen");
 }
 
+class Token{
+  final String accessToken;
+  final String refreshToken;
+  final String expiresOn;
+
+  Token(this.accessToken,this.refreshToken,this.expiresOn);
+  Token.fromJson(Map<String, dynamic> json)
+      : accessToken = json['accessToken'],
+        refreshToken = json['refreshToken'],
+        expiresOn = json['expiresOn'];
+
+  Map<String, dynamic> toJson() => {
+        'accessToken': accessToken,
+        'refreshToken': refreshToken,
+        'expiresOn': expiresOn,
+      };
+
+}
+Future<void> refreshToken(SharedPreferences prefs) async {
+  final accessToken = prefs.getString(keyForAccessToken);
+  final refreshToken = prefs.getString(keyForRefreshToken);
+  final expiresOn = prefs.getString(keyForExpiresOn);
+
+  Token oldToken = new Token(accessToken, refreshToken, expiresOn);
+  final respons = await http.post("$apiUrl/auth/refreshToken/",body: oldToken.toJson());
+  if(respons.statusCode == 200){
+    Token newToken = new Token.fromJson(jsonDecode(respons.body));
+    prefs.setString(keyForAccessToken, newToken.accessToken);
+    prefs.setString(keyForRefreshToken, newToken.refreshToken);
+    prefs.setString(keyForExpiresOn, newToken.expiresOn);
+  }else{
+    prefs.remove(keyForAccessToken);
+    prefs.remove(keyForRefreshToken);
+    prefs.remove(keyForExpiresOn);
+  }
+}
+
 Future<bool> aliJeUporabnikPrijavljen() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   try{
     final accessToken = prefs.getString(keyForAccessToken);
     final refreshToken = prefs.getString(keyForRefreshToken);
-    final expiresOn = prefs.getString(keyForRefreshToken);
+    final expiresOn = prefs.getString(keyForExpiresOn);
     if(accessToken != null && accessToken != ""){
       print("Uporabnik obstaja.");
       return true;
@@ -70,7 +108,9 @@ Future<UserData> fetchUserData(String token) async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
+
     throw Exception('Failed to load user');
+    
   }
 
 }
