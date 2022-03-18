@@ -20,9 +20,7 @@ class _MalicePageState extends State<MalicePage>{
 
   @override
   Widget build(BuildContext context){
-      return Scaffold(body:WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
-        _myController = c;
-      }));
+      return Scaffold(body:WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted));
   }
 }
 

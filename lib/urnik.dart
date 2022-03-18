@@ -15,20 +15,8 @@ class UrnikPage extends StatefulWidget{
 
 class _UrnikPageState extends State<UrnikPage>{
 
-
-  final flutterWebViewPlugin = new FlutterWebviewPlugin();
-
-      @override
-      void initState() {
-        super.initState();
-    
-        flutterWebViewPlugin.onUrlChanged.listen((String url) {
-          widget.data.spremeniUrlUrnika(url);
-        });
-      }
-
   @override
   Widget build(BuildContext context){
-      return new WebviewScaffold(url: widget.data.izbranaSola.urnikUrl);
+      return Scaffold(body:WebView(initialUrl: widget.data.izbranaSola.urnikUrl,javascriptMode: JavascriptMode.unrestricted));
   }
 }
