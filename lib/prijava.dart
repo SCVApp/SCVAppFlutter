@@ -4,6 +4,7 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:scv_app/data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final String apiUrl = "https://backend.app.scv.si";
 
@@ -14,11 +15,18 @@ Future<UserData> signInUser() async {
       final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
       final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
       UserData user = await fetchUserData(accessToken.toString());
+      if(user != null){
+
+      }
       return user;
     }catch (e){
       print(e);
       return null;
     }
+}
+
+Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expiresOn) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 }
 
 Future<UserData> fetchUserData(String token) async {

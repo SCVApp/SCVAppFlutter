@@ -136,11 +136,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ); */
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: Center(
-        child: _childrenWidgets[selectedIndex]
+        child: SafeArea(child: _childrenWidgets[selectedIndex])
       ),
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
