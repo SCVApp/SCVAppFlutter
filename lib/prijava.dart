@@ -19,8 +19,6 @@ Future<UserData> signInUser() async {
       print(e);
       return null;
     }
-
-    // Extract token from resulting url
 }
 
 Future<UserData> fetchUserData(String token) async {

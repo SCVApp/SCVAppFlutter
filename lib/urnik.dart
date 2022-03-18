@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -14,9 +16,14 @@ class UrnikPage extends StatefulWidget{
 }
 
 class _UrnikPageState extends State<UrnikPage>{
+  WebViewController _myController;
+      final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
 
   @override
   Widget build(BuildContext context){
-      return Scaffold(body:WebView(initialUrl: widget.data.izbranaSola.urnikUrl,javascriptMode: JavascriptMode.unrestricted));
+      return new WebView(initialUrl: widget.data.izbranaSola.urnikUrl,javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+        _myController = c;
+      });
   }
 }
