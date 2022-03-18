@@ -5,9 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:scv_app/data.dart';
 
+final String apiUrl = "https://backend.app.scv.si";
+
 Future<void> signInUser() async {
     try{
-      final result = await FlutterWebAuth.authenticate(url: "http://localhost:5050/auth/authUrl", callbackUrlScheme: "app");
+      final result = await FlutterWebAuth.authenticate(url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
       final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
       final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
@@ -22,7 +24,7 @@ Future<void> signInUser() async {
 
 Future<UserData> fetchUserData(String token) async {
   final response = await http
-      .get(Uri.parse('http://localhost:5050/user/get'),headers: {"Authorization":token});
+      .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
