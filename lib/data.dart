@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Sola{
   String id;//ERS,SSG
@@ -30,6 +33,40 @@ class UserData {
   const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName);
 }
 
+class SchoolData {
+  String id;
+  String urnikUrl;
+  String color;
+  String schoolUrl;
+  String name;
+  String razred;
+  Color schoolColor;
+
+  SchoolData(){}
+
+  Future<void> getData(token) async {
+    final response = await http
+      .get(Uri.parse('$apiUrl/user/school/'),headers: {"Authorization":token});
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    var decoded = jsonDecode(response.body);
+    this.id = decoded["id"].toString();
+    this.urnikUrl = decoded["urnikUrl"].toString();
+    this.color = decoded["color"].toString();
+    this.name = decoded["name"].toString();
+    this.razred = decoded["razred"].toString();
+    this.schoolUrl = decoded["schoolUrl"].toString();
+    schoolColor = HexColor.fromHex(this.color);    
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load school data');
+  }
+  }
+}
+
 class Data{
 
   List<Sola> sole = [
@@ -42,44 +79,44 @@ class Data{
   Sola izbranaSola = Sola("ERŠ", "https://ers.scv.si/", "https://ers.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/24353264bf0bc2a4b9c7d30eb8093fc21bb6c766", Colors.blue);
 
   String selectedId = "ERŠ";
+  SchoolData schoolData = new SchoolData();
+  UserData user = new UserData("","","","","","","");
 
   Data(){
     loadData();
   }
 
+  loadSavedData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.schoolData.schoolUrl = prefs.getString("schoolUrl");
+    print(prefs.getString("schoolUrl"));
+  }
+
   loadData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString(keyForAccessToken);
-  }
-
-  Sola dobiSolo(){
-      for (Sola sola in sole) {
-        if(sola.id == selectedId){
-          return sola;
-        }
-      }
-      return Sola("ERŠ", "https://ers.scv.si/", "https://ers.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/24353264bf0bc2a4b9c7d30eb8093fc21bb6c766/", Colors.blue);
-  }
-
-  saveData() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('selectedId', selectedId);
-  }
-
-  shraniIzbranoSolo(String id) async{
-    if(id != selectedId){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove('urnikUrl');
-      selectedId = id;
-      saveData();
-      loadData();
+    this.user = await fetchUserData(accessToken);
+    if(user == null){
+      return;
     }
+    await this.schoolData.getData(accessToken);
+    prefs.setString("schoolUrl", this.schoolData.schoolUrl);
+  }
+}
+
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
 
-  spremeniUrlUrnika(String newUrl) async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('urnikUrl', newUrl);
-    izbranaSola.urnikUrl = newUrl;
-  }
-  
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }

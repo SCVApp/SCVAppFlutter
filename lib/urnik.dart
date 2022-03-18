@@ -21,7 +21,7 @@ class _UrnikPageState extends State<UrnikPage>{
 
   @override
   Widget build(BuildContext context){
-      return new WebView(initialUrl: widget.data.izbranaSola.urnikUrl,javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+      return new WebView(initialUrl: widget.data.schoolData.urnikUrl,javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
         _myController = c;
       });
   }

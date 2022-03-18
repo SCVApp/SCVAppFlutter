@@ -72,4 +72,4 @@ Future<UserData> fetchUserData(String token) async {
     throw Exception('Failed to load user');
   }
 
-  }
+}

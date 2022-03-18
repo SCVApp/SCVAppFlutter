@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data.dart';
 
@@ -29,7 +31,7 @@ class _NastavitvePageState extends State<NastavitvePage>{
         prefs.remove(keyForRefreshToken);
         prefs.remove(keyForExpiresOn);
 
-        
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnBoardingPage()));
       }
 
       return Scaffold(
@@ -42,15 +44,5 @@ class _NastavitvePageState extends State<NastavitvePage>{
           ),
         ),
       );
-  }
-
-
-
-  selectSchoolPicker(Picker picker, List<int> list){
-    if(list.length > 0){
-      selectedPickerItem = list[0];
-      String sId = widget.data.sole[list[0]].id;
-      widget.data.shraniIzbranoSolo(sId);
-    }
   }
 }

@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
-      backgroundColor: selectedIndex==0? Color.fromRGBO(0, 148, 217, 1):Colors.white,
+      backgroundColor: selectedIndex==0? data.schoolData.schoolColor:Colors.white,
       body: Center(
         child: SafeArea(child: _childrenWidgets[selectedIndex])
       ),
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         theme: FFNavigationBarTheme(
           barBackgroundColor: Colors.white,
           selectedItemBorderColor: Colors.white,
-          selectedItemBackgroundColor: data.izbranaSola.color,
+          selectedItemBackgroundColor: data.schoolData.schoolColor,
           selectedItemIconColor: Colors.white,
           selectedItemLabelColor: Colors.black,
         ),
