@@ -7,16 +7,17 @@ import 'package:scv_app/data.dart';
 
 final String apiUrl = "https://backend.app.scv.si";
 
-Future<void> signInUser() async {
+Future<UserData> signInUser() async {
     try{
       final result = await FlutterWebAuth.authenticate(url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
       final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
       final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
       UserData user = await fetchUserData(accessToken.toString());
-      print(user.givenName);
+      return user;
     }catch (e){
       print(e);
+      return null;
     }
 
     // Extract token from resulting url

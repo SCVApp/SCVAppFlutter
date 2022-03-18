@@ -12,5 +12,5 @@ import 'package:scv_app/domov.dart';
 import 'package:scv_app/main.dart';
 
 void main() {
-  
+  runApp(MyHomePage(title: "Test",));
 }

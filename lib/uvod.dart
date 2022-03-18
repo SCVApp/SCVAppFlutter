@@ -1,12 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:scv_app/data.dart';
 import 'package:scv_app/domov.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:scv_app/main.dart';
 import 'package:scv_app/prijava.dart';
 
 class OnBoardingPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
+    void goToHome() async {
+    UserData user = await signInUser();
+    if(user != null){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage(title: "SCVApp",)));
+    }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 236, 236, 236),
@@ -59,10 +71,6 @@ class OnBoardingPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void goToHome() async {
-    await signInUser();
   }
 
   Widget buildImage(String path) =>
