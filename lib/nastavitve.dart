@@ -18,6 +18,10 @@ class _NastavitvePageState extends State<NastavitvePage>{
 
   int selectedPickerItem = 0;
 
+  void odjava(){
+
+  }
+
   @override
   Widget build(BuildContext context){
       return Scaffold(
@@ -25,32 +29,14 @@ class _NastavitvePageState extends State<NastavitvePage>{
         body: Center(
           child: Column(
             children: <Widget>[
-              ListTile(title:Text("Izbrana sola: " + widget.data.selectedId), onTap: (){
-                showPicker(context);
-              })
+              TextButton(onPressed: odjava, child: Text("Odjavi se!"))
             ],
           ),
         ),
       );
   }
 
-  List<PickerItem> items(){
-    List<PickerItem> list = [];
-    for (var i = 0; i < widget.data.sole.length; i++) {
-      String id = widget.data.sole[i].id;
-      if(id==widget.data.izbranaSola.id){
-        selectedPickerItem = i;
-      }
-      PickerItem newPicker = new PickerItem(text:Text(id));
-      list.add(newPicker);
-    }
-    return list;
-  }
 
-  showPicker(BuildContext context){
-    Picker picker = new Picker(adapter: PickerDataAdapter(data: items()),selecteds: [selectedPickerItem],onConfirm: selectSchoolPicker);
-    picker.show(_scaffoldKey.currentState);
-  }
 
   selectSchoolPicker(Picker picker, List<int> list){
     if(list.length > 0){
