@@ -33,10 +33,30 @@ class DarkLightTheme extends StatefulWidget {
 }
 
 class _DarkLightThemeState extends State<DarkLightTheme> {
+
+  @override
+  void initState() {
+    super.initState();
+    isLogedIn();
+  }
+
+  Widget presented = OnBoardingPage();
+
+  void isLogedIn() async {
+    if(await aliJeUporabnikPrijavljen()){
+        presented = MyHomePage();
+    }
+      setState(() {
+        isLoading = false;
+      });
+  }
+
+  bool isLoading = true;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: OnBoardingPage(),
+      home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
     );
   }

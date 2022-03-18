@@ -41,7 +41,7 @@ Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expires
   print("Uporabnik shranjen");
 }
 
-Future<bool> aliJeUporabnikPrijavljen(BuildContext context) async {
+Future<bool> aliJeUporabnikPrijavljen() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   try{
     final accessToken = prefs.getString(keyForAccessToken);
@@ -49,8 +49,9 @@ Future<bool> aliJeUporabnikPrijavljen(BuildContext context) async {
     final expiresOn = prefs.getString(keyForRefreshToken);
     if(accessToken != null && accessToken != ""){
       print("Uporabnik obstaja.");
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+      return true;
     }
+    return false;
   }catch (e){
     return false;
   }

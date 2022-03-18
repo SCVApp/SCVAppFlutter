@@ -18,8 +18,6 @@ class OnBoardingPage extends StatelessWidget {
       }
     }
 
-    aliJeUporabnikPrijavljen(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 236, 236, 236),
@@ -60,7 +58,6 @@ class OnBoardingPage extends StatelessWidget {
           skip: Text('Preskoči'),
           next: Icon(Icons.arrow_forward),
           dotsDecorator: getDotDecoration(),
-          onChange: (index) => print('Page $index selected'),
           // globalBackgroundColor: Theme.of(context).primaryColor,
           skipFlex: 0,
           nextFlex: 0,
