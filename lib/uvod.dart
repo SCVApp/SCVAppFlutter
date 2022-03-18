@@ -10,14 +10,16 @@ import 'package:scv_app/prijava.dart';
 class OnBoardingPage extends StatelessWidget {
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
 
     void goToHome() async {
-    UserData user = await signInUser();
-    if(user != null){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage(title: "SCVApp",)));
+      UserData user = await signInUser();
+      if(user != null){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+      }
     }
-    }
+
+    aliJeUporabnikPrijavljen(context);
 
     return Scaffold(
       appBar: AppBar(

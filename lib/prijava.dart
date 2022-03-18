@@ -1,12 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:scv_app/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'main.dart';
+
 final String apiUrl = "https://backend.app.scv.si";
+
+final String keyForAccessToken = "key_AccessToken";
+final String keyForRefreshToken= "key_RefreshToken";
+final String keyForExpiresOn = "key_ExpiresOn";
 
 Future<UserData> signInUser() async {
     try{
@@ -16,7 +24,7 @@ Future<UserData> signInUser() async {
       final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
       UserData user = await fetchUserData(accessToken.toString());
       if(user != null){
-
+        await shraniUporabnikovePodatkeZaprijavo(accessToken, refreshToken, expiresOn);
       }
       return user;
     }catch (e){
@@ -27,6 +35,25 @@ Future<UserData> signInUser() async {
 
 Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expiresOn) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(keyForAccessToken, accessToken);
+  prefs.setString(keyForRefreshToken, refreshToken);
+  prefs.setString(keyForExpiresOn, expiresOn);
+  print("Uporabnik shranjen");
+}
+
+Future<bool> aliJeUporabnikPrijavljen(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  try{
+    final accessToken = prefs.getString(keyForAccessToken);
+    final refreshToken = prefs.getString(keyForRefreshToken);
+    final expiresOn = prefs.getString(keyForRefreshToken);
+    if(accessToken != ""){
+      print("Uporabnik obstaja.");
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+    }
+  }catch (e){
+    return false;
+  }
 }
 
 Future<UserData> fetchUserData(String token) async {
