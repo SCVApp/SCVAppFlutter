@@ -6,14 +6,13 @@ import 'package:scv_app/prijava.dart';
 
 class OnBoardingPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Color.fromARGB(255, 236, 236, 236),
-      elevation: 0,
-    ),
-    body: SafeArea(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 236, 236, 236),
+        elevation: 0,
+      ),
+      body: SafeArea(
         child: IntroductionScreen(
           pages: [
             PageViewModel(
@@ -60,10 +59,9 @@ class OnBoardingPage extends StatelessWidget {
         ),
       ),
     );
-  
   }
 
-  void goToHome() async{
+  void goToHome() async {
     await signInUser();
   }
 
