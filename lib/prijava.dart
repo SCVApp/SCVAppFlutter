@@ -47,7 +47,8 @@ Future<bool> aliJeUporabnikPrijavljen(BuildContext context) async {
     final accessToken = prefs.getString(keyForAccessToken);
     final refreshToken = prefs.getString(keyForRefreshToken);
     final expiresOn = prefs.getString(keyForRefreshToken);
-    if(accessToken != ""){
+    print(accessToken);
+    if(accessToken != null && accessToken != ""){
       print("Uporabnik obstaja.");
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
     }
