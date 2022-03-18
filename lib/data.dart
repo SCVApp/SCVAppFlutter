@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Sola{
@@ -48,12 +49,7 @@ class Data{
 
   loadData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    selectedId = prefs.getString('selectedId') ?? "ERŠ";
-    izbranaSola = dobiSolo();
-    var newUrl = prefs.getString('urnikUrl') ?? "";
-    if(newUrl != ""){
-      izbranaSola.urnikUrl = newUrl;
-    }
+    final accessToken = prefs.getString(keyForAccessToken);
   }
 
   Sola dobiSolo(){
