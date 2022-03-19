@@ -70,11 +70,11 @@ class _NastavitvePageState extends State<NastavitvePage>{
     return new Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        token == "" ? Image(image: AssetImage("assets/profilePicture.png")) :
+        token == "" ? Image(image: AssetImage("assets/profilePicture.png"),height: 100,) :
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: FadeInImage(
-                  image: NetworkImage("$apiUrl/user/get/profilePicture",headers: {"Authorization":token})
+                  image: NetworkImage("$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",headers: {"Authorization":token})
                   ,placeholder: AssetImage("assets/profilePicture.png")
                   ,height: 100,),
               ),

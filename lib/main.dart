@@ -89,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         noUser = true;
       });
-      return;
     }
     setState(() {
       _childrenWidgets.add(new DomovPage(data: data));
@@ -112,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     if(noUser){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnBoardingPage()));
+      // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
 
 

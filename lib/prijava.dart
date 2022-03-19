@@ -39,7 +39,6 @@ Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expires
   prefs.setString(keyForAccessToken, accessToken);
   prefs.setString(keyForRefreshToken, refreshToken);
   prefs.setString(keyForExpiresOn, expiresOn);
-  print("Uporabnik shranjen");
 }
 
 class Token{
@@ -73,7 +72,7 @@ Future<String> refreshToken() async {
     prefs.setString(keyForAccessToken, newToken.accessToken);
     prefs.setString(keyForRefreshToken, newToken.refreshToken);
     prefs.setString(keyForExpiresOn, newToken.expiresOn);
-    print("Token refreshed!");
+ 
     return newToken.accessToken;
   }else{
     prefs.remove(keyForAccessToken);
@@ -108,7 +107,7 @@ Future<UserData> fetchUserData(String token) async {
     UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName']);
     return user;
   } else {
-    return await fetchUserData(await refreshToken());
+    return null;
   }
 
 }
