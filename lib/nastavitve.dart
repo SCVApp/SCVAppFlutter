@@ -70,14 +70,7 @@ class _NastavitvePageState extends State<NastavitvePage>{
     return new Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        token == "" ? Image(image: AssetImage("assets/profilePicture.png"),height: 100,) :
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: FadeInImage(
-                  image: NetworkImage("$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",headers: {"Authorization":token})
-                  ,placeholder: AssetImage("assets/profilePicture.png")
-                  ,height: 100,),
-              ),
+              userImage(),
               new Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,5 +82,16 @@ class _NastavitvePageState extends State<NastavitvePage>{
               TextButton(onPressed: odjava, child: Image(image: AssetImage("assets/odjava.png"),height: 32,)),
       ]
       );
+  }
+
+  Widget userImage(){
+    return token == "" ? Image(image: AssetImage("assets/profilePicture.png"),height: 100,) :
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: FadeInImage(
+                  image: NetworkImage("$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",headers: {"Authorization":token})
+                  ,placeholder: AssetImage("assets/profilePicture.png")
+                  ,height: 100,),
+              );
   }
 }
