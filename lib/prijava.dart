@@ -60,7 +60,8 @@ class Token{
       };
 
 }
-Future<void> refreshToken(SharedPreferences prefs) async {
+Future<String> refreshToken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   final accessToken = prefs.getString(keyForAccessToken);
   final refreshToken = prefs.getString(keyForRefreshToken);
   final expiresOn = prefs.getString(keyForExpiresOn);
@@ -72,10 +73,14 @@ Future<void> refreshToken(SharedPreferences prefs) async {
     prefs.setString(keyForAccessToken, newToken.accessToken);
     prefs.setString(keyForRefreshToken, newToken.refreshToken);
     prefs.setString(keyForExpiresOn, newToken.expiresOn);
+    print("Token refreshed!");
+    return newToken.accessToken;
   }else{
     prefs.remove(keyForAccessToken);
     prefs.remove(keyForRefreshToken);
     prefs.remove(keyForExpiresOn);
+    print("Error");
+    return "";
   }
 }
 
@@ -86,7 +91,6 @@ Future<bool> aliJeUporabnikPrijavljen() async {
     final refreshToken = prefs.getString(keyForRefreshToken);
     final expiresOn = prefs.getString(keyForExpiresOn);
     if(accessToken != null && accessToken != ""){
-      print("Uporabnik obstaja.");
       return true;
     }
     return false;
@@ -100,17 +104,11 @@ Future<UserData> fetchUserData(String token) async {
       .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
     var decoded = jsonDecode(response.body);
     UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName']);
     return user;
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-
-    throw Exception('Failed to load user');
-    
+    return await fetchUserData(await refreshToken());
   }
 
 }

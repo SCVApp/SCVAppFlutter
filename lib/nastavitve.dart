@@ -22,6 +22,25 @@ class _NastavitvePageState extends State<NastavitvePage>{
 
   int selectedPickerItem = 0;
 
+  String token = "";
+
+  @override
+  void initState() {
+    super.initState();
+    loadToken();
+  }
+  
+  void loadToken() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      setState(() {
+         token = prefs.getString(keyForAccessToken);
+      });
+    }catch (e){
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context){
 
@@ -39,10 +58,36 @@ class _NastavitvePageState extends State<NastavitvePage>{
         body: Center(
           child: Column(
             children: <Widget>[
-              TextButton(onPressed: odjava, child: Text("Odjavi se!"))
+              userInfo(odjava),
             ],
           ),
         ),
+      );
+  }
+
+  Widget userInfo(odjava){
+
+    return new Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        token == "" ? Image(image: AssetImage("assets/profilePicture.png")) :
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: FadeInImage(
+                  image: NetworkImage("$apiUrl/user/get/profilePicture",headers: {"Authorization":token})
+                  ,placeholder: AssetImage("assets/profilePicture.png")
+                  ,height: 100,),
+              ),
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.data.user.displayName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                  Text(widget.data.user.mail)
+                ],
+              ),
+              TextButton(onPressed: odjava, child: Image(image: AssetImage("assets/odjava.png"),height: 32,)),
+      ]
       );
   }
 }
