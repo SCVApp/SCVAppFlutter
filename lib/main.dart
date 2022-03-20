@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: selectedIndex==0? data.schoolData.schoolColor:Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-         value: SystemUiOverlayStyle.dark,                
+         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,                
          child: Center(
             child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
           ),

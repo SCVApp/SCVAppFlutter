@@ -61,9 +61,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
             children: [
               SimpleUserCard(
                 userName: "Uporabnik",
-                userProfilePic: NetworkImage(
-                    "$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",
-                    headers: {"Authorization": token}),
+                userProfilePic: widget.data.user.image//Profilna slika dijaka
               ),
               SettingsGroup(
                 items: [
@@ -91,6 +89,17 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     trailing: Switch.adaptive(
                       value: false,
                       onChanged: (value) {},
+                    ),
+                  ),
+                  SettingsItem(
+                    onTap: odjava,
+                    icons: Icons.logout,
+                    title: "Odjava",
+                    subtitle: "Odjavi se iz aplikacije",
+                    iconStyle: IconStyle(
+                      iconsColor: Colors.white,
+                      withBackground: true,
+                      backgroundColor: widget.data.schoolData.schoolColor//Barva šole
                     ),
                   ),
                 ],

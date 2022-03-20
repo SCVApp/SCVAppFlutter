@@ -29,8 +29,9 @@ class UserData {
   final String mobilePhone;
   final String surname;
   final String userPrincipalName;
+  final NetworkImage image;
 
-  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName);
+  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName,this.image);
 }
 
 class SchoolData {
@@ -41,8 +42,6 @@ class SchoolData {
   String name;
   String razred;
   Color schoolColor;
-
-  SchoolData(){}
 
   Future<void> getData(token) async {
     final response = await http
@@ -58,6 +57,9 @@ class SchoolData {
     this.name = decoded["name"].toString();
     this.razred = decoded["razred"].toString();
     this.schoolUrl = decoded["schoolUrl"].toString();
+    if(this.color == "#FFFFFF"){
+      this.color = "#000000";
+    }
     schoolColor = HexColor.fromHex(this.color);    
   } else {
     // If the server did not return a 200 OK response,
@@ -80,7 +82,7 @@ class Data{
 
   String selectedId = "ERŠ";
   SchoolData schoolData = new SchoolData();
-  UserData user = new UserData("","","","","","","");
+  UserData user = new UserData("","","","","","","",NetworkImage(""));
 
   Future<bool> loadData() async{
     final accessToken = await refreshToken();
