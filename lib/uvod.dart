@@ -8,15 +8,9 @@ import 'package:scv_app/main.dart';
 import 'package:scv_app/prijava.dart';
 
 class OnBoardingPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context){
-
-    void goToHome() async {
-      UserData user = await signInUser();
-      if(user != null){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +62,9 @@ class OnBoardingPage extends StatelessWidget {
           // animationDuration: 1000,
         ),
       ),
+      
     );
+
   }
 
   Widget buildImage(String path) =>

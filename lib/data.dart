@@ -60,7 +60,7 @@ class SchoolData {
     if(this.color == "#FFFFFF"){
       this.color = "#000000";
     }
-    schoolColor = HexColor.fromHex(this.color);    
+    schoolColor = HexColor.fromHex(this.color);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
