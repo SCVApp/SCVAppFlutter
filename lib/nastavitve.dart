@@ -7,6 +7,10 @@ import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
+import 'package:get/get.dart';
+
+
+
 
 class NastavitvePage extends StatefulWidget {
   NastavitvePage({Key key, this.title, this.data}) : super(key: key);
@@ -42,6 +46,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
     }
   }
 
+  bool _value = true;
   @override
   Widget build(BuildContext context) {
     Future<void> odjava() async {
@@ -65,20 +70,15 @@ class _NastavitvePageState extends State<NastavitvePage> {
               child: ListBody(
                 children: const <Widget>[
                   Text('Ali se res želiš odjaviti iz ŠCVAppa?'),
-                  
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Ne, prekliči'),
-                onPressed: () => Navigator.pop(context, 'Cancel')
-              ),
+                  child: const Text('Ne, prekliči'),
+                  onPressed: () => Navigator.pop(context, 'Cancel')),
               TextButton(
-                child: const Text('Da, odjavi me.'),
-                onPressed: odjava
-              ),
-              
+                  child: const Text('Da, odjavi me.'), onPressed: odjava),
             ],
           );
         },
@@ -96,7 +96,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 userProfilePic: widget.data.user.image, //Profilna slika dijaka,
                 cardColor: widget.data.schoolData.schoolColor,
                 cardRadius: 30,
-                userMoreInfo: Text(widget.data.user.mail), 
+                userMoreInfo: Text(widget.data.user.mail),
               ),
               SettingsGroup(
                 items: [
@@ -113,6 +113,15 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   ),
                   SettingsItem(
                     onTap: () {},
+                    icons: Icons.info_rounded,
+                    iconStyle: IconStyle(
+                    backgroundColor: Colors.purple,
+                  ),
+                    title: 'O aplikaciji',
+                    subtitle: "Izvedi več o aplikaciji ŠCVApp",
+                  ),
+                 /*  SettingsItem(
+                    onTap: () {},
                     icons: Icons.dark_mode_rounded,
                     iconStyle: IconStyle(
                       iconsColor: Colors.white,
@@ -122,10 +131,12 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     title: 'Temni način',
                     subtitle: "Avtomatsko",
                     trailing: Switch.adaptive(
-                      value: false,
-                      onChanged: (value) {},
+                      value: null,
+                      onChanged: (toggle) =>
+                          setState(() {}
                     ),
                   ),
+                  ), */
                 ],
                 /* body: Center(
           child: Column(
@@ -138,6 +149,15 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 settingsGroupTitle: "Račun",
                 items: [
                   SettingsItem(
+                    onTap: () {},
+                    icons: Icons.account_circle,
+                    iconStyle: IconStyle(
+                    backgroundColor: widget.data.schoolData.schoolColor,
+                  ),
+                    title: 'O meni',
+                    subtitle: "Informacije mojega računa",
+                  ),
+                  SettingsItem(
                     onTap: _showMyDialog,
                     icons: Icons.logout,
                     title: "Odjava",
@@ -148,13 +168,16 @@ class _NastavitvePageState extends State<NastavitvePage> {
                         backgroundColor:
                             widget.data.schoolData.schoolColor //Barva šole
                         ),
-                  )
+                  ),
+                  
+                  
                 ],
               )
             ],
           ),
         ));
   }
+
 
   Widget userInfo(odjava) {
     return new Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -196,4 +219,18 @@ class _NastavitvePageState extends State<NastavitvePage> {
             ),
           );
   }
+
+  
+   ThemeData _darkTheme = ThemeData(
+              accentColor: Colors.red,
+              brightness: Brightness.dark,
+              primaryColor: Colors.amber,
+            
+            );
+            
+            ThemeData _lightTheme = ThemeData(
+              accentColor: Colors.pink,
+              brightness: Brightness.light,
+              primaryColor: Colors.blue
+            );
 }

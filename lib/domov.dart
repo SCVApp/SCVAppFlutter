@@ -9,6 +9,7 @@ class DomovPage extends StatefulWidget{
 
   final String title;
 
+  
   final Data data;
   String schoolUrl;
 

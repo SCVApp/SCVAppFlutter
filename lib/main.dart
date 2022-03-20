@@ -59,9 +59,12 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     return MaterialApp(
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
+      
+      
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
