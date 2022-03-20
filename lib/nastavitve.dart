@@ -59,15 +59,19 @@ class _NastavitvePageState extends State<NastavitvePage> {
           child: ListView(
             padding: EdgeInsets.all(24),
             children: [
-              SimpleUserCard(
+              BigUserCard(
                 userName: widget.data.user.displayName,
-                userProfilePic: widget.data.user.image//Profilna slika dijaka
+                userProfilePic: widget.data.user.image, //Profilna slika dijaka, 
+                cardColor: widget.data.schoolData.schoolColor,
+                cardRadius: 30,
+                userMoreInfo: Text(widget.data.user.mail),//Text("Mail"),
+                
               ),
               SettingsGroup(
                 items: [
                   SettingsItem(
                     onTap: () {},
-                    icons: Icons.fingerprint,
+                    icons: Icons.change_circle,
                     iconStyle: IconStyle(
                       iconsColor: Colors.white,
                       withBackground: true,
@@ -91,6 +95,28 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       onChanged: (value) {},
                     ),
                   ),
+                  /* SettingsItem(
+                    onTap: odjava,
+                    icons: Icons.logout,
+                    title: "Odjava",
+                    subtitle: "Odjavi se iz aplikacije",
+                    iconStyle: IconStyle(
+                      iconsColor: Colors.white,
+                      withBackground: true,
+                      backgroundColor: widget.data.schoolData.schoolColor//Barva šole
+                    ), */
+                  //),
+                ],
+                /* body: Center(
+          child: Column(
+            children: <Widget>[
+              userInfo(odjava),
+            ],
+          ), */
+              ),
+              SettingsGroup(
+                settingsGroupTitle: "Račun",
+                items: [
                   SettingsItem(
                     onTap: odjava,
                     icons: Icons.logout,
@@ -101,17 +127,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       withBackground: true,
                       backgroundColor: widget.data.schoolData.schoolColor//Barva šole
                     ),
-                  ),
+                  )
                 ],
-                /* body: Center(
-          child: Column(
-            children: <Widget>[
-              userInfo(odjava),
+              )
             ],
-          ), */
-              ),
-            ],
+            
           ),
+          
         ));
   }
 
