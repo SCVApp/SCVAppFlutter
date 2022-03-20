@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/Components/settingsUserCard.dart';
 import 'package:scv_app/SettingsPages/aboutAplication.dart';
 import 'package:scv_app/SettingsPages/aboutMe.dart';
 import 'package:scv_app/SettingsPages/changeStatus.dart';
@@ -105,12 +106,16 @@ class _NastavitvePageState extends State<NastavitvePage> {
           child: ListView(
             padding: EdgeInsets.all(24),
             children: [
-              BigUserCard(
+              SettingsUserCard(
                 userName: widget.data.user.displayName,
-                userProfilePic: widget.data.user.image, //Profilna slika dijaka,
+                userProfilePic: widget.data.user.image,
                 cardColor: widget.data.schoolData.schoolColor,
-                cardRadius: 30,
-                userMoreInfo: Text(widget.data.user.mail),
+                userMoreInfo: Text(
+                  widget.data.user.mail,
+                  style: TextStyle(
+                    fontSize: 15
+                  ),
+                  ),
               ),
               SettingsGroup(
                 items: [
