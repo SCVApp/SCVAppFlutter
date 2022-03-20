@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/SettingsPages/aboutAplication.dart';
+import 'package:scv_app/SettingsPages/aboutMe.dart';
+import 'package:scv_app/SettingsPages/changeStatus.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,6 +52,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
   bool _value = true;
   @override
   Widget build(BuildContext context) {
+
     Future<void> odjava() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(keyForAccessToken);
@@ -57,6 +61,16 @@ class _NastavitvePageState extends State<NastavitvePage> {
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => OnBoardingPage()));
+    }
+
+    void goToPageChangeStatus(){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeStatusPage()));
+    }
+    void goToPageAboutApp(){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutAppPage()));
+    }
+    void goToPageAboutMe(){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutMePage()));
     }
 
     Future<void> _showMyDialog() async {
@@ -101,7 +115,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
               SettingsGroup(
                 items: [
                   SettingsItem(
-                    onTap: () {},
+                    onTap: goToPageChangeStatus,
                     icons: Icons.change_circle,
                     iconStyle: IconStyle(
                       iconsColor: Colors.white,
@@ -112,7 +126,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     subtitle: "Spremeni svoj status!",
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: goToPageAboutApp,
                     icons: Icons.info_rounded,
                     iconStyle: IconStyle(
                     backgroundColor: Colors.purple,
@@ -138,18 +152,12 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   ),
                   ), */
                 ],
-                /* body: Center(
-          child: Column(
-            children: <Widget>[
-              userInfo(odjava),
-            ],
-          ), */
               ),
               SettingsGroup(
                 settingsGroupTitle: "Račun",
                 items: [
                   SettingsItem(
-                    onTap: () {},
+                    onTap: goToPageAboutMe,
                     icons: Icons.account_circle,
                     iconStyle: IconStyle(
                     backgroundColor: widget.data.schoolData.schoolColor,
@@ -178,59 +186,4 @@ class _NastavitvePageState extends State<NastavitvePage> {
         ));
   }
 
-
-  Widget userInfo(odjava) {
-    return new Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      userImage(),
-      new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.data.user.displayName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          Text(widget.data.user.mail)
-        ],
-      ),
-      TextButton(
-          onPressed: odjava,
-          child: Image(
-            image: AssetImage("assets/odjava.png"),
-            height: 32,
-          )),
-    ]);
-  }
-
-  Widget userImage() {
-    return token == ""
-        ? Image(
-            image: AssetImage("assets/profilePicture.png"),
-            height: 100,
-          )
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: FadeInImage(
-              image: NetworkImage(
-                  "$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",
-                  headers: {"Authorization": token}),
-              placeholder: AssetImage("assets/profilePicture.png"),
-              height: 100,
-            ),
-          );
-  }
-
-  
-   ThemeData _darkTheme = ThemeData(
-              accentColor: Colors.red,
-              brightness: Brightness.dark,
-              primaryColor: Colors.amber,
-            
-            );
-            
-            ThemeData _lightTheme = ThemeData(
-              accentColor: Colors.pink,
-              brightness: Brightness.light,
-              primaryColor: Colors.blue
-            );
 }
