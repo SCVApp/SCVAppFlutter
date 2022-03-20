@@ -95,17 +95,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       onChanged: (value) {},
                     ),
                   ),
-                  /* SettingsItem(
-                    onTap: odjava,
-                    icons: Icons.logout,
-                    title: "Odjava",
-                    subtitle: "Odjavi se iz aplikacije",
-                    iconStyle: IconStyle(
-                      iconsColor: Colors.white,
-                      withBackground: true,
-                      backgroundColor: widget.data.schoolData.schoolColor//Barva šole
-                    ), */
-                  //),
+                  
                 ],
                 /* body: Center(
           child: Column(
