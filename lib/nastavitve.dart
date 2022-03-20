@@ -53,6 +53,39 @@ class _NastavitvePageState extends State<NastavitvePage> {
           MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
 
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Opozorilo!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('Ali se res želiš odjaviti iz ŠCVAppa?'),
+                  
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ne, prekliči'),
+                onPressed: () => Navigator.pop(context, 'Cancel')
+              ),
+              TextButton(
+                child: const Text('Da, odjavi me.'),
+                onPressed: () {
+                  odjava();
+                },
+              ),
+              
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
         key: _scaffoldKey,
         body: SafeArea(
@@ -61,11 +94,10 @@ class _NastavitvePageState extends State<NastavitvePage> {
             children: [
               BigUserCard(
                 userName: widget.data.user.displayName,
-                userProfilePic: widget.data.user.image, //Profilna slika dijaka, 
+                userProfilePic: widget.data.user.image, //Profilna slika dijaka,
                 cardColor: widget.data.schoolData.schoolColor,
                 cardRadius: 30,
-                userMoreInfo: Text(widget.data.user.mail),//Text("Mail"),
-                
+                userMoreInfo: Text(widget.data.user.mail), //Text("Mail"),
               ),
               SettingsGroup(
                 items: [
@@ -95,7 +127,6 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       onChanged: (value) {},
                     ),
                   ),
-                  
                 ],
                 /* body: Center(
           child: Column(
@@ -108,22 +139,21 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 settingsGroupTitle: "Račun",
                 items: [
                   SettingsItem(
-                    onTap: odjava,
+                    onTap: _showMyDialog,
                     icons: Icons.logout,
                     title: "Odjava",
                     subtitle: "Odjavi se iz aplikacije",
                     iconStyle: IconStyle(
-                      iconsColor: Colors.white,
-                      withBackground: true,
-                      backgroundColor: widget.data.schoolData.schoolColor//Barva šole
-                    ),
+                        iconsColor: Colors.white,
+                        withBackground: true,
+                        backgroundColor:
+                            widget.data.schoolData.schoolColor //Barva šole
+                        ),
                   )
                 ],
               )
             ],
-            
           ),
-          
         ));
   }
 
