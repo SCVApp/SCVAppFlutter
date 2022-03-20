@@ -104,9 +104,9 @@ Future<UserData> fetchUserData(String token) async {
 
   if (response.statusCode == 200) {
     var decoded = jsonDecode(response.body);
-    final user_image = NetworkImage("$apiUrl/user/get/profilePicture?=${decoded['mail']}",
+    final userImage = NetworkImage("$apiUrl/user/get/profilePicture?=${decoded['mail']}",
                     headers: {"Authorization": token});
-    UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],user_image);
+    UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],userImage);
     return user;
   } else {
     return null;
