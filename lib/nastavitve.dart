@@ -93,7 +93,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   child: const Text('Ne, prekliči'),
                   onPressed: () => Navigator.pop(context, 'Cancel')),
               TextButton(
-                  child: const Text('Da, odjavi me.'), onPressed: odjava),
+                  child: const Text('Da, odjavi me.',style: TextStyle(fontWeight: FontWeight.bold,)), onPressed: odjava),
             ],
           );
         },
