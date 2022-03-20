@@ -60,7 +60,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
             padding: EdgeInsets.all(24),
             children: [
               SimpleUserCard(
-                userName: "Uporabnik",
+                userName: widget.data.user.displayName,
                 userProfilePic: widget.data.user.image//Profilna slika dijaka
               ),
               SettingsGroup(
