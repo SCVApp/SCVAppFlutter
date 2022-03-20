@@ -43,7 +43,6 @@ app.*.map.json
 # Android Studio will place build artifacts here
 pubspec.lock
 ios/Runner.xcodeproj/project.pbxproj
-ios/Runner.xcodeproj/project.pbxproj
 flutter_01.png
-ios/Runner.xcodeproj/project.pbxproj
 ios/Podfile.lock
+*.pbxproj
