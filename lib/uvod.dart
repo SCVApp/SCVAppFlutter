@@ -12,6 +12,13 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
 
+    void goToHome() async {
+      UserData user = await signInUser();
+      if(user != null){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 236, 236, 236),
