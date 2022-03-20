@@ -112,9 +112,6 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(
                   widget.data.user.mail,
-                  style: TextStyle(
-                    fontSize: 15
-                  ),
                   ),
               ),
               SettingsGroup(

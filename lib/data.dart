@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:scv_app/prijava.dart';
@@ -30,8 +31,29 @@ class UserData {
   final String surname;
   final String userPrincipalName;
   final NetworkImage image;
+  final UserStatusData status;
 
-  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName,this.image);
+  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName,this.image,this.status);
+}
+
+class UserStatusData{
+  String id;
+  String display;
+  String color;
+  AssetImage assetImage;
+
+  Future<void> getData(token) async{
+    final response = await http
+      .get(Uri.parse('$apiUrl/user/get/status'),headers: {"Authorization":token});
+
+    if (response.statusCode == 200) {
+      var decoded = jsonDecode(response.body);
+      this.id = decoded["id"];
+      this.display = decoded["display"];
+      this.color = decoded["color"];
+      this.assetImage = AssetImage("assets/statusIcons/${this.id}.png");
+    }
+  }
 }
 
 class SchoolData {
@@ -82,7 +104,7 @@ class Data{
 
   String selectedId = "ERŠ";
   SchoolData schoolData = new SchoolData();
-  UserData user = new UserData("","","","","","","",NetworkImage(""));
+  UserData user = new UserData("","","","","","","",NetworkImage(""),UserStatusData());
 
   Future<bool> loadData() async{
     final accessToken = await refreshToken();

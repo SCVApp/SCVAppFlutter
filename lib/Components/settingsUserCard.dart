@@ -33,14 +33,12 @@ class SettingsUserCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
-              child: Align(
+          Align(
               alignment: Alignment.bottomLeft,
               child: CircleAvatar(
                 radius: 100,
                 backgroundColor: backgroundMotifColor.withOpacity(.1),
               ),
-            ),
           ),
           Align(
             alignment: Alignment.center,
@@ -62,10 +60,10 @@ class SettingsUserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipRRect(
-                        borderRadius: BorderRadius.circular(70.0),
+                        borderRadius: BorderRadius.circular(mediaQueryHeight/2),
                         child: Image(
                           image: userProfilePic,
-                          height: 130,
+                          height: 120,
                         ),
                     ),
                     Container(

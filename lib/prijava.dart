@@ -108,8 +108,9 @@ Future<UserData> fetchUserData(String token) async {
     var decoded = jsonDecode(response.body);
     final userImage = NetworkImage("$apiUrl/user/get/profilePicture?=${decoded['mail']}",
                     headers: {"Authorization": token});
-    final img = Image(image: userImage);
-    UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],userImage);
+    final UserStatusData userStatus = new UserStatusData();
+    await userStatus.getData(token);
+    UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],userImage,userStatus);
     return user;
   } else {
     return null;
