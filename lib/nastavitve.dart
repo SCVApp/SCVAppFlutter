@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
@@ -48,7 +49,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
       prefs.remove(keyForAccessToken);
       prefs.remove(keyForRefreshToken);
       prefs.remove(keyForExpiresOn);
-
+      Navigator.pop(context);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
@@ -75,9 +76,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
               ),
               TextButton(
                 child: const Text('Da, odjavi me.'),
-                onPressed: () {
-                  odjava();
-                },
+                onPressed: odjava
               ),
               
             ],

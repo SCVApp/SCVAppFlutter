@@ -101,6 +101,13 @@ Future<bool> aliJeUporabnikPrijavljen() async {
 Future<UserData> fetchUserData(String token) async {
   final response = await http
       .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
+  
+  final image = Image.network(
+          "$apiUrl/user/get",
+          headers: {"Authorization":token},
+          height: 100,
+          fit: BoxFit.cover,
+        );
 
   if (response.statusCode == 200) {
     var decoded = jsonDecode(response.body);
