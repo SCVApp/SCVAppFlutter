@@ -23,6 +23,7 @@ Future<UserData> signInUser() async {
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
       final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
       final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
+
       UserData user = await fetchUserData(accessToken.toString());
       if(user != null){
         await shraniUporabnikovePodatkeZaprijavo(accessToken, refreshToken, expiresOn);
@@ -72,7 +73,7 @@ Future<String> refreshToken() async {
     prefs.setString(keyForAccessToken, newToken.accessToken);
     prefs.setString(keyForRefreshToken, newToken.refreshToken);
     prefs.setString(keyForExpiresOn, newToken.expiresOn);
- 
+
     return newToken.accessToken;
   }else{
     prefs.remove(keyForAccessToken);
@@ -89,6 +90,7 @@ Future<bool> aliJeUporabnikPrijavljen() async {
     final accessToken = prefs.getString(keyForAccessToken);
     final refreshToken = prefs.getString(keyForRefreshToken);
     final expiresOn = prefs.getString(keyForExpiresOn);
+
     if(accessToken != null && accessToken != ""){
       return true;
     }
@@ -101,13 +103,6 @@ Future<bool> aliJeUporabnikPrijavljen() async {
 Future<UserData> fetchUserData(String token) async {
   final response = await http
       .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
-  
-  final image = Image.network(
-          "$apiUrl/user/get",
-          headers: {"Authorization":token},
-          height: 100,
-          fit: BoxFit.cover,
-        );
 
   if (response.statusCode == 200) {
     var decoded = jsonDecode(response.body);
