@@ -96,7 +96,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 userProfilePic: widget.data.user.image, //Profilna slika dijaka,
                 cardColor: widget.data.schoolData.schoolColor,
                 cardRadius: 30,
-                userMoreInfo: Text(widget.data.user.mail), //Text("Mail"),
+                userMoreInfo: Text(widget.data.user.mail), 
               ),
               SettingsGroup(
                 items: [
@@ -156,4 +156,44 @@ class _NastavitvePageState extends State<NastavitvePage> {
         ));
   }
 
+  Widget userInfo(odjava) {
+    return new Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      userImage(),
+      new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.data.user.displayName,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          Text(widget.data.user.mail)
+        ],
+      ),
+      TextButton(
+          onPressed: odjava,
+          child: Image(
+            image: AssetImage("assets/odjava.png"),
+            height: 32,
+          )),
+    ]);
+  }
+
+  Widget userImage() {
+    return token == ""
+        ? Image(
+            image: AssetImage("assets/profilePicture.png"),
+            height: 100,
+          )
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: FadeInImage(
+              image: NetworkImage(
+                  "$apiUrl/user/get/profilePicture?=${widget.data.user.mail}",
+                  headers: {"Authorization": token}),
+              placeholder: AssetImage("assets/profilePicture.png"),
+              height: 100,
+            ),
+          );
+  }
 }
