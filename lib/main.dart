@@ -61,7 +61,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     return MaterialApp(
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
-      
+      // theme: ThemeData.dark(),
       
     );
   }
@@ -80,6 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Data data = new Data();
   bool isLoading = true;
   bool noUser = false;
+
+  bool darkTheme = false;
 
   final List<Widget> _childrenWidgets = [];
 
@@ -101,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // _childrenWidgets.add(new IsciPage());
       _childrenWidgets.add(new EasistentPage());
       _childrenWidgets.add(new UrnikPage(data: data));
-      _childrenWidgets.add(new NastavitvePage(data: data));
+      _childrenWidgets.add(new NastavitvePage(data: data,changeTheme: darkTheme,));
       isLoading = false;
     });
   }
@@ -117,9 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: selectedIndex==0? data.schoolData.schoolColor:Colors.white,
+      backgroundColor: selectedIndex==0? data.schoolData.schoolColor: darkTheme ? Colors.black : Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,                
+         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : darkTheme ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,                
          child: Center(
             child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
           ),
@@ -127,11 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
-          barBackgroundColor: Colors.white,
-          selectedItemBorderColor: Colors.white,
+          barBackgroundColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
+          selectedItemBorderColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
           selectedItemBackgroundColor: data.schoolData.schoolColor,
-          selectedItemIconColor: Colors.white,
-          selectedItemLabelColor: Colors.black,
+          selectedItemIconColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
+          selectedItemLabelColor: darkTheme ? Colors.white : Colors.black,
         ),
         selectedIndex: selectedIndex,
         onSelectTab: (index) {

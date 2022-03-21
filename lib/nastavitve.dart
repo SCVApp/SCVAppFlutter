@@ -17,11 +17,13 @@ import 'package:get/get.dart';
 
 
 class NastavitvePage extends StatefulWidget {
-  NastavitvePage({Key key, this.title, this.data}) : super(key: key);
+  NastavitvePage({Key key, this.title, this.data,this.changeTheme}) : super(key: key);
 
   final String title;
 
   final Data data;
+
+  bool changeTheme;
 
   _NastavitvePageState createState() => _NastavitvePageState();
 }
@@ -50,7 +52,15 @@ class _NastavitvePageState extends State<NastavitvePage> {
     }
   }
 
-  bool _value = true;
+  bool _value = false;
+
+  toggleThemeBtn(toggle){
+      setState((){
+        _value=toggle;
+        widget.changeTheme = toggle;
+      });
+    }
+
   @override
   Widget build(BuildContext context) {
 
@@ -120,7 +130,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: goToPageChangeStatus,
                     icons: Icons.change_circle,
                     iconStyle: IconStyle(
-                      iconsColor: Colors.white,
+                      // iconsColor: Colors.white,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
@@ -136,7 +146,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     title: 'O aplikaciji',
                     subtitle: "Izvedi več o aplikaciji ŠCVApp",
                   ),
-                 /*  SettingsItem(
+                  SettingsItem(
                     onTap: () {},
                     icons: Icons.dark_mode_rounded,
                     iconStyle: IconStyle(
@@ -147,12 +157,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     title: 'Temni način',
                     subtitle: "Avtomatsko",
                     trailing: Switch.adaptive(
-                      value: null,
-                      onChanged: (toggle) =>
-                          setState(() {}
+                      activeColor: widget.data.schoolData.schoolColor,
+                      value: _value,
+                      onChanged: toggleThemeBtn,
                     ),
                   ),
-                  ), */
                 ],
               ),
               SettingsGroup(
@@ -179,8 +188,6 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             widget.data.schoolData.schoolColor //Barva šole
                         ),
                   ),
-                  
-                  
                 ],
               )
             ],
