@@ -83,10 +83,10 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
 
 
-fonts:
-    - family: MyFlutterApp # the name of your font family
+  fonts:
+    - family:  MyFlutterApp
       fonts:
-        - asset: assets/MyFlutterApp.ttf # your font file name and the directory
+       - asset: fonts/MyFlutterApp.ttf # your font file name and the directory
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

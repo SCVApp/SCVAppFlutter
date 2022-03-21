@@ -116,11 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    if(noUser){
-      // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnBoardingPage()));
-    }
-
-
     return Scaffold(
       backgroundColor: selectedIndex==0? data.schoolData.schoolColor:Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
