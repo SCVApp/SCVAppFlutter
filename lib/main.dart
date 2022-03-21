@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scv_app/easistent.dart';
-import 'package:scv_app/my_flutter_app_icons.dart';
+import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'P.O.',
           ), */
           FFNavigationBarItem(
-            iconData: MyFlutterApp.ea,
+            iconData: FluttereAIcon.ea,
             label: 'eAsistent',
           ),
           FFNavigationBarItem(
