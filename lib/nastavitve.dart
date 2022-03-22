@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
-import 'package:scv_app/Components/nastavitveItem.dart';
 import 'package:scv_app/Components/settingsUserCard.dart';
 import 'package:scv_app/SettingsPages/aboutAplication.dart';
 import 'package:scv_app/SettingsPages/aboutMe.dart';
@@ -130,9 +129,9 @@ class _NastavitvePageState extends State<NastavitvePage> {
               ),
               NastavitveGroup(
                 items: [
-                  NastavitveItem(
+                  SettingsItem(
                     iconStyle: IconStyle(
-                      // iconsColor: Colors.white,
+                      iconsColor: Theme.of(context).cardColor,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
@@ -145,6 +144,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: goToPageAboutApp,
                     icons: Icons.info_rounded,
                     iconStyle: IconStyle(
+                      iconsColor: Theme.of(context).cardColor,
                     backgroundColor: Colors.purple,
                   ),
                     title: 'O aplikaciji',
@@ -154,7 +154,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: () {},
                     icons: Icons.dark_mode_rounded,
                     iconStyle: IconStyle(
-                      iconsColor: Colors.white,
+                      iconsColor: Theme.of(context).cardColor,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
@@ -175,6 +175,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: goToPageAboutMe,
                     icons: Icons.account_circle,
                     iconStyle: IconStyle(
+                      iconsColor: Theme.of(context).cardColor,
                     backgroundColor: widget.data.schoolData.schoolColor,
                   ),
                     title: 'O meni',
@@ -186,7 +187,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     title: "Odjava",
                     subtitle: "Odjavi se iz aplikacije",
                     iconStyle: IconStyle(
-                        iconsColor: Colors.white,
+                        iconsColor: Theme.of(context).cardColor,
                         withBackground: true,
                         backgroundColor:
                             widget.data.schoolData.schoolColor //Barva šole

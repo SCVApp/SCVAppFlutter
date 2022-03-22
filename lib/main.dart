@@ -15,6 +15,7 @@ import 'urnik.dart';
 import 'data.dart';
 import 'isci.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -60,7 +61,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
       theme:Themes.light,
