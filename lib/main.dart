@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:scv_app/theme.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'malice.dart';
@@ -61,8 +63,8 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     return MaterialApp(
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData.dark(),
-      
+      theme:Themes.light,
+      darkTheme: Themes.dark,
     );
   }
 }
@@ -80,8 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Data data = new Data();
   bool isLoading = true;
   bool noUser = false;
-
-  bool darkTheme = false;
 
   final List<Widget> _childrenWidgets = [];
 
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // _childrenWidgets.add(new IsciPage());
       _childrenWidgets.add(new EasistentPage());
       _childrenWidgets.add(new UrnikPage(data: data));
-      _childrenWidgets.add(new NastavitvePage(data: data,changeTheme: darkTheme,));
+      _childrenWidgets.add(new NastavitvePage(data: data));
       isLoading = false;
     });
   }
@@ -119,9 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: selectedIndex==0? data.schoolData.schoolColor: darkTheme ? Colors.black : Colors.white,
+      backgroundColor: selectedIndex==0? data.schoolData.schoolColor: Theme.of(context).backgroundColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : darkTheme ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,                
+         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : Theme.of(context).backgroundColor == Colors.black ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
          child: Center(
             child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
           ),
@@ -129,11 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
-          barBackgroundColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
-          selectedItemBorderColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
+          barBackgroundColor: Theme.of(context).bottomAppBarColor,
+          selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
           selectedItemBackgroundColor: data.schoolData.schoolColor,
-          selectedItemIconColor: darkTheme ? Color.fromARGB(255, 80, 79, 79) : Colors.white,
-          selectedItemLabelColor: darkTheme ? Colors.white : Colors.black,
+          selectedItemIconColor: Theme.of(context).bottomAppBarColor,
+          selectedItemLabelColor: Theme.of(context).primaryColor,
         ),
         selectedIndex: selectedIndex,
         onSelectTab: (index) {

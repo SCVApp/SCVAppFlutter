@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/Components/nastavitveGroup.dart';
+import 'package:scv_app/Components/nastavitveItem.dart';
 import 'package:scv_app/Components/settingsUserCard.dart';
 import 'package:scv_app/SettingsPages/aboutAplication.dart';
 import 'package:scv_app/SettingsPages/aboutMe.dart';
 import 'package:scv_app/SettingsPages/changeStatus.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:scv_app/theme.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data.dart';
@@ -17,13 +20,11 @@ import 'package:get/get.dart';
 
 
 class NastavitvePage extends StatefulWidget {
-  NastavitvePage({Key key, this.title, this.data,this.changeTheme}) : super(key: key);
+  NastavitvePage({Key key, this.title, this.data}) : super(key: key);
 
   final String title;
 
   final Data data;
-
-  bool changeTheme;
 
   _NastavitvePageState createState() => _NastavitvePageState();
 }
@@ -52,13 +53,16 @@ class _NastavitvePageState extends State<NastavitvePage> {
     }
   }
 
-  bool _value = false;
+  bool _value = Get.isDarkMode;
 
   toggleThemeBtn(toggle){
       setState((){
         _value=toggle;
-        widget.changeTheme = toggle;
       });
+      if (Get.isDarkMode)
+        Get.changeThemeMode(ThemeMode.light);
+      else
+        Get.changeThemeMode(ThemeMode.dark);
     }
 
   @override
@@ -124,17 +128,17 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   widget.data.user.mail,
                   ),
               ),
-              SettingsGroup(
+              NastavitveGroup(
                 items: [
-                  SettingsItem(
-                    onTap: goToPageChangeStatus,
-                    icons: Icons.change_circle,
+                  NastavitveItem(
                     iconStyle: IconStyle(
                       // iconsColor: Colors.white,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
-                    title: 'Status',
+                    icons: Icons.change_circle,
+                    onTap: goToPageChangeStatus,
+                    title: "Status",
                     subtitle: "Spremeni svoj status!",
                   ),
                   SettingsItem(
@@ -164,7 +168,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   ),
                 ],
               ),
-              SettingsGroup(
+              NastavitveGroup(
                 settingsGroupTitle: "Račun",
                 items: [
                   SettingsItem(
