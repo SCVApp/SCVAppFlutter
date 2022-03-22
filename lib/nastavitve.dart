@@ -159,7 +159,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: Colors.red,
                     ),
                     title: 'Temni način',
-                    subtitle: "Avtomatsko",
+                    subtitle: _value ? "Vklopljeno" : "Izklopljeno",
                     trailing: Switch.adaptive(
                       activeColor: widget.data.schoolData.schoolColor,
                       value: _value,
