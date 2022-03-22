@@ -76,7 +76,7 @@ class SettingsUserCard extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: mediaQueryHeight / 31,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             textAlign: TextAlign.center,
                           ),
