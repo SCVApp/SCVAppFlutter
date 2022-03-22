@@ -6,11 +6,13 @@ class Themes {
     primaryColor: Colors.black,//Color text
     bottomAppBarColor: Colors.white,//Menu bar spodnji
     cardColor: Colors.white,//Barva oblački
+    hintColor: Colors.white,//Barva za ikone v oblčkih
   );
   static final dark = ThemeData.dark().copyWith(//Zamenjaj barve za tmno temo
     backgroundColor: Colors.black,
     primaryColor: Colors.white,
     bottomAppBarColor: Color.fromARGB(255, 80, 79, 79),
     cardColor: Color.fromARGB(255, 80, 79, 79),
+    hintColor: Color.fromARGB(255, 80, 79, 79),
   );
 }

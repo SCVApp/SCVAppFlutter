@@ -131,7 +131,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 items: [
                   SettingsItem(
                     iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).cardColor,
+                      iconsColor: Theme.of(context).hintColor,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
@@ -144,7 +144,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: goToPageAboutApp,
                     icons: Icons.info_rounded,
                     iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).cardColor,
+                      iconsColor: Theme.of(context).hintColor,
                     backgroundColor: Colors.purple,
                   ),
                     title: 'O aplikaciji',
@@ -154,7 +154,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: () {},
                     icons: Icons.dark_mode_rounded,
                     iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).cardColor,
+                      iconsColor: Theme.of(context).hintColor,
                       withBackground: true,
                       backgroundColor: Colors.red,
                     ),
@@ -175,7 +175,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     onTap: goToPageAboutMe,
                     icons: Icons.account_circle,
                     iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).cardColor,
+                      iconsColor: Theme.of(context).hintColor,
                     backgroundColor: widget.data.schoolData.schoolColor,
                   ),
                     title: 'O meni',
@@ -187,7 +187,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     title: "Odjava",
                     subtitle: "Odjavi se iz aplikacije",
                     iconStyle: IconStyle(
-                        iconsColor: Theme.of(context).cardColor,
+                        iconsColor: Theme.of(context).hintColor,
                         withBackground: true,
                         backgroundColor:
                             widget.data.schoolData.schoolColor //Barva šole
