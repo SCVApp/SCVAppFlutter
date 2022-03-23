@@ -48,9 +48,22 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
 
   Widget presented = OnBoardingPage();
 
+  ThemeMode themeMode = ThemeMode.system;
+
   void isLogedIn() async {
     if(await aliJeUporabnikPrijavljen()){
         presented = MyHomePage();
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      bool isDark = prefs.getBool(keyForThemeDark);
+      if(isDark==true){
+        themeMode = ThemeMode.dark;
+      }else if(isDark==false){
+        themeMode = ThemeMode.light;
+      }
+    }catch (e){
+      print(e);
     }
       setState(() {
         isLoading = false;
@@ -66,6 +79,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       debugShowCheckedModeBanner: false,
       theme:Themes.light,
       darkTheme: Themes.dark,
+      themeMode: themeMode,
     );
   }
 }

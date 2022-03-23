@@ -16,6 +16,7 @@ final String apiUrl = "https://backend.app.scv.si";
 final String keyForAccessToken = "key_AccessToken";
 final String keyForRefreshToken= "key_RefreshToken";
 final String keyForExpiresOn = "key_ExpiresOn";
+final String keyForThemeDark = "key_AppThemeDark";
 
 Future<UserData> signInUser() async {
     try{

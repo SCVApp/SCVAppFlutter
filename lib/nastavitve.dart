@@ -40,7 +40,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
     super.initState();
     loadToken();
   }
-
+  bool jeSistemskaTema=false;
   void loadToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -50,18 +50,35 @@ class _NastavitvePageState extends State<NastavitvePage> {
     } catch (e) {
       print(e);
     }
+    try{
+      bool test = prefs.getBool(keyForThemeDark);
+      if(test == null){
+        setState(() {
+          jeSistemskaTema = true;
+        });
+      }
+    }catch (e){
+      print(e);
+    }
   }
 
   bool _value = Get.isDarkMode;
 
-  toggleThemeBtn(toggle){
+  toggleThemeBtn(toggle) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
       setState((){
         _value=toggle;
       });
-      if (Get.isDarkMode)
+      if (Get.isDarkMode){
         Get.changeThemeMode(ThemeMode.light);
-      else
+        prefs.setBool(keyForThemeDark,false);
+      }else{
         Get.changeThemeMode(ThemeMode.dark);
+        prefs.setBool(keyForThemeDark,true);
+      }
+      setState(() {
+        jeSistemskaTema = false;
+      });
     }
 
   @override
@@ -162,7 +179,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: Colors.red,
                     ),
                     title: 'Temni način',
-                    subtitle: _value ? "Vklopljeno" : "Izklopljeno",
+                    subtitle: jeSistemskaTema ? "Sistemska" : _value ? "Vklopljeno" : "Izklopljeno",
                     trailing: Switch.adaptive(
                       activeColor: widget.data.schoolData.schoolColor,
                       value: _value,
