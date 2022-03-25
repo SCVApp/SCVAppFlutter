@@ -157,7 +157,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
                       withBackground: true,
-                      backgroundColor: Colors.red,
+                      backgroundColor: HexColor.fromHex("#A6CE39"),
                     ),
                     icons: Icons.change_circle,
                     onTap: goToPageChangeStatus,
@@ -166,13 +166,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   ),
                   SettingsItem(
                     onTap: goToPageAboutApp,
-                    icons: Icons.info_rounded,
+                    icons: Icons.construction,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
-                      backgroundColor: Colors.purple,
+                      backgroundColor: HexColor.fromHex("#0094d9"),
                     ),
-                    title: 'O aplikaciji',
-                    subtitle: "Izvedi več o aplikaciji ŠCVApp",
+                    title: 'Več Orodij',
+                    subtitle: "Dodatna orodja, ki jih ponuja ŠCVApp.",
                   ),
                   SettingsItem(
                     onTap: () {},
@@ -180,7 +180,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
                       withBackground: true,
-                      backgroundColor: Colors.red,
+                      backgroundColor: HexColor.fromHex("#EE5BA0"),
                     ),
                     title: 'Temni način',
                     subtitle: jeSistemskaTema
@@ -193,6 +193,36 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       value: _value,
                       onChanged: toggleThemeBtn,
                     ),
+                  ),
+                  SettingsItem(
+                    onTap: () {},
+                    icons: Icons.fingerprint,
+                    iconStyle: IconStyle(
+                      iconsColor: Theme.of(context).hintColor,
+                      withBackground: true,
+                      backgroundColor: HexColor.fromHex("#FFCA05"),
+                    ),
+                    title: 'Biometrično odklepanje',
+                    subtitle: jeSistemskaTema
+                        ? "Sistemska"
+                        : _value
+                            ? "Vklopljeno"
+                            : "Izklopljeno",
+                    trailing: Switch.adaptive(
+                      activeColor: widget.data.schoolData.schoolColor,
+                      value: _value,
+                      onChanged: toggleThemeBtn,
+                    ),
+                  ),
+                  SettingsItem(
+                    onTap: goToPageAboutApp,
+                    icons: Icons.info_rounded,
+                    iconStyle: IconStyle(
+                      iconsColor: Theme.of(context).hintColor,
+                      backgroundColor: HexColor.fromHex("#8DD7F7"),
+                    ),
+                    title: 'O aplikaciji',
+                    subtitle: "Izvedi več o aplikaciji ŠCVApp",
                   ),
                 ],
               ),

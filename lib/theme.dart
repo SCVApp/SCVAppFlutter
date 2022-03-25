@@ -8,7 +8,7 @@ class Themes {
     primaryColor: Colors.black, //Barva za text
     scaffoldBackgroundColor: Colors.white, //Tema za ozadje v nastavitvah
     bottomAppBarColor: Colors.white, //Menu bar spodnji
-    cardColor: Color.fromARGB(255, 245, 244, 244), //Barva oblački
+    cardColor: HexColor.fromHex("#FAFAFA"), //Barva oblački
     hintColor: Colors.white, //Barva za ikone v oblčkih
   );
   static final dark = ThemeData.dark().copyWith(
