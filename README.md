@@ -1,8 +1,8 @@
-# scv_app
+# ŠCVApp
 
-Aplikacija za dijake Šolskega centra Velenje
+Aplikacija za dijake Šolskega centra Velenje.
 
 ## Opis
 
-Aplikacija SCVApp z funkcijami šolske spletne strani, malic ter urnika za izbrano šolo 
+Aplikacija ŠCVApp, ki omogoča prijavi z šolskim microsoft računom. Nato imamo dostop do vseh orodij, ki jih ponuja ŠCVApp.
 # SCVAppFlutter
