@@ -141,7 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
           ),
       ),
-
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
           barBackgroundColor: Theme.of(context).bottomAppBarColor,

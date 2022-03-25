@@ -132,6 +132,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
 
     return Scaffold(
         key: _scaffoldKey,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: ListView(
             padding: EdgeInsets.all(24),
