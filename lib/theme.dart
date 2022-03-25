@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Themes {
   static final light = ThemeData.light().copyWith(//Zamenjaj barve za svtlo temo
     backgroundColor: Colors.white,//Barva upper menu bar
-    primaryColor: Colors.black,//Color text
+    primaryColor: Colors.black,//Barva za text
     bottomAppBarColor: Colors.white,//Menu bar spodnji
     cardColor: Colors.white,//Barva oblački
     hintColor: Colors.white,//Barva za ikone v oblčkih
