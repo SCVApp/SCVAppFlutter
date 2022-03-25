@@ -6,7 +6,9 @@ import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/settingsUserCard.dart';
 import 'package:scv_app/SettingsPages/aboutAplication.dart';
 import 'package:scv_app/SettingsPages/aboutMe.dart';
+import 'package:scv_app/SettingsPages/biometricPage.dart';
 import 'package:scv_app/SettingsPages/changeStatus.dart';
+import 'package:scv_app/SettingsPages/otherToolsPage.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/theme.dart';
 import 'package:scv_app/uvod.dart';
@@ -93,7 +95,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
 
     void goToPageChangeStatus() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => ChangeStatusPage()));
+          .push(MaterialPageRoute(builder: (context) => ChangeStatusPage(data: widget.data,)));
     }
 
     void goToPageAboutApp() {
@@ -104,6 +106,14 @@ class _NastavitvePageState extends State<NastavitvePage> {
     void goToPageAboutMe() {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AboutMePage()));
+    }
+    void goToPageBiometric() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => BiometricPage()));
+    }
+    void goToPageTools() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => OtherToolsPage()));
     }
 
     Future<void> _showMyDialog() async {
@@ -150,6 +160,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   widget.data.user.mail,
                   style: TextStyle(color: Colors.white),
                 ),
+                data: widget.data,
               ),
               NastavitveGroup(
                 items: [
@@ -165,7 +176,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     subtitle: "Spremeni svoj status!",
                   ),
                   SettingsItem(
-                    onTap: goToPageAboutApp,
+                    onTap: goToPageTools,
                     icons: Icons.construction,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
@@ -195,7 +206,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     ),
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: goToPageBiometric,
                     icons: Icons.fingerprint,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
@@ -208,11 +219,6 @@ class _NastavitvePageState extends State<NastavitvePage> {
                         : _value
                             ? "Vklopljeno"
                             : "Izklopljeno",
-                    trailing: Switch.adaptive(
-                      activeColor: widget.data.schoolData.schoolColor,
-                      value: _value,
-                      onChanged: toggleThemeBtn,
-                    ),
                   ),
                   SettingsItem(
                     onTap: goToPageAboutApp,

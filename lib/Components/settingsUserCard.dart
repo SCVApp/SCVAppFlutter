@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/Components/profilePictureWithStatus.dart';
+import 'package:scv_app/data.dart';
 
 class SettingsUserCard extends StatelessWidget {
   Color cardColor;
@@ -8,6 +10,7 @@ class SettingsUserCard extends StatelessWidget {
   String userName;
   Widget userMoreInfo;
   ImageProvider userProfilePic;
+  Data data;
 
   SettingsUserCard({
     this.cardColor,
@@ -17,6 +20,7 @@ class SettingsUserCard extends StatelessWidget {
     this.cardActionWidget,
     this.userMoreInfo,
     this.userProfilePic,
+    this.data
   });
 
   @override
@@ -59,13 +63,7 @@ class SettingsUserCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(mediaQueryHeight/2),
-                        child: Image(
-                          image: userProfilePic,
-                          height: 120,
-                        ),
-                    ),
+                    profilePictureWithStatus(data),
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
