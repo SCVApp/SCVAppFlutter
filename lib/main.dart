@@ -16,12 +16,13 @@ import 'data.dart';
 import 'isci.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 
 void main() {
   runApp(MyApp());
   SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
   ]);
 }
 
@@ -43,7 +44,6 @@ class DarkLightTheme extends StatefulWidget {
 }
 
 class _DarkLightThemeState extends State<DarkLightTheme> {
-
   @override
   void initState() {
     super.initState();
@@ -55,23 +55,23 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   ThemeMode themeMode = ThemeMode.system;
 
   void isLogedIn() async {
-    if(await aliJeUporabnikPrijavljen()){
-        presented = MyHomePage();
+    if (await aliJeUporabnikPrijavljen()) {
+      presented = MyHomePage();
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       bool isDark = prefs.getBool(keyForThemeDark);
-      if(isDark==true){
+      if (isDark == true) {
         themeMode = ThemeMode.dark;
-      }else if(isDark==false){
+      } else if (isDark == false) {
         themeMode = ThemeMode.light;
       }
-    }catch (e){
+    } catch (e) {
       print(e);
     }
-      setState(() {
-        isLoading = false;
-      });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   bool isLoading = true;
@@ -81,13 +81,12 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     return GetMaterialApp(
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
-      theme:Themes.light,
+      theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: themeMode,
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -97,6 +96,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  bool _canCheckBiometric = false;
+  String _authorizedOrNot = "Not Authorized";
+  List<BiometricType> _availableBiometricTypes = List<BiometricType>();
+
   int selectedIndex = 0;
   Data data = new Data();
   bool isLoading = true;
@@ -110,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
     loadDataToScreen();
   }
 
-  void loadDataToScreen() async{
-    if(!await this.data.loadData()){
+  void loadDataToScreen() async {
+    if (!await this.data.loadData()) {
       setState(() {
         noUser = true;
       });
@@ -127,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   void changeView(int index) {
     setState(() {
       selectedIndex = index;
@@ -136,14 +139,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: selectedIndex==0? data.schoolData.schoolColor: Theme.of(context).backgroundColor,
+      backgroundColor: selectedIndex == 0
+          ? data.schoolData.schoolColor
+          : Theme.of(context).backgroundColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-         value: selectedIndex == 0 ?SystemUiOverlayStyle.light : Theme.of(context).backgroundColor == Colors.black ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
-         child: Center(
-            child: SafeArea(child: isLoading ? CircularProgressIndicator() : _childrenWidgets[selectedIndex])
-          ),
+        value: selectedIndex == 0
+            ? SystemUiOverlayStyle.light
+            : Theme.of(context).backgroundColor == Colors.black
+                ? SystemUiOverlayStyle.light
+                : SystemUiOverlayStyle.dark,
+        child: Center(
+            child: SafeArea(
+                child: isLoading
+                    ? CircularProgressIndicator()
+                    : _childrenWidgets[selectedIndex])),
       ),
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
