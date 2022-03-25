@@ -15,9 +15,6 @@ import 'data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
 
-
-
-
 class NastavitvePage extends StatefulWidget {
   NastavitvePage({Key key, this.title, this.data}) : super(key: key);
 
@@ -40,7 +37,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
     super.initState();
     loadToken();
   }
-  bool jeSistemskaTema=false;
+
+  bool jeSistemskaTema = false;
   void loadToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -50,40 +48,39 @@ class _NastavitvePageState extends State<NastavitvePage> {
     } catch (e) {
       print(e);
     }
-    try{
+    try {
       bool test = prefs.getBool(keyForThemeDark);
-      if(test == null){
+      if (test == null) {
         setState(() {
           jeSistemskaTema = true;
         });
       }
-    }catch (e){
+    } catch (e) {
       print(e);
     }
   }
 
   bool _value = Get.isDarkMode;
 
-  toggleThemeBtn(toggle) async{
+  toggleThemeBtn(toggle) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-      setState((){
-        _value=toggle;
-      });
-      if (Get.isDarkMode){
-        Get.changeThemeMode(ThemeMode.light);
-        prefs.setBool(keyForThemeDark,false);
-      }else{
-        Get.changeThemeMode(ThemeMode.dark);
-        prefs.setBool(keyForThemeDark,true);
-      }
-      setState(() {
-        jeSistemskaTema = false;
-      });
+    setState(() {
+      _value = toggle;
+    });
+    if (Get.isDarkMode) {
+      Get.changeThemeMode(ThemeMode.light);
+      prefs.setBool(keyForThemeDark, false);
+    } else {
+      Get.changeThemeMode(ThemeMode.dark);
+      prefs.setBool(keyForThemeDark, true);
     }
+    setState(() {
+      jeSistemskaTema = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     Future<void> odjava() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(keyForAccessToken);
@@ -94,14 +91,19 @@ class _NastavitvePageState extends State<NastavitvePage> {
           MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
 
-    void goToPageChangeStatus(){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeStatusPage()));
+    void goToPageChangeStatus() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => ChangeStatusPage()));
     }
-    void goToPageAboutApp(){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutAppPage()));
+
+    void goToPageAboutApp() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AboutAppPage()));
     }
-    void goToPageAboutMe(){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutMePage()));
+
+    void goToPageAboutMe() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AboutMePage()));
     }
 
     Future<void> _showMyDialog() async {
@@ -123,7 +125,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   child: const Text('Ne, prekliči'),
                   onPressed: () => Navigator.pop(context, 'Cancel')),
               TextButton(
-                  child: const Text('Da, odjavi me.',style: TextStyle(fontWeight: FontWeight.bold,)), onPressed: odjava),
+                  child: const Text('Da, odjavi me.',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  onPressed: odjava),
             ],
           );
         },
@@ -132,7 +138,6 @@ class _NastavitvePageState extends State<NastavitvePage> {
 
     return Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: ListView(
             padding: EdgeInsets.all(24),
@@ -143,10 +148,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(
                   widget.data.user.mail,
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
-                  ),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               NastavitveGroup(
                 items: [
@@ -166,8 +169,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     icons: Icons.info_rounded,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
-                    backgroundColor: Colors.purple,
-                  ),
+                      backgroundColor: Colors.purple,
+                    ),
                     title: 'O aplikaciji',
                     subtitle: "Izvedi več o aplikaciji ŠCVApp",
                   ),
@@ -180,7 +183,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: Colors.red,
                     ),
                     title: 'Temni način',
-                    subtitle: jeSistemskaTema ? "Sistemska" : _value ? "Vklopljeno" : "Izklopljeno",
+                    subtitle: jeSistemskaTema
+                        ? "Sistemska"
+                        : _value
+                            ? "Vklopljeno"
+                            : "Izklopljeno",
                     trailing: Switch.adaptive(
                       activeColor: widget.data.schoolData.schoolColor,
                       value: _value,
@@ -197,8 +204,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     icons: Icons.account_circle,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
-                    backgroundColor: widget.data.schoolData.schoolColor,
-                  ),
+                      backgroundColor: widget.data.schoolData.schoolColor,
+                    ),
                     title: 'O meni',
                     subtitle: "Informacije mojega računa",
                   ),
@@ -220,5 +227,4 @@ class _NastavitvePageState extends State<NastavitvePage> {
           ),
         ));
   }
-
 }
