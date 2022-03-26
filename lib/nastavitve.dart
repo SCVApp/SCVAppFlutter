@@ -24,10 +24,10 @@ class NastavitvePage extends StatefulWidget {
 
   final Data data;
 
-  _NastavitvePageState createState() => _NastavitvePageState();
+  NastavitvePageState createState() => NastavitvePageState();
 }
 
-class _NastavitvePageState extends State<NastavitvePage> {
+class NastavitvePageState extends State<NastavitvePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int selectedPickerItem = 0;
@@ -81,6 +81,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
     });
   }
 
+
+  void refresh(){
+    setState(() {
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> odjava() async {
@@ -95,7 +102,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
 
     void goToPageChangeStatus() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => ChangeStatusPage(data: widget.data,)));
+          .push(MaterialPageRoute(builder: (context) => ChangeStatusPage(data: widget.data,notifyParent: refresh,)));
     }
 
     void goToPageAboutApp() {

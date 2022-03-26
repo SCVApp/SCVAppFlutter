@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/profilePictureWithStatus.dart';
 import 'package:scv_app/Components/statusItems.dart';
+import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +17,9 @@ import 'package:get/get.dart';
 
 
 class ChangeStatusPage extends StatefulWidget {
-  ChangeStatusPage({Key key, this.data}) : super(key: key);
-
-  final Data data;
+  final Function() notifyParent;
+  ChangeStatusPage({Key key, this.data,@required this.notifyParent}) : super(key: key);
+  Data data;
 
   _ChangeStatusPage createState() => _ChangeStatusPage();
 }
@@ -88,7 +91,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                       Icons.arrow_back_ios,
                       color: Theme.of(context).primaryColor,
                     ),
-                  onPressed: ()=>Navigator.of(context).pop()
+                  onPressed: ()=>{widget.notifyParent(),Navigator.of(context).pop()}
                   ),
                   ),
                 ],
@@ -107,6 +110,10 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
   chSt(String id) async{
     setState(() {
       widget.data.user.status.setStatus(id);
+    });
+    Timer(Duration(seconds: 1), () {
+      widget.notifyParent();
+      Navigator.of(context).pop();
     });
   }
 
