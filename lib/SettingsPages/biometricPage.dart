@@ -16,7 +16,8 @@ import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/api/local_auth_api.dart';
 
 class BiometricPage extends StatefulWidget {
-  BiometricPage({Key key, this.data}) : super(key: key);
+  final Function() notifyParent;
+  BiometricPage({Key key, this.data,@required this.notifyParent}) : super(key: key);
 
   final Data data;
 
@@ -101,6 +102,7 @@ class _BiometricPage extends State<BiometricPage> {
       _value = !_value;
     });
     prefs.setBool(keyForUseBiometrics, _value);
+    widget.notifyParent();
   }
 
   Widget build(BuildContext context) {
@@ -120,7 +122,7 @@ class _BiometricPage extends State<BiometricPage> {
           //       _checkBiometric();
           //       _authorizeNow();
           //     }),
-          Switch(value: _value,onChanged: changeToggle,),
+          Switch.adaptive(value: _value,onChanged: changeToggle,),
           Text("Biometrično odlepanje: ${_value?"Omogočeno":"Onemogočeno"}"),
         ],
       ),

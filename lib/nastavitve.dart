@@ -41,6 +41,7 @@ class NastavitvePageState extends State<NastavitvePage> {
   }
 
   bool jeSistemskaTema = false;
+  bool isBioEnabled = false;
   void loadToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -60,6 +61,16 @@ class NastavitvePageState extends State<NastavitvePage> {
     } catch (e) {
       print(e);
     }
+    try {
+      bool test = prefs.getBool(keyForUseBiometrics);
+      if (test != null) {
+        setState(() {
+          isBioEnabled = test;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   bool _value = Get.isDarkMode;
@@ -69,7 +80,7 @@ class NastavitvePageState extends State<NastavitvePage> {
     setState(() {
       _value = toggle;
     });
-    if (Get.isDarkMode) {
+    if (!toggle) {
       Get.changeThemeMode(ThemeMode.light);
       prefs.setBool(keyForThemeDark, false);
     } else {
@@ -82,9 +93,19 @@ class NastavitvePageState extends State<NastavitvePage> {
   }
 
 
-  void refresh(){
+  void refresh() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      
+      try {
+      bool test = prefs.getBool(keyForUseBiometrics);
+      if (test != null) {
+        setState(() {
+          isBioEnabled = test;
+        });
+      }
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
@@ -95,6 +116,9 @@ class NastavitvePageState extends State<NastavitvePage> {
       prefs.remove(keyForAccessToken);
       prefs.remove(keyForRefreshToken);
       prefs.remove(keyForExpiresOn);
+      prefs.remove(keyForThemeDark);
+      prefs.remove(keyForUseBiometrics);
+
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => OnBoardingPage()));
@@ -116,7 +140,7 @@ class NastavitvePageState extends State<NastavitvePage> {
     }
     void goToPageBiometric() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => BiometricPage()));
+          .push(MaterialPageRoute(builder: (context) => BiometricPage(notifyParent: refresh,)));
     }
     void goToPageTools() {
       Navigator.of(context)
@@ -221,9 +245,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: HexColor.fromHex("#FFCA05"),
                     ),
                     title: 'Biometrično odklepanje',
-                    subtitle: jeSistemskaTema
-                        ? "Sistemska"
-                        : _value
+                    subtitle: isBioEnabled
                             ? "Vklopljeno"
                             : "Izklopljeno",
                   ),

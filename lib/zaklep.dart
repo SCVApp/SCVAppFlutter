@@ -30,7 +30,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
-  String _authorizedOrNot = "Not Authorized";
+  bool _authorizedOrNot = true;
   List<BiometricType> _availableBiometricTypes = List<BiometricType>();
 
   Future<void> _checkBiometric() async {
@@ -63,10 +63,10 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
     setState(() {
       if (isAuthorized) {
-        _authorizedOrNot = "Authorized";
+        _authorizedOrNot = true;
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
       } else {
-        _authorizedOrNot = "Not Authorized";
+        _authorizedOrNot = false;
       }
     });
   }
@@ -87,14 +87,13 @@ class _ZaklepPageState extends State<ZaklepPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Center(child: 
+      body: Center(child:_authorizedOrNot?
           ElevatedButton(
           child: Icon(Icons.error_outline),
           onPressed: () {
             _authorizeNow();
-          }),
+          }):null,
           ),
-
     );
   }
 }
