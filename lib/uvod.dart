@@ -6,6 +6,7 @@ import 'package:scv_app/domov.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:scv_app/main.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:get/get.dart';
 
 class OnBoardingPage extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class OnBoardingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 236, 236, 236),
+        backgroundColor: Get.isDarkMode ? HexColor.fromHex("#121212") : Color.fromARGB(255, 236, 236, 236),
         elevation: 0,
       ),
       body: SafeArea(
@@ -92,6 +93,6 @@ class OnBoardingPage extends StatelessWidget {
         bodyTextStyle: TextStyle(fontSize: 20),
         descriptionPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
-        pageColor: Color.fromARGB(255, 236, 236, 236),
+        pageColor: Get.isDarkMode ? HexColor.fromHex("#121212") : Color.fromARGB(255, 236, 236, 236),
       );
 }

@@ -36,8 +36,13 @@ class _AboutMePage extends State<AboutMePage> {
   
 
     return Scaffold(
-        body: Center(
-          child: ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
+        body: SafeArea(
+          child: Column(
+            children: [
+              ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
+              Text("Noob"),
+            ],
+          ),
         )
     );
   }
