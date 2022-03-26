@@ -28,7 +28,7 @@ class _DomovPageState extends State<DomovPage>{
       return Scaffold(
         body:WebView(initialUrl: widget.data.schoolData.schoolUrl,onWebViewCreated: (controler)=>{
         _myController = controler
-      },javascriptMode: JavascriptMode.unrestricted,),floatingActionButton: FloatingActionButton(onPressed: changeUrl,child: Icon(Icons.home),backgroundColor: widget.data.schoolData.schoolColor,));
+      },javascriptMode: JavascriptMode.unrestricted,),floatingActionButton: FloatingActionButton(onPressed: changeUrl,child: Icon(Icons.home,color: Colors.white,),backgroundColor: widget.data.schoolData.schoolColor,));
   }
 
   void changeUrl(){

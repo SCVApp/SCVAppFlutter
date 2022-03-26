@@ -90,7 +90,7 @@ class SchoolData {
     this.razred = decoded["razred"].toString();
     this.schoolUrl = decoded["schoolUrl"].toString();
     if(this.color == "#FFFFFF"){
-      this.color = "#000000";
+      this.color = "#8253D7";
     }
     schoolColor = HexColor.fromHex(this.color);
   } else {

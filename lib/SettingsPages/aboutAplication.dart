@@ -36,8 +36,29 @@ class _AboutAppPage extends State<AboutAppPage> {
   
 
     return Scaffold(
-        body: Center(
-          child: ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
+                      icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  onPressed: ()=>{Navigator.of(context).pop()}
+                  ),
+                  ),
+                ],
+              ),
+              Text("Zaenkrat se sam testiramo. π ≈ 3,14159265358979323846264338327950288419716939937510582097494459..."),
+            ],
+          ),
         )
     );
   }
