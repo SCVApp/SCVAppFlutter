@@ -7,7 +7,6 @@ import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/urnik.dart';
 import 'package:scv_app/uvod.dart';
-import 'package:scv_app/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
@@ -15,15 +14,17 @@ import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/api/local_auth_api.dart';
 
-class BiometricPage extends StatefulWidget {
-  BiometricPage({Key key, this.data}) : super(key: key);
+class ZaklepPage extends StatefulWidget {
+  ZaklepPage({Key key, this.title, this.data}) : super(key: key);
+
+  final String title;
 
   final Data data;
 
-  _BiometricPage createState() => _BiometricPage();
+  _ZaklepPageState createState() => _ZaklepPageState();
 }
 
-class _BiometricPage extends State<BiometricPage> {
+class _ZaklepPageState extends State<ZaklepPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final LocalAuthentication _localAuthentication = LocalAuthentication();
@@ -74,42 +75,14 @@ class _BiometricPage extends State<BiometricPage> {
 
   @override
   void initState() {
+    _authorizeNow();
     super.initState();
   }
 
   bool _value = true;
 
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: (() => Navigator.pop(context)),
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          ElevatedButton(
-              child: Icon(Icons.abc),
-              onPressed: () {
-                _checkBiometric();
-                _authorizeNow();
-              }),
-          Text(_authorizedOrNot),
-
-          ElevatedButton(
-            onPressed: (() => Navigator.pop(context)),
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          ElevatedButton(
-              child: Icon(Icons.fingerprint),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ZaklepPage()));
-              }),
-          Text(_authorizedOrNot),
-        ],
-      ),
-    )));
+    return Text("dA");
   }
 }
