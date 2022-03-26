@@ -87,7 +87,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Center(child:_authorizedOrNot?
+      body: SafeArea(child:!_authorizedOrNot?
           Column(children: [
             ElevatedButton(
           child: Icon(Icons.error_outline),
