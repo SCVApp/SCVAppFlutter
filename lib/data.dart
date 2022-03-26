@@ -54,6 +54,16 @@ class UserStatusData{
       this.assetImage = AssetImage("assets/statusIcons/${this.id}.png");
     }
   }
+
+  setStatus(String statusId) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString(keyForAccessToken);
+    final response = await http
+      .get(Uri.parse('$apiUrl/user/setStatus/$statusId'),headers: {"Authorization":accessToken});
+    if(response.statusCode == 200){
+      this.getData(accessToken);
+    }
+  }
 }
 
 class SchoolData {

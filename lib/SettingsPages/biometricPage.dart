@@ -76,6 +76,7 @@ class _BiometricPage extends State<BiometricPage> {
             child: Icon(Icons.abc),
             onPressed: _authorizeNow,
           ),
+          Text(_authorizedOrNot),
         ],
       ),
     )));

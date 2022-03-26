@@ -15,6 +15,7 @@ class StatusItem extends SettingsItem {
   TextStyle subtitleStyle;
   Widget trailing;
   SharedPreferences prefs;
+  VoidCallback onTap;
 
   StatusItem(
       {this.imageProvider,
@@ -25,17 +26,12 @@ class StatusItem extends SettingsItem {
       this.trailing,
       this.statusId,
       this.prefs});
-  
-  // void changeSt() async{
-  //   final accessToken = prefs.getString(keyForAccessToken);
-  //   await http
-  //     .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
-  // }
+
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: ()=>{},
+      onTap: onTap,
       leading: Image(image: imageProvider,width: 30,),
       title: Text(
         title,

@@ -104,12 +104,21 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
     );
   }
 
+  chSt(String id) async{
+    setState(() {
+      widget.data.user.status.setStatus(id);
+    });
+  }
+
   List<SettingsItem> getStatuses(){
     List<SettingsItem> result = [];
     for(StatusItem item in status){
       if(item.statusId == widget.data.user.status.id){
         item.trailing = Icon(Icons.check);
       }
+      item.onTap = ()=>{
+        chSt(item.statusId)
+      };
       result.add(item);
     }
     return result;
