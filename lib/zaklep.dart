@@ -88,12 +88,14 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
     return Scaffold(
       body: Center(child:_authorizedOrNot?
-          ElevatedButton(
+          Column(children: [
+            ElevatedButton(
           child: Icon(Icons.error_outline),
           onPressed: () {
             _authorizeNow();
-          }):null,
-          ),
-    );
+          })
+          ],
+          ):null,
+    ));
   }
 }
