@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/main.dart';
 import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/urnik.dart';
@@ -63,6 +64,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = "Authorized";
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
       } else {
         _authorizedOrNot = "Not Authorized";
       }
@@ -83,6 +85,9 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("dA");
+
+    return Scaffold(
+      body: Center(child: Text("OK")),
+    );
   }
 }

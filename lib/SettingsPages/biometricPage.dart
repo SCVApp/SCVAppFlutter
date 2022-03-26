@@ -75,9 +75,33 @@ class _BiometricPage extends State<BiometricPage> {
   @override
   void initState() {
     super.initState();
+
+    loadPrefs();
   }
 
-  bool _value = true;
+  void loadPrefs() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      bool test = prefs.getBool(keyForUseBiometrics);
+      if (test != null) {
+        setState(() {
+          _value = test;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  bool _value = false;
+
+  changeToggle(bool toggle) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _value = !_value;
+    });
+    prefs.setBool(keyForUseBiometrics, _value);
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,24 +114,14 @@ class _BiometricPage extends State<BiometricPage> {
             onPressed: (() => Navigator.pop(context)),
             child: Icon(Icons.arrow_back_ios),
           ),
-          ElevatedButton(
-              child: Icon(Icons.abc),
-              onPressed: () {
-                _checkBiometric();
-                _authorizeNow();
-              }),
-          Text(_authorizedOrNot),
-
-          ElevatedButton(
-            onPressed: (() => Navigator.pop(context)),
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          ElevatedButton(
-              child: Icon(Icons.fingerprint),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ZaklepPage()));
-              }),
-          Text(_authorizedOrNot),
+          // ElevatedButton(
+          //     child: Icon(Icons.abc),
+          //     onPressed: () {
+          //       _checkBiometric();
+          //       _authorizeNow();
+          //     }),
+          Switch(value: _value,onChanged: changeToggle,),
+          Text("Biometrično odlepanje: ${_value?"Omogočeno":"Onemogočeno"}"),
         ],
       ),
     )));

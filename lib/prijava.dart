@@ -17,6 +17,7 @@ final String keyForAccessToken = "key_AccessToken";
 final String keyForRefreshToken= "key_RefreshToken";
 final String keyForExpiresOn = "key_ExpiresOn";
 final String keyForThemeDark = "key_AppThemeDark";
+final String keyForUseBiometrics= "key_UserBiometrics";
 
 Future<UserData> signInUser() async {
     try{

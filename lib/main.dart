@@ -7,6 +7,7 @@ import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/theme.dart';
 import 'package:scv_app/uvod.dart';
+import 'package:scv_app/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'malice.dart';
 import 'nastavitve.dart';
@@ -53,12 +54,23 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   Widget presented = OnBoardingPage();
 
   ThemeMode themeMode = ThemeMode.system;
+  bool isBioLock = false;
 
   void isLogedIn() async {
-    if (await aliJeUporabnikPrijavljen()) {
-      presented = MyHomePage();
-    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      bool isBio = prefs.getBool(keyForUseBiometrics);
+      if (isBio == true) {
+        isBioLock = true;
+      } else if (isBio == false) {
+        isBioLock = false;
+      }
+    } catch (e) {
+      print(e);
+    }
+    if (await aliJeUporabnikPrijavljen()) {
+      presented = isBioLock ? ZaklepPage() : MyHomePage();
+    }
     try {
       bool isDark = prefs.getBool(keyForThemeDark);
       if (isDark == true) {
