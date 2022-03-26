@@ -96,10 +96,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final LocalAuthentication _localAuthentication = LocalAuthentication();
-  bool _canCheckBiometric = false;
-  String _authorizedOrNot = "Not Authorized";
-  List<BiometricType> _availableBiometricTypes = List<BiometricType>();
+
+
+  
 
   int selectedIndex = 0;
   Data data = new Data();

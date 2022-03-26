@@ -34,7 +34,7 @@ class _BiometricPage extends State<BiometricPage> {
     bool isAuthorized = false;
     try {
       isAuthorized = await _localAuthentication.authenticate(
-        localizedReason: "Please authenticate to complete your transaction",
+        localizedReason: "Za vstop se autoriziraj:",
         useErrorDialogs: true,
         stickyAuth: true,
       );
@@ -64,22 +64,6 @@ class _BiometricPage extends State<BiometricPage> {
 
   bool _value = true;
 
-  Widget buildButton({
-    @required String text,
-    @required IconData icon,
-    @required VoidCallback onClicked,
-  }) =>
-      ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size.fromHeight(50),
-        ),
-        icon: Icon(icon, size: 26),
-        label: Text(
-          text,
-          style: TextStyle(fontSize: 20),
-        ),
-        onPressed: onClicked,
-      );
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
