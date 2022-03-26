@@ -87,7 +87,14 @@ class _ZaklepPageState extends State<ZaklepPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Center(child: Text("OK")),
+      body: Center(child: 
+          ElevatedButton(
+          child: Icon(Icons.error_outline),
+          onPressed: () {
+            _authorizeNow();
+          }),
+          ),
+
     );
   }
 }
