@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:scv_app/urnik.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
@@ -12,7 +13,6 @@ import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/api/local_auth_api.dart';
-
 
 class BiometricPage extends StatefulWidget {
   BiometricPage({Key key, this.data}) : super(key: key);
@@ -47,7 +47,7 @@ class _BiometricPage extends State<BiometricPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = "Authorized";
-      }else{
+      } else {
         _authorizedOrNot = "Not Authorized";
       }
     });
@@ -64,8 +64,6 @@ class _BiometricPage extends State<BiometricPage> {
 
   bool _value = true;
   @override
-
-
   Widget buildAvailability(BuildContext context) => buildButton(
         text: 'Check Availability',
         icon: Icons.event_available,
@@ -113,7 +111,7 @@ class _BiometricPage extends State<BiometricPage> {
 
           if (isAuthenticated) {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => NastavitvePage()),
+              MaterialPageRoute(builder: (context) => UrnikPage()),
             );
           }
         },
@@ -146,15 +144,10 @@ class _BiometricPage extends State<BiometricPage> {
             onPressed: (() => Navigator.pop(context)),
             child: Icon(Icons.arrow_back_ios),
           ),
-          ElevatedButton(
-            child: Icon(Icons.abc),
-            onPressed: _authorizeNow
-          ),
+          ElevatedButton(child: Icon(Icons.abc), onPressed: _authorizeNow),
           Text(_authorizedOrNot),
         ],
       ),
     )));
-  
   }
-  
 }
