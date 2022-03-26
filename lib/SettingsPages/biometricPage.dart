@@ -30,6 +30,20 @@ class _BiometricPage extends State<BiometricPage> {
   String _authorizedOrNot = "Not Authorized";
   List<BiometricType> _availableBiometricTypes = List<BiometricType>();
 
+  Future<void> _checkBiometric() async {
+    bool canCheckBiometric = false;
+    try {
+      canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _canCheckBiometric = canCheckBiometric;
+    });
+  }
+
   Future<void> _authorizeNow() async {
     bool isAuthorized = false;
     try {
@@ -75,7 +89,12 @@ class _BiometricPage extends State<BiometricPage> {
             onPressed: (() => Navigator.pop(context)),
             child: Icon(Icons.arrow_back_ios),
           ),
-          ElevatedButton(child: Icon(Icons.abc), onPressed: _authorizeNow),
+          ElevatedButton(
+              child: Icon(Icons.abc),
+              onPressed: () {
+                _checkBiometric();
+                _authorizeNow();
+              }),
           Text(_authorizedOrNot),
         ],
       ),
