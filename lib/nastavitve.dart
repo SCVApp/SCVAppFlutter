@@ -93,7 +93,7 @@ class NastavitvePageState extends State<NastavitvePage> {
   }
 
 
-  void refresh() async{
+  void refreshBio() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       try {
@@ -106,6 +106,12 @@ class NastavitvePageState extends State<NastavitvePage> {
       } catch (e) {
         print(e);
       }
+    });
+  }
+
+  void refresh() async{
+    setState(() {
+      
     });
   }
 
@@ -140,7 +146,7 @@ class NastavitvePageState extends State<NastavitvePage> {
     }
     void goToPageBiometric() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => BiometricPage(notifyParent: refresh,)));
+          .push(MaterialPageRoute(builder: (context) => BiometricPage(notifyParent: refreshBio,)));
     }
     void goToPageTools() {
       Navigator.of(context)

@@ -31,6 +31,8 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
 
   String token = "";
 
+  bool isLoadingNewInfo = false;
+
   List<Widget> status = [
     StatusItem(
       title: "Dosegljiv",
@@ -96,8 +98,8 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                   ),
                 ],
               ),
-              profilePictureWithStatus(widget.data),
-              NastavitveGroup(
+              isLoadingNewInfo ? CircularProgressIndicator() : profilePictureWithStatus(widget.data),
+              isLoadingNewInfo ? CircularProgressIndicator() : NastavitveGroup(
                 settingsGroupTitle: "Statusi, ki so na voljo",
                 items: getStatuses()
               )
@@ -108,12 +110,14 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
   }
 
   chSt(String id) async{
-    setState(() {
-      widget.data.user.status.setStatus(id);
+    setState((){
+      isLoadingNewInfo = true;
     });
-    Timer(Duration(seconds: 1), () {
-      widget.notifyParent();
-      Navigator.of(context).pop();
+    UserStatusData nev = await widget.data.user.status.setStatus(id);
+    widget.notifyParent();
+    setState(() {
+      widget.data.user.status.setS(nev);
+      isLoadingNewInfo = false;
     });
   }
 
@@ -122,6 +126,8 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
     for(StatusItem item in status){
       if(item.statusId == widget.data.user.status.id){
         item.trailing = Icon(Icons.check);
+      }else{
+        item.trailing = null;
       }
       item.onTap = ()=>{
         chSt(item.statusId)
