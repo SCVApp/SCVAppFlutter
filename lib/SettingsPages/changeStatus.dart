@@ -98,7 +98,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                   ),
                 ],
               ),
-              isLoadingNewInfo ? CircularProgressIndicator() : profilePictureWithStatus(widget.data),
+              isLoadingNewInfo ? Text("") : profilePictureWithStatus(widget.data),
               isLoadingNewInfo ? CircularProgressIndicator() : NastavitveGroup(
                 settingsGroupTitle: "Statusi, ki so na voljo",
                 items: getStatuses()
