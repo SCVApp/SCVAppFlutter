@@ -190,12 +190,11 @@ class NastavitvePageState extends State<NastavitvePage> {
             padding: EdgeInsets.all(24),
             children: [
               SettingsUserCard(
-                // userName: widget.data.user.displayName,
-                userName: widget.data.user.displayName,
-                userProfilePic: widget.data.user.image,
+                userName: widget.data.user!=null ? widget.data.user.displayName:"",
+                userProfilePic: widget.data.user!=null ? widget.data.user.image:AssetImage("asstes/profilePicture.png"),
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(
-                  widget.data.user.mail,
+                  widget.data.user != null ? widget.data.user.mail:"",
                   style: TextStyle(color: Colors.white),
                 ),
                 data: widget.data,

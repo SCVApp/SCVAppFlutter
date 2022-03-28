@@ -12,7 +12,7 @@ Widget profilePictureWithStatus(Data data){
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(60),
                         child: Image(
-                          image: data.user.image,
+                          image: data.user != null ? data.user.image : AssetImage("assets/profilePicture.png"),
                           height: 120,
                         ),
                     ),
@@ -22,7 +22,7 @@ Widget profilePictureWithStatus(Data data){
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Image(
-                          image: data.user.status.assetImage,
+                          image: data.user != null ? data.user.status.assetImage:AssetImage("assets/statusIcons/Unknown.png"),
                           height: 32,
                         ),
                   ),
