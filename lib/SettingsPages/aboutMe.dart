@@ -39,7 +39,23 @@ class _AboutMePage extends State<AboutMePage> {
         body: SafeArea(
           child: Column(
             children: [
-              ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
+                      icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  onPressed: ()=>{Navigator.of(context).pop()}
+                  ),
+                  ),
+                ],
+              ),
               Text(""),
             ],
           ),
