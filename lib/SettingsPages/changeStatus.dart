@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/Components/backBtn.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/profilePictureWithStatus.dart';
 import 'package:scv_app/Components/statusItems.dart';
@@ -81,23 +82,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: IconButton(
-                      icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  onPressed: ()=>{widget.notifyParent(),Navigator.of(context).pop()}
-                  ),
-                  ),
-                ],
-              ),
+              backButton(context),
               isLoadingNewInfo ? Text("") : profilePictureWithStatus(widget.data),
               isLoadingNewInfo ? CircularProgressIndicator() : NastavitveGroup(
                 settingsGroupTitle: "Statusi, ki so na voljo",

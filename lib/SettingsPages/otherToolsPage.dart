@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/Components/backBtn.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,8 +37,12 @@ class _OtherToolsPage extends State<OtherToolsPage> {
   
 
     return Scaffold(
-        body: Center(
-          child: ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
+        body: SafeArea(
+          child: Column(
+            children: [
+              backButton(context)
+            ],
+          )
         )
     );
   }
