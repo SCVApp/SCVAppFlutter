@@ -64,19 +64,19 @@ class SettingsUserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     profilePictureWithStatus(data),
-                    Container(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             userName,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: mediaQueryHeight / 31,
+                              fontSize: mediaQueryHeight / 33,
                               color: Colors.white,
                             ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                           ),
                           userMoreInfo,
                         ],
