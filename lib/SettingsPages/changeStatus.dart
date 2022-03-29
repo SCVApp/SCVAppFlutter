@@ -84,12 +84,11 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
             children: [
               backButton(context),
               isLoadingNewInfo ? Text("") : profilePictureWithStatus(widget.data),
-              isLoadingNewInfo ? CircularProgressIndicator() : ListView(children: [
+              isLoadingNewInfo ? CircularProgressIndicator() :
                 NastavitveGroup(
                   settingsGroupTitle: "Statusi, ki so na voljo",
                   items: getStatuses()
                 )
-              ],)
             ],
           ),
         )
