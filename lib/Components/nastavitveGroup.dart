@@ -41,6 +41,8 @@ class NastavitveGroup extends StatelessWidget {
               : Container(),
           // The SettingsGroup sections
           Container(
+            constraints: BoxConstraints(
+            minWidth: double.infinity,maxHeight: 505),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(15),
