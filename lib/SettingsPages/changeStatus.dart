@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/Components/backBtn.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/profilePictureWithStatus.dart';
 import 'package:scv_app/Components/statusItems.dart';
@@ -30,6 +31,8 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
   int selectedPickerItem = 0;
 
   String token = "";
+
+  bool isLoadingNewInfo = false;
 
   List<Widget> status = [
     StatusItem(
@@ -72,48 +75,48 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
   bool _value = true;
   @override
   Widget build(BuildContext context) {
-  
-
     return Scaffold(
         body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // crossAxisAlignment: CrossAxisAlignment.center,
+              backButton(context),
+              isLoadingNewInfo ? Text("") : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: IconButton(
-                      icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  onPressed: ()=>{widget.notifyParent(),Navigator.of(context).pop()}
-                  ),
-                  ),
+                  profilePictureWithStatus(widget.data,context),
                 ],
               ),
-              profilePictureWithStatus(widget.data),
-              NastavitveGroup(
-                settingsGroupTitle: "Statusi, ki so na voljo",
-                items: getStatuses()
-              )
-            ],
-          ),
+              isLoadingNewInfo ? Text("") : Row(children: [Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    "Statusi, ki so še na voljo:",
+                    style: TextStyle(fontSize: 22 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                ),]),
+              isLoadingNewInfo ? Center(child: CircularProgressIndicator()) :
+              Expanded(child: ListView(
+                children: [
+                  NastavitveGroup(
+                    items: getStatuses()
+                  ),
+                ],
+              )),
+          ]
         )
-    );
+    ));
   }
 
   chSt(String id) async{
-    setState(() {
-      widget.data.user.status.setStatus(id);
+    setState((){
+      isLoadingNewInfo = true;
     });
-    Timer(Duration(seconds: 1), () {
-      widget.notifyParent();
-      Navigator.of(context).pop();
+    UserStatusData nev = await widget.data.user.status.setStatus(id);
+    widget.notifyParent();
+    setState(() {
+      widget.data.user.status.setS(nev);
+      isLoadingNewInfo = false;
     });
   }
 
@@ -122,6 +125,8 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
     for(StatusItem item in status){
       if(item.statusId == widget.data.user.status.id){
         item.trailing = Icon(Icons.check);
+      }else{
+        item.trailing = null;
       }
       item.onTap = ()=>{
         chSt(item.statusId)

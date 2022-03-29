@@ -63,10 +63,10 @@ class SettingsUserCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    profilePictureWithStatus(data),
-                    Container(
+                    profilePictureWithStatus(data,context),
+                    Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -76,7 +76,7 @@ class SettingsUserCard extends StatelessWidget {
                               fontSize: mediaQueryHeight / 31,
                               color: Colors.white,
                             ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.right,
                           ),
                           userMoreInfo,
                         ],

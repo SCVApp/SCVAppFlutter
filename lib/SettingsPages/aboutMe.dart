@@ -5,6 +5,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Components/backBtn.dart';
 import '../data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
@@ -39,8 +40,8 @@ class _AboutMePage extends State<AboutMePage> {
         body: SafeArea(
           child: Column(
             children: [
-              ElevatedButton(onPressed: (() => Navigator.pop(context)),child: Icon(Icons.arrow_back_ios),),
-              Text("Noob"),
+              backButton(context),
+              Text(""),
             ],
           ),
         )

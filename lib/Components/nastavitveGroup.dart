@@ -24,6 +24,7 @@ class NastavitveGroup extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(bottom: 20),
+      constraints: BoxConstraints(maxHeight: double.infinity,maxWidth: double.infinity),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,10 +42,6 @@ class NastavitveGroup extends StatelessWidget {
               : Container(),
           // The SettingsGroup sections
           Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(15),
-            ),
             child: ListView.separated(
               physics: ScrollPhysics(),
               separatorBuilder: (context, index) {

@@ -130,6 +130,15 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         noUser = true;
       });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.remove(keyForAccessToken);
+      prefs.remove(keyForRefreshToken);
+      prefs.remove(keyForExpiresOn);
+      prefs.remove(keyForThemeDark);
+      prefs.remove(keyForUseBiometrics);
+
+      Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
     setState(() {
       _childrenWidgets.add(new DomovPage(data: data));

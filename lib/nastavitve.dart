@@ -93,7 +93,7 @@ class NastavitvePageState extends State<NastavitvePage> {
   }
 
 
-  void refresh() async{
+  void refreshBio() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       try {
@@ -106,6 +106,12 @@ class NastavitvePageState extends State<NastavitvePage> {
       } catch (e) {
         print(e);
       }
+    });
+  }
+
+  void refresh() async{
+    setState(() {
+      
     });
   }
 
@@ -140,7 +146,7 @@ class NastavitvePageState extends State<NastavitvePage> {
     }
     void goToPageBiometric() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => BiometricPage(notifyParent: refresh,)));
+          .push(MaterialPageRoute(builder: (context) => BiometricPage(notifyParent: refreshBio,)));
     }
     void goToPageTools() {
       Navigator.of(context)
@@ -184,12 +190,13 @@ class NastavitvePageState extends State<NastavitvePage> {
             padding: EdgeInsets.all(24),
             children: [
               SettingsUserCard(
-                userName: widget.data.user.displayName,
-                userProfilePic: widget.data.user.image,
+                userName: widget.data.user!=null ? widget.data.user.displayName:"",
+                // userName: "Jure Petronijevič",
+                userProfilePic: widget.data.user!=null ? widget.data.user.image:AssetImage("asstes/profilePicture.png"),
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(
-                  widget.data.user.mail,
-                  style: TextStyle(color: Colors.white),
+                  widget.data.user != null ? widget.data.user.mail:"",
+                  style: TextStyle(color: Colors.white,fontSize: MediaQuery.of(context).size.height/42 > 14 ? 14 : MediaQuery.of(context).size.height/42),
                 ),
                 data: widget.data,
               ),

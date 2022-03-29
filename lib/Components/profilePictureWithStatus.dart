@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
 
-Widget profilePictureWithStatus(Data data){
+Widget profilePictureWithStatus(Data data,BuildContext context){
+  double imageSize = MediaQuery.of(context).size.width/3.1 > 120 ? 120 : MediaQuery.of(context).size.width/3.1;
   return Container(
-                width: 120,
-                height: 120,
+                width: imageSize,
+                height: imageSize,
+                constraints: BoxConstraints(
+                  maxHeight: 120,maxWidth: 120,
+                ),
                 child: Stack(
                 children: [
                   Align(
                     alignment: Alignment.center,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(60),
+                        borderRadius: BorderRadius.circular(imageSize/2),
                         child: Image(
-                          image: data.user.image,
-                          height: 120,
+                          image: data.user != null ? data.user.image : AssetImage("assets/profilePicture.png"),
+                          height: imageSize,
                         ),
                     ),
                   ),
@@ -22,8 +26,8 @@ Widget profilePictureWithStatus(Data data){
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Image(
-                          image: data.user.status.assetImage,
-                          height: 32,
+                          image: data.user != null ? data.user.status.assetImage:AssetImage("assets/statusIcons/Unknown.png"),
+                          height: imageSize/3.75,
                         ),
                   ),
                   )

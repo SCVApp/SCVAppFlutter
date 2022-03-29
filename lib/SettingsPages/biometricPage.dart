@@ -9,6 +9,7 @@ import 'package:scv_app/urnik.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:scv_app/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Components/backBtn.dart';
 import '../data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
@@ -108,24 +109,25 @@ class _BiometricPage extends State<BiometricPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: (() => Navigator.pop(context)),
-            child: Icon(Icons.arrow_back_ios),
-          ),
+          backButton(context),
           // ElevatedButton(
           //     child: Icon(Icons.abc),
           //     onPressed: () {
           //       _checkBiometric();
           //       _authorizeNow();
           //     }),
-          Switch.adaptive(value: _value,onChanged: changeToggle,),
-          Text("Biometrično odlepanje: ${_value?"Omogočeno":"Onemogočeno"}"),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Switch.adaptive(value: _value,onChanged: changeToggle,),
+              Text("Biometrično odlepanje: ${_value?"Omogočeno":"Onemogočeno"}"),
+            ],
+          )
         ],
       ),
-    )));
+    ));
   }
 }

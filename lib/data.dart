@@ -55,14 +55,22 @@ class UserStatusData{
     }
   }
 
-  setStatus(String statusId) async{
+  setS(UserStatusData nev){
+    this.id = nev.id;
+    this.display = nev.display;
+    this.color = nev.color;
+    this.assetImage = nev.assetImage;
+  }
+
+  Future<UserStatusData> setStatus(String statusId) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString(keyForAccessToken);
     final response = await http
       .get(Uri.parse('$apiUrl/user/setStatus/$statusId'),headers: {"Authorization":accessToken});
     if(response.statusCode == 200){
-      this.getData(accessToken);
+      await this.getData(accessToken);
     }
+    return this;
   }
 }
 
