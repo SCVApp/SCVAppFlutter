@@ -40,7 +40,8 @@ class _OtherToolsPage extends State<OtherToolsPage> {
         body: SafeArea(
           child: Column(
             children: [
-              backButton(context)
+              backButton(context),
+              Text("Kmalu na voljo..."),
             ],
           )
         )

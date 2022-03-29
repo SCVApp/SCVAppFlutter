@@ -101,7 +101,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
               Padding(padding: EdgeInsets.only(top: 10)),
               isLoadingNewInfo ? Center(child: CircularProgressIndicator()) :
               Expanded(child: ListView(
-                padding: EdgeInsets.only(right: 20,left: 20),
+                padding: EdgeInsets.only(right: 15,left: 15),
                 children: [
                   NastavitveGroup(
                     items: getStatuses()
