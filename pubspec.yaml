@@ -55,8 +55,8 @@ dev_dependencies:
   get: ^4.6.1
 
 flutter_icons:
-  image_path_android: "assets/AppIcon.png"
-  image_path_ios: "assets/AppIcon.png"
+  image_path_android: "assets/1024.png"
+  image_path_ios: "assets/1024.png"
   android: true
 
 
