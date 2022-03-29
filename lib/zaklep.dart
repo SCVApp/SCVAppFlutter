@@ -95,7 +95,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
             _authorizeNow();
           })
           ],
-          ):Text(""),
+          ): Center(child:Text("")),
     ));
   }
 }
