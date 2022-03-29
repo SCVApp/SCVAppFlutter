@@ -191,7 +191,7 @@ class NastavitvePageState extends State<NastavitvePage> {
             children: [
               SettingsUserCard(
                 userName: widget.data.user!=null ? widget.data.user.displayName:"",
-                // userName: "Jure Petronijevič",
+                // userName: "",
                 userProfilePic: widget.data.user!=null ? widget.data.user.image:AssetImage("asstes/profilePicture.png"),
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(

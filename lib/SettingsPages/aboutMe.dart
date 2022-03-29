@@ -41,7 +41,7 @@ class _AboutMePage extends State<AboutMePage> {
           child: Column(
             children: [
               backButton(context),
-              Text(""),
+              Text("Kmalu na voljo..."),
             ],
           ),
         )

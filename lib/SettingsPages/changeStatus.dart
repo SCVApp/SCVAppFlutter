@@ -87,16 +87,21 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                   profilePictureWithStatus(widget.data,context),
                 ],
               ),
-              isLoadingNewInfo ? Text("") : Row(children: [Padding(
+              Padding(padding: EdgeInsets.only(top: 10)),
+              isLoadingNewInfo ? Text("") : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     "Statusi, ki so še na voljo:",
                     style: TextStyle(fontSize: 22 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                   ),
                 ),]),
+              Padding(padding: EdgeInsets.only(top: 10)),
               isLoadingNewInfo ? Center(child: CircularProgressIndicator()) :
               Expanded(child: ListView(
+                padding: EdgeInsets.only(right: 15,left: 15),
                 children: [
                   NastavitveGroup(
                     items: getStatuses()

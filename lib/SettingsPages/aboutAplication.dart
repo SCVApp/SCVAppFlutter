@@ -41,7 +41,7 @@ class _AboutAppPage extends State<AboutAppPage> {
           child: Column(
             children: [
               backButton(context),
-              Text("Zaenkrat se sam testiramo. π ≈ 3,14159265358979323846264338327950288419716939937510582097494459..."),
+              Text("Kmalu na voljo..."),
             ],
           ),
         )
