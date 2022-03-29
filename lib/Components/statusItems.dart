@@ -38,11 +38,6 @@ class StatusItem extends SettingsItem {
         style: titleStyle ?? TextStyle(fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
-      subtitle: Text(
-        subtitle,
-        style: subtitleStyle ?? TextStyle(color: Colors.grey),
-        maxLines: 1,
-      ),
       trailing:
           (trailing != null) ? trailing : null,
     );
