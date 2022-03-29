@@ -75,13 +75,11 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
   bool _value = true;
   @override
   Widget build(BuildContext context) {
-  
-
     return Scaffold(
         body: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.all(24),
-            children: [
+          child: Column(
+          children: [
+            // crossAxisAlignment: CrossAxisAlignment.center,
               backButton(context),
               isLoadingNewInfo ? Text("") : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,14 +87,25 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                   profilePictureWithStatus(widget.data),
                 ],
               ),
+              isLoadingNewInfo ? Text("") : Row(children: [Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    "Statusi, ki so še na voljo:",
+                    style: TextStyle(fontSize: 22 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                ),]),
               isLoadingNewInfo ? Center(child: CircularProgressIndicator()) :
-              NastavitveGroup(
-                settingsGroupTitle: "Statusi, ki so na voljo",
-                items: getStatuses()
-              ),
-            ]),
+              Expanded(child: ListView(
+                children: [
+                  NastavitveGroup(
+                    items: getStatuses()
+                  ),
+                ],
+              )),
+          ]
         )
-    );
+    ));
   }
 
   chSt(String id) async{
