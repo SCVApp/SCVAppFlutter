@@ -63,7 +63,7 @@ class SettingsUserCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    profilePictureWithStatus(data),
+                    profilePictureWithStatus(data,context),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,

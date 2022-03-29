@@ -84,7 +84,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
               isLoadingNewInfo ? Text("") : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  profilePictureWithStatus(widget.data),
+                  profilePictureWithStatus(widget.data,context),
                 ],
               ),
               isLoadingNewInfo ? Text("") : Row(children: [Padding(

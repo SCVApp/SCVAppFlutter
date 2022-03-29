@@ -196,7 +196,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                 cardColor: widget.data.schoolData.schoolColor,
                 userMoreInfo: Text(
                   widget.data.user != null ? widget.data.user.mail:"",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white,fontSize: MediaQuery.of(context).size.height/42 > 14 ? 14 : MediaQuery.of(context).size.height/42),
                 ),
                 data: widget.data,
               ),
