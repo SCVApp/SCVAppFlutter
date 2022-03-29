@@ -79,18 +79,22 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
 
     return Scaffold(
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
+            padding: EdgeInsets.all(24),
             children: [
               backButton(context),
-              isLoadingNewInfo ? Text("") : profilePictureWithStatus(widget.data),
-              isLoadingNewInfo ? CircularProgressIndicator() :
-                NastavitveGroup(
-                  settingsGroupTitle: "Statusi, ki so na voljo",
-                  items: getStatuses()
-                )
-            ],
-          ),
+              isLoadingNewInfo ? Text("") : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  profilePictureWithStatus(widget.data),
+                ],
+              ),
+              isLoadingNewInfo ? Center(child: CircularProgressIndicator()) :
+              NastavitveGroup(
+                settingsGroupTitle: "Statusi, ki so na voljo",
+                items: getStatuses()
+              ),
+            ]),
         )
     );
   }
