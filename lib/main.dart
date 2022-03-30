@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:http/http.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
@@ -48,6 +50,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   @override
   void initState() {
     super.initState();
+    // HomeWidget.setAppGroupId('group.pripomocki');
     isLogedIn();
   }
 
@@ -91,11 +94,16 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       home: isLoading ? CircularProgressIndicator() : presented,
       debugShowCheckedModeBanner: false,
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: themeMode,
+      supportedLocales: [
+        Locale("sl")
+      ],
+      locale: Locale("sl"),
     );
   }
 }
