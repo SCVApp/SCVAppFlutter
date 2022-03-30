@@ -141,7 +141,7 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
                             child: Icon(
                               Icons.arrow_back_ios,
                               size: 35,
-                              color: danasniDan.compareTo(trenutnoIzbraniCas) >= 0 ? Colors.grey:Colors.black,
+                              color: danasniDan.compareTo(trenutnoIzbraniCas) >= 0 ? Colors.grey:Theme.of(context).primaryColor,
                               ),
                             onTap: pojdiDanNazaj,
                           ),
