@@ -64,7 +64,8 @@ class _ZaklepPageState extends State<ZaklepPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = true;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyHomePage()));
       } else {
         _authorizedOrNot = false;
       }
@@ -77,6 +78,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   @override
   void initState() {
+    _checkBiometric();
     _authorizeNow();
     super.initState();
   }
@@ -85,17 +87,19 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: SafeArea(child:!_authorizedOrNot?
-          Column(children: [
-            ElevatedButton(
-          child: Icon(Icons.error_outline),
-          onPressed: () {
-            _authorizeNow();
-          })
-          ],
-          ):Text(""),
+        body: SafeArea(
+      child: !_authorizedOrNot
+          ? Column(
+              children: [
+                ElevatedButton(
+                    child: Icon(Icons.error_outline),
+                    onPressed: () {
+                      _authorizeNow();
+                    })
+              ],
+            )
+          : Text(""),
     ));
   }
 }

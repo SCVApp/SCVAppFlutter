@@ -4,6 +4,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_web_auth (0.4.1):
     - Flutter
+  - home_widget (0.0.1):
+    - Flutter
   - local_auth (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
@@ -15,6 +17,7 @@ DEPENDENCIES:
   - babstrap_settings_screen (from `.symlinks/plugins/babstrap_settings_screen/ios`)
   - Flutter (from `Flutter`)
   - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
+  - home_widget (from `.symlinks/plugins/home_widget/ios`)
   - local_auth (from `.symlinks/plugins/local_auth/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
@@ -26,6 +29,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_web_auth:
     :path: ".symlinks/plugins/flutter_web_auth/ios"
+  home_widget:
+    :path: ".symlinks/plugins/home_widget/ios"
   local_auth:
     :path: ".symlinks/plugins/local_auth/ios"
   shared_preferences:
@@ -37,6 +42,7 @@ SPEC CHECKSUMS:
   babstrap_settings_screen: 535097da0fa521a47fef6f6678ff2b464ee15937
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_web_auth: 09a0abd245f1a07a3ff4dcf1247a048d89ee12a9
+  home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
   local_auth: 1740f55d7af0a2e2a8684ce225fe79d8931e808c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96

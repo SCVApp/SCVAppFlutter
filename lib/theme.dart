@@ -20,6 +20,6 @@ class Themes {
     bottomAppBarColor: HexColor.fromHex("#1C1C1E"),
     cardColor: HexColor.fromHex("#1C1C1E"),
     hintColor: HexColor.fromHex("#1C1C1E"),
-    shadowColor: Colors.grey.withOpacity(0.5),
+    shadowColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0.5),
   );
 }

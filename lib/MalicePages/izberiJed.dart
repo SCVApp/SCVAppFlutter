@@ -218,7 +218,7 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
         print(item.naslov);
       };
       ret.add(item);
-      ret.add(Padding(padding: EdgeInsets.only(top:10)));
+      ret.add(Padding(padding: EdgeInsets.only(top:15)));
     }
     return ret;
   }
