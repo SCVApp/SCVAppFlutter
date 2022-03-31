@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scv_app/Components/komponeneteZaMalico.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
+import 'package:scv_app/MalicePages/ostaleInformacije.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MalicePage extends StatefulWidget{
@@ -67,6 +68,7 @@ class _MalicePageState extends State<MalicePage>{
               infoWidget: Icon(
                 Icons.arrow_forward_ios
               ),
+              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => OstaleInformacijeMalicePage())),
             ),
           ],
         ),

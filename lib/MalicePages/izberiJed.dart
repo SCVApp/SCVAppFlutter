@@ -32,12 +32,12 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
       imeJedi: "Pac kar je danes za jest",
       slika: AssetImage("assets/slikeMalica/mesni_meni.png"),
       naslov: "Mesni meni",
-      izbrana: true,
     ),
     malica_Jed_Izbira(
       imeJedi: "Pac kar je danes za jest",
       slika: AssetImage("assets/slikeMalica/vegi_meni.png"),
       naslov: "Vegi meni",
+      izbrana: true,
     ),
     malica_Jed_Izbira(
       imeJedi: "Klasična pizza",
@@ -168,9 +168,15 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 20)),
-                        Expanded(child: ListView(
-                          padding: EdgeInsets.only(right: 40 ,left: 40),
-                          children: maliceZaTaDan(),
+                        Expanded(child: ListView.separated(
+                          itemCount: maliceNaMenuju.length,
+                          padding: EdgeInsets.only(left: 40,right: 40),
+                          separatorBuilder: (context,index){
+                            return Padding(padding: EdgeInsets.only(top:15));
+                          },
+                          itemBuilder: (BuildContext contect, int index){
+                            return maliceNaMenuju[index];
+                          }
                         )),
                     ],
                 ),
@@ -209,18 +215,6 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
           )
         ),
       );
-  }
-
-  List<Widget> maliceZaTaDan(){
-    List<Widget> ret = [];
-    for(malica_Jed_Izbira item in maliceNaMenuju){
-      item.onTap = (){
-        print(item.naslov);
-      };
-      ret.add(item);
-      ret.add(Padding(padding: EdgeInsets.only(top:15)));
-    }
-    return ret;
   }
 }
 
