@@ -23,11 +23,11 @@ class _MalicePageState extends State<MalicePage>{
 
   @override
   Widget build(BuildContext context){
-    // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
-    //     _myController = c;
-    //   });
+    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+        _myController = c;
+      });
 
-    return Scaffold(
+    /* return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.only(right: 20,left: 20),
@@ -73,7 +73,7 @@ class _MalicePageState extends State<MalicePage>{
           ],
         ),
       ),
-    );
+    ); */
   }
 }
 
