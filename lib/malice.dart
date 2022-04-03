@@ -74,9 +74,8 @@ class _MalicePageState extends State<MalicePage> {
             width: 250,
             decoration: BoxDecoration(
                 color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-            child: FlatButton(
+            child: TextButton(
               onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainMalicePage())),
-  
               child: Text(
                 'Prijava',
                 style: TextStyle(color: Colors.white, fontSize: 25),
