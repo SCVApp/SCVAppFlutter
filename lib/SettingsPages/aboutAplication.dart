@@ -54,12 +54,12 @@ class _AboutAppPage extends State<AboutAppPage> {
             children: [
               backButton(context),
               Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
               child: Center(
               child: Container(
                   width: 200,
                   height: 150,
-                  child: Image.asset('assets/school_logo.png')),
+                  child: Image.asset('assets/ikona_appa.png')),
             ),
           ),
           Padding(
