@@ -39,17 +39,17 @@
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-  		<string>https</string>
-  		<string>http</string>
+		<string>https</string>
+		<string>http</string>
 		<string>googlegmail</string>
-    	<string>x-dispatch</string>
-    	<string>readdle-spark</string>
-    	<string>airmail</string>
-    	<string>ms-outlook</string>
-    	<string>ymail</string>
-    	<string>fastmail</string>
-    	<string>superhuman</string>
-    	<string>protonmail</string>
+		<string>x-dispatch</string>
+		<string>readdle-spark</string>
+		<string>airmail</string>
+		<string>ms-outlook</string>
+		<string>ymail</string>
+		<string>fastmail</string>
+		<string>superhuman</string>
+		<string>protonmail</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

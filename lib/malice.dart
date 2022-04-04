@@ -30,9 +30,9 @@ class _MalicePageState extends State<MalicePage> {
 
   @override
   Widget build(BuildContext context) {
-    // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
-    //     _myController = c;
-    //   });
+    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+        _myController = c;
+      });
 
     logInUser() async {
       String username = field_username_controller.text.toString();
