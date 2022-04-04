@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/Components/komponeneteZaMalico.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
 import 'package:scv_app/MalicePages/ostaleInformacije.dart';
-import 'package:scv_app/mainMalice.dart';
+import 'package:scv_app/MalicePages/mainMalice.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MalicePage extends StatefulWidget {
@@ -75,7 +76,7 @@ class _MalicePageState extends State<MalicePage> {
             decoration: BoxDecoration(
                 color: Colors.blue, borderRadius: BorderRadius.circular(20)),
             child: TextButton(
-              onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainMalicePage())),
+              onPressed: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainMalicePage())),
               child: Text(
                 'Prijava',
                 style: TextStyle(color: Colors.white, fontSize: 25),
@@ -85,14 +86,12 @@ class _MalicePageState extends State<MalicePage> {
           Container(
             height: 100,
             width: 250,
-            child: FlatButton(
-              onPressed: () {
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
+            child: TextButton(
               child: Text(
                 'Pozabljeno geslo?',
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
+              onPressed: ()=>launch("https://malice.scv.si/students/password/new"),
             ),
           ),
         ],

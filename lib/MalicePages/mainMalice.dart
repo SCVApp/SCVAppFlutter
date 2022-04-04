@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/Components/komponeneteZaMalico.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
 import 'package:scv_app/MalicePages/ostaleInformacije.dart';
-import 'package:scv_app/mainMalice.dart';
+import 'package:scv_app/MalicePages/mainMalice.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MainMalicePage extends StatefulWidget {

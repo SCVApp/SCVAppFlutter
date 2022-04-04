@@ -142,7 +142,7 @@ class NastavitvePageState extends State<NastavitvePage> {
 
     void goToPageAboutMe() {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => AboutMePage()));
+          .push(MaterialPageRoute(builder: (context) => AboutMePage(data: widget.data,)));
     }
     void goToPageBiometric() {
       Navigator.of(context)
