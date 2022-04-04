@@ -22,13 +22,35 @@ class _MalicePageState extends State<MalicePage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
+  bool isLoggingIn = false;
+  bool isLogedIn = false;
+
+  final field_username_controller = TextEditingController();
+  final field_password_controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
     //     _myController = c;
     //   });
 
-    return GestureDetector(
+    logInUser() async {
+      String username = field_username_controller.text.toString();
+      String password = field_password_controller.text.toString();
+      print("Username: $username");
+      print("Password: $password");
+      setState(() {
+        isLoggingIn = true;
+      });
+      await Future.delayed(Duration(seconds: 1),(){
+        setState(() {
+          isLogedIn = true;
+          isLoggingIn = false;
+        });
+      });
+    }
+
+    return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage() : GestureDetector(
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -49,6 +71,8 @@ class _MalicePageState extends State<MalicePage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                  controller: field_username_controller,
+                  autocorrect: false,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(color: Colors.white),
@@ -61,7 +85,9 @@ class _MalicePageState extends State<MalicePage> {
                   left: 15.0, right: 15.0, top: 10, bottom: 20),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: field_password_controller,
                 obscureText: true,
+                autocorrect: false,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Colors.white),
                     labelStyle: TextStyle(color: Colors.white),
@@ -76,7 +102,7 @@ class _MalicePageState extends State<MalicePage> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainMalicePage())),
+                onPressed: logInUser,
                 child: Text(
                   'Prijava',
                   style: TextStyle(color: Colors.white, fontSize: 25),

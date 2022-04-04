@@ -65,11 +65,18 @@ class _AboutAppPage extends State<AboutAppPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text("Aplikacija ŠCVApp je namenjena dijakom in učiteljem šolskega centra Velenje. Ustvarila sva jo Blaž Osredkar in Urban Krepel v sklopu raziskovalne naloge. \n  \nAplikacija vsebuje orodja, ki so potrebna za šolanje: \n • domača stran spletne šole, \n • spletni portal malice,\n • urnik za razred, ki ga obiskujemo,..\n\nK aplikaciji bova sproti dodajala še dodatna orodja in novosti. Če imaš vprašanje, nama ga napiši na info.app@scv.si.", textAlign: TextAlign.justify,),
-          ),  
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Text("Uporabne povezave", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.left),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0,vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Uporabne povezave", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.left)
+              ],
+            ),
+          ),
+          
           ],
           ),
           
