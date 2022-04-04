@@ -75,8 +75,8 @@ class _MalicePageState extends State<MalicePage> {
                   autocorrect: false,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintStyle: TextStyle(color: Colors.white),
-                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+                      labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                       labelText: 'E-pošta',
                       hintText: 'v formatu ime.priimek@scv.si')),
             ),
@@ -89,8 +89,8 @@ class _MalicePageState extends State<MalicePage> {
                 obscureText: true,
                 autocorrect: false,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white),
-                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+                    labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                     border: OutlineInputBorder(),
                     labelText: 'Geslo',
                     hintText: 'Geslo, uporabljeno za malice'),

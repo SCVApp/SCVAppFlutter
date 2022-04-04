@@ -46,41 +46,115 @@ class _AboutAppPage extends State<AboutAppPage> {
   bool _value = true;
   @override
   Widget build(BuildContext context) {
-  
+    
+    odpriLink(link) async {
+      if (link.url == "mailto:info.app@scv.si"){
+        if(!await launch(link.url)){
+          print("Email can't be opened");
+        }
+      }
+    }
 
     return Scaffold(
         body: SafeArea(
           child: Column(
             children: [
               backButton(context),
+          Expanded(child: ListView(
+            children: [
               Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
-              child: Center(
-              child: Container(
-                  width: 200,
-                  height: 150,
-                  child: Image.asset('assets/ikona_appa.png')),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Text("Aplikacija ŠCVApp je namenjena dijakom in učiteljem šolskega centra Velenje. Ustvarila sva jo Blaž Osredkar in Urban Krepel v sklopu raziskovalne naloge. \n  \nAplikacija vsebuje orodja, ki so potrebna za šolanje: \n • domača stran spletne šole, \n • spletni portal malice,\n • urnik za razred, ki ga obiskujemo,..\n\nK aplikaciji bova sproti dodajala še dodatna orodja in novosti. Če imaš vprašanje, nama ga napiši na info.app@scv.si.", textAlign: TextAlign.justify,),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0,vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Uporabne povezave", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.left)
-              ],
-            ),
-          ),
+                padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
+                child: Center(
+                child: Container(
+                    width: 200,
+                    height: 150,
+                    child: Image.asset('assets/ikona_appa.png')),
+              ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Linkify(
+                  onOpen: odpriLink,
+                  text: "Aplikacija ŠCVApp je namenjena dijakom in učiteljem šolskega centra Velenje. Ustvarila sva jo Blaž Osredkar in Urban Krepel v sklopu raziskovalne naloge. \n  \nAplikacija vsebuje orodja, ki so potrebna za šolanje: \n • domača stran spletne šole, \n • spletni portal malice,\n • urnik za razred, ki ga obiskujemo,..\n\nK aplikaciji bova sproti dodajala še dodatna orodja in novosti. Če imaš vprašanje, nama ga napiši na info.app@scv.si.",
+                  textAlign: TextAlign.justify,
+                )
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0,vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Uporabne povezave", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.left)
+                  ],
+                ),
+              ),
+              for(Widget i in MediaQuery.of(context).size.width < 340 ? smallerPhones() : biggerPhones()) i,
+            ],
+          )),
           
-          ],
+        ],
           ),
           
         )
     ); 
   }
+
+  List<Widget> smallerPhones(){
+    print(MediaQuery.of(context).size.width);
+    return [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Spletni portal ŠCVApp"),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+            Text("https://app.scv.si")
+          ],
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Vodič, kako uporabiti ŠCVApp"),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+            Text("Klikni tukaj")
+          ],
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> biggerPhones(){
+    return [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Spletni portal ŠCVApp"),
+            Text("https://app.scv.si")
+          ],
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Vodič, kako uporabiti ŠCVApp"),
+            Text("Klikni tukaj")
+          ],
+        ),
+      ),
+    ];
+  }
+
   }

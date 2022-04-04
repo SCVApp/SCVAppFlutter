@@ -70,6 +70,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
               ),
               onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => OstaleInformacijeMalicePage())),
             ),
+            Padding(padding: EdgeInsets.only(bottom: 20))
           ],
         ),
       ),
