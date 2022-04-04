@@ -61,6 +61,7 @@ class _AboutAppPage extends State<AboutAppPage> {
             children: [
               backButton(context),
           Expanded(child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 35),
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
@@ -72,7 +73,7 @@ class _AboutAppPage extends State<AboutAppPage> {
               ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(),
                 child: Linkify(
                   onOpen: odpriLink,
                   text: "Aplikacija ŠCVApp je namenjena dijakom in učiteljem šolskega centra Velenje. Ustvarila sva jo Blaž Osredkar in Urban Krepel v sklopu raziskovalne naloge. \n  \nAplikacija vsebuje orodja, ki so potrebna za šolanje: \n • domača stran spletne šole, \n • spletni portal malice,\n • urnik za razred, ki ga obiskujemo,..\n\nK aplikaciji bova sproti dodajala še dodatna orodja in novosti. Če imaš vprašanje, nama ga napiši na info.app@scv.si.",
@@ -80,7 +81,7 @@ class _AboutAppPage extends State<AboutAppPage> {
                 )
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0,vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,6 +91,14 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               for(Widget i in MediaQuery.of(context).size.width < 340 ? smallerPhones() : biggerPhones()) i,
+              Padding(
+                padding: EdgeInsets.only(top:60),
+                child: Text(
+                  "ŠCVApp, 2022. Vse pravice pridržane.",
+                  textAlign: TextAlign.center,
+                  ),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 20))
             ],
           )),
           
@@ -104,26 +113,56 @@ class _AboutAppPage extends State<AboutAppPage> {
     print(MediaQuery.of(context).size.width);
     return [
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Spletni portal ŠCVApp"),
             Padding(padding: EdgeInsets.only(bottom: 10)),
-            Text("https://app.scv.si")
+            GestureDetector(
+              child: Text(
+                "https://app.scv.si",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: (){
+                launch(
+                "https://app.scv.si",
+                forceSafariVC: false,
+                forceWebView: false,
+                );
+              },
+            )
           ],
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Vodič, kako uporabiti ŠCVApp"),
             Padding(padding: EdgeInsets.only(bottom: 10)),
-            Text("Klikni tukaj")
+            GestureDetector(
+              child: Text(
+                "Klikni tukaj",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: (){
+                launch(
+                "https://app.scv.si/o-nas",
+                forceSafariVC: false,
+                forceWebView: false,
+                );
+              },
+            )
           ],
         ),
       ),
@@ -133,24 +172,54 @@ class _AboutAppPage extends State<AboutAppPage> {
   List<Widget> biggerPhones(){
     return [
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Spletni portal ŠCVApp"),
-            Text("https://app.scv.si")
+            GestureDetector(
+              child: Text(
+                "https://app.scv.si",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: (){
+                launch(
+                "https://app.scv.si",
+                forceSafariVC: false,
+                forceWebView: false,
+                );
+              },
+            )
           ],
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Vodič, kako uporabiti ŠCVApp"),
-            Text("Klikni tukaj")
+            GestureDetector(
+              child: Text(
+                "Klikni tukaj",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: (){
+                launch(
+                "https://app.scv.si/o-nas",
+                forceSafariVC: false,
+                forceWebView: false,
+                );
+              },
+            )
           ],
         ),
       ),
