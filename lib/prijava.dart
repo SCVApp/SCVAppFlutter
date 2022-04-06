@@ -18,6 +18,7 @@ final String keyForRefreshToken= "key_RefreshToken";
 final String keyForExpiresOn = "key_ExpiresOn";
 final String keyForThemeDark = "key_AppThemeDark";
 final String keyForUseBiometrics= "key_UserBiometrics";
+final String keyForAppAutoLock= "key_AppAutoLock";
 
 Future<UserData> signInUser() async {
     try{
@@ -75,7 +76,7 @@ Future<String> refreshToken() async {
     prefs.setString(keyForAccessToken, newToken.accessToken);
     prefs.setString(keyForRefreshToken, newToken.refreshToken);
     prefs.setString(keyForExpiresOn, newToken.expiresOn);
-
+    print("Uspesna osvezitev zetona");
     return newToken.accessToken;
   }else{
     prefs.remove(keyForAccessToken);

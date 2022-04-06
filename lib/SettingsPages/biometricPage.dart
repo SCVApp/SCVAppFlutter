@@ -37,6 +37,7 @@ class _BiometricPage extends State<BiometricPage> {
     bool canCheckBiometric = false;
     try {
       canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+      canCheckBiometric = await _localAuthentication.isDeviceSupported();
     } on PlatformException catch (e) {
       print(e);
     }
@@ -98,12 +99,20 @@ class _BiometricPage extends State<BiometricPage> {
   bool _value = false;
 
   changeToggle(bool toggle) async{
+    await _checkBiometric();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _value = !_value;
-    });
-    prefs.setBool(keyForUseBiometrics, _value);
-    widget.notifyParent();
+    if(_canCheckBiometric){
+      setState(() {
+        _value = !_value;
+      });
+      prefs.setBool(keyForUseBiometrics, _value);
+      widget.notifyParent();
+    }else{
+      prefs.setBool(keyForUseBiometrics, false);
+      setState(() {
+        _value = false;
+      });
+    }
   }
 
   Widget build(BuildContext context) {

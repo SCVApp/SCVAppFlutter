@@ -20,6 +20,7 @@ import 'isci.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -115,7 +116,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
 
   
@@ -130,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     loadDataToScreen();
   }
 
@@ -163,6 +165,31 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       selectedIndex = index;
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async{
+    super.didChangeAppLifecycleState(state);
+    if(state == AppLifecycleState.resumed){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      try{
+        final expiresOn = prefs.getString(keyForExpiresOn);
+        DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc();
+        DateTime zdaj = new DateTime.now().toUtc();
+        print(expiredDate);
+        if(zdaj.isAfter(expiredDate)){
+          await refreshToken();
+        }
+      }catch(e){
+        print(e);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
