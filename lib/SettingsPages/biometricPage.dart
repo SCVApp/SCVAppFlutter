@@ -112,6 +112,10 @@ class _BiometricPage extends State<BiometricPage> {
       child: Column(
         children: [
           backButton(context),
+          Container(
+              width: 200,
+              height: 150,
+              child: Image.asset('assets/biometrika.gif',)),
           // ElevatedButton(
           //     child: Icon(Icons.abc),
           //     onPressed: () {
@@ -119,6 +123,7 @@ class _BiometricPage extends State<BiometricPage> {
           //       _authorizeNow();
           //     }),
           Column(
+            
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
