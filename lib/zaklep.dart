@@ -78,15 +78,23 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   @override
   void initState() {
-    _checkBiometric();
-    _authorizeNow();
     super.initState();
+    onStartUp();
+  }
+
+  void onStartUp() async{
+    await _checkBiometric();
+    if(_canCheckBiometric){
+      await _authorizeNow();
+    }
   }
 
   bool _value = true;
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         body: SafeArea(
       child: !_authorizedOrNot
