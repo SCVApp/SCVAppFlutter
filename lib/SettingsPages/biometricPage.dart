@@ -15,10 +15,12 @@ import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/api/local_auth_api.dart';
+import 'package:app_settings/app_settings.dart';
 
 class BiometricPage extends StatefulWidget {
   final Function() notifyParent;
-  BiometricPage({Key key, this.data,@required this.notifyParent}) : super(key: key);
+  BiometricPage({Key key, this.data, @required this.notifyParent})
+      : super(key: key);
 
   final Data data;
 
@@ -71,6 +73,36 @@ class _BiometricPage extends State<BiometricPage> {
     });
   }
 
+  Future<void> _OpozoriloBiometrika() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Opozorilo!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('V telefonu nimaš nastavljenih varnostnih nastavitev.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: const Text('Prekliči'),
+                onPressed: () => Navigator.pop(context, 'Cancel')),
+            TextButton(
+                child: const Text('Odpri nastavitve',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () => AppSettings.openSecuritySettings()),
+          ],
+        );
+      },
+    );
+  }
+
   int selectedPickerItem = 0;
 
   String token = "";
@@ -82,7 +114,7 @@ class _BiometricPage extends State<BiometricPage> {
     loadPrefs();
   }
 
-  void loadPrefs() async{
+  void loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       bool test = prefs.getBool(keyForUseBiometrics);
@@ -98,20 +130,21 @@ class _BiometricPage extends State<BiometricPage> {
 
   bool _value = false;
 
-  changeToggle(bool toggle) async{
+  changeToggle(bool toggle) async {
     await _checkBiometric();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(_canCheckBiometric){
+    if (_canCheckBiometric) {
       setState(() {
         _value = !_value;
       });
       prefs.setBool(keyForUseBiometrics, _value);
       widget.notifyParent();
-    }else{
+    } else {
       prefs.setBool(keyForUseBiometrics, false);
       setState(() {
         _value = false;
       });
+      _OpozoriloBiometrika();
     }
   }
 
@@ -124,7 +157,9 @@ class _BiometricPage extends State<BiometricPage> {
           Container(
               width: 200,
               height: 150,
-              child: Image.asset('assets/biometrika.gif',)),
+              child: Image.asset(
+                'assets/biometrika.gif',
+              )),
           // ElevatedButton(
           //     child: Icon(Icons.abc),
           //     onPressed: () {
@@ -132,12 +167,15 @@ class _BiometricPage extends State<BiometricPage> {
           //       _authorizeNow();
           //     }),
           Column(
-            
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Switch.adaptive(value: _value,onChanged: changeToggle,),
-              Text("Biometrično odlepanje: ${_value?"Omogočeno":"Onemogočeno"}"),
+              Switch.adaptive(
+                value: _value,
+                onChanged: changeToggle,
+              ),
+              Text(
+                  "Biometrično odlepanje: ${_value ? "Omogočeno" : "Onemogočeno"}"),
             ],
           )
         ],

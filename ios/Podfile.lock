@@ -1,4 +1,6 @@
 PODS:
+  - "app_settings (3.0.0+1)":
+    - Flutter
   - babstrap_settings_screen (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -18,6 +20,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - babstrap_settings_screen (from `.symlinks/plugins/babstrap_settings_screen/ios`)
   - Flutter (from `Flutter`)
   - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
@@ -29,6 +32,8 @@ DEPENDENCIES:
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 EXTERNAL SOURCES:
+  app_settings:
+    :path: ".symlinks/plugins/app_settings/ios"
   babstrap_settings_screen:
     :path: ".symlinks/plugins/babstrap_settings_screen/ios"
   Flutter:
@@ -49,6 +54,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   babstrap_settings_screen: 535097da0fa521a47fef6f6678ff2b464ee15937
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_web_auth: 09a0abd245f1a07a3ff4dcf1247a048d89ee12a9
