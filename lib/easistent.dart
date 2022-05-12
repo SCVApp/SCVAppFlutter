@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class EasistentPage extends StatefulWidget{
+class EasistentPage extends StatefulWidget {
   EasistentPage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -12,17 +12,25 @@ class EasistentPage extends StatefulWidget{
   _EasistentPageState createState() => _EasistentPageState();
 }
 
-class _EasistentPageState extends State<EasistentPage>{
+class _EasistentPageState extends State<EasistentPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Enable virtual display.
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+  }
 
   WebViewController _myController;
-      final Completer<WebViewController> _controller =
+  final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
   @override
-  Widget build(BuildContext context){
-      return new WebView(
-        initialUrl: "https://www.easistent.com/",javascriptMode: JavascriptMode.unrestricted,gestureRecognizers: Set(),
-        );
+  Widget build(BuildContext context) {
+    return new WebView(
+      initialUrl: "https://www.easistent.com/",
+      javascriptMode: JavascriptMode.unrestricted,
+      gestureRecognizers: Set(),
+    );
   }
 }
 
