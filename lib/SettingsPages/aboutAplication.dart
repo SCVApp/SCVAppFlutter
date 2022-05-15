@@ -44,9 +44,9 @@ class _AboutAppPage extends State<AboutAppPage> {
   }
 
   bool _value = true;
+
   @override
   Widget build(BuildContext context) {
-    
     odpriLink(link) async {
       if (link.url == "mailto:info.app@scv.si"){
         if(!await launch(link.url)){
@@ -91,22 +91,18 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               for(Widget i in MediaQuery.of(context).size.width < 340 ? smallerPhones() : biggerPhones()) i,
-              Padding(
-                padding: EdgeInsets.only(top:60),
-                child: Text(
-                  "ŠCVApp, 2022. Vse pravice pridržane.",
-                  textAlign: TextAlign.center,
-                  ),
+              Text(
+                "ŠCVApp, 2022. Vse pravice pridržane.",
+                textAlign: TextAlign.center,
               ),
-              Padding(padding: EdgeInsets.only(bottom: 20))
+            Padding(padding: EdgeInsets.only(bottom: 20))
             ],
           )),
-          
         ],
-          ),
+        ),
           
         )
-    ); 
+    );
   }
 
   List<Widget> smallerPhones(){

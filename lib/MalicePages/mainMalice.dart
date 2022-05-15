@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ import 'package:scv_app/Components/komponeneteZaMalico.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
 import 'package:scv_app/MalicePages/ostaleInformacije.dart';
 import 'package:scv_app/MalicePages/mainMalice.dart';
+import 'package:scv_app/malice.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MainMalicePage extends StatefulWidget {
-  MainMalicePage({Key key, this.title}) : super(key: key);
+  MainMalicePage({Key key,this.maliceUser,this.logedOutUser}) : super(key: key);
 
-  final String title;
+  final MaliceUser maliceUser;
+  final Function logedOutUser;
 
   _MainMalicePageState createState() => _MainMalicePageState();
 }
@@ -21,6 +24,11 @@ class _MainMalicePageState extends State<MainMalicePage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
+  void logOutUser() async{
+    await widget.maliceUser.logOutUser();
+    widget.logedOutUser();
+  }
+  
   @override
   Widget build(BuildContext context) {
     // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
@@ -41,7 +49,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
               opis: "Pin koda za prevzem malice:",
-              informacija: "42069",
+              informacija: widget.maliceUser.pinNumber.toString(),
             ),
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
@@ -52,7 +60,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
               opis: "Stanje na računu",
-              informacija: "420,69€",
+              informacija: "${widget.maliceUser.buget}€",
             ),
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
@@ -68,9 +76,10 @@ class _MainMalicePageState extends State<MainMalicePage> {
               infoWidget: Icon(
                 Icons.arrow_forward_ios
               ),
-              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => OstaleInformacijeMalicePage())),
+              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => OstaleInformacijeMalicePage(maliceUser: widget.maliceUser,))),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 20))
+            Padding(padding: EdgeInsets.only(bottom: 20)),
+            TextButton(onPressed: logOutUser, child: Text("Odjava"))
           ],
         ),
       ),

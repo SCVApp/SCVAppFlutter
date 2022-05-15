@@ -136,7 +136,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void loadDataToScreen() async {
-    if (!await this.data.loadData()) {
+    CacheData cacheData = new CacheData();
+    await cacheData.getData();
+    if (!await this.data.loadData(cacheData)) {
       setState(() {
         noUser = true;
       });
@@ -151,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
     setState(() {
-      _childrenWidgets.add(new DomovPage(data: data));
+      _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
       _childrenWidgets.add(new MalicePage());
       // _childrenWidgets.add(new IsciPage());
       _childrenWidgets.add(new EasistentPage());
@@ -159,6 +161,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       _childrenWidgets.add(new NastavitvePage(data: data));
       isLoading = false;
     });
+
+    // setState(() {
+    //     data.schoolData.schoolUrl = "https://app.scv.si/";
+    //     DomovPage page = _childrenWidgets[0];
+    //     page.updateData(data);
+    // });
   }
 
   void changeView(int index) {

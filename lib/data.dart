@@ -109,22 +109,37 @@ class SchoolData {
   }
 }
 
+class CacheData{
+  String schoolUrlKey = "cacheData-SchoolUrl";
+  String schoolUrl;
+  String schoolColorKey = "cacheData-SchoolColor";
+  Color schoolColor;
+
+  getData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      this.schoolUrl = prefs.getString(this.schoolUrlKey);
+      this.schoolColor = HexColor.fromHex(prefs.getString(this.schoolColorKey));
+    }catch (e){
+      this.schoolUrl = "";
+      this.schoolColor = Colors.black;
+    }
+  }
+
+  saveData(String _schoolUrl, String _schoolColorHex) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.schoolUrlKey, _schoolUrl);
+    this.schoolUrl = _schoolUrl;
+    prefs.setString(this.schoolColorKey, _schoolColorHex);
+    this.schoolColor = HexColor.fromHex(_schoolColorHex);
+  }
+}
+
 class Data{
-
-  List<Sola> sole = [
-    Sola("ERŠ", "https://ers.scv.si/sl/", "https://ers.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/24353264bf0bc2a4b9c7d30eb8093fc21bb6c766", Color.fromRGBO(0, 148, 217, 1)),
-    Sola("ŠSD", "https://storitvena.scv.si/sl/", "https://storitvena.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/642f7c2194b696dce4345e4a06f14d3510784603", Color.fromRGBO(238, 91, 160, 1)),
-    Sola("ŠSGO", "https://ssgo.scv.si/sl/", "https://ssgo.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/25447b9cd323fcb5b062a7a450fd3bff7da2b270", Color.fromRGBO(166, 206, 57, 1)),
-    Sola("Gimnazija", "https://gimnazija.scv.si/", "https://gimnazija.scv.si/?cat=3", "https://www.easistent.com/urniki/b29317ef35a6e16dc2012e97a575322a8eae7f56", Color.fromRGBO(255, 202, 5, 1))
-  ];
-
-  Sola izbranaSola = Sola("ERŠ", "https://ers.scv.si/", "https://ers.scv.si/sl/kategorija/novice/", "https://www.easistent.com/urniki/24353264bf0bc2a4b9c7d30eb8093fc21bb6c766", Colors.blue);
-
-  String selectedId = "ERŠ";
   SchoolData schoolData = new SchoolData();
   UserData user = new UserData("","","","","","","",NetworkImage(""),UserStatusData());
 
-  Future<bool> loadData() async{
+  Future<bool> loadData(CacheData cacheData) async{
     final accessToken = await refreshToken();
     if(accessToken == "" || accessToken == null){
       return false;
@@ -134,7 +149,7 @@ class Data{
       return false;
     }
     await this.schoolData.getData(accessToken);
-
+    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color);
     return true;
   }
 }

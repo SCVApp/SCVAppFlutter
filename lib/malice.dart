@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,8 +7,74 @@ import 'package:scv_app/Components/komponeneteZaMalico.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
 import 'package:scv_app/MalicePages/ostaleInformacije.dart';
 import 'package:scv_app/MalicePages/mainMalice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:http/http.dart' as http;
+
+MaliceUser maliceUser = new MaliceUser("");
+
+class MaliceUser {
+  String accessToken;
+  String email;
+  String firstName;
+  String lastName;
+  double buget;
+  String referenceNumber;
+  int pinNumber;
+
+  MaliceUser(String body){
+    if(body != ""){
+      this.loadJson(body);
+    }
+  }
+
+  loadJson(String body){
+    final decoded = jsonDecode(body);
+    this.accessToken = decoded['access_token'];
+    this.email = decoded['student']['email'];
+    this.firstName = decoded['student']['first_name'];
+    this.lastName = decoded['student']['last_name'];
+    this.buget = decoded['student']['budget'];
+    this.referenceNumber = decoded['student']['reference'];
+    this.pinNumber = decoded['student']['pin_number'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'access_token': this.accessToken,
+        'student': {
+          'email':this.email,
+          'first_name':this.firstName,
+          'last_name':this.lastName,
+          'budget':this.buget,
+          'reference':this.referenceNumber,
+          'pin_number':this.pinNumber,
+        },
+      };
+  void saveUser() async{
+    String jsonString = jsonEncode(this);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("userMalica", jsonString);
+  }
+  Future<bool> loadUser() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      String jsonString = prefs.getString("userMalica");
+      if(jsonString != ""){
+        this.loadJson(jsonString);
+        return true;
+      }else{
+        return false;
+      }
+    }catch(e){
+      return false;
+    }
+  }
+  void logOutUser() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("userMalica");
+  }
+}
 
 class MalicePage extends StatefulWidget {
   MalicePage({Key key, this.title}) : super(key: key);
@@ -28,6 +95,35 @@ class _MalicePageState extends State<MalicePage> {
   final field_username_controller = TextEditingController();
   final field_password_controller = TextEditingController();
 
+  String errorMessage = "";
+  void showError(String errMsg){
+    setState(() {
+      errorMessage=errMsg;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadIfLogedIn();
+  }
+
+  logedOutUser(){
+    setState(() {
+      isLogedIn=false;
+      isLoggingIn=false;
+    });
+  }
+
+  loadIfLogedIn() async{
+    if(await maliceUser.loadUser() == true){
+      setState(() {
+        isLogedIn = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
@@ -37,20 +133,41 @@ class _MalicePageState extends State<MalicePage> {
     logInUser() async {
       String username = field_username_controller.text.toString();
       String password = field_password_controller.text.toString();
-      print("Username: $username");
-      print("Password: $password");
-      setState(() {
-        isLoggingIn = true;
-      });
-      await Future.delayed(Duration(seconds: 1),(){
+
+      if(username != "" && password != ""){
         setState(() {
-          isLogedIn = true;
+          isLoggingIn = true;
+        });
+        var formData = new Map<String, dynamic>();
+        formData['email'] = username;
+        formData['password'] = password;
+        showError("");
+        final response = await http.post("https://malice.scv.si/api/v2/auth",body: formData);
+        setState(() {
           isLoggingIn = false;
         });
-      });
+        print(response.statusCode);
+        if(response.statusCode == 200){
+          print('Response ok');
+          maliceUser = new MaliceUser(response.body);
+          setState(() {
+            isLogedIn = true;
+          });
+          await maliceUser.saveUser();
+          field_password_controller.text = "";
+          field_username_controller.text = "";
+        }else if(response.statusCode == 401){
+          var err = jsonDecode(response.body)["errors"];
+          if(err == "Invalid email/password!"){
+            showError("Napačna e-pošta ali geslo");
+          }
+        }else if(response.statusCode == 500){
+          showError("E-pošta ne obstaja");
+        }
+      }
     }
 
-    return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage() : GestureDetector(
+    return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage(maliceUser: maliceUser,logedOutUser: logedOutUser,) : GestureDetector(
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -64,6 +181,7 @@ class _MalicePageState extends State<MalicePage> {
                 child: Container(
                     width: 200,
                     height: 150,
+                    // color: Theme.of(context).primaryColor==Colors.white ? Colors.white : Colors.transparent,
                     child: Image.asset('assets/school_logo.png')),
               ),
             ),
@@ -78,6 +196,7 @@ class _MalicePageState extends State<MalicePage> {
                       hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                       labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                       labelText: 'E-pošta',
+                      errorText: errorMessage==""?null:errorMessage,
                       hintText: 'v formatu ime.priimek@scv.si')),
             ),
             Padding(
@@ -92,6 +211,7 @@ class _MalicePageState extends State<MalicePage> {
                     hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                     labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                     border: OutlineInputBorder(),
+                    errorText: errorMessage==""?null:errorMessage,
                     labelText: 'Geslo',
                     hintText: 'Geslo, uporabljeno za malice'),
               ),
