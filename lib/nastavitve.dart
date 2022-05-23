@@ -18,11 +18,15 @@ import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:get/get.dart';
 
 class NastavitvePage extends StatefulWidget {
-  NastavitvePage({Key key, this.title, this.data}) : super(key: key);
+  NastavitvePage({Key key, this.title, this.data, this.cacheData}) : super(key: key);
 
   final String title;
 
-  final Data data;
+  Data data;
+  final CacheData cacheData;
+  updateData(Data updateData){
+    data = updateData;
+  }
 
   NastavitvePageState createState() => NastavitvePageState();
 }
@@ -190,17 +194,17 @@ class NastavitvePageState extends State<NastavitvePage> {
             padding: EdgeInsets.all(24),
             children: [
               SettingsUserCard(
-                userName: widget.data.user!=null ? widget.data.user.displayName:"",
+                userName: widget.data!=null ? widget.data.user.displayName:widget.cacheData.userDisplayName,
                 // userName: "",
-                userProfilePic: widget.data.user!=null ? widget.data.user.image:AssetImage("asstes/profilePicture.png"),
-                cardColor: widget.data.schoolData.schoolColor,
+                userProfilePic: widget.data!=null ? widget.data.user.image:AssetImage("asstes/profilePicture.png"),
+                cardColor: widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor,
                 userMoreInfo: Text(
-                  widget.data.user != null ? widget.data.user.mail:"",
+                  widget.data != null ? widget.data.user.mail:widget.cacheData.userMail,
                   style: TextStyle(color: Colors.white,fontSize: MediaQuery.of(context).size.height/42 > 14 ? 14 : MediaQuery.of(context).size.height/42),
                 ),
                 data: widget.data,
               ),
-              NastavitveGroup(
+              widget.data == null ? CircularProgressIndicator(color: widget.cacheData.schoolColor,) : NastavitveGroup(
                 items: [
                   SettingsItem(
                     iconStyle: IconStyle(
@@ -238,7 +242,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                             ? "Vklopljeno"
                             : "Izklopljeno",
                     trailing: Switch.adaptive(
-                      activeColor: widget.data.schoolData.schoolColor,
+                      activeColor: widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor,
                       value: _value,
                       onChanged: toggleThemeBtn,
                     ),
@@ -268,7 +272,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                   ),
                 ],
               ),
-              NastavitveGroup(
+              widget.data == null ? CircularProgressIndicator(color: widget.cacheData.schoolColor,) :NastavitveGroup(
                 settingsGroupTitle: "Račun",
                 items: [
                   SettingsItem(
@@ -276,7 +280,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                     icons: Icons.account_circle,
                     iconStyle: IconStyle(
                       iconsColor: Theme.of(context).hintColor,
-                      backgroundColor: widget.data.schoolData.schoolColor,
+                      backgroundColor: widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor,
                     ),
                     title: 'O meni',
                     subtitle: "Informacije mojega računa",
@@ -290,7 +294,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                         iconsColor: Theme.of(context).hintColor,
                         withBackground: true,
                         backgroundColor:
-                            widget.data.schoolData.schoolColor //Barva šole
+                            widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor //Barva šole
                         ),
                   ),
                 ],

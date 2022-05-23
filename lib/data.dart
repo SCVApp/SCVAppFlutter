@@ -114,24 +114,42 @@ class CacheData{
   String schoolUrl;
   String schoolColorKey = "cacheData-SchoolColor";
   Color schoolColor;
+  String userDisplayNameKey = "cacheData-UserDisplayName";
+  String userDisplayName;
+  String userMailKey = "cacheData-UserDisplayMail";
+  String userMail;
+  String schoolScheduleKey= "cacheData-SchoolSchedule";
+  String schoolSchedule;
 
   getData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       this.schoolUrl = prefs.getString(this.schoolUrlKey);
       this.schoolColor = HexColor.fromHex(prefs.getString(this.schoolColorKey));
+      this.userDisplayName = prefs.getString(this.userDisplayNameKey);
+      this.userMail = prefs.getString(this.userMailKey);
+      this.schoolSchedule = prefs.getString(this.schoolScheduleKey);
     }catch (e){
       this.schoolUrl = "";
       this.schoolColor = Colors.black;
+      this.userDisplayName = "Not loaded";
+      this.userMail = "not.loaded@scv.si";
+      this.schoolSchedule = "";
     }
   }
 
-  saveData(String _schoolUrl, String _schoolColorHex) async{
+  saveData(String _schoolUrl, String _schoolColorHex, String _userDisplayName, String _userMail, String _schoolSchedule) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(this.schoolUrlKey, _schoolUrl);
     this.schoolUrl = _schoolUrl;
     prefs.setString(this.schoolColorKey, _schoolColorHex);
     this.schoolColor = HexColor.fromHex(_schoolColorHex);
+    prefs.setString(this.userDisplayNameKey, _userDisplayName);
+    this.userDisplayName = _userDisplayName;
+    prefs.setString(this.userMailKey, _userMail);
+    this.userMail = _userMail;
+    prefs.setString(this.schoolScheduleKey, _schoolSchedule);
+    this.schoolSchedule = _schoolSchedule;
   }
 }
 
@@ -149,7 +167,7 @@ class Data{
       return false;
     }
     await this.schoolData.getData(accessToken);
-    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color);
+    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl);
     return true;
   }
 }

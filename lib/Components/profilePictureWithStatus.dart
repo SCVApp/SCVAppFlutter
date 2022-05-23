@@ -16,7 +16,7 @@ Widget profilePictureWithStatus(Data data,BuildContext context){
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(imageSize/2),
                         child: Image(
-                          image: data.user != null ? data.user.image : AssetImage("assets/profilePicture.png"),
+                          image: data != null ? data.user.image : AssetImage("assets/profilePicture.png"),
                           height: imageSize,
                         ),
                     ),
@@ -26,7 +26,7 @@ Widget profilePictureWithStatus(Data data,BuildContext context){
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Image(
-                          image: data.user != null ? data.user.status.assetImage:AssetImage("assets/statusIcons/Unknown.png"),
+                          image: data != null ? data.user.status.assetImage:AssetImage("assets/statusIcons/Unknown.png"),
                           height: imageSize/3.75,
                         ),
                   ),

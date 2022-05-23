@@ -125,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Data data = new Data();
   bool isLoading = true;
   bool noUser = false;
+  CacheData cacheData = new CacheData();
 
   final List<Widget> _childrenWidgets = [];
 
@@ -136,8 +137,18 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void loadDataToScreen() async {
-    CacheData cacheData = new CacheData();
-    await cacheData.getData();
+    CacheData cacheData2 = new CacheData();
+    await cacheData2.getData();
+    setState(() {
+      cacheData = cacheData2;
+      _childrenWidgets.add(new DomovPage(cacheData: cacheData2,));
+      _childrenWidgets.add(new MalicePage());
+      // _childrenWidgets.add(new IsciPage());
+      _childrenWidgets.add(new EasistentPage());
+      _childrenWidgets.add(new UrnikPage(cacheData: cacheData2));
+      _childrenWidgets.add(new NastavitvePage(cacheData: cacheData2));
+      isLoading = false;
+    });
     if (!await this.data.loadData(cacheData)) {
       setState(() {
         noUser = true;
@@ -153,19 +164,29 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       MaterialPageRoute(builder: (context) => OnBoardingPage()));
     }
     setState(() {
-      _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
-      _childrenWidgets.add(new MalicePage());
-      // _childrenWidgets.add(new IsciPage());
-      _childrenWidgets.add(new EasistentPage());
-      _childrenWidgets.add(new UrnikPage(data: data));
-      _childrenWidgets.add(new NastavitvePage(data: data));
-      isLoading = false;
+        DomovPage page = _childrenWidgets[0];
+        page.updateData(data);
+        UrnikPage page2 = _childrenWidgets[3];
+        page2.updateData(data);
+        NastavitvePage page3 = _childrenWidgets[4];
+        page3.updateData(data);
     });
-
+    var prevS = selectedIndex;
+    setState(() {
+      selectedIndex=prevS != 0 ? 0 : 1;
+    });
+    await Future.delayed(Duration(milliseconds: 10));
+    setState(() {
+      selectedIndex=prevS;
+    });
     // setState(() {
-    //     data.schoolData.schoolUrl = "https://app.scv.si/";
-    //     DomovPage page = _childrenWidgets[0];
-    //     page.updateData(data);
+    //   _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
+    //   _childrenWidgets.add(new MalicePage());
+    //   // _childrenWidgets.add(new IsciPage());
+    //   _childrenWidgets.add(new EasistentPage());
+    //   _childrenWidgets.add(new UrnikPage(data: data));
+    //   _childrenWidgets.add(new NastavitvePage(data: data));
+    //   isLoading = false;
     // });
   }
 
@@ -204,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: selectedIndex == 0
-          ? data.schoolData.schoolColor
+          ? (data.schoolData.schoolColor != null ? data.schoolData.schoolColor : cacheData.schoolColor)
           : Theme.of(context).backgroundColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: selectedIndex == 0
@@ -222,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         theme: FFNavigationBarTheme(
           barBackgroundColor: Theme.of(context).bottomAppBarColor,
           selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
-          selectedItemBackgroundColor: data.schoolData.schoolColor,
+          selectedItemBackgroundColor: (data.schoolData.schoolColor != null ? data.schoolData.schoolColor : cacheData.schoolColor),
           selectedItemIconColor: Theme.of(context).bottomAppBarColor,
           selectedItemLabelColor: Theme.of(context).primaryColor,
         ),

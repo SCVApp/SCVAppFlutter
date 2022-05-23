@@ -5,11 +5,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'data.dart';
 
 class UrnikPage extends StatefulWidget{
-  UrnikPage({Key key, this.title,this.data}) : super(key: key);
+  UrnikPage({Key key, this.title,this.data,this.cacheData}) : super(key: key);
 
   final String title;
 
-  final Data data;
+  Data data;
+  final CacheData cacheData;
+  updateData(Data updateData){
+    data = updateData;
+  }
 
   _UrnikPageState createState() => _UrnikPageState();
 }
@@ -21,7 +25,7 @@ class _UrnikPageState extends State<UrnikPage>{
 
   @override
   Widget build(BuildContext context){
-      return new WebView(initialUrl: widget.data.schoolData.urnikUrl,javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+      return new WebView(initialUrl: widget.data!=null?widget.data.schoolData.urnikUrl:widget.cacheData.schoolSchedule,javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
         _myController = c;
       });
   }
