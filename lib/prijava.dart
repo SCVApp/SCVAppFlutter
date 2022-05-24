@@ -70,7 +70,7 @@ Future<String> refreshToken() async {
   final expiresOn = prefs.getString(keyForExpiresOn);
 
   Token oldToken = new Token(accessToken, refreshToken, expiresOn);
-  final respons = await http.post("$apiUrl/auth/refreshToken/",body: oldToken.toJson());
+  final respons = await http.post(Uri.parse("$apiUrl/auth/refreshToken/"),body: oldToken.toJson());
   if(respons.statusCode == 200){
     Token newToken = new Token.fromJson(jsonDecode(respons.body));
     prefs.setString(keyForAccessToken, newToken.accessToken);

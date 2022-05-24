@@ -142,7 +142,7 @@ class _MalicePageState extends State<MalicePage> {
         formData['email'] = username;
         formData['password'] = password;
         showError("");
-        final response = await http.post("https://malice.scv.si/api/v2/auth",body: formData);
+        final response = await http.post(Uri.parse("https://malice.scv.si/api/v2/auth"),body: formData);
         setState(() {
           isLoggingIn = false;
         });

@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:home_widget/home_widget.dart';
-import 'package:http/http.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
@@ -16,11 +14,9 @@ import 'nastavitve.dart';
 import 'domov.dart';
 import 'urnik.dart';
 import 'data.dart';
-import 'isci.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:get/get.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:intl/intl.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -51,7 +47,6 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   @override
   void initState() {
     super.initState();
-    // HomeWidget.setAppGroupId('group.pripomocki');
     isLogedIn();
   }
 
@@ -118,9 +113,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
-
-  
-
   int selectedIndex = 0;
   Data data = new Data();
   bool isLoading = true;
@@ -132,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    // WidgetsBinding.instance.addObserver(this);
     loadDataToScreen();
   }
 
@@ -172,13 +164,15 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         page3.updateData(data);
     });
     var prevS = selectedIndex;
-    setState(() {
-      selectedIndex=prevS != 0 ? 0 : 1;
-    });
-    await Future.delayed(Duration(milliseconds: 10));
-    setState(() {
-      selectedIndex=prevS;
-    });
+    if(prevS != 0){
+      setState(() {
+        selectedIndex = 0;
+      });
+      await Future.delayed(Duration(milliseconds: 10));
+      setState(() {
+        selectedIndex=prevS;
+      });
+    }
     // setState(() {
     //   _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
     //   _childrenWidgets.add(new MalicePage());
@@ -196,30 +190,30 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async{
-    super.didChangeAppLifecycleState(state);
-    if(state == AppLifecycleState.resumed){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      try{
-        final expiresOn = prefs.getString(keyForExpiresOn);
-        DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc();
-        DateTime zdaj = new DateTime.now().toUtc();
-        print(expiredDate);
-        if(zdaj.isAfter(expiredDate)){
-          await refreshToken();
-        }
-      }catch(e){
-        print(e);
-      }
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) async{
+  //   super.didChangeAppLifecycleState(state);
+  //   if(state == AppLifecycleState.resumed){
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     try{
+  //       final expiresOn = prefs.getString(keyForExpiresOn);
+  //       DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc();
+  //       DateTime zdaj = new DateTime.now().toUtc();
+  //       print(expiredDate);
+  //       if(zdaj.isAfter(expiredDate)){
+  //         await refreshToken();
+  //       }
+  //     }catch(e){
+  //       print(e);
+  //     }
+  //   }
+  // }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -52,8 +52,7 @@ class _ZaklepPageState extends State<ZaklepPage> {
     try {
       isAuthorized = await _localAuthentication.authenticate(
         localizedReason: "Za vstop se autoriziraj:",
-        useErrorDialogs: true,
-        stickyAuth: true,
+        options: AuthenticationOptions(useErrorDialogs: true,stickyAuth: true)
       );
     } on PlatformException catch (e) {
       print(e);

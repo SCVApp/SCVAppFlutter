@@ -61,7 +61,7 @@ class OnBoardingPage extends StatelessWidget {
           next: Icon(Icons.arrow_forward),
           dotsDecorator: getDotDecoration(),
           // globalBackgroundColor: Theme.of(context).primaryColor,
-          skipFlex: 0,
+          skipOrBackFlex: 0,
           nextFlex: 0,
           // isProgressTap: false,
           // isProgress: false,
@@ -91,7 +91,7 @@ class OnBoardingPage extends StatelessWidget {
   PageDecoration getPageDecoration() => PageDecoration(
         titleTextStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         bodyTextStyle: TextStyle(fontSize: 20),
-        descriptionPadding: EdgeInsets.all(16).copyWith(bottom: 0),
+        bodyPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
         pageColor: Get.isDarkMode ? HexColor.fromHex("#121212") : Color.fromARGB(255, 236, 236, 236),
       );
