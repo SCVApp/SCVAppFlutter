@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:scv_app/Components/NavBarItemv2.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
@@ -248,27 +249,27 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           });
         },
         items: [
-          FFNavigationBarItem(
+          FFNavigationBarItemv2(
             iconData: Icons.home_rounded,
             label: 'Domov',
           ),
-          FFNavigationBarItem(
+          FFNavigationBarItemv2(
             iconData: Icons.fastfood,
             label: 'Malice',
           ),
-          /* FFNavigationBarItem(
+          /* FFNavigationBarItemv2(
             iconData: Icons.person_search,
             label: 'P.O.',
           ), */
-          FFNavigationBarItem(
+          FFNavigationBarItemv2(
             iconData: FluttereAIcon.ea,
             label: 'eAsistent',
           ),
-          FFNavigationBarItem(
+          FFNavigationBarItemv2(
             iconData: Icons.calendar_today_rounded,
             label: 'Urnik',
           ),
-          FFNavigationBarItem(
+          FFNavigationBarItemv2(
             iconData: Icons.settings,
             label: 'Nastavitve',
           ),
