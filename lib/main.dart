@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -134,12 +133,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await cacheData2.getData();
     setState(() {
       cacheData = cacheData2;
-      _childrenWidgets.add(new DomovPage(cacheData: cacheData2,));
+      _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
       _childrenWidgets.add(new MalicePage());
       // _childrenWidgets.add(new IsciPage());
       _childrenWidgets.add(new EasistentPage());
-      _childrenWidgets.add(new UrnikPage(cacheData: cacheData2));
-      _childrenWidgets.add(new NastavitvePage(cacheData: cacheData2));
+      _childrenWidgets.add(new UrnikPage(cacheData: cacheData));
+      _childrenWidgets.add(new NastavitvePage(cacheData: cacheData));
       isLoading = false;
     });
     if (!await this.data.loadData(cacheData)) {
@@ -178,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     //   _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
     //   _childrenWidgets.add(new MalicePage());
     //   // _childrenWidgets.add(new IsciPage());
-    //   _childrenWidgets.add(new EasistentPage());
+    //  _childrenWidgets.add(new EasistentPage());
     //   _childrenWidgets.add(new UrnikPage(data: data));
     //   _childrenWidgets.add(new NastavitvePage(data: data));
     //   isLoading = false;

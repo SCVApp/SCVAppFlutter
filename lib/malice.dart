@@ -146,9 +146,7 @@ class _MalicePageState extends State<MalicePage> {
         setState(() {
           isLoggingIn = false;
         });
-        print(response.statusCode);
         if(response.statusCode == 200){
-          print('Response ok');
           maliceUser = new MaliceUser(response.body);
           setState(() {
             isLogedIn = true;
@@ -185,12 +183,14 @@ class _MalicePageState extends State<MalicePage> {
                     child: Image.asset('assets/school_logo.png')),
               ),
             ),
-            Padding(
+            AutofillGroup(child: Column(children: [
+              Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                   controller: field_username_controller,
                   autocorrect: false,
+                  autofillHints: [AutofillHints.email],
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -207,6 +207,7 @@ class _MalicePageState extends State<MalicePage> {
                 controller: field_password_controller,
                 obscureText: true,
                 autocorrect: false,
+                autofillHints: [AutofillHints.password],
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                     labelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -216,6 +217,7 @@ class _MalicePageState extends State<MalicePage> {
                     hintText: 'Geslo, uporabljeno za malice'),
               ),
             ),
+            ],)),
             Container(
               height: 50,
               width: 250,

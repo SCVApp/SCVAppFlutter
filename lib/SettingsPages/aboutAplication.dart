@@ -38,18 +38,25 @@ class _AboutAppPage extends State<AboutAppPage> {
 
   String token = "";
 
+  ScrollController scrollController = ScrollController();
+  
+
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(_afterBuild);
   }
 
   bool _value = true;
+
+  bool isListViewBigger = true;
 
   @override
   Widget build(BuildContext context) {
     odpriLink(link) async {
       if (link.url == "mailto:info.app@scv.si"){
-        if(!await launch(link.url)){
+        if(!await launchUrl(Uri.parse(link.url),mode: LaunchMode.externalApplication)){
           print("Email can't be opened");
         }
       }
@@ -61,6 +68,7 @@ class _AboutAppPage extends State<AboutAppPage> {
             children: [
               backButton(context),
           Expanded(child: ListView(
+            controller: scrollController,
             padding: EdgeInsets.symmetric(horizontal: 35),
             children: [
               Padding(
@@ -91,19 +99,43 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               for(Widget i in MediaQuery.of(context).size.width < 340 ? smallerPhones() : biggerPhones()) i,
-              Text(
+              isListViewBigger ? Column(children: [
+                Padding(padding: EdgeInsets.only(top: 30)),
+                Text(
                 "ŠCVApp, 2022. Vse pravice pridržane.",
                 textAlign: TextAlign.center,
               ),
+              Padding(padding: EdgeInsets.only(bottom: 20))]) : SizedBox(),
             Padding(padding: EdgeInsets.only(bottom: 20))
             ],
           )),
+           !isListViewBigger ? Column(children: [Text(
+                "ŠCVApp, 2022. Vse pravice pridržane.",
+                textAlign: TextAlign.center,
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 5))]) : SizedBox(),
         ],
         ),
           
         )
     );
   }
+
+  Future<void> _afterBuild (timestamp) async {
+    if (scrollController.hasClients) {
+      if(scrollController.position.maxScrollExtent > 0.0){
+        setState(() {
+          isListViewBigger = true;
+        });
+      }else{
+        setState(() {
+          isListViewBigger = false;
+        });
+      }
+    }   
+  }
+
+  
 
   List<Widget> smallerPhones(){
     print(MediaQuery.of(context).size.width);
@@ -125,10 +157,9 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               onTap: (){
-                launch(
-                "https://app.scv.si",
-                forceSafariVC: false,
-                forceWebView: false,
+                launchUrl(
+                Uri.parse("https://app.scv.si"),
+                mode: LaunchMode.externalApplication
                 );
               },
             )
@@ -152,10 +183,9 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               onTap: (){
-                launch(
-                "https://app.scv.si/o-nas",
-                forceSafariVC: false,
-                forceWebView: false,
+                launchUrl(
+                Uri.parse("https://app.scv.si/o-nas"),
+                mode: LaunchMode.externalApplication
                 );
               },
             )
@@ -183,10 +213,9 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               onTap: (){
-                launch(
-                "https://app.scv.si",
-                forceSafariVC: false,
-                forceWebView: false,
+                launchUrl(
+                Uri.parse("https://app.scv.si"),
+                mode: LaunchMode.externalApplication
                 );
               },
             )
@@ -209,10 +238,9 @@ class _AboutAppPage extends State<AboutAppPage> {
                 ),
               ),
               onTap: (){
-                launch(
-                "https://app.scv.si/o-nas",
-                forceSafariVC: false,
-                forceWebView: false,
+                launchUrl(
+                Uri.parse("https://app.scv.si/o-nas"),
+                mode: LaunchMode.externalApplication
                 );
               },
             )
