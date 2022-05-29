@@ -128,6 +128,7 @@ class NastavitvePageState extends State<NastavitvePage> {
       prefs.remove(keyForExpiresOn);
       prefs.remove(keyForThemeDark);
       prefs.remove(keyForUseBiometrics);
+      widget.cacheData.deleteKeys(prefs);
 
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(

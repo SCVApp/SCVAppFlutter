@@ -131,7 +131,7 @@ class CacheData{
       this.schoolSchedule = prefs.getString(this.schoolScheduleKey);
     }catch (e){
       this.schoolUrl = "";
-      this.schoolColor = Colors.black;
+      this.schoolColor = Colors.blue;
       this.userDisplayName = "Not loaded";
       this.userMail = "not.loaded@scv.si";
       this.schoolSchedule = "";
@@ -150,6 +150,14 @@ class CacheData{
     this.userMail = _userMail;
     prefs.setString(this.schoolScheduleKey, _schoolSchedule);
     this.schoolSchedule = _schoolSchedule;
+  }
+
+  deleteKeys(SharedPreferences prefs){
+    prefs.remove(this.schoolUrlKey);
+    prefs.remove(this.schoolColorKey);
+    prefs.remove(this.userDisplayNameKey);
+    prefs.remove(this.userMailKey);
+    prefs.remove(this.schoolScheduleKey);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
@@ -16,6 +17,7 @@ import 'urnik.dart';
 import 'data.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 void main() {
@@ -124,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     loadDataToScreen();
   }
 
@@ -151,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       prefs.remove(keyForExpiresOn);
       prefs.remove(keyForThemeDark);
       prefs.remove(keyForUseBiometrics);
+      cacheData.deleteKeys(prefs);
 
       Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => OnBoardingPage()));
@@ -167,6 +170,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     if(prevS != 0){
       setState(() {
         selectedIndex = 0;
+      });
+      await Future.delayed(Duration(milliseconds: 10));
+      setState(() {
+        selectedIndex=prevS;
+      });
+    }else if(cacheData.schoolUrl == ""){
+      setState(() {
+        selectedIndex = 1;
       });
       await Future.delayed(Duration(milliseconds: 10));
       setState(() {
@@ -190,30 +201,29 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
   }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) async{
-  //   super.didChangeAppLifecycleState(state);
-  //   if(state == AppLifecycleState.resumed){
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     try{
-  //       final expiresOn = prefs.getString(keyForExpiresOn);
-  //       DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc();
-  //       DateTime zdaj = new DateTime.now().toUtc();
-  //       print(expiredDate);
-  //       if(zdaj.isAfter(expiredDate)){
-  //         await refreshToken();
-  //       }
-  //     }catch(e){
-  //       print(e);
-  //     }
-  //   }
-  // }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async{
+    super.didChangeAppLifecycleState(state);
+    if(state == AppLifecycleState.resumed){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      try{
+        final expiresOn = prefs.getString(keyForExpiresOn);
+        DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc().subtract(Duration(minutes:5));
+        DateTime zdaj = new DateTime.now().toUtc();
+        if(zdaj.isAfter(expiredDate)){
+          await refreshToken();
+        }
+      }catch(e){
+        print(e);
+      }
+    }
+  }
 
-  // @override
-  // void dispose() {
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: Center(
             child: SafeArea(
                 child: isLoading
-                    ? CircularProgressIndicator()
+                    ? CircularProgressIndicator(color: cacheData.schoolColor,)
                     : _childrenWidgets[selectedIndex])),
       ),
       bottomNavigationBar: FFNavigationBar(
