@@ -19,6 +19,7 @@ final String keyForExpiresOn = "key_ExpiresOn";
 final String keyForThemeDark = "key_AppThemeDark";
 final String keyForUseBiometrics= "key_UserBiometrics";
 final String keyForAppAutoLock= "key_AppAutoLock";
+final String keyForAppAutoLockTimer= "key_AppAutoLockTimer";
 
 Future<UserData> signInUser() async {
     try{

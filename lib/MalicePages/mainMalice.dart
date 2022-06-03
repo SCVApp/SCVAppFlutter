@@ -60,7 +60,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
               opis: "Stanje na računu",
-              informacija: "${widget.maliceUser.buget}€",
+              informacija: "${widget.maliceUser.buget.toStringAsFixed(2)}€",
             ),
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/urnik.dart';
@@ -125,9 +126,34 @@ class _BiometricPage extends State<BiometricPage> {
     } catch (e) {
       print(e);
     }
+
+    try{
+      int timeInMinutes = prefs.getInt(keyForAppAutoLockTimer);
+      if(timeInMinutes != null){
+        int izbira = 1;
+        if(timeInMinutes == 0){
+          izbira = 0;
+        }else if(timeInMinutes == 5){
+          izbira = 1;
+        }else if(timeInMinutes == 10){
+          izbira = 2;
+        }else if(timeInMinutes == 30){
+          izbira = 3;
+        }else{
+          izbira = 4;
+        }
+        setState(() {
+          selectedAutoLockItem = izbira;
+        });
+      }
+    }catch(e){
+      print(e);
+    }
   }
 
   bool _value = false;
+
+  int selectedAutoLockItem = 1;
 
   changeToggle(bool toggle) async {
     await _checkBiometric();
@@ -175,10 +201,53 @@ class _BiometricPage extends State<BiometricPage> {
               ),
               Text(
                   "Biometrično odlepanje: ${_value ? "Omogočeno" : "Onemogočeno"}"),
+              _value?ListTile(title:Text("Zaklep aplikacije v odzadju: " + autoLockMods[selectedAutoLockItem].toString()), onTap: (){
+                showPicker(context);
+              }):SizedBox()
             ],
           )
         ],
       ),
     ));
   }
+
+  List<String> autoLockMods = [
+    "Takoj",
+    "Po 5 minutah",
+    "Po 10 minutah",
+    "Po 30 minutah",
+    "Nikoli",
+  ];
+
+  createPickerItems(){
+    return autoLockMods.map((e) => new PickerItem(text: new Text(e), value: autoLockMods.indexOf(e))
+    ).toList();
+  }
+
+  showPicker(BuildContext context){
+    Picker picker = new Picker(adapter: PickerDataAdapter(data: createPickerItems()), onConfirm: selectAutoLock, selecteds: [selectedAutoLockItem]);
+    picker.showModal(context);
+  }
+
+  selectAutoLock(Picker picker, List value) async {
+    if(value.length > 0){
+      int newValue = value[0];
+      setState(() {
+        selectedAutoLockItem = newValue;
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int timeInMinutes = 0;
+      if(newValue == 1){
+        timeInMinutes = 5;
+      }else if(newValue == 2){
+        timeInMinutes = 10;
+      }else if(newValue == 3){
+        timeInMinutes = 30;
+      }else if(newValue == 4){
+        timeInMinutes = 10001;
+      }
+      prefs.setInt(keyForAppAutoLockTimer, timeInMinutes);
+    }
+  }
+
 }

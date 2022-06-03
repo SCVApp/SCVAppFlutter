@@ -131,6 +131,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void loadDataToScreen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(keyForAppAutoLock);
     CacheData cacheData2 = new CacheData();
     await cacheData2.getData();
     setState(() {
@@ -147,7 +149,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       setState(() {
         noUser = true;
       });
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(keyForAccessToken);
       prefs.remove(keyForRefreshToken);
       prefs.remove(keyForExpiresOn);
@@ -216,6 +217,39 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       }catch(e){
         print(e);
       }
+
+      try{
+        bool isBio = prefs.getBool(keyForUseBiometrics);
+        int autoLock = prefs.getInt(keyForAppAutoLock);
+        int zdaj = new DateTime.now().toUtc().millisecondsSinceEpoch;
+        print(autoLock);
+        if(isBio == true){
+          prefs.remove(keyForAppAutoLock);
+          if(zdaj >= autoLock){
+            Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => ZaklepPage()));
+          }
+        }
+      }catch(e){
+        print(e);
+      }
+    }else if(state == AppLifecycleState.paused){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int minuts=5;
+      try{
+        int minutuesToAutoLOCK = prefs.getInt(keyForAppAutoLockTimer);
+        if(minutuesToAutoLOCK == 0){
+          minuts = 0;
+        }else if(minutuesToAutoLOCK > 10000){
+          prefs.remove(keyForAppAutoLockTimer);
+          return;
+        }else{
+          minuts = minutuesToAutoLOCK;
+        }
+      }catch(e){
+        minuts=5;
+      }
+      prefs.setInt(keyForAppAutoLock, new DateTime.now().toUtc().add(Duration(minutes:minuts)).millisecondsSinceEpoch);
     }
   }
 

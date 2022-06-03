@@ -19,7 +19,7 @@ class MaliceUser {
   String email;
   String firstName;
   String lastName;
-  double buget;
+  num buget;
   String referenceNumber;
   int pinNumber;
 
