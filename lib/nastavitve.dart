@@ -226,7 +226,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: HexColor.fromHex("#0094d9"),
                     ),
                     title: 'Orodja',
-                    subtitle: "Dodatna orodja, ki jih ponuja ŠCVApp.",  // check this one, on an iPhone 13 the text is truncated at 'ponuja'
+                    subtitle: "Ostala orodja",  // check this one, on an iPhone 13 the text is truncated at 'ponuja'
                   ),
                   SettingsItem(
                     onTap: () {},
