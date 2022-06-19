@@ -222,7 +222,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         bool isBio = prefs.getBool(keyForUseBiometrics);
         int autoLock = prefs.getInt(keyForAppAutoLock);
         int zdaj = new DateTime.now().toUtc().millisecondsSinceEpoch;
-        print(autoLock);
         if(isBio == true){
           prefs.remove(keyForAppAutoLock);
           if(zdaj >= autoLock){
@@ -240,6 +239,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         int minutuesToAutoLOCK = prefs.getInt(keyForAppAutoLockTimer);
         if(minutuesToAutoLOCK == 0){
           minuts = 0;
+          prefs.setInt(keyForAppAutoLock, new DateTime.now().toUtc().millisecondsSinceEpoch);
+          return;
         }else if(minutuesToAutoLOCK > 10000){
           prefs.remove(keyForAppAutoLockTimer);
           return;

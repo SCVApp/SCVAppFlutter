@@ -160,11 +160,10 @@ class _MalicePageState extends State<MalicePage> {
             showError("Napačna e-pošta ali geslo");
           }
         }else if(response.statusCode == 500){
-          showError("E-pošta ne obstaja");
+          showError("Napačna e-pošta ali geslo");
         }
       }
     }
-
     return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage(maliceUser: maliceUser,logedOutUser: logedOutUser,) : GestureDetector(
       child: SingleChildScrollView(
         child: Column(

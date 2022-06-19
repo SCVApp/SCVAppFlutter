@@ -49,7 +49,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
               opis: "Pin koda za prevzem malice:",
-              informacija: widget.maliceUser.pinNumber.toString(),
+              informacija:  widget.maliceUser != null ? widget.maliceUser.pinNumber.toString() : "",
             ),
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
@@ -60,7 +60,7 @@ class _MainMalicePageState extends State<MainMalicePage> {
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(
               opis: "Stanje na računu",
-              informacija: "${widget.maliceUser.buget.toStringAsFixed(2)}€",
+              informacija: "${widget.maliceUser != null ? widget.maliceUser.buget.toStringAsFixed(2):""}€",
             ),
             Padding(padding: EdgeInsets.only(top:20)),
             malica_Info(

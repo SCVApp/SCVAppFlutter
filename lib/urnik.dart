@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'data.dart';
 
 class UrnikPage extends StatefulWidget{
@@ -19,6 +19,14 @@ class UrnikPage extends StatefulWidget{
 }
 
 class _UrnikPageState extends State<UrnikPage>{
+
+  @override
+  Widget build(BuildContext context) {
+    return MainUrnikPage(data: widget.data,);
+  }
+}
+
+/*
   WebViewController _myController;
       final Completer<WebViewController> _controller =
       Completer<WebViewController>();
@@ -29,4 +37,4 @@ class _UrnikPageState extends State<UrnikPage>{
         _myController = c;
       });
   }
-}
+*/

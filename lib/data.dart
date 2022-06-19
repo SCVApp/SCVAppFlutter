@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +20,52 @@ class Sola{
     this.noviceUrl = _noviceUrl;
     this.urnikUrl = _urnikUrl;
     this.color = _color;
+  }
+}
+
+class UrnikData{
+  UrnikBoxStyle nowStyle;
+  UrnikBoxStyle nextStyle;
+  UrnikBoxStyle otherStyle;
+
+  UrnikData({this.nowStyle,this.nextStyle,this.otherStyle});
+
+  Color lightColor(Color color, int howMuch){
+    int newRed = color.red + howMuch;
+    int newGreen = color.green + howMuch;
+    int newBlue = color.blue + howMuch;
+    newRed = newRed > 255 ? 255 : newRed;
+    newGreen = newGreen > 255 ? 255 : newGreen;
+    newBlue = newBlue > 255 ? 255 : newBlue;
+    newRed = newRed < 0 ? 0 : newRed;
+    newGreen = newGreen < 0 ? 0 : newGreen;
+    newBlue = newBlue < 0 ? 0 : newBlue;
+    return Color.fromARGB(255, newRed, newGreen, newBlue);
+  }
+
+  void getFromSchoolColor(Color schoolColor, String schoolId){
+    Color ptextColor = schoolId != "GIM" ? Colors.white : Colors.black;
+    Color stextColor = schoolId != "GIM" ? HexColor.fromHex("#e4e4e4") : HexColor.fromHex("#4f4f4f");
+    Color faitedBgColor = this.lightColor(schoolColor, 40);
+
+    this.nowStyle = new UrnikBoxStyle(
+      bgColor: schoolColor,
+      primaryTextColor: ptextColor,
+      secundaryTextColor: stextColor,
+    );
+
+    this.nextStyle = new UrnikBoxStyle(
+      bgColor: faitedBgColor,
+      primaryTextColor: Colors.black,
+      secundaryTextColor: HexColor.fromHex("#4f4f4f"),
+    );
+
+    this.otherStyle = new UrnikBoxStyle(
+      bgColor: HexColor.fromHex("#fafafa"),
+      primaryTextColor: this.nextStyle.primaryTextColor,
+      secundaryTextColor: this.nextStyle.secundaryTextColor,
+    );
+
   }
 }
 
@@ -92,6 +139,7 @@ class SchoolData {
     // then parse the JSON.
     var decoded = jsonDecode(response.body);
     this.id = decoded["id"].toString();
+    // this.id = "SSD";
     this.urnikUrl = decoded["urnikUrl"].toString();
     this.color = decoded["color"].toString();
     this.name = decoded["name"].toString();
@@ -101,6 +149,7 @@ class SchoolData {
       this.color = "#8253D7";
     }
     schoolColor = HexColor.fromHex(this.color);
+    // schoolColor = HexColor.fromHex("#EE5BA0");
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -164,6 +213,7 @@ class CacheData{
 class Data{
   SchoolData schoolData = new SchoolData();
   UserData user = new UserData("","","","","","","",NetworkImage(""),UserStatusData());
+  UrnikData urnikData = new UrnikData();
 
   Future<bool> loadData(CacheData cacheData) async{
     final accessToken = await refreshToken();
@@ -175,6 +225,7 @@ class Data{
       return false;
     }
     await this.schoolData.getData(accessToken);
+    this.urnikData.getFromSchoolColor(this.schoolData.schoolColor, this.schoolData.id);
     cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl);
     return true;
   }
