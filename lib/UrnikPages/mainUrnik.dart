@@ -75,7 +75,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
         var painter1 = TextPainter(
           textDirection: TextDirection.ltr,
           text: TextSpan(
-            text: 'Sedaj na urniku',
+            text: 'Trenutno na urniku',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),

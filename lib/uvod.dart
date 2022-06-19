@@ -29,14 +29,14 @@ class OnBoardingPage extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'Dobrodošel/a na aplikaciji ŠCVApp!',
+              title: 'Dobrodošel/a v aplikaciji ŠCVApp!',
               body: '',
               image: buildImage('assets/school_logo.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: 'Vsa orodja na enem mestu.',
-              body: 'Vsa orodja, potrebna za šolanje na enem mestu.',
+              body: 'Dijakom koristna orodja, zbrana na enem mestu.',
               image: buildImage('assets/orodja.png'),
               decoration: getPageDecoration(),
             ),
@@ -47,9 +47,8 @@ class OnBoardingPage extends StatelessWidget {
             //   decoration: getPageDecoration(),
             // ),
             PageViewModel(
-              title: 'Preprosto. Varno.',
-              body:
-                  'Prijavi se z šolskim računom in dostopaj do vseh funkcij ŠCVAppa!',
+              title: 'Preprosto in varno',
+              body: 'Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.',
               image: buildImage('assets/microsoft.png'),
               decoration: getPageDecoration(),
             ),

@@ -195,7 +195,7 @@ class _MalicePageState extends State<MalicePage> {
                       hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                       labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                       labelText: 'E-pošta',
-                      hintText: 'v formatu ime.priimek@scv.si')),
+                      hintText: 'E-poštni naslov v obliki ime.priimek@scv.si')),
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -211,7 +211,7 @@ class _MalicePageState extends State<MalicePage> {
                     labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                     border: OutlineInputBorder(),
                     labelText: 'Geslo',
-                    hintText: 'Geslo, uporabljeno za malice'),
+                    hintText: 'Geslo za dostop do sistema malic'),
               ),
             ),
             ],)),
@@ -238,7 +238,7 @@ class _MalicePageState extends State<MalicePage> {
               width: 250,
               child: TextButton(
                 child: Text(
-                  'Pozabljeno geslo?',
+                  'Pozabljeno geslo',
                   style: TextStyle(color: Colors.blue, fontSize: 15),
                 ),
                 onPressed: ()=>launchUrl(Uri.parse("https://malice.scv.si/students/password/new"), mode: LaunchMode.externalApplication),

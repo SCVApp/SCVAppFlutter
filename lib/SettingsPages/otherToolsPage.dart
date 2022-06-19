@@ -41,7 +41,7 @@ class _OtherToolsPage extends State<OtherToolsPage> {
           child: Column(
             children: [
               backButton(context),
-              Text("Kmalu na voljo..."),
+              Text("Kmalu na voljo ..."),
             ],
           )
         )

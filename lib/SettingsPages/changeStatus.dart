@@ -93,7 +93,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
                 children: [Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    "Statusi, ki so še na voljo:",
+                    "Izberi prikazan status:",
                     style: TextStyle(fontSize: 22 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
