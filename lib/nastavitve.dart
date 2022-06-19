@@ -115,7 +115,7 @@ class NastavitvePageState extends State<NastavitvePage> {
 
   void refresh() async{
     setState(() {
-      
+
     });
   }
 
@@ -164,11 +164,11 @@ class NastavitvePageState extends State<NastavitvePage> {
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Opozorilo!'),
+            title: const Text('Odjava'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
-                  Text('Ali se res želiš odjaviti iz ŠCVAppa?'),
+                  Text('Si prepričan, da se želiš odjaviti iz aplikacije ŠCVApp?'),
                 ],
               ),
             ),
@@ -216,7 +216,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                     icons: Icons.change_circle,
                     onTap: goToPageChangeStatus,
                     title: "Status",
-                    subtitle: "Spremeni svoj status!",
+                    subtitle: "Sprememba prikazanega statusa",
                   ),
                   SettingsItem(
                     onTap: goToPageTools,
@@ -225,8 +225,8 @@ class NastavitvePageState extends State<NastavitvePage> {
                       iconsColor: Theme.of(context).hintColor,
                       backgroundColor: HexColor.fromHex("#0094d9"),
                     ),
-                    title: 'Več Orodij',
-                    subtitle: "Dodatna orodja, ki jih ponuja ŠCVApp.",
+                    title: 'Orodja',
+                    subtitle: "Dodatna orodja, ki jih ponuja ŠCVApp.",  // check this one, on an iPhone 13 the text is truncated at 'ponuja'
                   ),
                   SettingsItem(
                     onTap: () {},
@@ -238,10 +238,10 @@ class NastavitvePageState extends State<NastavitvePage> {
                     ),
                     title: 'Temni način',
                     subtitle: jeSistemskaTema
-                        ? "Sistemska"
+                        ? "Samodejno"
                         : _value
-                            ? "Vklopljeno"
-                            : "Izklopljeno",
+                            ? "Vklopljen"
+                            : "Izklopljen",
                     trailing: Switch.adaptive(
                       activeColor: widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor,
                       value: _value,
@@ -269,7 +269,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                       backgroundColor: HexColor.fromHex("#8DD7F7"),
                     ),
                     title: 'O aplikaciji',
-                    subtitle: "Izvedi več o aplikaciji ŠCVApp",
+                    subtitle: "Podatki o aplikaciji ŠCVApp",
                   ),
                 ],
               ),
@@ -283,14 +283,14 @@ class NastavitvePageState extends State<NastavitvePage> {
                       iconsColor: Theme.of(context).hintColor,
                       backgroundColor: widget.data!= null ? widget.data.schoolData.schoolColor:widget.cacheData.schoolColor,
                     ),
-                    title: 'O meni',
-                    subtitle: "Informacije mojega računa",
+                    title: 'Moj račun',
+                    subtitle: "Podatki mojega računa",
                   ),
                   SettingsItem(
                     onTap: _showMyDialog,
                     icons: Icons.logout,
                     title: "Odjava",
-                    subtitle: "Odjavi se iz aplikacije",
+                    subtitle: "Odjava iz aplikacije",
                     iconStyle: IconStyle(
                         iconsColor: Theme.of(context).hintColor,
                         withBackground: true,
