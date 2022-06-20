@@ -6,6 +6,7 @@ import 'package:scv_app/prijava.dart';
 
 class UreUrnikData{
   List<UraTrajanje> urnikUre = [];
+  int zacetekNaslednjeUre = -1;
 
   Future<void> getFromWeb(String token) async{
     final response = await http
@@ -21,21 +22,68 @@ class UreUrnikData{
       for(int i = 0;i<urnik.length;i++){
         this.urnikUre.add(UraTrajanje.fromJson(urnik[i]));
       }
+    this.pocistiUreObKoncuPouka();
   }
 
   void prikaziTrenutnoUro(UrnikData urnikData){
-    int casZdaj = DateTime.now().subtract(const Duration(hours: 10)).millisecondsSinceEpoch;
+    int casZdaj = DateTime.now().millisecondsSinceEpoch;
     int idTrenutneUre = -1;
     for(UraTrajanje uraTrajanje in this.urnikUre){
       if(uraTrajanje.zacetek.millisecondsSinceEpoch <= casZdaj && casZdaj <= uraTrajanje.konec.millisecondsSinceEpoch){
         uraTrajanje.style = urnikData.nowStyle;
         idTrenutneUre = uraTrajanje.id;
-      }else if(uraTrajanje.id - 1 == idTrenutneUre){
-        uraTrajanje.style = urnikData.nextStyle;
       }
       else{
         uraTrajanje.style = urnikData.otherStyle;
       }
+    }
+
+    for(int i = 0;i<this.urnikUre.length;i++){
+      UraTrajanje uraTrajanje = this.urnikUre[i];
+      if(idTrenutneUre == -1){
+        if(i == 0){
+          if(uraTrajanje.zacetek.millisecondsSinceEpoch > casZdaj){
+            uraTrajanje.style = urnikData.nextStyle;
+            this.zacetekNaslednjeUre = uraTrajanje.zacetek.millisecondsSinceEpoch;
+          }
+        }else{
+          if(this.urnikUre[i-1].konec.millisecondsSinceEpoch < casZdaj && uraTrajanje.zacetek.millisecondsSinceEpoch > casZdaj){
+            uraTrajanje.style = urnikData.nextStyle;
+            this.zacetekNaslednjeUre = uraTrajanje.zacetek.millisecondsSinceEpoch;
+          }
+        }
+      }else{
+        if(idTrenutneUre + 1 < this.urnikUre.length){
+          if(uraTrajanje.id == idTrenutneUre + 1){
+            uraTrajanje.style = urnikData.nextStyle;
+            this.zacetekNaslednjeUre = uraTrajanje.zacetek.millisecondsSinceEpoch;
+          }
+        }
+      }
+    }
+  }
+
+  String doNaslednjeUre(){
+    if(this.zacetekNaslednjeUre == -1) return "";
+    int casZdaj = DateTime.now().millisecondsSinceEpoch;
+    Duration duration = new Duration(milliseconds: this.zacetekNaslednjeUre - casZdaj);
+    return duration.inMinutes.toString() + " min in " + (duration.inSeconds - (duration.inMinutes * 60) ).toString() + "s";
+  }
+
+  void  pocistiUreObKoncuPouka(){
+    int prvaPraznaUra = -1;
+    for(int i = 0;i<this.urnikUre.length;i++){
+      UraTrajanje uraTrajanje = this.urnikUre[i];
+      if(uraTrajanje.aliSoUrePrazne() == true){
+        if(prvaPraznaUra == -1){
+          prvaPraznaUra = i;
+        }
+      }else{
+        prvaPraznaUra = -1;
+      }
+    }
+    if(prvaPraznaUra > -1){
+      this.urnikUre.removeRange(prvaPraznaUra,this.urnikUre.length);
     }
   }
 }
@@ -83,6 +131,15 @@ class UraTrajanje{
     result.trajanje = result.trajanje.replaceAll(":", ".");
 
     return result;
+  }
+
+  bool aliSoUrePrazne(){
+    for(Ura ura in this.ura){
+      if(ura.ucitelj != "" || ura.ucilnica != "" || ura.krajsava != "" || ura.dogodek != ""){
+        return false;
+      }
+    }
+    return true;
   }
 }
 

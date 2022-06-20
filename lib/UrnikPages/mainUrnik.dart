@@ -27,23 +27,62 @@ class MainUrnikPage extends StatefulWidget{
 class _MainUrnikPageState extends State<MainUrnikPage>{
   
   final double gap = 15;
+  String doNaslednjeUreTxt = "";
+  int currectHourIndex = 0;
+  bool jeSePouk = true;
+
+  Timer timerZaUrnik;
+
+  final ScrollController scrollController = new ScrollController();
+
+  void scrollToCurrectBox(int scrollToIndex){
+    scrollController.animateTo(((60+this.gap)*scrollToIndex), duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+  }
+
+  void trenutnoNiPouka(){
+    jeSePouk = false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      WidgetsBinding.instance.addPostFrameCallback((_) => scrollToCurrectBox(currectHourIndex));
+    if(widget.data != null && widget.data.ureUrnikData.zacetekNaslednjeUre != -1){
+      timerZaUrnik = Timer.periodic(new Duration(seconds: 1), (timer) {
+        setState(() {
+          doNaslednjeUreTxt = widget.data.ureUrnikData.doNaslednjeUre();
+        });
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    if(timerZaUrnik != null){
+      timerZaUrnik.cancel();
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
     return  Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.only(bottom: 5)),
-          Padding(child: TitleNowOn(), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15)),
-          trenutnaUra(),
+          Padding(child: TitleNowOn(doNaslednjeUreTxt), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15)),
+          trenutnaUra(context),
           Padding(child: Align(
             child: Text("Današnji urnik", style: TextStyle(fontWeight: FontWeight.bold),),
             alignment: Alignment.centerLeft,
           ), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),),
           Padding(padding: EdgeInsets.only(bottom: this.gap)),
           Expanded(child: ListView(
+            controller: scrollController,
             padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
             children: [
-              for(Widget i in ShowHoursInDay()) i,
+              for(Widget i in ShowHoursInDay(context)) i,
               Padding(padding: EdgeInsets.only(bottom: 10)),
               GestureDetector(
                 child: Row(
@@ -60,28 +99,44 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
       );
   }
 
-  Widget trenutnaUra(){
+  Widget trenutnaUra(BuildContext context){
     UraTrajanje trajanjeUra = widget.data.ureUrnikData.urnikUre.firstWhere(((element) => element.style == widget.data.urnikData.nowStyle), orElse: () => null);
     if(trajanjeUra != null){
 
-      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
+      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra, context: context),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
       );
+    }else{
+      String title = "";
+      int length = widget.data.ureUrnikData.urnikUre.length;
+      if(length > 0){
+        int trenutniCas = DateTime.now().millisecondsSinceEpoch;
+        int konecZadnjeUre = widget.data.ureUrnikData.urnikUre[length-1].konec.millisecondsSinceEpoch;
+        if(trenutniCas > konecZadnjeUre){
+          title = "Konec pouka";
+          this.trenutnoNiPouka();
+        }
+      }
+      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData.nowStyle, context: context, mainTitle: title),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);
     }
-    return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);
   }
 
-  List<Widget> ShowHoursInDay(){
+  List<Widget> ShowHoursInDay(BuildContext context){
     List<Widget> hours = [];
     widget.data.ureUrnikData.prikaziTrenutnoUro(widget.data.urnikData);
+    int i = 0;
     for(UraTrajanje uraTrajanje in this.widget.data.ureUrnikData.urnikUre){
       Ura ura = uraTrajanje.ura.length >= 1 ? uraTrajanje.ura[0] : new Ura();
-      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: uraTrajanje.style, trajanjeUra: uraTrajanje));
+      if(uraTrajanje.style == widget.data.urnikData.nextStyle){
+        currectHourIndex = i;
+      }
+      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: uraTrajanje.style, trajanjeUra: uraTrajanje, context: context));
       hours.add(Padding(padding: EdgeInsets.only(bottom: this.gap)));
+      i+=1;
     }
     return hours;
   }
 
-  Widget TitleNowOn(){
+  Widget TitleNowOn(String doNaslednjeUreTxt){
     return LayoutBuilder(
       builder: (context, constraints) {
         var painter1 = TextPainter(
@@ -96,7 +151,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
         var painter2 = TextPainter(
           textDirection: TextDirection.ltr,
           text: TextSpan(
-            text: '(5min in 40s do naslednje ure):',
+            text: doNaslednjeUreTxt !="" ? '($doNaslednjeUreTxt do naslednje ure):':"",
             style: TextStyle(
             ),
           ),

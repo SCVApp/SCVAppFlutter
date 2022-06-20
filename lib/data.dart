@@ -29,6 +29,13 @@ class UrnikData{
   UrnikBoxStyle nextStyle;
   UrnikBoxStyle otherStyle;
 
+  var tabelaZaSvetlejseBarve = {
+    "ERS":HexColor.fromHex("#85C9E9"),
+    "GIM":HexColor.fromHex("#FDE792"),
+    "SSD":HexColor.fromHex("#F7B4D2"),
+    "SSGO":HexColor.fromHex("#D4E8A6"),
+  };
+
   UrnikData({this.nowStyle,this.nextStyle,this.otherStyle});
 
   Color lightColor(Color color, int howMuch){
@@ -56,7 +63,7 @@ class UrnikData{
     );
 
     this.nextStyle = new UrnikBoxStyle(
-      bgColor: faitedBgColor,
+      bgColor: this.tabelaZaSvetlejseBarve[schoolId],
       primaryTextColor: Colors.black,
       secundaryTextColor: HexColor.fromHex("#4f4f4f"),
     );
@@ -140,7 +147,7 @@ class SchoolData {
     // then parse the JSON.
     var decoded = jsonDecode(response.body);
     this.id = decoded["id"].toString();
-    // this.id = "SSD";
+    // this.id = "GIM";
     this.urnikUrl = decoded["urnikUrl"].toString();
     this.color = decoded["color"].toString();
     this.name = decoded["name"].toString();
@@ -150,7 +157,6 @@ class SchoolData {
       this.color = "#8253D7";
     }
     schoolColor = HexColor.fromHex(this.color);
-    // schoolColor = HexColor.fromHex("#EE5BA0");
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
