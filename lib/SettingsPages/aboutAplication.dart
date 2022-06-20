@@ -85,14 +85,19 @@ class _AboutAppPage extends State<AboutAppPage> {
                 child: Linkify(
                   onOpen: odpriLink,
                   text: '''Aplikacija ŠCVApp je namenjena dijakom in učiteljem Šolskega centra Velenje. Ustvarila sta jo Blaž Osredkar in Urban Krepel v sklopu svoje raziskovalne naloge.
-\nAplikacija vsebuje naslednja orodja, koristna dijakom:
- • dostop do sistema za prijavo na malico,
- • urnik za obiskovan razred,
- • hiter dostop do domače spletne strani šole,
- • bližnjico do pregleda eAsistenta dijaka,
+                      \nAplikacija vsebuje naslednja orodja, koristna dijakom:
+                      
+• dostop do sistema za prijavo na malico,
+
+• urnik za obiskovan razred,
+
+• hiter dostop do domače spletne strani šole,
+
+• bližnjico do pregleda eAsistenta dijaka,
+
 ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
-\nV aplikacijo bomo še naprej dodajali več uporabnih orodij. Za vsa vprašanja in pripombe smo na voljo na e-poštnem naslovu info.app@scv.si.''',
-                  textAlign: TextAlignb.justify,
+                      \nV aplikacijo bomo še naprej dodajali več uporabnih orodij. Za vsa vprašanja in pripombe smo na voljo na e-poštnem naslovu info.app@scv.si.''',
+                  textAlign: TextAlign.justify,
                 )
               ),
               Padding(

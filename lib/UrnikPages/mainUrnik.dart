@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/boxForHour.dart';
+import 'package:scv_app/UrnikPages/urnikData.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../data.dart';
@@ -24,7 +25,7 @@ class MainUrnikPage extends StatefulWidget{
 }
 
 class _MainUrnikPageState extends State<MainUrnikPage>{
-  final List<int> a = [1,2,3,4,5];
+  
   final double gap = 15;
   
   @override
@@ -33,7 +34,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
         children: <Widget>[
           Padding(padding: EdgeInsets.only(bottom: 5)),
           Padding(child: TitleNowOn(), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15)),
-          Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),),
+          trenutnaUra(),
           Padding(child: Align(
             child: Text("Današnji urnik", style: TextStyle(fontWeight: FontWeight.bold),),
             alignment: Alignment.centerLeft,
@@ -59,11 +60,22 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
       );
   }
 
+  Widget trenutnaUra(){
+    UraTrajanje trajanjeUra = widget.data.ureUrnikData.urnikUre.firstWhere(((element) => element.style == widget.data.urnikData.nowStyle), orElse: () => null);
+    if(trajanjeUra != null){
+
+      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
+      );
+    }
+    return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);
+  }
+
   List<Widget> ShowHoursInDay(){
     List<Widget> hours = [];
-    for(int i = 0; i < this.a.length; i++){
-      UrnikBoxStyle style = widget.data.urnikData != null ? i == 0 ? widget.data.urnikData.nowStyle : i == 1 ? widget.data.urnikData.nextStyle : widget.data.urnikData.otherStyle : null;
-      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: style));
+    widget.data.ureUrnikData.prikaziTrenutnoUro(widget.data.urnikData);
+    for(UraTrajanje uraTrajanje in this.widget.data.ureUrnikData.urnikUre){
+      Ura ura = uraTrajanje.ura.length >= 1 ? uraTrajanje.ura[0] : new Ura();
+      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: uraTrajanje.style, trajanjeUra: uraTrajanje));
       hours.add(Padding(padding: EdgeInsets.only(bottom: this.gap)));
     }
     return hours;

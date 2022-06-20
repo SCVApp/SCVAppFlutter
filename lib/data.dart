@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
+import 'package:scv_app/UrnikPages/urnikData.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -214,6 +215,7 @@ class Data{
   SchoolData schoolData = new SchoolData();
   UserData user = new UserData("","","","","","","",NetworkImage(""),UserStatusData());
   UrnikData urnikData = new UrnikData();
+  UreUrnikData ureUrnikData = new UreUrnikData();
 
   Future<bool> loadData(CacheData cacheData) async{
     final accessToken = await refreshToken();
@@ -227,6 +229,8 @@ class Data{
     await this.schoolData.getData(accessToken);
     this.urnikData.getFromSchoolColor(this.schoolData.schoolColor, this.schoolData.id);
     cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl);
+    this.ureUrnikData.getFromWeb(accessToken);
+
     return true;
   }
 }
