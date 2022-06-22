@@ -48,13 +48,11 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
     // TODO: implement initState
     super.initState();
       WidgetsBinding.instance.addPostFrameCallback((_) => scrollToCurrectBox(currectHourIndex));
-    if(widget.data != null && widget.data.ureUrnikData.zacetekNaslednjeUre != -1){
       timerZaUrnik = Timer.periodic(new Duration(seconds: 1), (timer) {
         setState(() {
           doNaslednjeUreTxt = widget.data.ureUrnikData.doNaslednjeUre();
         });
       });
-    }
   }
 
   @override
@@ -100,7 +98,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
   }
 
   Widget trenutnaUra(BuildContext context){
-    UraTrajanje trajanjeUra = widget.data.ureUrnikData.urnikUre.firstWhere(((element) => element.style == widget.data.urnikData.nowStyle), orElse: () => null);
+    UraTrajanje trajanjeUra = widget.data != null ? widget.data.ureUrnikData.urnikUre.firstWhere(((element) => element.style == widget.data.urnikData.nowStyle), orElse: () => null):null;
     if(trajanjeUra != null){
 
       return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra, context: context),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
@@ -111,9 +109,14 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
       if(length > 0){
         int trenutniCas = DateTime.now().millisecondsSinceEpoch;
         int konecZadnjeUre = widget.data.ureUrnikData.urnikUre[length-1].konec.millisecondsSinceEpoch;
+        DateTime zacetekPrveUre = widget.data.ureUrnikData.urnikUre[0].zacetek;
         if(trenutniCas > konecZadnjeUre){
           title = "Konec pouka";
           this.trenutnoNiPouka();
+        }else if(trenutniCas<zacetekPrveUre.millisecondsSinceEpoch){
+          String zacetekH = zacetekPrveUre.hour < 10 ? "0"+zacetekPrveUre.hour.toString() : zacetekPrveUre.hour.toString();
+          String zacetekM = zacetekPrveUre.minute < 10 ? "0"+zacetekPrveUre.minute.toString() : zacetekPrveUre.minute.toString();
+          title = "Začetek pouka ob $zacetekH.$zacetekM";
         }
       }
       return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData.nowStyle, context: context, mainTitle: title),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);

@@ -103,7 +103,7 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Konec pouka",style: TextStyle(fontSize: 20,color: urnikBoxStyle != null ? urnikBoxStyle.primaryTextColor : Colors.white, fontWeight: FontWeight.bold),)
+          Text("$mainTitle",style: TextStyle(fontSize: 20,color: urnikBoxStyle != null ? urnikBoxStyle.primaryTextColor : Colors.white, fontWeight: FontWeight.bold),)
         ],
       ),
     );
