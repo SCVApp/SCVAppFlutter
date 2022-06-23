@@ -164,9 +164,10 @@ class _MalicePageState extends State<MalicePage> {
         }
       }
     }
-    return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage(maliceUser: maliceUser,logedOutUser: logedOutUser,) : GestureDetector(
+    return isLoggingIn ? Center(child: CircularProgressIndicator(),) : isLogedIn ? MainMalicePage(maliceUser: maliceUser,logedOutUser: logedOutUser,) : 
+    GestureDetector(
       child: SingleChildScrollView(
-        child: Column(
+          child: Column(
           children: <Widget>[
             Text(
               "Prijava v sistem malic",

@@ -23,6 +23,7 @@ class UreUrnikData{
         this.urnikUre.add(UraTrajanje.fromJson(urnik[i]));
       }
     this.pocistiUreObKoncuPouka();
+    this.saveData();
   }
 
   void prikaziTrenutnoUro(UrnikData urnikData){
@@ -84,7 +85,16 @@ class UreUrnikData{
     }
     if(prvaPraznaUra > -1){
       this.urnikUre.removeRange(prvaPraznaUra,this.urnikUre.length);
-    }
+    } 
+  }
+
+  Map<String, dynamic> toJson() => {
+    "urnik": this.urnikUre,
+  };
+
+  void saveData(){
+    String jsonString = jsonEncode(this);
+    print(jsonString);
   }
 }
 
@@ -141,6 +151,13 @@ class UraTrajanje{
     }
     return true;
   }
+
+  Map<String, dynamic> toJson() => {
+    "id": this.id,
+    "ime": this.ime,
+    "trajanje": this.trajanje,
+    "ura": this.ura,
+  };
 }
 
 class Ura{
@@ -164,4 +181,14 @@ class Ura{
 
     return result;
   }
+
+  Map<String, dynamic> toJson() => {
+    "krajsava": this.krajsava,
+    "ucitelj": this.ucitelj,
+    "ucilnica": this.ucilnica,
+    "dogodek": this.dogodek,
+    "nadomescanje": this.nadomescanje,
+    "zaposlitev": this.zaposlitev,
+    "odpadlo": this.odpadlo,
+  };
 }

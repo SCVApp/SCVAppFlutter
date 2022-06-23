@@ -45,7 +45,6 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
       WidgetsBinding.instance.addPostFrameCallback((_) => scrollToCurrectBox(currectHourIndex));
       timerZaUrnik = Timer.periodic(new Duration(seconds: 1), (timer) {
@@ -57,7 +56,6 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     if(timerZaUrnik != null){
       timerZaUrnik.cancel();
@@ -66,7 +64,9 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
   
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.only(bottom: 5)),
           Padding(child: TitleNowOn(doNaslednjeUreTxt), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15)),
@@ -87,21 +87,21 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                   Text("Ogled urnika za ostale dni", style: TextStyle (fontSize: 15),),
-                  Icon(Icons.arrow_forward_ios, color: Colors.black,),
+                  Icon(Icons.arrow_forward_ios, color: Theme.of(context).primaryColor,),
                 ]),
               ),
               Padding(padding: EdgeInsets.only(bottom: 30))
             ],
           ))
         ]
-      );
+      ));
   }
 
   Widget trenutnaUra(BuildContext context){
     UraTrajanje trajanjeUra = widget.data != null ? widget.data.ureUrnikData.urnikUre.firstWhere(((element) => element.style == widget.data.urnikData.nowStyle), orElse: () => null):null;
     if(trajanjeUra != null){
 
-      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra, context: context),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
+      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData != null ? widget.data.urnikData.nowStyle : null, trajanjeUra: trajanjeUra, context: context, urnikData: widget.data.urnikData),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
       );
     }else{
       String title = "";
@@ -119,7 +119,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
           title = "Začetek pouka ob $zacetekH.$zacetekM";
         }
       }
-      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData.nowStyle, context: context, mainTitle: title),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);
+      return Padding(child: HourBoxUrnik(urnikBoxStyle: widget.data.urnikData.nowStyle, context: context, mainTitle: title, urnikData: widget.data.urnikData),padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),);
     }
   }
 
@@ -132,7 +132,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
       if(uraTrajanje.style == widget.data.urnikData.nextStyle){
         currectHourIndex = i;
       }
-      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: uraTrajanje.style, trajanjeUra: uraTrajanje, context: context));
+      hours.add(HourBoxUrnik(isSmall: true, urnikBoxStyle: uraTrajanje.style, trajanjeUra: uraTrajanje, context: context, urnikData: widget.data.urnikData));
       hours.add(Padding(padding: EdgeInsets.only(bottom: this.gap)));
       i+=1;
     }
@@ -145,7 +145,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
         var painter1 = TextPainter(
           textDirection: TextDirection.ltr,
           text: TextSpan(
-            text: 'Trenutno na urniku',
+            text: 'Trenutno na urniku ',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),

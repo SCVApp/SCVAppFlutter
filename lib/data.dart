@@ -71,7 +71,7 @@ class UrnikData{
     this.otherStyle = new UrnikBoxStyle(
       bgColor: HexColor.fromHex("#fafafa"),
       primaryTextColor: this.nextStyle.primaryTextColor,
-      secundaryTextColor: this.nextStyle.secundaryTextColor,
+      secundaryTextColor: Colors.grey,
     );
 
   }

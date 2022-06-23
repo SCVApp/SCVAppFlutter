@@ -12,7 +12,7 @@ class SomeValuseForSize{
 
 final defualtStyleBox = new UrnikBoxStyle(bgColor: Colors.blue, primaryTextColor: Colors.white, secundaryTextColor: Colors.white);
 
-Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTrajanje trajanjeUra, BuildContext context, String mainTitle = ""}) {
+Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTrajanje trajanjeUra, BuildContext context, String mainTitle = "", UrnikData urnikData}) {
   String krajsava = "";
   String ucilnica = "";
   int id = 0;
@@ -36,7 +36,6 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
   }
 
   Widget buildContentOfPopUp(){
-    return LayoutBuilder(builder: ((context, constraints) {
       return Container(
         // height: 150,
         child: Wrap(
@@ -57,11 +56,10 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
                 Text("Profesor/ica: $ucitelj"),
               ],
             ),
-            Padding(padding: EdgeInsets.only(top: 30.0),),
-            Text("$ucilnica", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+            Text("\n\n\n"),
+            Text("$ucilnica", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
           ],
         ));
-    }));
 
   }
 
@@ -72,7 +70,7 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
-        
+        backgroundColor: Theme.of(context).cardColor,
         content: buildContentOfPopUp(),
         actions: [
           TextButton(onPressed: Navigator.of(context).pop, child: Icon(Icons.close))
@@ -90,10 +88,10 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: urnikBoxStyle != null ? urnikBoxStyle.bgColor : Colors.white,
+        color: urnikBoxStyle != null ? urnikBoxStyle == urnikData.otherStyle ? Theme.of(context).cardColor : urnikBoxStyle.bgColor : Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[600].withOpacity(0.7),
+            color: Theme.of(context).shadowColor,
             blurRadius: 3,
             offset: Offset(4, 4), // Shadow position
           ),
@@ -113,10 +111,10 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
     height: someValuesForSize.height,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      color: urnikBoxStyle != null ? urnikBoxStyle.bgColor : Colors.white,
+      color: urnikBoxStyle != null ? urnikBoxStyle == urnikData.otherStyle ? Theme.of(context).cardColor : urnikBoxStyle.bgColor : Colors.white,
       boxShadow: [
         BoxShadow(
-          color: Colors.grey[600].withOpacity(0.7),
+          color: Theme.of(context).shadowColor,
           blurRadius: 3,
           offset: Offset(4, 4), // Shadow position
         ),
@@ -130,18 +128,18 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         child:
         Row(
           children: [
-            Text("${id<0?"":id.toString()+"."}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle.primaryTextColor : Colors.white),),
+            Text("${id<0?"":id.toString()+"."}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ?  urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white),),
             Padding(padding: EdgeInsets.only(left: 20)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("$krajsava", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle.primaryTextColor : Colors.white),),
+                Text("$krajsava", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white),),
                 Text("$trajanje", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle.secundaryTextColor : Colors.white),)
             ],),
           ],),
         ),
-        Padding(padding: EdgeInsets.only(right: 15), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle.primaryTextColor : Colors.white), textAlign: TextAlign.center,),)
+        Padding(padding: EdgeInsets.only(right: 15), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white), textAlign: TextAlign.center,),)
     ]),
   ),
   onTap: prikaziPodrobnoUro,

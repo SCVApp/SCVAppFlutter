@@ -265,7 +265,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return Scaffold(
       backgroundColor: selectedIndex == 0
           ? (data.schoolData.schoolColor != null ? data.schoolData.schoolColor : cacheData.schoolColor)
-          : Theme.of(context).backgroundColor,
+          : Theme.of(context).scaffoldBackgroundColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: selectedIndex == 0
             ? SystemUiOverlayStyle.light
