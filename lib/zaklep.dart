@@ -16,12 +16,9 @@ import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/api/local_auth_api.dart';
 
 class ZaklepPage extends StatefulWidget {
-  ZaklepPage({Key key, this.title, this.data}) : super(key: key);
+  ZaklepPage({Key key, this.isFromAutoLock = false}) : super(key: key);
 
-  final String title;
-
-  final Data data;
-
+  final bool isFromAutoLock;
   _ZaklepPageState createState() => _ZaklepPageState();
 }
 
@@ -63,8 +60,12 @@ class _ZaklepPageState extends State<ZaklepPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = true;
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        if(!widget.isFromAutoLock){
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        }else{
+          Navigator.pop(context);
+        }
       } else {
         _authorizedOrNot = false;
       }

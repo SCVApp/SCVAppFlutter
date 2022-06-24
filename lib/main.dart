@@ -225,8 +225,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         if(isBio == true){
           prefs.remove(keyForAppAutoLock);
           if(zdaj >= autoLock){
-            Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => ZaklepPage()));
+            Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => ZaklepPage(isFromAutoLock: true,)));
           }
         }
       }catch(e){
