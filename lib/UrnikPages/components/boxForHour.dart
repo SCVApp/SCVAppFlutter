@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/UrnikPages/components/otherStyleBox.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
 import 'package:scv_app/data.dart';
@@ -7,7 +8,8 @@ class SomeValuseForSize{
   final double height;
   final double primaryFontSize;
   final double secundaryFontSize;
-  SomeValuseForSize({this.height,this.primaryFontSize,this.secundaryFontSize});
+  final double widthOfIcon;
+  SomeValuseForSize({this.height,this.primaryFontSize,this.secundaryFontSize,this.widthOfIcon});
 }
 
 final defualtStyleBox = new UrnikBoxStyle(bgColor: Colors.blue, primaryTextColor: Colors.white, secundaryTextColor: Colors.white);
@@ -20,6 +22,10 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
   int izbranaUra = 0;
   String ucitelj = "";
 
+  final SomeValuseForSize someValuesForSize = !isSmall ? 
+  SomeValuseForSize(height: 90, primaryFontSize: 24, secundaryFontSize: 15,widthOfIcon: 30) :
+  SomeValuseForSize(height: 60, primaryFontSize: 20, secundaryFontSize: 13,widthOfIcon: 30);
+
   if(trajanjeUra != null && trajanjeUra.ura.length > 0){
     Ura ura = trajanjeUra.ura[izbranaUra];
     krajsava = ura.krajsava != "" ? ura.krajsava : "";
@@ -27,6 +33,21 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
     id = trajanjeUra.id;
     trajanje = trajanjeUra.trajanje;
     ucitelj = ura.ucitelj;
+
+    if(ura.nadomescanje == true || ura.dogodek != "" || ura.odpadlo == true || ura.zaposlitev == true){
+      OtherStyleBox styleOfBox = OtherStyleBox.odpadlo;
+      if(ura.dogodek != ""){
+        styleOfBox = OtherStyleBox.dogodek;
+      }else if(ura.nadomescanje == true){
+        styleOfBox = OtherStyleBox.nadomescanje;
+      }else if(ura.odpadlo == true){
+        styleOfBox = OtherStyleBox.odpadlo;
+      }else if(ura.zaposlitev == true){
+        styleOfBox = OtherStyleBox.zaposlitev;
+      }
+      return otherStyleBox(someValuesForSize, context, id, krajsava, trajanje, ucilnica, styleOfBox, ura.dogodek);
+    }
+
   }else{
     krajsava = "/";
     ucilnica = "/";
@@ -79,9 +100,6 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
     );
   }
 
-  final SomeValuseForSize someValuesForSize = !isSmall ? 
-  SomeValuseForSize(height: 90, primaryFontSize: 24, secundaryFontSize: 15) :
-  SomeValuseForSize(height: 60, primaryFontSize: 20, secundaryFontSize: 13);
   if(mainTitle != ""){
     return Container(
       height: someValuesForSize.height,

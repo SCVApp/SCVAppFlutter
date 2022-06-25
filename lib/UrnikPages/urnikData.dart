@@ -3,10 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/data.dart';
 import 'package:scv_app/prijava.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UreUrnikData{
   List<UraTrajanje> urnikUre = [];
   int zacetekNaslednjeUre = -1;
+  final String urnikDataKey = "urnikDataKey";
 
   Future<void> getFromWeb(String token) async{
     final response = await http
@@ -89,12 +91,14 @@ class UreUrnikData{
   }
 
   Map<String, dynamic> toJson() => {
+    "datum":DateTime.now().toString(),
     "urnik": this.urnikUre,
   };
 
-  void saveData(){
+  void saveData() async {
     String jsonString = jsonEncode(this);
-    print(jsonString);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.urnikDataKey, jsonString);
   }
 }
 
