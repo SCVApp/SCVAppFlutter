@@ -12,10 +12,10 @@ enum OtherStyleBox{
 
 Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, int id, String krajsava, String trajanje, String ucilnica, OtherStyleBox styleOfBox, String dogodek){
   var colorsForStyles = {
-    OtherStyleBox.odpadlo: HexColor.fromHex("#BE3B26"),
-    OtherStyleBox.nadomescanje: HexColor.fromHex("#1DB1DB"),
-    OtherStyleBox.zaposlitev: HexColor.fromHex("#D42BC2"),
-    OtherStyleBox.dogodek: HexColor.fromHex("#FFA500")
+    OtherStyleBox.odpadlo: HexColor.fromHex("#FFB9AE"),
+    OtherStyleBox.nadomescanje: HexColor.fromHex("#ABE8F9"),
+    OtherStyleBox.zaposlitev: HexColor.fromHex("#FFB0F7"),
+    OtherStyleBox.dogodek: HexColor.fromHex("#FFE2AC")
   };
 
   var textColorsForStyle = {
@@ -36,14 +36,7 @@ Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, 
     height: someValuesForSize.height,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      gradient: LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: [
-          colorsForStyles[styleOfBox],
-          Colors.white,
-        ],
-      ),
+      color: colorsForStyles[styleOfBox],
       boxShadow: [
         BoxShadow(
           color: Theme.of(context).shadowColor,
@@ -60,18 +53,18 @@ Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, 
         child:
         Row(
           children: [
-            Text("${id<0?"":id.toString()+"."}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: textColorsForStyle[styleOfBox]),),
+            Text("${id<0?"":id.toString()+".${id<10?" ":""}"}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: textColorsForStyle[styleOfBox]),),
             Padding(padding: EdgeInsets.only(left: 20)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${styleOfBox != OtherStyleBox.dogodek ? krajsava: dogodek}", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: textColorsForStyle[styleOfBox]),),
+                Text("${styleOfBox != OtherStyleBox.dogodek ? krajsava: dogodek}", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: textColorsForStyle[styleOfBox], decoration: OtherStyleBox.odpadlo == styleOfBox ? TextDecoration.lineThrough:TextDecoration.none),),
                 Text("$trajanje", style: TextStyle(fontSize: someValuesForSize.secundaryFontSize, color: textColorsForStyle[styleOfBox]),)
             ],),
           ],),
         ),
-        styleOfBox != OtherStyleBox.dogodek ?Padding(padding: EdgeInsets.only(right: 45), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: textColorsForStyle[styleOfBox]), textAlign: TextAlign.center,),):SizedBox()
+        styleOfBox != OtherStyleBox.dogodek ?Padding(padding: EdgeInsets.only(right: 45), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: textColorsForStyle[styleOfBox], decoration: OtherStyleBox.odpadlo == styleOfBox ? TextDecoration.lineThrough:TextDecoration.none),  textAlign: TextAlign.center,),):SizedBox()
     ]),
     Positioned(child: Image.asset(imagesForStyle[styleOfBox], width: someValuesForSize.widthOfIcon, height: someValuesForSize.widthOfIcon,), right: 10, top: 10,),
   ])),

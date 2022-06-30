@@ -146,7 +146,7 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         child:
         Row(
           children: [
-            Text("${id<0?"":id.toString()+"."}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ?  urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white),),
+            Text("${id<0?"":id.toString()+".${id<10?" ":""}"}", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ?  urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white),),
             Padding(padding: EdgeInsets.only(left: 20)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

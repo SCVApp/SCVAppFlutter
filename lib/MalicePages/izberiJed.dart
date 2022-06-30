@@ -170,7 +170,7 @@ class _IzberiJedMalicePage extends State<IzberiJedMalicePage>{
                       Padding(padding: EdgeInsets.only(bottom: 20)),
                         Expanded(child: ListView.separated(
                           itemCount: maliceNaMenuju.length,
-                          padding: EdgeInsets.only(left: 40,right: 40),
+                          padding: EdgeInsets.only(left: 40,right: 40, bottom: 40),
                           separatorBuilder: (context,index){
                             return Padding(padding: EdgeInsets.only(top:15));
                           },

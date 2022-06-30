@@ -9,23 +9,38 @@ class UreUrnikData{
   List<UraTrajanje> urnikUre = [];
   int zacetekNaslednjeUre = -1;
   final String urnikDataKey = "urnikDataKey";
+  DateTime lastUpdate = DateTime.now();
 
   Future<void> getFromWeb(String token) async{
     final response = await http
       .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      this.fromJson(json);
+      this.fromJson(json, true);
     }
   }
 
-  void fromJson(var json){
+  Future<void> getFromPrefs() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var json = prefs.getString(urnikDataKey);
+    if(json != null){
+      this.fromJson(jsonDecode(json), false);
+    }
+  }
+
+  void fromJson(var json, bool fromWeb){
     var urnik = json["urnik"];
-      for(int i = 0;i<urnik.length;i++){
-        this.urnikUre.add(UraTrajanje.fromJson(urnik[i]));
-      }
+    var datum = json["datum"];
+    for(int i = 0;i<urnik.length;i++){
+      this.urnikUre.add(UraTrajanje.fromJson(urnik[i]));
+    }
+    if(datum != null){
+      this.lastUpdate = DateTime.parse(datum);
+    }
     this.pocistiUreObKoncuPouka();
-    this.saveData();
+    if(fromWeb){
+      this.saveData();
+    }
   }
 
   void prikaziTrenutnoUro(UrnikData urnikData){
@@ -70,6 +85,9 @@ class UreUrnikData{
     if(this.zacetekNaslednjeUre == -1) return "";
     int casZdaj = DateTime.now().millisecondsSinceEpoch;
     Duration duration = new Duration(milliseconds: this.zacetekNaslednjeUre - casZdaj);
+    if(duration.inSeconds < 0){
+      return "";
+    }
     return duration.inMinutes.toString() + " min in " + (duration.inSeconds - (duration.inMinutes * 60) ).toString() + "s";
   }
 
@@ -120,29 +138,28 @@ class UraTrajanje{
     for(int i = 0;i<ure.length;i++){
       result.ura.add(Ura.fromJson(ure[i]));
     }
-
+    result.trajanje = result.trajanje.replaceAll(":", ".");
     try{
       DateTime casZdaj = DateTime.now();//Trenutni cas
 
       //Pretvorimo v datetime za zacetek ure
       String zacetekS = result.trajanje.split("-")[0].trim();
 
-      String zacetekH = zacetekS.split(":")[0];
-      String zacetekM = zacetekS.split(":")[1];
+      String zacetekH = zacetekS.split(".")[0];
+      String zacetekM = zacetekS.split(".")[1];
       result.zacetek = DateTime(casZdaj.year,casZdaj.month,casZdaj.day,int.parse(zacetekH),int.parse(zacetekM));
 
 
       //Pretvorimo v datetime za konec ure
       String konecS = result.trajanje.split("-")[1].trim();
 
-      String konecH = konecS.split(":")[0];
-      String konecM = konecS.split(":")[1];
+      String konecH = konecS.split(".")[0];
+      String konecM = konecS.split(".")[1];
       result.konec = DateTime(casZdaj.year,casZdaj.month,casZdaj.day,int.parse(konecH),int.parse(konecM));
     }catch(e){
       print("Error: $e");
     }
 
-    result.trajanje = result.trajanje.replaceAll(":", ".");
 
     return result;
   }
