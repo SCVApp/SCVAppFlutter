@@ -12,16 +12,23 @@ class UreUrnikData{
   DateTime lastUpdate = DateTime.now();
 
   Future<void> getFromWeb(String token) async{
-    final response = await http
-      .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
-      this.fromJson(json, true);
+    DateTime casZdaj = DateTime.now();
+    if(casZdaj.day != lastUpdate.day && casZdaj.month != lastUpdate.month && casZdaj.year != lastUpdate.year){
+      final response = await http
+        .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        this.fromJson(json, true);
+      }
+      print("Update urnik from web");
+    }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("Update urnik same day");
+      this.getFromPrefs(prefs);
     }
   }
 
-  Future<void> getFromPrefs() async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  void getFromPrefs(SharedPreferences prefs) async{
     var json = prefs.getString(urnikDataKey);
     if(json != null){
       this.fromJson(jsonDecode(json), false);

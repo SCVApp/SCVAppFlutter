@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'data.dart';
 
 class UrnikPage extends StatefulWidget{
-  UrnikPage({Key key, this.title,this.data,this.cacheData}) : super(key: key);
-
-  final String title;
+  UrnikPage({Key key,this.data,this.cacheData}) : super(key: key);
 
   Data data;
   final CacheData cacheData;
@@ -22,7 +18,8 @@ class _UrnikPageState extends State<UrnikPage>{
 
   @override
   Widget build(BuildContext context) {
-    return MainUrnikPage(data: widget.data,);
+    // return MainUrnikPage(ureUrnikData: null, urnikData: null);
+    return MainUrnikPage(ureUrnikData: widget.data != null ? widget.data.ureUrnikData : widget.cacheData.ureUrnikData, urnikData: widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData,);
   }
 }
 

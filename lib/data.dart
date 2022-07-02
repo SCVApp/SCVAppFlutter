@@ -168,6 +168,8 @@ class SchoolData {
 class CacheData{
   String schoolUrlKey = "cacheData-SchoolUrl";
   String schoolUrl;
+  String schoolIdKey = "cacheData-SchoolId";
+  String schoolId;
   String schoolColorKey = "cacheData-SchoolColor";
   Color schoolColor;
   String userDisplayNameKey = "cacheData-UserDisplayName";
@@ -176,16 +178,22 @@ class CacheData{
   String userMail;
   String schoolScheduleKey= "cacheData-SchoolSchedule";
   String schoolSchedule;
+  UreUrnikData ureUrnikData = new UreUrnikData();
+  UrnikData urnikData = new UrnikData();
 
   getData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
+      this.schoolId = prefs.getString(schoolIdKey);
       this.schoolUrl = prefs.getString(this.schoolUrlKey);
       this.schoolColor = HexColor.fromHex(prefs.getString(this.schoolColorKey));
       this.userDisplayName = prefs.getString(this.userDisplayNameKey);
       this.userMail = prefs.getString(this.userMailKey);
       this.schoolSchedule = prefs.getString(this.schoolScheduleKey);
+      this.ureUrnikData.getFromPrefs(prefs);
+      this.urnikData.getFromSchoolColor(this.schoolColor, this.schoolId);
     }catch (e){
+      this.schoolId = "";
       this.schoolUrl = "";
       this.schoolColor = Colors.blue;
       this.userDisplayName = "Not loaded";
@@ -194,7 +202,7 @@ class CacheData{
     }
   }
 
-  saveData(String _schoolUrl, String _schoolColorHex, String _userDisplayName, String _userMail, String _schoolSchedule) async{
+  saveData(String _schoolUrl, String _schoolColorHex, String _userDisplayName, String _userMail, String _schoolSchedule, String _schoolId) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(this.schoolUrlKey, _schoolUrl);
     this.schoolUrl = _schoolUrl;
@@ -206,6 +214,8 @@ class CacheData{
     this.userMail = _userMail;
     prefs.setString(this.schoolScheduleKey, _schoolSchedule);
     this.schoolSchedule = _schoolSchedule;
+    prefs.setString(this.schoolIdKey, _schoolId);
+    this.schoolId = _schoolId;
   }
 
   deleteKeys(SharedPreferences prefs){
@@ -224,6 +234,7 @@ class Data{
   UreUrnikData ureUrnikData = new UreUrnikData();
 
   Future<bool> loadData(CacheData cacheData) async{
+    ureUrnikData.lastUpdate = cacheData.ureUrnikData.lastUpdate;
     final accessToken = await refreshToken();
     if(accessToken == "" || accessToken == null){
       return false;
@@ -234,7 +245,7 @@ class Data{
     }
     await this.schoolData.getData(accessToken);
     this.urnikData.getFromSchoolColor(this.schoolData.schoolColor, this.schoolData.id);
-    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl);
+    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl, this.schoolData.id);
     this.ureUrnikData.getFromWeb(accessToken);
 
     return true;

@@ -185,15 +185,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         selectedIndex=prevS;
       });
     }
-    // setState(() {
-    //   _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
-    //   _childrenWidgets.add(new MalicePage());
-    //   // _childrenWidgets.add(new IsciPage());
-    //  _childrenWidgets.add(new EasistentPage());
-    //   _childrenWidgets.add(new UrnikPage(data: data));
-    //   _childrenWidgets.add(new NastavitvePage(data: data));
-    //   isLoading = false;
-    // });
   }
 
   void changeView(int index) {
