@@ -85,19 +85,21 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
   }
 
   void prikaziPodrobnoUro(){
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+    if(id > 0 || ucitelj != "" || ucilnica != "/" || krajsava != "/"){
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+          backgroundColor: Theme.of(context).cardColor,
+          content: buildContentOfPopUp(),
+          actions: [
+            TextButton(onPressed: Navigator.of(context).pop, child: Icon(Icons.close))
+          ],
         ),
-        backgroundColor: Theme.of(context).cardColor,
-        content: buildContentOfPopUp(),
-        actions: [
-          TextButton(onPressed: Navigator.of(context).pop, child: Icon(Icons.close))
-        ],
-      ),
-    );
+      );
+    }
   }
 
   if(mainTitle != ""){

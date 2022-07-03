@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/UrnikPages/detailUrnik.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'data.dart';
 
@@ -18,8 +19,8 @@ class _UrnikPageState extends State<UrnikPage>{
 
   @override
   Widget build(BuildContext context) {
-    // return MainUrnikPage(ureUrnikData: null, urnikData: null);
-    return MainUrnikPage(ureUrnikData: widget.data != null ? widget.data.ureUrnikData : widget.cacheData.ureUrnikData, urnikData: widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData,);
+    return DetailUrnik(context, widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData);
+    // return MainUrnikPage(ureUrnikData: widget.data != null ? widget.data.ureUrnikData : widget.cacheData.ureUrnikData, urnikData: widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData,);
   }
 }
 
