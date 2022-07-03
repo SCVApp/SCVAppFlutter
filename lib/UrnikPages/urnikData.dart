@@ -29,9 +29,16 @@ class UreUrnikData{
   }
 
   void getFromPrefs(SharedPreferences prefs) async{
-    var json = prefs.getString(urnikDataKey);
-    if(json != null){
-      this.fromJson(jsonDecode(json), false);
+    try{
+      var json = prefs.getString(urnikDataKey);
+      if(json != null){
+        this.fromJson(jsonDecode(json), false);
+      }else{
+        this.lastUpdate = this.lastUpdate.subtract(Duration(days: 2));
+      }
+    }catch(e){
+      this.lastUpdate = this.lastUpdate.subtract(Duration(days: 2));
+      print("Error getting from prefs");
     }
   }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -110,8 +111,10 @@ Future<UserData> fetchUserData(String token) async {
 
   if (response.statusCode == 200) {
     var decoded = jsonDecode(response.body);
-    final userImage = NetworkImage("$apiUrl/user/get/profilePicture?=${decoded['mail']}",
-                    headers: {"Authorization": token});
+    final userImage = CachedNetworkImageProvider(
+      "$apiUrl/user/get/profilePicture?=${decoded['mail']}"
+      ,headers: {"Authorization": token},
+      );
     final UserStatusData userStatus = new UserStatusData();
     await userStatus.getData(token);
     UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],userImage,userStatus);

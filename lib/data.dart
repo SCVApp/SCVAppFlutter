@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
@@ -85,7 +84,7 @@ class UserData {
   final String mobilePhone;
   final String surname;
   final String userPrincipalName;
-  final NetworkImage image;
+  final CachedNetworkImageProvider image;
   final UserStatusData status;
 
   const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName,this.image,this.status);
@@ -199,6 +198,7 @@ class CacheData{
       this.userDisplayName = "Not loaded";
       this.userMail = "not.loaded@scv.si";
       this.schoolSchedule = "";
+      this.ureUrnikData.lastUpdate = DateTime.now().subtract(Duration(days: 2));
     }
   }
 
@@ -224,12 +224,14 @@ class CacheData{
     prefs.remove(this.userDisplayNameKey);
     prefs.remove(this.userMailKey);
     prefs.remove(this.schoolScheduleKey);
+    prefs.remove(this.schoolIdKey);
+    prefs.remove(this.ureUrnikData.urnikDataKey);
   }
 }
 
 class Data{
   SchoolData schoolData = new SchoolData();
-  UserData user = new UserData("","","","","","","",NetworkImage(""),UserStatusData());
+  UserData user = new UserData("","","","","","","",CachedNetworkImageProvider(""),UserStatusData());
   UrnikData urnikData = new UrnikData();
   UreUrnikData ureUrnikData = new UreUrnikData();
 
