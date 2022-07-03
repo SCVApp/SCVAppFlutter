@@ -13,7 +13,7 @@ class UreUrnikData{
 
   Future<void> getFromWeb(String token) async{
     DateTime casZdaj = DateTime.now();
-    if(casZdaj.day != lastUpdate.day && casZdaj.month != lastUpdate.month && casZdaj.year != lastUpdate.year){
+    if(casZdaj.day != lastUpdate.day || casZdaj.month != lastUpdate.month || casZdaj.year != lastUpdate.year){
       final response = await http
         .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
       if (response.statusCode == 200) {
