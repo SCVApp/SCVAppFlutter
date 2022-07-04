@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/otherStyleBox.dart';
+import 'package:scv_app/UrnikPages/detailUrnik.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
 import 'package:scv_app/data.dart';
@@ -45,7 +46,12 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
       }else if(ura.zaposlitev == true){
         styleOfBox = OtherStyleBox.zaposlitev;
       }
-      return otherStyleBox(someValuesForSize, context, id, krajsava, trajanje, ucilnica, styleOfBox, ura.dogodek);
+      return GestureDetector(
+        child: otherStyleBox(someValuesForSize, context, id, krajsava, trajanje, ucilnica, styleOfBox, ura.dogodek, urnikData),
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailUrnik(context,urnikData, trajanje: trajanje, ucilnica: ucilnica, id:id, ucitelj: ucitelj, krajsava: krajsava,dogodek: ura.dogodek, styleOfBox: styleOfBox)));
+        },
+      );
     }
 
   }else{
@@ -54,52 +60,6 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
     id = -1;
     trajanje = "/";
     ucitelj = "";
-  }
-
-  Widget buildContentOfPopUp(){
-      return Container(
-        // height: 150,
-        child: Wrap(
-          direction: Axis.horizontal,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("$id. ura: "),
-                    Text(krajsava, style: TextStyle(fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                Text("Čas: $trajanje"),
-                Text("Profesor/ica: $ucitelj"),
-              ],
-            ),
-            Text("\n\n\n"),
-            Text("$ucilnica", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          ],
-        ));
-
-  }
-
-  void prikaziPodrobnoUro(){
-    if(id > 0 || ucitelj != "" || ucilnica != "/" || krajsava != "/"){
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          ),
-          backgroundColor: Theme.of(context).cardColor,
-          content: buildContentOfPopUp(),
-          actions: [
-            TextButton(onPressed: Navigator.of(context).pop, child: Icon(Icons.close))
-          ],
-        ),
-      );
-    }
   }
 
   if(mainTitle != ""){
@@ -162,6 +122,8 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         Padding(padding: EdgeInsets.only(right: 15), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white), textAlign: TextAlign.center,),)
     ]),
   ),
-  onTap: prikaziPodrobnoUro,
+  onTap: (){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailUrnik(context, urnikData, ucilnica: ucilnica, id: id, trajanje: trajanje, ucitelj: ucitelj, krajsava: krajsava,)));
+  },
   );
 }

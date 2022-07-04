@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/data.dart';
 
+import '../detailUrnik.dart';
 import 'boxForHour.dart';
 
 enum OtherStyleBox{
+  normalno,
   odpadlo,
   nadomescanje,
   zaposlitev,
   dogodek
 }
 
-Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, int id, String krajsava, String trajanje, String ucilnica, OtherStyleBox styleOfBox, String dogodek){
+Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, int id, String krajsava, String trajanje, String ucilnica, OtherStyleBox styleOfBox, String dogodek, UrnikData urnikData){
   var colorsForStyles = {
     OtherStyleBox.odpadlo: HexColor.fromHex("#FFB9AE"),
     OtherStyleBox.nadomescanje: HexColor.fromHex("#ABE8F9"),
@@ -32,7 +34,7 @@ Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, 
     OtherStyleBox.dogodek: "assets/urnikIcons/dogodek.png"
   };
   
-  return GestureDetector(child: Container(
+  return Container(
     height: someValuesForSize.height,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
@@ -67,6 +69,5 @@ Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, 
         styleOfBox != OtherStyleBox.dogodek ?Padding(padding: EdgeInsets.only(right: 45), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: textColorsForStyle[styleOfBox], decoration: OtherStyleBox.odpadlo == styleOfBox ? TextDecoration.lineThrough:TextDecoration.none),  textAlign: TextAlign.center,),):SizedBox()
     ]),
     Positioned(child: Image.asset(imagesForStyle[styleOfBox], width: someValuesForSize.widthOfIcon, height: someValuesForSize.widthOfIcon,), right: 10, top: 10,),
-  ])),
-  );
+  ]));
 }
