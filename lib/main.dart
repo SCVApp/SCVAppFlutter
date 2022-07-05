@@ -267,11 +267,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             child: SafeArea(
                 child: isLoading
                     ? CircularProgressIndicator(color: cacheData.schoolColor,)
-                    : Navigator(
-                      onGenerateRoute: (settings){
-                          return MaterialPageRoute(builder: (_)=>_childrenWidgets[selectedIndex]);
-                      },
-                    )
+                    : _childrenWidgets[selectedIndex]
                     )),
       ),
       bottomNavigationBar: FFNavigationBar(

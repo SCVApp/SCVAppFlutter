@@ -62,6 +62,12 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
     ucitelj = "";
   }
 
+  void prikaziPodrobnosti(){
+    if(id>=0 || krajsava != "/" || ucilnica != "/" || ucitelj != ""){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailUrnik(context, urnikData, ucilnica: ucilnica, id: id, trajanje: trajanje, ucitelj: ucitelj, krajsava: krajsava,)));
+    }
+  }
+
   if(mainTitle != ""){
     return Container(
       height: someValuesForSize.height,
@@ -122,8 +128,6 @@ Widget HourBoxUrnik({bool isSmall = false, UrnikBoxStyle urnikBoxStyle, UraTraja
         Padding(padding: EdgeInsets.only(right: 15), child: Text("$ucilnica", style: TextStyle(fontSize: someValuesForSize.primaryFontSize, color: urnikBoxStyle != null ? urnikBoxStyle != urnikData.nowStyle ? Theme.of(context).primaryColor : urnikBoxStyle.primaryTextColor : Colors.white), textAlign: TextAlign.center,),)
     ]),
   ),
-  onTap: (){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailUrnik(context, urnikData, ucilnica: ucilnica, id: id, trajanje: trajanje, ucitelj: ucitelj, krajsava: krajsava,)));
-  },
+  onTap: prikaziPodrobnosti
   );
 }
