@@ -21,12 +21,59 @@ class DetailUrnik extends StatefulWidget{
   _DetailUrnikState createState() => _DetailUrnikState();
 }
 class _DetailUrnikState extends State<DetailUrnik>{
+
+  final double paddingInSizeBox = 15;
+  final double paddingFromScreenStartEnd = 37;
+
+  Widget content(){
+    return LayoutBuilder(builder: ((context, constraints) {
+      final double mainFontSize = MediaQuery.of(context).size.width * 0.045;
+      final double bigFontSize = MediaQuery.of(context).size.width * 0.069;
+      final double spaceBetweenLines = 10;
+
+      var textForClass = TextPainter(
+          textDirection: TextDirection.ltr,
+          text: TextSpan(
+            text: '${widget.ucilnica}',
+            style: TextStyle(fontSize: bigFontSize, fontWeight: FontWeight.w500)
+          ),
+      );
+      textForClass.layout();
+      double sizeForRichText = MediaQuery.of(context).size.width - (2*paddingFromScreenStartEnd) - (2*paddingInSizeBox) - textForClass.size.width - 10;
+      return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: sizeForRichText,
+                          child:RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(text:"${widget.id}. ura: ",style: TextStyle(fontSize: mainFontSize),),
+                              TextSpan(text:"${widget.dogodek!=""?widget.dogodek:widget.krajsava}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: mainFontSize),),
+                            ],
+                          ),
+                        )),
+                        Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
+                        Text("Čas: ${widget.trajanje}", style: TextStyle(fontSize: mainFontSize),),
+                        Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
+                        widget.styleOfBox != OtherStyleBox.dogodek ? Text("Profesor/ica: ${widget.ucitelj}", style: TextStyle(fontSize: mainFontSize)) : SizedBox(),
+                      ],
+                  ),
+                  Positioned(child: Text(textForClass.text.toPlainText(), style: textForClass.text.style,), right: 0, top: -5,),
+                ],
+                ));
+    }));
+  }
+
   @override
   Widget build(BuildContext context){
-
-    final double mainFontSize = MediaQuery.of(context).size.width * 0.045;
-    final double bigFontSize = MediaQuery.of(context).size.width * 0.069;
-    final double spaceBetweenLines = 10;
 
     return Scaffold(
       body: SafeArea(child: Container(
@@ -38,7 +85,7 @@ class _DetailUrnikState extends State<DetailUrnik>{
           }, child: Icon(Icons.arrow_back_ios_new, size: 25, color: Theme.of(context).primaryColor,),),
           Padding(child: Container(
             // height: 150,
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(paddingInSizeBox),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               boxShadow: [
@@ -53,31 +100,10 @@ class _DetailUrnikState extends State<DetailUrnik>{
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children:[
-                Stack(
-                children: [
-                    Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("${widget.id}. ura: ",style: TextStyle(fontSize: mainFontSize),),
-                          Text("${widget.dogodek!=""?widget.dogodek:widget.krajsava}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: mainFontSize),),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
-                      Text("Čas: ${widget.trajanje}", style: TextStyle(fontSize: mainFontSize),),
-                      Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
-                      widget.styleOfBox != OtherStyleBox.dogodek ? Text("Profesor/ica: ${widget.ucitelj}", style: TextStyle(fontSize: mainFontSize)) : SizedBox(),
-                    ],
-                  ),
-                  Positioned(child: Text("${widget.ucilnica}", style: TextStyle(fontSize: bigFontSize, fontWeight: FontWeight.w500),), right: 0, top: -5,),
-                ],
-                )
+                this.content()
             ])
             ),
-            padding: EdgeInsets.only(left: 37, right: 37),)
+            padding: EdgeInsets.only(left: paddingFromScreenStartEnd, right: paddingFromScreenStartEnd),)
         ]))));
   }
 }

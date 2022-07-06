@@ -66,6 +66,10 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
       timerZaUrnik.cancel();
     }
   }
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(seconds: 3));
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -84,23 +88,28 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
             alignment: Alignment.centerLeft,
           ), padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),),
           Padding(padding: EdgeInsets.only(bottom: this.gap)),
-          Expanded(child: ListView(
-            controller: scrollController,
-            padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
-            children: [
-              for(Widget i in ShowHoursInDay(context)) i,
-              Padding(padding: EdgeInsets.only(bottom: 10)),
-              GestureDetector(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  Text("Ogled urnika za ostale dni", style: TextStyle (fontSize: 15),),
-                  Icon(Icons.arrow_forward_ios, color: Theme.of(context).primaryColor,),
-                ]),
+          Expanded(child:
+            RefreshIndicator(
+              child: ListView(
+                controller: scrollController,
+                padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
+                children: [
+                  for(Widget i in ShowHoursInDay(context)) i,
+                  Padding(padding: EdgeInsets.only(bottom: 10)),
+                  GestureDetector(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                      Text("Ogled urnika za ostale dni", style: TextStyle (fontSize: 15),),
+                      Icon(Icons.arrow_forward_ios, color: Theme.of(context).primaryColor,),
+                    ]),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30))
+                ],
               ),
-              Padding(padding: EdgeInsets.only(bottom: 30))
-            ],
-          ))
+              onRefresh: _onRefresh,
+            )
+          )
         ]
       ));
   }
