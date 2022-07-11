@@ -28,6 +28,7 @@ class _DetailUrnikState extends State<DetailUrnik>{
   Widget content(){
     return LayoutBuilder(builder: ((context, constraints) {
       final double mainFontSize = MediaQuery.of(context).size.width * 0.045;
+      final Color textColor = widget.styleOfBox == OtherStyleBox.normalno ? Theme.of(context).primaryColor : Colors.black;
       final double bigFontSize = MediaQuery.of(context).size.width * 0.069;
       final double spaceBetweenLines = 10;
 
@@ -35,11 +36,12 @@ class _DetailUrnikState extends State<DetailUrnik>{
           textDirection: TextDirection.ltr,
           text: TextSpan(
             text: '${widget.ucilnica}',
-            style: TextStyle(fontSize: bigFontSize, fontWeight: FontWeight.w500)
+            style: TextStyle(fontSize: bigFontSize, fontWeight: FontWeight.w500, color: textColor, decoration: widget.styleOfBox != OtherStyleBox.odpadlo ? TextDecoration.none : TextDecoration.lineThrough)
           ),
       );
       textForClass.layout();
-      double sizeForRichText = MediaQuery.of(context).size.width - (2*paddingFromScreenStartEnd) - (2*paddingInSizeBox) - textForClass.size.width - 10;
+      double sizeOfBox = MediaQuery.of(context).size.width - (2*paddingFromScreenStartEnd) - (2*paddingInSizeBox);
+      double sizeForRichText = sizeOfBox - textForClass.size.width - 10;
       return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
@@ -52,21 +54,22 @@ class _DetailUrnikState extends State<DetailUrnik>{
                           child:RichText(
                           text: TextSpan(
                             style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: textColor,
                             ),
                             children: <TextSpan>[
                               TextSpan(text:"${widget.id}. ura: ",style: TextStyle(fontSize: mainFontSize),),
-                              TextSpan(text:"${widget.dogodek!=""?widget.dogodek:widget.krajsava}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: mainFontSize),),
+                              TextSpan(text:"${widget.dogodek!=""?widget.dogodek:widget.krajsava}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: mainFontSize,decoration: widget.styleOfBox != OtherStyleBox.odpadlo ? TextDecoration.none : TextDecoration.lineThrough),),
                             ],
                           ),
                         )),
                         Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
-                        Text("Čas: ${widget.trajanje}", style: TextStyle(fontSize: mainFontSize),),
+                        Text("Čas: ${widget.trajanje}", style: TextStyle(fontSize: mainFontSize,color:textColor),),
                         Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
-                        widget.styleOfBox != OtherStyleBox.dogodek ? Text("Profesor/ica: ${widget.ucitelj}", style: TextStyle(fontSize: mainFontSize)) : SizedBox(),
+                        widget.styleOfBox != OtherStyleBox.dogodek ? SizedBox(width: sizeOfBox - 15, child:Text("Profesor/ica: ${widget.ucitelj}", style: TextStyle(fontSize: mainFontSize, color: textColor))) : SizedBox(),
                       ],
                   ),
                   Positioned(child: Text(textForClass.text.toPlainText(), style: textForClass.text.style,), right: 0, top: -5,),
+                  widget.styleOfBox != OtherStyleBox.normalno ? Positioned(child: Image.asset(imagesForStyle[widget.styleOfBox]),right: 0, bottom: 0,):SizedBox(),
                 ],
                 ));
     }));
@@ -87,7 +90,7 @@ class _DetailUrnikState extends State<DetailUrnik>{
             // height: 150,
             padding: EdgeInsets.all(paddingInSizeBox),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
+              color: widget.styleOfBox == OtherStyleBox.normalno ? Theme.of(context).cardColor : colorsForStyles[widget.styleOfBox],
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,

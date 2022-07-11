@@ -12,27 +12,27 @@ enum OtherStyleBox{
   dogodek
 }
 
+var colorsForStyles = {
+  OtherStyleBox.odpadlo: HexColor.fromHex("#FFB9AE"),
+  OtherStyleBox.nadomescanje: HexColor.fromHex("#ABE8F9"),
+  OtherStyleBox.zaposlitev: HexColor.fromHex("#FFB0F7"),
+  OtherStyleBox.dogodek: HexColor.fromHex("#FFE2AC")
+};
+var textColorsForStyle = {
+  OtherStyleBox.odpadlo: Colors.black,
+  OtherStyleBox.nadomescanje: Colors.black,
+  OtherStyleBox.zaposlitev: Colors.black,
+  OtherStyleBox.dogodek: Colors.black
+};
+var imagesForStyle = {
+  OtherStyleBox.odpadlo: "assets/urnikIcons/odpadlo.png",
+  OtherStyleBox.nadomescanje: "assets/urnikIcons/nadomescanje.png",
+  OtherStyleBox.zaposlitev: "assets/urnikIcons/zaposlitev.png",
+  OtherStyleBox.dogodek: "assets/urnikIcons/dogodek.png"
+};
+
+
 Widget otherStyleBox(SomeValuseForSize someValuesForSize, BuildContext context, int id, String krajsava, String trajanje, String ucilnica, OtherStyleBox styleOfBox, String dogodek, UrnikData urnikData){
-  var colorsForStyles = {
-    OtherStyleBox.odpadlo: HexColor.fromHex("#FFB9AE"),
-    OtherStyleBox.nadomescanje: HexColor.fromHex("#ABE8F9"),
-    OtherStyleBox.zaposlitev: HexColor.fromHex("#FFB0F7"),
-    OtherStyleBox.dogodek: HexColor.fromHex("#FFE2AC")
-  };
-
-  var textColorsForStyle = {
-    OtherStyleBox.odpadlo: Colors.black,
-    OtherStyleBox.nadomescanje: Colors.black,
-    OtherStyleBox.zaposlitev: Colors.black,
-    OtherStyleBox.dogodek: Colors.black
-  };
-
-  var imagesForStyle = {
-    OtherStyleBox.odpadlo: "assets/urnikIcons/odpadlo.png",
-    OtherStyleBox.nadomescanje: "assets/urnikIcons/nadomescanje.png",
-    OtherStyleBox.zaposlitev: "assets/urnikIcons/zaposlitev.png",
-    OtherStyleBox.dogodek: "assets/urnikIcons/dogodek.png"
-  };
   
   return Container(
     height: someValuesForSize.height,

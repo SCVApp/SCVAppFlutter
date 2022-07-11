@@ -19,7 +19,7 @@ class _UrnikPageState extends State<UrnikPage>{
 
   @override
   Widget build(BuildContext context) {
-    return MainUrnikPage(ureUrnikData: widget.data != null ? widget.data.ureUrnikData : widget.cacheData.ureUrnikData, urnikData: widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData,);
+    return MainUrnikPage(ureUrnikData: widget.data != null ? widget.data.ureUrnikData : widget.cacheData.ureUrnikData, urnikData: widget.data != null ? widget.data.urnikData : widget.cacheData.urnikData, schoolColor: widget.data != null ? widget.data.schoolData.schoolColor : widget.cacheData.schoolColor);
   }
 }
 

@@ -8,12 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UreUrnikData{
   List<UraTrajanje> urnikUre = [];
   int zacetekNaslednjeUre = -1;
+  ///Ključ za shranjevanje urnika v spomin telefona
   final String urnikDataKey = "urnikDataKey";
   DateTime lastUpdate = DateTime.now();
 
-  Future<void> getFromWeb(String token) async{
+  Future<void> getFromWeb(String token,{bool force = false}) async{
     DateTime casZdaj = DateTime.now();
-    if(casZdaj.day != lastUpdate.day || casZdaj.month != lastUpdate.month || casZdaj.year != lastUpdate.year){
+    if(casZdaj.day != lastUpdate.day || casZdaj.month != lastUpdate.month || casZdaj.year != lastUpdate.year || force){
       final response = await http
         .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
       if (response.statusCode == 200) {
@@ -45,6 +46,7 @@ class UreUrnikData{
   void fromJson(var json, bool fromWeb){
     var urnik = json["urnik"];
     var datum = json["datum"];
+    this.urnikUre.clear();
     for(int i = 0;i<urnik.length;i++){
       this.urnikUre.add(UraTrajanje.fromJson(urnik[i]));
     }
@@ -102,7 +104,7 @@ class UreUrnikData{
     if(duration.inSeconds < 0){
       return "";
     }
-    return duration.inMinutes.toString() + " min in " + (duration.inSeconds - (duration.inMinutes * 60) ).toString() + "s";
+    return duration.inMinutes.toString() + "min in " + (duration.inSeconds - (duration.inMinutes * 60) ).toString() + "s";
   }
 
   void  pocistiUreObKoncuPouka(){

@@ -4,6 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/boxForHour.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
+import 'package:scv_app/prijava.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../data.dart';
@@ -17,10 +19,11 @@ class UrnikBoxStyle{
 }
 
 class MainUrnikPage extends StatefulWidget{
-  MainUrnikPage({Key key, this.ureUrnikData, this.urnikData}) : super(key: key);
+  MainUrnikPage({Key key, this.ureUrnikData, this.urnikData, this.schoolColor}) : super(key: key);
 
   final UreUrnikData ureUrnikData;
   final UrnikData urnikData;
+  final Color schoolColor;
 
   _MainUrnikPageState createState() => _MainUrnikPageState();
 }
@@ -31,8 +34,11 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
   String doNaslednjeUreTxt = "";
   int currectHourIndex = 0;
   bool jeSePouk = true;
+  double bottomOffsetOfListView = 0;
 
   Timer timerZaUrnik;
+
+  GlobalKey _keyForListView = GlobalKey();
 
   final ScrollController scrollController = new ScrollController();
 
@@ -46,17 +52,32 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
     jeSePouk = false;
   }
 
+  void onBuildFinished(){
+    scrollToCurrectBox(currectHourIndex);
+    if(currectHourIndex > 0){
+      try{
+          RenderBox box = this._keyForListView.currentContext.findRenderObject() as RenderBox;
+          Offset position = box.localToGlobal(Offset.zero);
+          double y = position.dy;
+          double sizeOfScreen = box.size.height;
+          setState(() {
+            this.bottomOffsetOfListView = sizeOfScreen - 120;
+          });
+      }catch(e){}
+    }
+  }
+
   @override
   void initState() {
-    super.initState();
     if(widget.urnikData != null && widget.ureUrnikData != null){
-      WidgetsBinding.instance.addPostFrameCallback((_) => scrollToCurrectBox(currectHourIndex));
+      WidgetsBinding.instance.addPostFrameCallback((_) => this.onBuildFinished());
       timerZaUrnik = Timer.periodic(new Duration(seconds: 1), (timer) {
         setState(() {
           doNaslednjeUreTxt = widget.ureUrnikData.doNaslednjeUre();
         });
       });
     }
+    super.initState();
   }
 
   @override
@@ -68,7 +89,13 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
   }
 
   Future<void> _onRefresh() async {
-    await Future.delayed(Duration(seconds: 3));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      await widget.ureUrnikData.getFromWeb(prefs.getString(keyForAccessToken), force: true);
+    }catch(e){
+      print(e);
+    }
+    setState(() {});
   }
   
   @override
@@ -90,6 +117,7 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
           Padding(padding: EdgeInsets.only(bottom: this.gap)),
           Expanded(child:
             RefreshIndicator(
+              key: _keyForListView,
               child: ListView(
                 controller: scrollController,
                 padding: EdgeInsets.only(bottom: this.gap,left: 15, right: 15),
@@ -104,10 +132,11 @@ class _MainUrnikPageState extends State<MainUrnikPage>{
                       Icon(Icons.arrow_forward_ios, color: Theme.of(context).primaryColor,),
                     ]),
                   ),
-                  Padding(padding: EdgeInsets.only(bottom: 30))
+                  SizedBox(height: this.bottomOffsetOfListView),
                 ],
               ),
               onRefresh: _onRefresh,
+              color: widget.schoolColor
             )
           )
         ]
