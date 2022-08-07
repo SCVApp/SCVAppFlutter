@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -55,9 +56,9 @@ class _BiometricPage extends State<BiometricPage> {
     bool isAuthorized = false;
     try {
       isAuthorized = await _localAuthentication.authenticate(
-        localizedReason: "Za vstop se autoriziraj:",
-        options: AuthenticationOptions(useErrorDialogs: true,stickyAuth: true)
-      );
+          localizedReason: "Za vstop se autoriziraj:",
+          options:
+              AuthenticationOptions(useErrorDialogs: true, stickyAuth: true));
     } on PlatformException catch (e) {
       print(e);
     }
@@ -127,26 +128,26 @@ class _BiometricPage extends State<BiometricPage> {
       print(e);
     }
 
-    try{
+    try {
       int timeInMinutes = prefs.getInt(keyForAppAutoLockTimer);
-      if(timeInMinutes != null){
+      if (timeInMinutes != null) {
         int izbira = 1;
-        if(timeInMinutes == 0){
+        if (timeInMinutes == 0) {
           izbira = 0;
-        }else if(timeInMinutes == 5){
+        } else if (timeInMinutes == 5) {
           izbira = 1;
-        }else if(timeInMinutes == 10){
+        } else if (timeInMinutes == 10) {
           izbira = 2;
-        }else if(timeInMinutes == 30){
+        } else if (timeInMinutes == 30) {
           izbira = 3;
-        }else{
+        } else {
           izbira = 4;
         }
         setState(() {
           selectedAutoLockItem = izbira;
         });
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
@@ -174,37 +175,78 @@ class _BiometricPage extends State<BiometricPage> {
   }
 
   Widget build(BuildContext context) {
+    double textSize = MediaQuery.of(context).size.width * 0.042;
+    TextStyle textStyle = TextStyle(
+      fontSize: textSize,
+      color: Theme.of(context).primaryColor,
+    );
+
     return Scaffold(
         body: SafeArea(
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         children: [
           backButton(context),
-          Container(
-              width: 200,
-              height: 150,
-              child: Image.asset(
-                'assets/biometrika.gif',
-              )),
-          // ElevatedButton(
-          //     child: Icon(Icons.abc),
-          //     onPressed: () {
-          //       _checkBiometric();
-          //       _authorizeNow();
-          //     }),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Switch.adaptive(
-                value: _value,
-                onChanged: changeToggle,
-              ),
-              Text(
-                  "Biometrično odlepanje: ${_value ? "Omogočeno" : "Onemogočeno"}"),
-              _value?ListTile(title:Text("Zaklep aplikacije v odzadju: " + autoLockMods[selectedAutoLockItem].toString()), onTap: (){
-                showPicker(context);
-              }):SizedBox()
-            ],
+          Padding(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text("Biometrični odklep aplikacije", style: textStyle),
+                    SizedBox(
+                      child: CupertinoSwitch(
+                        value: _value,
+                        onChanged: changeToggle,
+                      ),
+                      width: 45,
+                    )
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                _value
+                    ? GestureDetector(
+                        child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                "Zaklep aplikacije v odzadju po:",
+                                style: textStyle,
+                              ),
+                              Text(
+                                autoLockMods[selectedAutoLockItem].toString(),
+                                style: textStyle,
+                              )
+                            ]),
+                        onTap: () {
+                          showPicker(context);
+                        })
+                    : SizedBox(),
+                Padding(padding: EdgeInsets.only(top: 60)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("INFO",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: textSize,
+                            fontWeight: FontWeight.bold)),
+                    Padding(padding: EdgeInsets.only(top: 20)),
+                    Text(
+                      "Z omogočanjem te nastavite lahko nato v aplikacijo vstopite preko biometričnih podatkov (prepoznava obraza ali Face ID, prepoznava prstnega odtisa ali Touch ID ter PIN ali geslo telefona). V primeru, da na telefonu nimate nič od navedenega, vas aplikacija opori, da dodate vsaj en varnostni pogoj, naveden zgoraj.",
+                      style: textStyle,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
+                )
+              ],
+            ),
+            padding: EdgeInsets.only(left: 30, right: 30, top: 20),
           )
         ],
       ),
@@ -213,41 +255,45 @@ class _BiometricPage extends State<BiometricPage> {
 
   List<String> autoLockMods = [
     "Takoj",
-    "Po 5 minutah",
-    "Po 10 minutah",
-    "Po 30 minutah",
+    "5 min",
+    "10 min",
+    "30 min",
     "Nikoli",
   ];
 
-  createPickerItems(){
-    return autoLockMods.map((e) => new PickerItem(text: new Text(e), value: autoLockMods.indexOf(e))
-    ).toList();
+  createPickerItems() {
+    return autoLockMods
+        .map((e) =>
+            new PickerItem(text: new Text(e), value: autoLockMods.indexOf(e)))
+        .toList();
   }
 
-  showPicker(BuildContext context){
-    Picker picker = new Picker(adapter: PickerDataAdapter(data: createPickerItems()), onConfirm: selectAutoLock, selecteds: [selectedAutoLockItem]);
+  showPicker(BuildContext context) {
+    Picker picker = new Picker(
+        adapter: PickerDataAdapter(data: createPickerItems()),
+        onConfirm: selectAutoLock,
+        selecteds: [selectedAutoLockItem]);
     picker.showModal(context);
   }
 
   selectAutoLock(Picker picker, List value) async {
-    if(value.length > 0){
+    if (value.length > 0) {
       int newValue = value[0];
       setState(() {
         selectedAutoLockItem = newValue;
       });
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int timeInMinutes = 0;
-      if(newValue == 1){
+      if (newValue == 1) {
         timeInMinutes = 5;
-      }else if(newValue == 2){
+      } else if (newValue == 2) {
         timeInMinutes = 10;
-      }else if(newValue == 3){
+      } else if (newValue == 3) {
         timeInMinutes = 30;
-      }else if(newValue == 4){
+      } else if (newValue == 4) {
         timeInMinutes = 10001;
       }
       prefs.setInt(keyForAppAutoLockTimer, timeInMinutes);
     }
   }
-
 }
