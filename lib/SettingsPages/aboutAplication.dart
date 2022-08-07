@@ -14,7 +14,6 @@ import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class AboutAppPage extends StatefulWidget {
   AboutAppPage({Key key, this.data}) : super(key: key);
 
@@ -23,14 +22,14 @@ class AboutAppPage extends StatefulWidget {
   _AboutAppPage createState() => _AboutAppPage();
 }
 
-
 Future<void> _onOpen(LinkableElement link) async {
-    if (await canLaunch(link.url)) {
-      await launch(link.url);
-    } else {
-      throw 'Could not launch $link';
-    }
+  if (await canLaunchUrl(Uri.parse(link.url))) {
+    // await launch(link.url);
+  } else {
+    throw 'Could not launch $link';
   }
+}
+
 class _AboutAppPage extends State<AboutAppPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -39,7 +38,6 @@ class _AboutAppPage extends State<AboutAppPage> {
   String token = "";
 
   ScrollController scrollController = ScrollController();
-  
 
   @override
   void initState() {
@@ -55,8 +53,9 @@ class _AboutAppPage extends State<AboutAppPage> {
   @override
   Widget build(BuildContext context) {
     odpriLink(link) async {
-      if (link.url == "mailto:info.app@scv.si"){
-        if(!await launchUrl(Uri.parse(link.url),mode: LaunchMode.externalApplication)){
+      if (link.url == "mailto:info.app@scv.si") {
+        if (!await launchUrl(Uri.parse(link.url),
+            mode: LaunchMode.externalApplication)) {
           print("Email can't be opened");
         }
       }
@@ -64,27 +63,29 @@ class _AboutAppPage extends State<AboutAppPage> {
 
     return Scaffold(
         body: SafeArea(
-          child: Column(
-            children: [
-              backButton(context),
-          Expanded(child: ListView(
+      child: Column(
+        children: [
+          backButton(context),
+          Expanded(
+              child: ListView(
             controller: scrollController,
             padding: EdgeInsets.symmetric(horizontal: 35),
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
                 child: Center(
-                child: Container(
-                    width: 200,
-                    height: 150,
-                    child: Image.asset('assets/ikona_appa.png')),
-              ),
+                  child: Container(
+                      width: 200,
+                      height: 150,
+                      child: Image.asset('assets/ikona_appa.png')),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(),
-                child: Linkify(
-                  onOpen: odpriLink,
-                  text: '''Aplikacija ŠCVApp je namenjena dijakom in učiteljem Šolskega centra Velenje. Ustvarila sta jo Blaž Osredkar in Urban Krepel v sklopu svoje raziskovalne naloge.
+                  padding: const EdgeInsets.symmetric(),
+                  child: Linkify(
+                    onOpen: odpriLink,
+                    text:
+                        '''Aplikacija ŠCVApp je namenjena dijakom in učiteljem Šolskega centra Velenje. Ustvarila sta jo Blaž Osredkar in Urban Krepel v sklopu svoje raziskovalne naloge.
                       \nAplikacija vsebuje naslednja orodja, koristna dijakom:
 • dostop do sistema za prijavo na malico,
 • urnik za obiskovan razred,
@@ -92,60 +93,66 @@ class _AboutAppPage extends State<AboutAppPage> {
 • bližnjico do pregleda eAsistenta dijaka,
 ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                       \nV aplikacijo bomo še naprej dodajali več uporabnih orodij. Za vsa vprašanja in pripombe smo na voljo na e-poštnem naslovu info.app@scv.si.''',
-                  // textAlign: TextAlign.justify,
-                )
-              ),
+                    // textAlign: TextAlign.justify,
+                  )),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Uporabne povezave", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.left)
+                    Text("Uporabne povezave",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left)
                   ],
                 ),
               ),
-              for(Widget i in MediaQuery.of(context).size.width < 340 ? smallerPhones() : biggerPhones()) i,
-              isListViewBigger ? Column(children: [
-                Padding(padding: EdgeInsets.only(top: 30)),
-                Text(
-                "ŠCVApp, 2022. Vse pravice pridržane.",
-                textAlign: TextAlign.center,
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 20))]) : SizedBox(),
-            Padding(padding: EdgeInsets.only(bottom: 20))
+              for (Widget i in MediaQuery.of(context).size.width < 340
+                  ? smallerPhones()
+                  : biggerPhones())
+                i,
+              isListViewBigger
+                  ? Column(children: [
+                      Padding(padding: EdgeInsets.only(top: 30)),
+                      Text(
+                        "ŠCVApp, 2022. Vse pravice pridržane.",
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 20))
+                    ])
+                  : SizedBox(),
+              Padding(padding: EdgeInsets.only(bottom: 20))
             ],
           )),
-           !isListViewBigger ? Column(children: [Text(
-                "ŠCVApp, 2022. Vse pravice pridržane.",
-                textAlign: TextAlign.center,
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 5))]) : SizedBox(),
+          !isListViewBigger
+              ? Column(children: [
+                  Text(
+                    "ŠCVApp, 2022. Vse pravice pridržane.",
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 5))
+                ])
+              : SizedBox(),
         ],
-        ),
-          
-        )
-    );
+      ),
+    ));
   }
 
-  Future<void> _afterBuild (timestamp) async {
+  Future<void> _afterBuild(timestamp) async {
     if (scrollController.hasClients) {
-      if(scrollController.position.maxScrollExtent > 0.0){
+      if (scrollController.position.maxScrollExtent > 0.0) {
         setState(() {
           isListViewBigger = true;
         });
-      }else{
+      } else {
         setState(() {
           isListViewBigger = false;
         });
       }
-    }   
+    }
   }
 
-  
-
-  List<Widget> smallerPhones(){
-    print(MediaQuery.of(context).size.width);
+  List<Widget> smallerPhones() {
     return [
       Padding(
         padding: EdgeInsets.symmetric(vertical: 10),
@@ -163,11 +170,9 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   color: Colors.blueAccent,
                 ),
               ),
-              onTap: (){
-                launchUrl(
-                Uri.parse("https://app.scv.si"),
-                mode: LaunchMode.externalApplication
-                );
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si"),
+                    mode: LaunchMode.externalApplication);
               },
             )
           ],
@@ -189,11 +194,9 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   color: Colors.blueAccent,
                 ),
               ),
-              onTap: (){
-                launchUrl(
-                Uri.parse("https://app.scv.si/o-nas"),
-                mode: LaunchMode.externalApplication
-                );
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si/o-nas"),
+                    mode: LaunchMode.externalApplication);
               },
             )
           ],
@@ -202,7 +205,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
     ];
   }
 
-  List<Widget> biggerPhones(){
+  List<Widget> biggerPhones() {
     return [
       Padding(
         padding: EdgeInsets.symmetric(vertical: 10),
@@ -219,11 +222,9 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   color: Colors.blueAccent,
                 ),
               ),
-              onTap: (){
-                launchUrl(
-                Uri.parse("https://app.scv.si"),
-                mode: LaunchMode.externalApplication
-                );
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si"),
+                    mode: LaunchMode.externalApplication);
               },
             )
           ],
@@ -244,11 +245,9 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   color: Colors.blueAccent,
                 ),
               ),
-              onTap: (){
-                launchUrl(
-                Uri.parse("https://app.scv.si/o-nas"),
-                mode: LaunchMode.externalApplication
-                );
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si/o-nas"),
+                    mode: LaunchMode.externalApplication);
               },
             )
           ],
@@ -256,5 +255,4 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
       ),
     ];
   }
-
-  }
+}
