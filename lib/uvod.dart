@@ -1,28 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:scv_app/data.dart';
-import 'package:scv_app/domov.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:scv_app/main.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:get/get.dart';
 
 class OnBoardingPage extends StatelessWidget {
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     void goToHome() async {
       UserData user = await signInUser();
-      if(user != null){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+      if (user != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MyHomePage()));
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.isDarkMode ? HexColor.fromHex("#121212") : Color.fromARGB(255, 236, 236, 236),
+        backgroundColor: Get.isDarkMode
+            ? HexColor.fromHex("#121212")
+            : Color.fromARGB(255, 236, 236, 236),
         elevation: 0,
       ),
       body: SafeArea(
@@ -48,7 +46,8 @@ class OnBoardingPage extends StatelessWidget {
             // ),
             PageViewModel(
               title: 'Preprosto in varno',
-              body: 'Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.',
+              body:
+                  'Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.',
               image: buildImage('assets/microsoft.png'),
               decoration: getPageDecoration(),
             ),
@@ -69,9 +68,7 @@ class OnBoardingPage extends StatelessWidget {
           // animationDuration: 1000,
         ),
       ),
-      
     );
-
   }
 
   Widget buildImage(String path) =>
@@ -92,6 +89,8 @@ class OnBoardingPage extends StatelessWidget {
         bodyTextStyle: TextStyle(fontSize: 20),
         bodyPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
-        pageColor: Get.isDarkMode ? HexColor.fromHex("#121212") : Color.fromARGB(255, 236, 236, 236),
+        pageColor: Get.isDarkMode
+            ? HexColor.fromHex("#121212")
+            : Color.fromARGB(255, 236, 236, 236),
       );
 }

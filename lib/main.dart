@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
 import 'package:scv_app/easistent.dart';
+import 'package:scv_app/functions.dart';
 import 'package:scv_app/presentation/ea_flutter_icon.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:scv_app/theme.dart';
@@ -18,7 +19,6 @@ import 'data.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -98,9 +98,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: themeMode,
-      supportedLocales: [
-        Locale("sl")
-      ],
+      supportedLocales: [Locale("sl")],
       locale: Locale("sl"),
     );
   }
@@ -114,7 +112,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-
   int selectedIndex = 0;
   Data data = new Data();
   bool isLoading = true;
@@ -137,52 +134,47 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await cacheData2.getData();
     setState(() {
       cacheData = cacheData2;
-      _childrenWidgets.add(new DomovPage(cacheData: cacheData,));
+      _childrenWidgets.add(new DomovPage(
+        cacheData: cacheData,
+      ));
       _childrenWidgets.add(new MalicePage());
       // _childrenWidgets.add(new IsciPage());
       _childrenWidgets.add(new EasistentPage());
       _childrenWidgets.add(new UrnikPage(cacheData: cacheData));
       _childrenWidgets.add(new NastavitvePage(cacheData: cacheData));
-      isLoading = false;
+      isLoading = !cacheData2.dataLoaded;
     });
     if (!await this.data.loadData(cacheData)) {
       setState(() {
         noUser = true;
       });
-      prefs.remove(keyForAccessToken);
-      prefs.remove(keyForRefreshToken);
-      prefs.remove(keyForExpiresOn);
-      prefs.remove(keyForThemeDark);
-      prefs.remove(keyForUseBiometrics);
-      cacheData.deleteKeys(prefs);
-
-      Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => OnBoardingPage()));
+      await logOutUser(context);
     }
     setState(() {
-        DomovPage page = _childrenWidgets[0];
-        page.updateData(data);
-        UrnikPage page2 = _childrenWidgets[3];
-        page2.updateData(data);
-        NastavitvePage page3 = _childrenWidgets[4];
-        page3.updateData(data);
+      DomovPage page = _childrenWidgets[0];
+      page.updateData(data);
+      UrnikPage page2 = _childrenWidgets[3];
+      page2.updateData(data);
+      NastavitvePage page3 = _childrenWidgets[4];
+      page3.updateData(data);
+      isLoading = false;
     });
     var prevS = selectedIndex;
-    if(prevS != 0){
+    if (prevS != 0) {
       setState(() {
         selectedIndex = 0;
       });
       await Future.delayed(Duration(milliseconds: 10));
       setState(() {
-        selectedIndex=prevS;
+        selectedIndex = prevS;
       });
-    }else if(cacheData.schoolUrl == ""){
+    } else if (cacheData.schoolUrl == "") {
       setState(() {
         selectedIndex = 1;
       });
       await Future.delayed(Duration(milliseconds: 10));
       setState(() {
-        selectedIndex=prevS;
+        selectedIndex = prevS;
       });
     }
   }
@@ -194,54 +186,65 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async{
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    if(state == AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      try{
+      try {
         final expiresOn = prefs.getString(keyForExpiresOn);
-        DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss").parse(expiresOn).toUtc().subtract(Duration(minutes:5));
+        DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
+            .parse(expiresOn)
+            .toUtc()
+            .subtract(Duration(minutes: 5));
         DateTime zdaj = new DateTime.now().toUtc();
-        if(zdaj.isAfter(expiredDate)){
+        if (zdaj.isAfter(expiredDate)) {
           await refreshToken();
         }
-      }catch(e){
+      } catch (e) {
         print(e);
       }
 
-      try{
+      try {
         bool isBio = prefs.getBool(keyForUseBiometrics);
         int autoLock = prefs.getInt(keyForAppAutoLock);
         int zdaj = new DateTime.now().toUtc().millisecondsSinceEpoch;
-        if(isBio == true){
+        if (isBio == true) {
           prefs.remove(keyForAppAutoLock);
-          if(zdaj >= autoLock){
-            Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ZaklepPage(isFromAutoLock: true,)));
+          if (zdaj >= autoLock) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ZaklepPage(
+                      isFromAutoLock: true,
+                    )));
           }
         }
-      }catch(e){
+      } catch (e) {
         print(e);
       }
-    }else if(state == AppLifecycleState.paused){
+    } else if (state == AppLifecycleState.paused) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      int minuts=5;
-      try{
+      int minuts = 5;
+      try {
         int minutuesToAutoLOCK = prefs.getInt(keyForAppAutoLockTimer);
-        if(minutuesToAutoLOCK == 0){
+        if (minutuesToAutoLOCK == 0) {
           minuts = 0;
-          prefs.setInt(keyForAppAutoLock, new DateTime.now().toUtc().millisecondsSinceEpoch);
+          prefs.setInt(keyForAppAutoLock,
+              new DateTime.now().toUtc().millisecondsSinceEpoch);
           return;
-        }else if(minutuesToAutoLOCK > 10000){
+        } else if (minutuesToAutoLOCK > 10000) {
           prefs.remove(keyForAppAutoLockTimer);
           return;
-        }else{
+        } else {
           minuts = minutuesToAutoLOCK;
         }
-      }catch(e){
-        minuts=5;
+      } catch (e) {
+        minuts = 5;
       }
-      prefs.setInt(keyForAppAutoLock, new DateTime.now().toUtc().add(Duration(minutes:minuts)).millisecondsSinceEpoch);
+      prefs.setInt(
+          keyForAppAutoLock,
+          new DateTime.now()
+              .toUtc()
+              .add(Duration(minutes: minuts))
+              .millisecondsSinceEpoch);
     }
   }
 
@@ -255,7 +258,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: selectedIndex == 0
-          ? (data.schoolData.schoolColor != null ? data.schoolData.schoolColor : cacheData.schoolColor)
+          ? (data.schoolData.schoolColor != null
+              ? data.schoolData.schoolColor
+              : cacheData.schoolColor)
           : Theme.of(context).scaffoldBackgroundColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: selectedIndex == 0
@@ -266,15 +271,18 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: Center(
             child: SafeArea(
                 child: isLoading
-                    ? CircularProgressIndicator(color: cacheData.schoolColor,)
-                    : _childrenWidgets[selectedIndex]
-                    )),
+                    ? CircularProgressIndicator(
+                        color: cacheData.schoolColor,
+                      )
+                    : _childrenWidgets[selectedIndex])),
       ),
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
           barBackgroundColor: Theme.of(context).bottomAppBarColor,
           selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
-          selectedItemBackgroundColor: (data.schoolData.schoolColor != null ? data.schoolData.schoolColor : cacheData.schoolColor),
+          selectedItemBackgroundColor: (data.schoolData.schoolColor != null
+              ? data.schoolData.schoolColor
+              : cacheData.schoolColor),
           selectedItemIconColor: Theme.of(context).bottomAppBarColor,
           selectedItemLabelColor: Theme.of(context).primaryColor,
         ),

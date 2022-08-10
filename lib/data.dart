@@ -7,14 +7,15 @@ import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class Sola{
-  String id;//ERS,SSG
+class Sola {
+  String id; //ERS,SSG
   String homeUrl;
   String noviceUrl;
   String urnikUrl;
   Color color;
 
-  Sola(String _id, String _homeUrl, String _noviceUrl, String _urnikUrl, Color _color){
+  Sola(String _id, String _homeUrl, String _noviceUrl, String _urnikUrl,
+      Color _color) {
     this.id = _id;
     this.homeUrl = _homeUrl;
     this.noviceUrl = _noviceUrl;
@@ -23,21 +24,21 @@ class Sola{
   }
 }
 
-class UrnikData{
+class UrnikData {
   UrnikBoxStyle nowStyle;
   UrnikBoxStyle nextStyle;
   UrnikBoxStyle otherStyle;
 
   var tabelaZaSvetlejseBarve = {
-    "ERS":HexColor.fromHex("#85C9E9"),
-    "GIM":HexColor.fromHex("#FDE792"),
-    "SSD":HexColor.fromHex("#F7B4D2"),
-    "SSGO":HexColor.fromHex("#D4E8A6"),
+    "ERS": HexColor.fromHex("#85C9E9"),
+    "GIM": HexColor.fromHex("#FDE792"),
+    "SSD": HexColor.fromHex("#F7B4D2"),
+    "SSGO": HexColor.fromHex("#D4E8A6"),
   };
 
-  UrnikData({this.nowStyle,this.nextStyle,this.otherStyle});
+  UrnikData({this.nowStyle, this.nextStyle, this.otherStyle});
 
-  Color lightColor(Color color, int howMuch){
+  Color lightColor(Color color, int howMuch) {
     int newRed = color.red + howMuch;
     int newGreen = color.green + howMuch;
     int newBlue = color.blue + howMuch;
@@ -50,9 +51,11 @@ class UrnikData{
     return Color.fromARGB(255, newRed, newGreen, newBlue);
   }
 
-  void getFromSchoolColor(Color schoolColor, String schoolId){
+  void getFromSchoolColor(Color schoolColor, String schoolId) {
     Color ptextColor = schoolId != "GIM" ? Colors.white : Colors.black;
-    Color stextColor = schoolId != "GIM" ? HexColor.fromHex("#e4e4e4") : HexColor.fromHex("#4f4f4f");
+    Color stextColor = schoolId != "GIM"
+        ? HexColor.fromHex("#e4e4e4")
+        : HexColor.fromHex("#4f4f4f");
     Color faitedBgColor = this.lightColor(schoolColor, 40);
 
     this.nowStyle = new UrnikBoxStyle(
@@ -72,7 +75,6 @@ class UrnikData{
       primaryTextColor: this.nextStyle.primaryTextColor,
       secundaryTextColor: Colors.grey,
     );
-
   }
 }
 
@@ -87,18 +89,27 @@ class UserData {
   final CachedNetworkImageProvider image;
   final UserStatusData status;
 
-  const UserData(this.displayName, this.givenName,this.surname, this.mail, this.mobilePhone, this.id, this.userPrincipalName,this.image,this.status);
+  const UserData(
+      this.displayName,
+      this.givenName,
+      this.surname,
+      this.mail,
+      this.mobilePhone,
+      this.id,
+      this.userPrincipalName,
+      this.image,
+      this.status);
 }
 
-class UserStatusData{
+class UserStatusData {
   String id;
   String display;
   String color;
   AssetImage assetImage;
 
-  Future<void> getData(token) async{
-    final response = await http
-      .get(Uri.parse('$apiUrl/user/get/status'),headers: {"Authorization":token});
+  Future<void> getData(token) async {
+    final response = await http.get(Uri.parse('$apiUrl/user/get/status'),
+        headers: {"Authorization": token});
 
     if (response.statusCode == 200) {
       var decoded = jsonDecode(response.body);
@@ -109,19 +120,20 @@ class UserStatusData{
     }
   }
 
-  setS(UserStatusData nev){
+  setS(UserStatusData nev) {
     this.id = nev.id;
     this.display = nev.display;
     this.color = nev.color;
     this.assetImage = nev.assetImage;
   }
 
-  Future<UserStatusData> setStatus(String statusId) async{
+  Future<UserStatusData> setStatus(String statusId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString(keyForAccessToken);
-    final response = await http
-      .get(Uri.parse('$apiUrl/user/setStatus/$statusId'),headers: {"Authorization":accessToken});
-    if(response.statusCode == 200){
+    final response = await http.get(
+        Uri.parse('$apiUrl/user/setStatus/$statusId'),
+        headers: {"Authorization": accessToken});
+    if (response.statusCode == 200) {
       await this.getData(accessToken);
     }
     return this;
@@ -138,33 +150,33 @@ class SchoolData {
   Color schoolColor;
 
   Future<void> getData(token) async {
-    final response = await http
-      .get(Uri.parse('$apiUrl/user/school/'),headers: {"Authorization":token});
+    final response = await http.get(Uri.parse('$apiUrl/user/school/'),
+        headers: {"Authorization": token});
 
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    var decoded = jsonDecode(response.body);
-    this.id = decoded["id"].toString();
-    // this.id = "GIM";
-    this.urnikUrl = decoded["urnikUrl"].toString();
-    this.color = decoded["color"].toString();
-    this.name = decoded["name"].toString();
-    this.razred = decoded["razred"].toString();
-    this.schoolUrl = decoded["schoolUrl"].toString();
-    if(this.color == "#FFFFFF"){
-      this.color = "#8253D7";
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var decoded = jsonDecode(response.body);
+      this.id = decoded["id"].toString();
+      // this.id = "GIM";
+      this.urnikUrl = decoded["urnikUrl"].toString();
+      this.color = decoded["color"].toString();
+      this.name = decoded["name"].toString();
+      this.razred = decoded["razred"].toString();
+      this.schoolUrl = decoded["schoolUrl"].toString();
+      if (this.color == "#FFFFFF") {
+        this.color = "#8253D7";
+      }
+      schoolColor = HexColor.fromHex(this.color);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load school data');
     }
-    schoolColor = HexColor.fromHex(this.color);
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load school data');
-  }
   }
 }
 
-class CacheData{
+class CacheData {
   String schoolUrlKey = "cacheData-SchoolUrl";
   String schoolUrl;
   String schoolIdKey = "cacheData-SchoolId";
@@ -175,14 +187,15 @@ class CacheData{
   String userDisplayName;
   String userMailKey = "cacheData-UserDisplayMail";
   String userMail;
-  String schoolScheduleKey= "cacheData-SchoolSchedule";
+  String schoolScheduleKey = "cacheData-SchoolSchedule";
   String schoolSchedule;
   UreUrnikData ureUrnikData = new UreUrnikData();
   UrnikData urnikData = new UrnikData();
+  bool dataLoaded = false;
 
-  getData() async{
+  getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       this.schoolId = prefs.getString(schoolIdKey);
       this.schoolUrl = prefs.getString(this.schoolUrlKey);
       this.schoolColor = HexColor.fromHex(prefs.getString(this.schoolColorKey));
@@ -191,7 +204,8 @@ class CacheData{
       this.schoolSchedule = prefs.getString(this.schoolScheduleKey);
       this.ureUrnikData.getFromPrefs(prefs);
       this.urnikData.getFromSchoolColor(this.schoolColor, this.schoolId);
-    }catch (e){
+      this.dataLoaded = true;
+    } catch (e) {
       this.schoolId = "";
       this.schoolUrl = "";
       this.schoolColor = Colors.blue;
@@ -199,10 +213,12 @@ class CacheData{
       this.userMail = "not.loaded@scv.si";
       this.schoolSchedule = "";
       this.ureUrnikData.lastUpdate = DateTime.now().subtract(Duration(days: 2));
+      this.dataLoaded = false;
     }
   }
 
-  saveData(String _schoolUrl, String _schoolColorHex, String _userDisplayName, String _userMail, String _schoolSchedule, String _schoolId) async{
+  saveData(String _schoolUrl, String _schoolColorHex, String _userDisplayName,
+      String _userMail, String _schoolSchedule, String _schoolId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(this.schoolUrlKey, _schoolUrl);
     this.schoolUrl = _schoolUrl;
@@ -218,7 +234,7 @@ class CacheData{
     this.schoolId = _schoolId;
   }
 
-  deleteKeys(SharedPreferences prefs){
+  deleteKeys(SharedPreferences prefs) {
     prefs.remove(this.schoolUrlKey);
     prefs.remove(this.schoolColorKey);
     prefs.remove(this.userDisplayNameKey);
@@ -229,25 +245,34 @@ class CacheData{
   }
 }
 
-class Data{
+class Data {
   SchoolData schoolData = new SchoolData();
-  UserData user = new UserData("","","","","","","",CachedNetworkImageProvider(""),UserStatusData());
+  UserData user = new UserData("", "", "", "", "", "", "",
+      CachedNetworkImageProvider(""), UserStatusData());
   UrnikData urnikData = new UrnikData();
   UreUrnikData ureUrnikData = new UreUrnikData();
 
-  Future<bool> loadData(CacheData cacheData) async{
+  Future<bool> loadData(CacheData cacheData) async {
     ureUrnikData.lastUpdate = cacheData.ureUrnikData.lastUpdate;
     final accessToken = await refreshToken();
-    if(accessToken == "" || accessToken == null){
+    if (accessToken == "" || accessToken == null) {
       return false;
     }
     this.user = await fetchUserData(accessToken);
-    if(user == null){
+    if (user == null) {
       return false;
     }
     await this.schoolData.getData(accessToken);
-    this.urnikData.getFromSchoolColor(this.schoolData.schoolColor, this.schoolData.id);
-    cacheData.saveData(this.schoolData.schoolUrl,this.schoolData.color,this.user.displayName,this.user.mail,this.schoolData.urnikUrl, this.schoolData.id);
+    this
+        .urnikData
+        .getFromSchoolColor(this.schoolData.schoolColor, this.schoolData.id);
+    cacheData.saveData(
+        this.schoolData.schoolUrl,
+        this.schoolData.color,
+        this.user.displayName,
+        this.user.mail,
+        this.schoolData.urnikUrl,
+        this.schoolData.id);
     this.ureUrnikData.getFromWeb(accessToken);
 
     return true;

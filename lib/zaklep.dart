@@ -1,19 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_picker/flutter_picker.dart';
+import 'package:scv_app/functions.dart';
 import 'package:scv_app/main.dart';
-import 'package:scv_app/nastavitve.dart';
-import 'package:scv_app/prijava.dart';
-import 'package:scv_app/urnik.dart';
-import 'package:scv_app/uvod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../data.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:scv_app/api/local_auth_api.dart';
 
 class ZaklepPage extends StatefulWidget {
   ZaklepPage({Key key, this.isFromAutoLock = false}) : super(key: key);
@@ -44,15 +34,64 @@ class _ZaklepPageState extends State<ZaklepPage> {
     });
   }
 
+  void odjava() {
+    Navigator.pop(context);
+    logOutUser(context);
+  }
+
+  void pojdiVNastavitve() {
+    Navigator.pop(context);
+    AppSettings.openSecuritySettings();
+  }
+
+  Future<void> _OpozoriloBiometrika() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Opozorilo!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text(
+                    'V telefonu nimaš nastavljenih varnostnih nastavitev. Zato vam nemoremo odkleniti aplikacije.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: const Text('Odjavi me',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () => odjava()),
+            TextButton(
+                child: const Text('Odpri nastavitve',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () => pojdiVNastavitve()),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _authorizeNow() async {
     bool isAuthorized = false;
     try {
       isAuthorized = await _localAuthentication.authenticate(
-        localizedReason: "Za vstop se autoriziraj:",
-        options: AuthenticationOptions(useErrorDialogs: true,stickyAuth: true)
-      );
+          localizedReason: "Za vstop se autoriziraj:",
+          options:
+              AuthenticationOptions(useErrorDialogs: true, stickyAuth: true));
     } on PlatformException catch (e) {
-      print(e);
+      print(e.code);
+      print(e.message);
+      if (e.code == "NotAvailable" &&
+          e.message == "Required security features not enabled") {
+        _OpozoriloBiometrika();
+      }
     }
 
     if (!mounted) return;
@@ -60,10 +99,10 @@ class _ZaklepPageState extends State<ZaklepPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = true;
-        if(!widget.isFromAutoLock){
+        if (!widget.isFromAutoLock) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => MyHomePage()));
-        }else{
+        } else {
           Navigator.pop(context);
         }
       } else {
@@ -82,9 +121,9 @@ class _ZaklepPageState extends State<ZaklepPage> {
     onStartUp();
   }
 
-  void onStartUp() async{
+  void onStartUp() async {
     await _checkBiometric();
-    if(_canCheckBiometric){
+    if (_canCheckBiometric) {
       await _authorizeNow();
     }
   }
@@ -93,8 +132,6 @@ class _ZaklepPageState extends State<ZaklepPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
         body: SafeArea(
       child: !_authorizedOrNot

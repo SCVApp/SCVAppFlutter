@@ -7,8 +7,8 @@ import 'package:scv_app/SettingsPages/aboutMe.dart';
 import 'package:scv_app/SettingsPages/biometricPage.dart';
 import 'package:scv_app/SettingsPages/changeStatus.dart';
 import 'package:scv_app/SettingsPages/otherToolsPage.dart';
+import 'package:scv_app/functions.dart';
 import 'package:scv_app/prijava.dart';
-import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
@@ -117,17 +117,8 @@ class NastavitvePageState extends State<NastavitvePage> {
   @override
   Widget build(BuildContext context) {
     Future<void> odjava() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove(keyForAccessToken);
-      prefs.remove(keyForRefreshToken);
-      prefs.remove(keyForExpiresOn);
-      prefs.remove(keyForThemeDark);
-      prefs.remove(keyForUseBiometrics);
-      widget.cacheData.deleteKeys(prefs);
-
       Navigator.pop(context);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => OnBoardingPage()));
+      await logOutUser(context);
     }
 
     void goToPageChangeStatus() {
@@ -173,7 +164,8 @@ class NastavitvePageState extends State<NastavitvePage> {
               child: ListBody(
                 children: const <Widget>[
                   Text(
-                      'Si prepričan, da se želiš odjaviti iz aplikacije ŠCVApp?'),
+                    'Si prepričan, da se želiš odjaviti iz aplikacije ŠCVApp?',
+                  ),
                 ],
               ),
             ),
