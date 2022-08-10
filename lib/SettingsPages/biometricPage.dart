@@ -25,7 +25,7 @@ class _BiometricPage extends State<BiometricPage> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
   String _authorizedOrNot = "Not Authorized";
-  List<BiometricType> _availableBiometricTypes = List<BiometricType>();
+  List<BiometricType> _availableBiometricTypes = List<BiometricType>.empty();
 
   Future<void> _checkBiometric() async {
     bool canCheckBiometric = false;
