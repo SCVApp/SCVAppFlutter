@@ -1,22 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:scv_app/nastavitve.dart';
 import 'package:scv_app/prijava.dart';
-import 'package:scv_app/urnik.dart';
-import 'package:scv_app/uvod.dart';
-import 'package:scv_app/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/backBtn.dart';
 import '../data.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:scv_app/api/local_auth_api.dart';
 import 'package:app_settings/app_settings.dart';
 
 class BiometricPage extends StatefulWidget {
