@@ -205,7 +205,7 @@ class _BiometricPage extends State<BiometricPage> {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               Text(
-                                "Zaklep aplikacije v odzadju po:",
+                                "Zaklep aplikacije v ozadju po:",
                                 style: textStyle,
                               ),
                               Text(

@@ -294,7 +294,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                   : NastavitveGroup(
                       settingsGroupTitle: "Račun",
                       items: [
-                        SettingsItem(
+                        /* SettingsItem(
                           onTap: goToPageAboutMe,
                           icons: Icons.account_circle,
                           iconStyle: IconStyle(
@@ -305,7 +305,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                           ),
                           title: 'Moj račun',
                           subtitle: "Podatki mojega računa",
-                        ),
+                        ), */
                         SettingsItem(
                           onTap: _showMyDialog,
                           icons: Icons.logout,
