@@ -126,11 +126,11 @@ class _MalicePageState extends State<MalicePage> {
 
   @override
   Widget build(BuildContext context) {
-    // return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
-    //     _myController = c;
-    //   });
+    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
+        _myController = c;
+      });
 
-    logInUser() async {
+    /* logInUser() async {
       String username = field_username_controller.text.toString();
       String password = field_password_controller.text.toString();
 
@@ -249,7 +249,7 @@ class _MalicePageState extends State<MalicePage> {
         ),
       ),
       onTap: ()=> FocusManager.instance.primaryFocus.unfocus()
-    );
+    ); */
   }
 }
 
