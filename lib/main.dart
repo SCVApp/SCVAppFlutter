@@ -257,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: selectedIndex == 0
+      backgroundColor: selectedIndex == 0 && !isLoading
           ? (data.schoolData.schoolColor != null
               ? data.schoolData.schoolColor
               : cacheData.schoolColor)

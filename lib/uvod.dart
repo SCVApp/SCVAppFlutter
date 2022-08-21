@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:scv_app/Components/loginInPage.dart';
 import 'package:scv_app/data.dart';
-import 'package:scv_app/main.dart';
-import 'package:scv_app/prijava.dart';
 import 'package:get/get.dart';
 
 class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void goToHome() async {
-      UserData user = await signInUser();
-      if (user != null) {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => MyHomePage()));
-      }
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => LoginInPage()));
     }
 
     return Scaffold(
