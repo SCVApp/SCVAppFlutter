@@ -276,49 +276,52 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       )
                     : _childrenWidgets[selectedIndex])),
       ),
-      bottomNavigationBar: FFNavigationBar(
-        theme: FFNavigationBarTheme(
-          barBackgroundColor: Theme.of(context).bottomAppBarColor,
-          selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
-          selectedItemBackgroundColor: (data.schoolData.schoolColor != null
-              ? data.schoolData.schoolColor
-              : cacheData.schoolColor),
-          selectedItemIconColor: Theme.of(context).bottomAppBarColor,
-          selectedItemLabelColor: Theme.of(context).primaryColor,
-        ),
-        selectedIndex: selectedIndex,
-        onSelectTab: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        items: [
-          FFNavigationBarItemv2(
-            iconData: Icons.home_rounded,
-            label: 'Domov',
-          ),
-          FFNavigationBarItemv2(
-            iconData: Icons.fastfood,
-            label: 'Malice',
-          ),
-          /* FFNavigationBarItemv2(
+      bottomNavigationBar: !isLoading
+          ? FFNavigationBar(
+              theme: FFNavigationBarTheme(
+                barBackgroundColor: Theme.of(context).bottomAppBarColor,
+                selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
+                selectedItemBackgroundColor:
+                    (data.schoolData.schoolColor != null
+                        ? data.schoolData.schoolColor
+                        : cacheData.schoolColor),
+                selectedItemIconColor: Theme.of(context).bottomAppBarColor,
+                selectedItemLabelColor: Theme.of(context).primaryColor,
+              ),
+              selectedIndex: selectedIndex,
+              onSelectTab: (index) {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              items: [
+                FFNavigationBarItemv2(
+                  iconData: Icons.home_rounded,
+                  label: 'Domov',
+                ),
+                FFNavigationBarItemv2(
+                  iconData: Icons.fastfood,
+                  label: 'Malice',
+                ),
+                /* FFNavigationBarItemv2(
             iconData: Icons.person_search,
             label: 'P.O.',
           ), */
-          FFNavigationBarItemv2(
-            iconData: FluttereAIcon.ea,
-            label: 'eAsistent',
-          ),
-          FFNavigationBarItemv2(
-            iconData: Icons.calendar_today_rounded,
-            label: 'Urnik',
-          ),
-          FFNavigationBarItemv2(
-            iconData: Icons.settings,
-            label: 'Nastavitve',
-          ),
-        ],
-      ),
+                FFNavigationBarItemv2(
+                  iconData: FluttereAIcon.ea,
+                  label: 'eAsistent',
+                ),
+                FFNavigationBarItemv2(
+                  iconData: Icons.calendar_today_rounded,
+                  label: 'Urnik',
+                ),
+                FFNavigationBarItemv2(
+                  iconData: Icons.settings,
+                  label: 'Nastavitve',
+                ),
+              ],
+            )
+          : SizedBox(),
     );
   }
 }
