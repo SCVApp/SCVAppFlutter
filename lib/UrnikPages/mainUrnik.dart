@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/boxForHour.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
+import 'package:scv_app/UrnikPages/urnikForOtherDays.dart';
 import 'package:scv_app/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,11 +19,19 @@ class UrnikBoxStyle {
 }
 
 class MainUrnikPage extends StatefulWidget {
-  MainUrnikPage({Key key, this.ureUrnikData, this.urnikData, this.schoolColor})
+  MainUrnikPage(
+      {Key key,
+      this.ureUrnikData,
+      this.urnikData,
+      this.schoolColor,
+      this.data,
+      this.cacheData})
       : super(key: key);
 
   final UreUrnikData ureUrnikData;
   final UrnikData urnikData;
+  final Data data;
+  final CacheData cacheData;
   final Color schoolColor;
 
   _MainUrnikPageState createState() => _MainUrnikPageState();
@@ -90,6 +99,17 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
     }
   }
 
+  void goToUrnikForOtherDays() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => UrnikForOtherDays(
+                  urlString: widget.data != null
+                      ? widget.data.schoolData.urnikUrl
+                      : widget.cacheData.schoolSchedule,
+                )));
+  }
+
   Future<void> _onRefresh() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -115,6 +135,23 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
               padding: EdgeInsets.only(bottom: this.gap, left: 15, right: 15)),
           trenutnaUra(context),
           Padding(
+            child: GestureDetector(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Ogled urnika za ostale dni",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ]),
+                onTap: goToUrnikForOtherDays),
+            padding: EdgeInsets.only(left: 15, right: 15, bottom: this.gap),
+          ),
+          Padding(
             child: Align(
               child: Text(
                 "Današnji urnik",
@@ -139,23 +176,6 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
                   ),
                   onRefresh: _onRefresh,
                   color: widget.schoolColor)),
-          GestureDetector(
-            child: Padding(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Ogled urnika za ostale dni",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ]),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            ),
-          ),
         ]));
   }
 
