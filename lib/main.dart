@@ -188,9 +188,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
+      //Aplikacija odprta iz ozadja
       SharedPreferences prefs = await SharedPreferences.getInstance();
       try {
+        //Funkcija za osvežitev dostopnega žetona
         final expiresOn = prefs.getString(keyForExpiresOn);
+        final accessToken = prefs.getString(keyForAccessToken);
         DateTime expiredDate = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
             .parse(expiresOn)
             .toUtc()
@@ -199,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         if (zdaj.isAfter(expiredDate)) {
           await refreshToken();
         }
+        await cacheData.ureUrnikData.getFromWeb(accessToken);
       } catch (e) {
         print(e);
       }
