@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:home_widget/home_widget.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
 import 'package:scv_app/easistent.dart';
 import 'package:scv_app/functions.dart';
