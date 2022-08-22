@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
@@ -203,15 +205,13 @@ class NastavitvePageState extends State<NastavitvePage> {
                     ? widget.data.schoolData.schoolColor
                     : widget.cacheData.schoolColor,
                 userMoreInfo: Text(
-                  widget.data != null
-                      ? widget.data.user.mail
-                      : widget.cacheData.userMail,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: MediaQuery.of(context).size.height / 42 > 14
-                          ? 14
-                          : MediaQuery.of(context).size.height / 42),
-                ),
+                    widget.data != null
+                        ? widget.data.user.mail
+                        : widget.cacheData.userMail,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: min(
+                            MediaQuery.of(context).size.height / 42, 14.0))),
                 data: widget.data,
               ),
               widget.data == null

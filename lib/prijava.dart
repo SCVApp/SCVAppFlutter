@@ -15,44 +15,47 @@ import 'main.dart';
 final String apiUrl = "https://backend.app.scv.si";
 
 final String keyForAccessToken = "key_AccessToken";
-final String keyForRefreshToken= "key_RefreshToken";
+final String keyForRefreshToken = "key_RefreshToken";
 final String keyForExpiresOn = "key_ExpiresOn";
 final String keyForThemeDark = "key_AppThemeDark";
-final String keyForUseBiometrics= "key_UserBiometrics";
-final String keyForAppAutoLock= "key_AppAutoLock";
-final String keyForAppAutoLockTimer= "key_AppAutoLockTimer";
+final String keyForUseBiometrics = "key_UserBiometrics";
+final String keyForAppAutoLock = "key_AppAutoLock";
+final String keyForAppAutoLockTimer = "key_AppAutoLockTimer";
 
 Future<UserData> signInUser() async {
-    try{
-      final result = await FlutterWebAuth.authenticate(url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
-      final accessToken = Uri.parse(result).queryParameters['accessToken'];
-      final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
-      final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
+  try {
+    final result = await FlutterWebAuth.authenticate(
+        url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
+    final accessToken = Uri.parse(result).queryParameters['accessToken'];
+    final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
+    final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
 
-      UserData user = await fetchUserData(accessToken.toString());
-      if(user != null){
-        await shraniUporabnikovePodatkeZaprijavo(accessToken, refreshToken, expiresOn);
-      }
-      return user;
-    }catch (e){
-      print(e);
-      return null;
+    UserData user = await fetchUserData(accessToken.toString());
+    if (user != null) {
+      await shraniUporabnikovePodatkeZaprijavo(
+          accessToken, refreshToken, expiresOn);
     }
+    return user;
+  } catch (e) {
+    print(e);
+    return null;
+  }
 }
 
-Future<void> shraniUporabnikovePodatkeZaprijavo(accessToken,refreshToken,expiresOn) async {
+Future<void> shraniUporabnikovePodatkeZaprijavo(
+    accessToken, refreshToken, expiresOn) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(keyForAccessToken, accessToken);
   prefs.setString(keyForRefreshToken, refreshToken);
   prefs.setString(keyForExpiresOn, expiresOn);
 }
 
-class Token{
+class Token {
   final String accessToken;
   final String refreshToken;
   final String expiresOn;
 
-  Token(this.accessToken,this.refreshToken,this.expiresOn);
+  Token(this.accessToken, this.refreshToken, this.expiresOn);
   Token.fromJson(Map<String, dynamic> json)
       : accessToken = json['accessToken'],
         refreshToken = json['refreshToken'],
@@ -63,8 +66,8 @@ class Token{
         'refreshToken': refreshToken,
         'expiresOn': expiresOn,
       };
-
 }
+
 Future<String> refreshToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final accessToken = prefs.getString(keyForAccessToken);
@@ -72,15 +75,16 @@ Future<String> refreshToken() async {
   final expiresOn = prefs.getString(keyForExpiresOn);
 
   Token oldToken = new Token(accessToken, refreshToken, expiresOn);
-  final respons = await http.post(Uri.parse("$apiUrl/auth/refreshToken/"),body: oldToken.toJson());
-  if(respons.statusCode == 200){
+  final respons = await http.post(Uri.parse("$apiUrl/auth/refreshToken/"),
+      body: oldToken.toJson());
+  if (respons.statusCode == 200) {
     Token newToken = new Token.fromJson(jsonDecode(respons.body));
     prefs.setString(keyForAccessToken, newToken.accessToken);
     prefs.setString(keyForRefreshToken, newToken.refreshToken);
     prefs.setString(keyForExpiresOn, newToken.expiresOn);
     print("Uspesna osvezitev zetona");
     return newToken.accessToken;
-  }else{
+  } else {
     prefs.remove(keyForAccessToken);
     prefs.remove(keyForRefreshToken);
     prefs.remove(keyForExpiresOn);
@@ -91,36 +95,45 @@ Future<String> refreshToken() async {
 
 Future<bool> aliJeUporabnikPrijavljen() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  try{
+  try {
     final accessToken = prefs.getString(keyForAccessToken);
     final refreshToken = prefs.getString(keyForRefreshToken);
     final expiresOn = prefs.getString(keyForExpiresOn);
 
-    if(accessToken != null && accessToken != ""){
+    if (accessToken != null && accessToken != "") {
       return true;
     }
     return false;
-  }catch (e){
+  } catch (e) {
     return false;
   }
 }
 
 Future<UserData> fetchUserData(String token) async {
   final response = await http
-      .get(Uri.parse('$apiUrl/user/get'),headers: {"Authorization":token});
+      .get(Uri.parse('$apiUrl/user/get'), headers: {"Authorization": token});
 
   if (response.statusCode == 200) {
     var decoded = jsonDecode(response.body);
     final userImage = CachedNetworkImageProvider(
-      "$apiUrl/user/get/profilePicture?=${decoded['mail']}"
-      ,headers: {"Authorization": token},
-      );
+      "$apiUrl/user/get/profilePicture?=${decoded['mail']}",
+      headers: {"Authorization": token},
+      errorListener: () => print("Error in image"),
+    );
     final UserStatusData userStatus = new UserStatusData();
     await userStatus.getData(token);
-    UserData user = UserData(decoded['displayName'],decoded['givenName'],decoded['surname'], decoded['mail'], decoded['mobilePhone'], decoded['id'], decoded['userPrincipalName'],userImage,userStatus);
+    UserData user = UserData(
+        decoded['displayName'],
+        decoded['givenName'],
+        decoded['surname'],
+        decoded['mail'],
+        decoded['mobilePhone'],
+        decoded['id'],
+        decoded['userPrincipalName'],
+        userImage,
+        userStatus);
     return user;
   } else {
     return null;
   }
-
 }

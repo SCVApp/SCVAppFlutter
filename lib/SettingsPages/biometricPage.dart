@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -144,7 +146,7 @@ class _BiometricPage extends State<BiometricPage> {
 
   bool _value = false;
 
-  int selectedAutoLockItem = 1;
+  int selectedAutoLockItem = 0;
 
   changeToggle(bool toggle) async {
     await _checkBiometric();
@@ -165,7 +167,7 @@ class _BiometricPage extends State<BiometricPage> {
   }
 
   Widget build(BuildContext context) {
-    double textSize = MediaQuery.of(context).size.width * 0.042;
+    double textSize = min(MediaQuery.of(context).size.width * 0.042, 16);
     TextStyle textStyle = TextStyle(
       fontSize: textSize,
       color: Theme.of(context).primaryColor,
