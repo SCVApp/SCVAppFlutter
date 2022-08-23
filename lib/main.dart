@@ -190,6 +190,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       //Aplikacija odprta iz ozadja
       SharedPreferences prefs = await SharedPreferences.getInstance();
+
       try {
         //Funkcija za osvežitev dostopnega žetona
         final expiresOn = prefs.getString(keyForExpiresOn);

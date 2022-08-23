@@ -157,12 +157,28 @@ class _BiometricPage extends State<BiometricPage> {
       });
       prefs.setBool(keyForUseBiometrics, _value);
       widget.notifyParent();
+      if (_value == true) {
+        defualtSelectAutoLock(prefs);
+      }
     } else {
       prefs.setBool(keyForUseBiometrics, false);
       setState(() {
         _value = false;
       });
       _OpozoriloBiometrika();
+    }
+  }
+
+  defualtSelectAutoLock(SharedPreferences prefs) {
+    try {
+      int autoLockTimer = prefs.getInt(keyForAppAutoLockTimer);
+      if (autoLockTimer == null) {
+        prefs.setInt(keyForAppAutoLockTimer, 0);
+        print("Auto lock prefs set automatically");
+      }
+    } catch (e) {
+      prefs.setInt(keyForAppAutoLockTimer, 0);
+      print("Auto lock prefs set automatically");
     }
   }
 
@@ -275,14 +291,18 @@ class _BiometricPage extends State<BiometricPage> {
         selectedAutoLockItem = newValue;
       });
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      int timeInMinutes = 0;
+      int timeInMinutes = 0; //Takoj
       if (newValue == 1) {
+        //Zec 5 min
         timeInMinutes = 5;
       } else if (newValue == 2) {
+        //Zec 10 min
         timeInMinutes = 10;
       } else if (newValue == 3) {
+        //Zec 30 min
         timeInMinutes = 30;
       } else if (newValue == 4) {
+        // Nikoli
         timeInMinutes = 10001;
       }
       prefs.setInt(keyForAppAutoLockTimer, timeInMinutes);
