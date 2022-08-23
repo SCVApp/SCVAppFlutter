@@ -215,9 +215,10 @@ class NastavitvePageState extends State<NastavitvePage> {
                 data: widget.data,
               ),
               widget.data == null
-                  ? CircularProgressIndicator(
+                  ? Center(
+                      child: CircularProgressIndicator(
                       color: widget.cacheData.schoolColor,
-                    )
+                    ))
                   : NastavitveGroup(
                       items: [
                         SettingsItem(
@@ -288,9 +289,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                       ],
                     ),
               widget.data == null
-                  ? CircularProgressIndicator(
-                      color: widget.cacheData.schoolColor,
-                    )
+                  ? SizedBox()
                   : NastavitveGroup(
                       settingsGroupTitle: "Račun",
                       items: [
