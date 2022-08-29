@@ -26,12 +26,12 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
 
   List<Widget> status = [
     StatusItem(
-      title: "Dosegljiv",
+      title: "Dosegljiv/-a",
       imageProvider: AssetImage("assets/statusIcons/available.png"),
       statusId: "available",
     ),
     StatusItem(
-      title: "Odsoten",
+      title: "Odsoten/-a",
       imageProvider: AssetImage("assets/statusIcons/away.png"),
       statusId: "away",
     ),
@@ -46,12 +46,12 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
       statusId: "busy",
     ),
     StatusItem(
-      title: "Ne motite",
+      title: "Ne moti",
       imageProvider: AssetImage("assets/statusIcons/dnd.png"),
       statusId: "dnd",
     ),
     StatusItem(
-      title: "Nedosegljiv",
+      title: "Nedosegljiv/-a",
       imageProvider: AssetImage("assets/statusIcons/offline.png"),
       statusId: "offline",
     ),
@@ -83,7 +83,7 @@ class _ChangeStatusPage extends State<ChangeStatusPage> {
           ? Text("")
           : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.only(bottom: 40, top: 10),
                 child: Text(
                   "Izberi prikazan status:",
                   style: TextStyle(
