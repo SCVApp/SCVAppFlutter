@@ -240,8 +240,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#0094d9"),
                           ),
                           title: 'Orodja',
-                          subtitle:
-                              "Ostala orodja", 
+                          subtitle: "Ostala orodja",
                         ),
                         SettingsItem(
                           onTap: () {},
