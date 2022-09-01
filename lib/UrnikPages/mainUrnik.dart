@@ -166,6 +166,7 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
               child: RefreshIndicator(
                   key: _keyForListView,
                   child: ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     controller: scrollController,
                     padding:
                         EdgeInsets.only(bottom: this.gap, left: 15, right: 15),
@@ -257,16 +258,21 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
         naslednaUraText = "začetek pouka";
       }
     }
+
+    bool isNext = widget.ureUrnikData.zacetekNaslednjeUre != -1;
     return Wrap(
+      alignment: WrapAlignment.center,
       children: [
         Text(
           "Trenutno na urniku",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Padding(padding: EdgeInsets.only(left: 5)),
-        Text(
-          "($doNaslednjeUreTxt do $naslednaUraText):",
-        ),
+        isNext
+            ? Text(
+                "($doNaslednjeUreTxt do $naslednaUraText):",
+              )
+            : SizedBox(),
       ],
     );
   }

@@ -66,6 +66,7 @@ class UreUrnikData {
   void prikaziTrenutnoUro(UrnikData urnikData) {
     int casZdaj = DateTime.now().millisecondsSinceEpoch;
     int idTrenutneUre = -1;
+
     for (UraTrajanje uraTrajanje in this.urnikUre) {
       if (uraTrajanje.zacetek.millisecondsSinceEpoch <= casZdaj &&
           casZdaj <= uraTrajanje.konec.millisecondsSinceEpoch) {
