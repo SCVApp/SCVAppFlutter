@@ -230,7 +230,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                           icons: Icons.change_circle,
                           onTap: goToPageChangeStatus,
                           title: "Status",
-                          subtitle: "Sprememba prikazanega statusa",
+                          subtitle: "Spremeni status",
                         ),
                         SettingsItem(
                           onTap: goToPageTools,
@@ -240,8 +240,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#0094d9"),
                           ),
                           title: 'Orodja',
-                          subtitle:
-                              "Ostala orodja", // check this one, on an iPhone 13 the text is truncated at 'ponuja'
+                          subtitle: "Ostala orodja",
                         ),
                         SettingsItem(
                           onTap: () {},
@@ -284,7 +283,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#8DD7F7"),
                           ),
                           title: 'O aplikaciji',
-                          subtitle: "Podatki o aplikaciji ŠCVApp",
+                          subtitle: "Podatki o aplikaciji",
                         ),
                       ],
                     ),

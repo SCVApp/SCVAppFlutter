@@ -39,9 +39,17 @@ class _OtherToolsPage extends State<OtherToolsPage> {
     return Scaffold(
         body: SafeArea(
           child: Column(
+            
             children: [
               backButton(context),
-              Text("Kmalu na voljo ..."),
+              Container(
+            width: 200,
+            height: 300,
+            child: Image.asset(
+              'assets/Construction2.png',
+            )),
+              
+              Text("Kmalu na voljo."),
             ],
           )
         )

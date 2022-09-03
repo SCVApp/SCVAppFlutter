@@ -28,12 +28,12 @@ Widget HourBoxUrnik(
     UraTrajanje trajanjeUra,
     BuildContext context,
     String mainTitle = "",
-    UrnikData urnikData}) {
+    UrnikData urnikData,
+    int izbranaUra = 0}) {
   String krajsava = "";
   String ucilnica = "";
   int id = 0; // Katera ura po vrsti je npr. 1., 0., 5. ...
   String trajanje = "";
-  int izbranaUra = 0; // Katera ura jeizbrana v istem casovnem obdobju
   String ucitelj = "";
 
   final SomeValuseForSize someValuesForSize = !isSmall
@@ -48,7 +48,7 @@ Widget HourBoxUrnik(
           secundaryFontSize: 13,
           widthOfIcon: 30);
 
-  if (trajanjeUra != null && trajanjeUra.ura.length > 0) {
+  if (trajanjeUra != null && trajanjeUra.ura.length > izbranaUra) {
     Ura ura = trajanjeUra.ura[izbranaUra];
     krajsava = ura.krajsava != "" ? ura.krajsava : "";
     ucilnica = ura.ucilnica != "" ? ura.ucilnica : "/   ";

@@ -166,6 +166,7 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
               child: RefreshIndicator(
                   key: _keyForListView,
                   child: ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     controller: scrollController,
                     padding:
                         EdgeInsets.only(bottom: this.gap, left: 15, right: 15),
@@ -248,53 +249,32 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
   }
 
   Widget TitleNowOn(String doNaslednjeUreTxt) {
-    return LayoutBuilder(builder: (context, constraints) {
-      var painter1 = TextPainter(
-        textDirection: TextDirection.ltr,
-        text: TextSpan(
-          text: 'Trenutno na urniku ',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+    String naslednaUraText = "naslednje ure";
+    if (widget.ureUrnikData.urnikUre.length > 0) {
+      int trenutneMiliSec = DateTime.now().millisecondsSinceEpoch;
+      int zacetekPrveUre =
+          widget.ureUrnikData.urnikUre[0].zacetek.millisecondsSinceEpoch;
+      if (zacetekPrveUre > trenutneMiliSec) {
+        naslednaUraText = "začetek pouka";
+      }
+    }
+
+    bool isNext = widget.ureUrnikData.zacetekNaslednjeUre != -1;
+    return Wrap(
+      alignment: WrapAlignment.center,
+      children: [
+        Text(
+          "Trenutno na urniku",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-      );
-      var painter2 = TextPainter(
-        textDirection: TextDirection.ltr,
-        text: TextSpan(
-          text: doNaslednjeUreTxt != ""
-              ? '($doNaslednjeUreTxt do naslednje ure):'
-              : "",
-          style: TextStyle(),
-        ),
-      );
-      painter1.layout();
-      painter2.layout();
-      bool isOverFlowing =
-          painter1.size.width + painter2.size.width > constraints.maxWidth;
-      return isOverFlowing
-          ? Column(
-              children: [
-                Text(
-                  painter1.text.toPlainText(),
-                  style: painter1.text.style,
-                ),
-                Text(
-                  painter2.text.toPlainText(),
-                  style: painter2.text.style,
-                ),
-              ],
-            )
-          : Row(children: [
-              Text(
-                painter1.text.toPlainText(),
-                style: painter1.text.style,
-              ),
-              Text(
-                painter2.text.toPlainText(),
-                style: painter2.text.style,
-              ),
-            ]);
-    });
+        Padding(padding: EdgeInsets.only(left: 5)),
+        isNext
+            ? Text(
+                "($doNaslednjeUreTxt do $naslednaUraText):",
+              )
+            : SizedBox(),
+      ],
+    );
   }
 }
 

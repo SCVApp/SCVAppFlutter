@@ -46,7 +46,7 @@ class HoursBoxUrnikState extends State<HoursBoxUrnik> {
             clipBehavior: Clip.none,
             onPageChanged: spremeniIzbranoUro,
             children: [
-              for (int i = 0; i < steviloUrVCasovnemObdobju; i++) box()
+              for (int i = 0; i < steviloUrVCasovnemObdobju; i++) box(i)
             ],
           ),
           Positioned(
@@ -68,7 +68,7 @@ class HoursBoxUrnikState extends State<HoursBoxUrnik> {
         ]));
   }
 
-  Widget box() {
+  Widget box(int i) {
     return Padding(
       child: HourBoxUrnik(
         isSmall: widget.isSmall,
@@ -77,6 +77,7 @@ class HoursBoxUrnikState extends State<HoursBoxUrnik> {
         context: context,
         mainTitle: widget.mainTitle,
         urnikData: widget.urnikData,
+        izbranaUra: i,
       ),
       padding: EdgeInsets.symmetric(horizontal: 10),
     );
