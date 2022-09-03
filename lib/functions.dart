@@ -4,6 +4,7 @@ import 'package:scv_app/prijava.dart';
 import 'package:scv_app/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 Future<void> logOutUser(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,6 +20,7 @@ Future<void> logOutUser(BuildContext context) async {
   } else {
     Get.changeThemeMode(ThemeMode.light);
   }
+  await CookieManager().clearCookies();
   Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => OnBoardingPage()));
 }
