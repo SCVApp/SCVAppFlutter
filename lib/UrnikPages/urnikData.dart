@@ -14,9 +14,18 @@ class UreUrnikData{
 
   Future<void> getFromWeb(String token,{bool force = false}) async{
     DateTime casZdaj = DateTime.now();
+<<<<<<< Updated upstream
     if(casZdaj.day != lastUpdate.day || casZdaj.month != lastUpdate.month || casZdaj.year != lastUpdate.year || force){
       final response = await http
         .get(Uri.parse('$apiUrl/user/schedule'),headers: {"Authorization":token});
+=======
+    if (casZdaj.day != lastUpdate.day ||
+        casZdaj.month != lastUpdate.month ||
+        casZdaj.year != lastUpdate.year ||
+        force) {
+      final response = await http.get(Uri.parse('$apiUrl/user/schedule'),
+          headers: {"Authorization": token});
+>>>>>>> Stashed changes
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         this.fromJson(json, true);
