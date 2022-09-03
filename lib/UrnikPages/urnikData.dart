@@ -21,6 +21,7 @@ class UreUrnikData {
         force) {
       final response = await http.get(Uri.parse('$apiUrl/user/schedule'),
           headers: {"Authorization": token});
+      print(response.statusCode);
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         this.fromJson(json, true);
@@ -56,6 +57,8 @@ class UreUrnikData {
     }
     if (datum != null) {
       this.lastUpdate = DateTime.parse(datum);
+    } else if (fromWeb == true) {
+      this.lastUpdate = DateTime.now();
     }
     this.pocistiUreObKoncuPouka();
     if (fromWeb) {
@@ -142,6 +145,7 @@ class UreUrnikData {
   void saveData() async {
     String jsonString = jsonEncode(this);
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(jsonString);
     prefs.setString(this.urnikDataKey, jsonString);
   }
 }

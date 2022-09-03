@@ -203,7 +203,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         if (zdaj.isAfter(expiredDate)) {
           await refreshToken();
         }
-        await cacheData.ureUrnikData.getFromWeb(accessToken);
+        if (data != null) {
+          await data.ureUrnikData.getFromWeb(accessToken);
+          print("data refreshed");
+        } else {
+          await cacheData.ureUrnikData.getFromWeb(accessToken);
+        }
       } catch (e) {
         print(e);
       }
