@@ -25,7 +25,7 @@ final String keyForAppAutoLockTimer = "key_AppAutoLockTimer";
 Future<UserData> signInUser() async {
   try {
     final result = await FlutterWebAuth.authenticate(
-        url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
+        url: "$apiUrl/auth/authUrl", callbackUrlScheme: "scvapp");
     final accessToken = Uri.parse(result).queryParameters['accessToken'];
     final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
     final expiresOn = Uri.parse(result).queryParameters['expiresOn'];
