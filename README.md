@@ -1,8 +1,13 @@
 # ŠCVApp
 
-Aplikacija za dijake Šolskega centra Velenje.
+Aplikacija ŠCVApp je namenjena dijakom in učiteljem Šolskega centra Velenje. Ustvarila sta jo Blaž Osredkar in Urban Krepel.
 
 ## Opis
 
-Aplikacija ŠCVApp, ki omogoča prijavi z šolskim microsoft računom. Nato imamo dostop do vseh orodij, ki jih ponuja ŠCVApp.
+Aplikacija vsebuje naslednja orodja:
+• dostop do sistema za prijavo na malico,
+• urnik za obiskovan razred,
+• hiter dostop do domače spletne strani šole,
+• spletni dostop do aplikacije eAsistent,
+ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
 
