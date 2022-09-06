@@ -1,8 +1,8 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scv_app/data.dart';
-import 'package:scv_app/functions.dart';
+import 'package:scv_app/Data/data.dart';
+import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/main.dart';
 import 'package:local_auth/local_auth.dart';
 

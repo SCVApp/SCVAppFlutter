@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/detailUrnik.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
-import 'data.dart';
+import '../Data/data.dart';
 
 class UrnikPage extends StatefulWidget {
   UrnikPage({Key key, this.data, this.cacheData}) : super(key: key);

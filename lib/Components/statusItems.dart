@@ -3,7 +3,7 @@ import 'package:babstrap_settings_screen/src/settings_screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:scv_app/prijava.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StatusItem extends SettingsItem {

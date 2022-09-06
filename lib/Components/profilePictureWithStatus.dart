@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data.dart';
+import '../Data/data.dart';
 
 Widget profilePictureWithStatus(Data data, BuildContext context) {
   double imageSize = MediaQuery.of(context).size.width / 3.1 > 120

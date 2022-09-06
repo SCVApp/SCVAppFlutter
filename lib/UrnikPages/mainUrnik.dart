@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/boxForHour.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
 import 'package:scv_app/UrnikPages/urnikForOtherDays.dart';
-import 'package:scv_app/prijava.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data.dart';
+import '../Data/data.dart';
 import 'components/boxForHours.dart';
 
 class UrnikBoxStyle {

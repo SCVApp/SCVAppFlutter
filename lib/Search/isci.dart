@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'data.dart';
+import '../Data/data.dart';
 
 class IsciPage extends StatefulWidget{
   IsciPage({Key key}) : super(key: key);

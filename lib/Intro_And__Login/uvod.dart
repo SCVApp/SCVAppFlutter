@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:scv_app/Components/loginInPage.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 import 'package:get/get.dart';
 
 class OnBoardingPage extends StatelessWidget {

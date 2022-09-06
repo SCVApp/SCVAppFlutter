@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'main.dart';
+import '../main.dart';
 
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";

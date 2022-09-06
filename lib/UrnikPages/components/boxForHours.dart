@@ -2,7 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 
 import 'boxForHour.dart';
 

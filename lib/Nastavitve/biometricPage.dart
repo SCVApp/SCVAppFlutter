@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:scv_app/prijava.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/backBtn.dart';
-import '../data.dart';
+import '../Data/data.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:app_settings/app_settings.dart';
 
