@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 
 import '../detailUrnik.dart';
 import 'boxForHour.dart';

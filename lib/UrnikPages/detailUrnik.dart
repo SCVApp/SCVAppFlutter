@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/otherStyleBox.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 
 class DetailUrnik extends StatefulWidget {
   DetailUrnik(this.context, this.urnikData,

@@ -85,9 +85,6 @@ class MalicePage extends StatefulWidget {
 }
 
 class _MalicePageState extends State<MalicePage> {
-  WebViewController _myController;
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
 
   bool isLoggingIn = false;
   bool isLogedIn = false;
@@ -102,12 +99,12 @@ class _MalicePageState extends State<MalicePage> {
     });
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    loadIfLogedIn();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   loadIfLogedIn();
+  // }
 
   logedOutUser(){
     setState(() {
@@ -126,9 +123,7 @@ class _MalicePageState extends State<MalicePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted,onWebViewCreated:(WebViewController c){
-        _myController = c;
-      });
+    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted);
 
     /* logInUser() async {
       String username = field_username_controller.text.toString();

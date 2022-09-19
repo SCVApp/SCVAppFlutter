@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scv_app/domov.dart';
+import 'package:scv_app/Home_Page/domov.dart';
 
 import 'package:scv_app/main.dart';
 

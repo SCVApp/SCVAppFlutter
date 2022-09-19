@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'data.dart';
+import '../Data/data.dart';
 
 class DomovPage extends StatefulWidget {
   DomovPage({Key key, this.title, this.data, this.schoolUrl, this.cacheData})

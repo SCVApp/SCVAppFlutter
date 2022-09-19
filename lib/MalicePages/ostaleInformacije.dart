@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scv_app/malice.dart';
+import 'package:scv_app/Lunch/malice.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 

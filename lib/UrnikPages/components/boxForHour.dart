@@ -3,7 +3,7 @@ import 'package:scv_app/UrnikPages/components/otherStyleBox.dart';
 import 'package:scv_app/UrnikPages/detailUrnik.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 
 class SomeValuseForSize {
   final double height;

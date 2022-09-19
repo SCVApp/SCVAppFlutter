@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
-import 'package:scv_app/data.dart';
+import 'package:scv_app/Data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'main.dart';
+import '../main.dart';
 
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
@@ -25,7 +25,8 @@ final String keyForAppAutoLockTimer = "key_AppAutoLockTimer";
 Future<UserData> signInUser() async {
   try {
     final result = await FlutterWebAuth.authenticate(
-        url: "$apiUrl/auth/authUrl", callbackUrlScheme: "app");
+        url: "$apiUrl/auth/authUrl", callbackUrlScheme: "scvapp");
+
     final accessToken = Uri.parse(result).queryParameters['accessToken'];
     final refreshToken = Uri.parse(result).queryParameters['refreshToken'];
     final expiresOn = Uri.parse(result).queryParameters['expiresOn'];

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/Components/backBtn.dart';
-import 'package:scv_app/prijava.dart';
-import 'package:scv_app/uvod.dart';
-import '../data.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
+import 'package:scv_app/Intro_And__Login/uvod.dart';
+import '../Data/data.dart';
 
 import '../main.dart';
 

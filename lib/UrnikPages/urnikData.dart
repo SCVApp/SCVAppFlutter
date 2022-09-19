@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
-import 'package:scv_app/data.dart';
-import 'package:scv_app/prijava.dart';
+import 'package:scv_app/Data/data.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UreUrnikData {

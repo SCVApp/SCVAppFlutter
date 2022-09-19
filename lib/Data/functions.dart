@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:scv_app/data.dart';
-import 'package:scv_app/prijava.dart';
-import 'package:scv_app/uvod.dart';
+import 'package:scv_app/Data/data.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
+import 'package:scv_app/Intro_And__Login/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';

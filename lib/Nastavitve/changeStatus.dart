@@ -3,7 +3,7 @@ import 'package:scv_app/Components/backBtn.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/profilePictureWithStatus.dart';
 import 'package:scv_app/Components/statusItems.dart';
-import '../data.dart';
+import '../Data/data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 
 class ChangeStatusPage extends StatefulWidget {
