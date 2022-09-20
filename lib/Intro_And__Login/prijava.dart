@@ -1,15 +1,10 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
 import 'package:scv_app/Data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../main.dart';
 
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
@@ -76,20 +71,25 @@ Future<String> refreshToken() async {
   final expiresOn = prefs.getString(keyForExpiresOn);
 
   Token oldToken = new Token(accessToken, refreshToken, expiresOn);
-  final respons = await http.post(Uri.parse("$apiUrl/auth/refreshToken/"),
-      body: oldToken.toJson());
-  if (respons.statusCode == 200) {
-    Token newToken = new Token.fromJson(jsonDecode(respons.body));
-    prefs.setString(keyForAccessToken, newToken.accessToken);
-    prefs.setString(keyForRefreshToken, newToken.refreshToken);
-    prefs.setString(keyForExpiresOn, newToken.expiresOn);
-    print("Uspesna osvezitev zetona");
-    return newToken.accessToken;
-  } else {
+  try {
+    final respons = await http.post(Uri.parse("$apiUrl/auth/refreshToken/"),
+        body: oldToken.toJson());
+    if (respons.statusCode == 200) {
+      Token newToken = new Token.fromJson(jsonDecode(respons.body));
+      prefs.setString(keyForAccessToken, newToken.accessToken);
+      prefs.setString(keyForRefreshToken, newToken.refreshToken);
+      prefs.setString(keyForExpiresOn, newToken.expiresOn);
+      return newToken.accessToken;
+    } else {
+      prefs.remove(keyForAccessToken);
+      prefs.remove(keyForRefreshToken);
+      prefs.remove(keyForExpiresOn);
+      return "";
+    }
+  } catch (e) {
     prefs.remove(keyForAccessToken);
     prefs.remove(keyForRefreshToken);
     prefs.remove(keyForExpiresOn);
-    print("Error");
     return "";
   }
 }

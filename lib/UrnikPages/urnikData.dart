@@ -15,7 +15,7 @@ class UreUrnikData {
 
   Future<void> getFromWeb(String token, {bool force = false}) async {
     DateTime casZdaj = DateTime.now();
-    
+
     if (casZdaj.day != lastUpdate.day ||
         casZdaj.month != lastUpdate.month ||
         casZdaj.year != lastUpdate.year ||
@@ -146,7 +146,6 @@ class UreUrnikData {
   void saveData() async {
     String jsonString = jsonEncode(this);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(jsonString);
     prefs.setString(this.urnikDataKey, jsonString);
   }
 }

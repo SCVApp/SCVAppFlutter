@@ -49,3 +49,4 @@ ios/Podfile.lock
 ios/Runner.xcodeproj/project.pbxproj
 keystore.jks
 upload_certificate.pem
+pass_scvapp.cer
