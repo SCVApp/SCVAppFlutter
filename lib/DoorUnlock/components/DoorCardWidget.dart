@@ -9,12 +9,12 @@ Widget DoorCardWidget(BuildContext context, Color color, Widget child,
         padding: EdgeInsets.all(padding),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
               blurRadius: 5,
-              offset: Offset(4, 4), // Shadow position
+              offset: Offset(0, 8), // Shadow position
             ),
           ],
         ),
