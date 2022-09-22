@@ -27,11 +27,6 @@ class _DoorUnlockPage extends State<DoorUnlockPage> {
       children: [
         backButton(context),
         DoorCardsWidget(),
-        /* QrImage(
-          data: "https://www.google.com",
-          version: QrVersions.auto,
-          size: 200.0,
-        ), */
         Text("Test"),
       ],
     )));

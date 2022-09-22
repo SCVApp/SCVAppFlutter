@@ -14,6 +14,7 @@ class DoorCardsWidget extends StatefulWidget {
 
 class _DoorCardsWidget extends State<DoorCardsWidget> {
   double selectedCard = 0;
+  PageController pageController = new PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -26,6 +27,15 @@ class _DoorCardsWidget extends State<DoorCardsWidget> {
     });
   }
 
+  changeSelectedPage(double index) {
+    if (pageController != null && index != selectedCard) {
+      int durationForAnimation = 300 * (index - selectedCard).abs().toInt();
+      pageController.animateToPage(index.toInt(),
+          duration: Duration(milliseconds: durationForAnimation),
+          curve: Curves.easeInOut);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -33,6 +43,7 @@ class _DoorCardsWidget extends State<DoorCardsWidget> {
           clipBehavior: Clip.none,
           height: (MediaQuery.of(context).size.width * 0.5) + 20,
           child: PageView(
+            controller: pageController,
             onPageChanged: changeSelectedCard,
             scrollDirection: Axis.horizontal,
             children: [
@@ -70,6 +81,7 @@ class _DoorCardsWidget extends State<DoorCardsWidget> {
       DotsIndicator(
         dotsCount: 3,
         position: selectedCard,
+        onTap: changeSelectedPage,
       )
     ]);
   }
