@@ -8,6 +8,7 @@ import 'package:scv_app/Nastavitve/aboutAplication.dart';
 import 'package:scv_app/Nastavitve/aboutMe.dart';
 import 'package:scv_app/Nastavitve/biometricPage.dart';
 import 'package:scv_app/Nastavitve/changeStatus.dart';
+import 'package:scv_app/Nastavitve/doorUnlockPage.dart';
 import 'package:scv_app/Nastavitve/otherToolsPage.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
@@ -155,6 +156,11 @@ class NastavitvePageState extends State<NastavitvePage> {
           .push(MaterialPageRoute(builder: (context) => OtherToolsPage()));
     }
 
+    void goToDoorUnlock() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => DoorUnlockPage()));
+    }
+
     Future<void> _showMyDialog() async {
       return showDialog<void>(
         context: context,
@@ -239,8 +245,8 @@ class NastavitvePageState extends State<NastavitvePage> {
                             iconsColor: Theme.of(context).hintColor,
                             backgroundColor: HexColor.fromHex("#0094d9"),
                           ),
-                          title: 'Orodja',
-                          subtitle: "Ostala orodja",
+                          title: 'Ostala orodja',
+                          subtitle: "Orodja za šolo",
                         ),
                         SettingsItem(
                           onTap: () {},
@@ -304,6 +310,19 @@ class NastavitvePageState extends State<NastavitvePage> {
                           title: 'Moj račun',
                           subtitle: "Podatki mojega računa",
                         ), */
+                        SettingsItem(
+                          onTap: goToDoorUnlock,
+                          icons: Icons.door_back_door,
+                          iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: widget.data != null
+                                  ? widget.data.schoolData.schoolColor
+                                  : widget.cacheData.schoolColor //Barva šole
+                              ),
+                          title: 'Odklep vrat',
+                          subtitle: "Odklep vrat s pomočjo QR kode",
+                        ),
                         SettingsItem(
                           onTap: _showMyDialog,
                           icons: Icons.logout,
