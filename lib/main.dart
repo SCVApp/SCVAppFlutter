@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,6 +12,7 @@ import 'package:scv_app/Data/theme.dart';
 import 'package:scv_app/Intro_And__Login/uvod.dart';
 import 'package:scv_app/Lock/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 import 'Lunch/malice.dart';
 import 'Nastavitve/nastavitve.dart';
 import 'Home_Page/domov.dart';
@@ -119,9 +122,30 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   final List<Widget> _childrenWidgets = [];
 
+  StreamSubscription _streamSubscription;
+
+  void _incomingLinkHandler() {
+    try {
+      _streamSubscription = uriLinkStream.listen((Uri uri) {
+        if (!mounted) {
+          return;
+        }
+        print('Received URI: $uri');
+        // 3
+      }, onError: (Object err) {
+        if (!mounted) {
+          return;
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _incomingLinkHandler();
     WidgetsBinding.instance.addObserver(this);
     loadDataToScreen();
   }
@@ -204,8 +228,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           await refreshToken();
         }
         if (data != null) {
+          if (!mounted) return;
           await data.ureUrnikData.getFromWeb(accessToken);
-          print("data refreshed");
         } else {
           await cacheData.ureUrnikData.getFromWeb(accessToken);
         }
@@ -260,6 +284,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    this._streamSubscription.cancel();
     super.dispose();
   }
 
