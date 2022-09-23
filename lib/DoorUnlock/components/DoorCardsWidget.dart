@@ -41,8 +41,9 @@ class _DoorCardsWidget extends State<DoorCardsWidget> {
     return Column(children: [
       Container(
           clipBehavior: Clip.none,
-          height: (MediaQuery.of(context).size.width * 0.5) + 20,
+          height: MediaQuery.of(context).size.width * 0.5,
           child: PageView(
+            clipBehavior: Clip.none,
             controller: pageController,
             onPageChanged: changeSelectedCard,
             scrollDirection: Axis.horizontal,
@@ -75,9 +76,10 @@ class _DoorCardsWidget extends State<DoorCardsWidget> {
                       gapless: false,
                     ),
                   ),
-                  padding: 25),
+                  padding_inside: 25),
             ],
           )),
+      Padding(padding: EdgeInsets.only(bottom: 20)),
       DotsIndicator(
         dotsCount: 3,
         position: selectedCard,

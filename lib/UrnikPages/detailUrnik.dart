@@ -156,7 +156,7 @@ class _DetailUrnikState extends State<DetailUrnik> {
                     BoxShadow(
                       color: Theme.of(context).shadowColor,
                       blurRadius: 3,
-                      offset: Offset(4, 4), // Shadow position
+                      offset: Offset(0, 6), // Shadow position
                     ),
                   ],
                   borderRadius: BorderRadius.circular(15),
