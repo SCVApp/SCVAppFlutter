@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 Widget DoorCardWidget(BuildContext context, Color color, Widget child,
-    {double padding = 40}) {
+    {double padding_inside = 40}) {
   return Padding(
-    padding: EdgeInsets.only(left: padding, right: padding, bottom: 20),
+    padding: EdgeInsets.symmetric(horizontal: 40),
     child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.all(padding),
+        padding: EdgeInsets.all(padding_inside),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.all(Radius.circular(10)),
