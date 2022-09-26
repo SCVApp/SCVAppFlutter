@@ -39,6 +39,11 @@
             </intent-filter>
             <!-- Deep linking -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <data android:host="app.scv.si" android:scheme="scvapp" />
+            </intent-filter>
 
             <!-- Required to fetch data from the internet. -->
             
