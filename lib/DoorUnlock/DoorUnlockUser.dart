@@ -1,4 +1,3 @@
-import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/Components/backBtn.dart';
