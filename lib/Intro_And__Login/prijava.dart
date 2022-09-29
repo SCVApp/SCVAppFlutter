@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:scv_app/Data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// final String apiUrl = "http://localhost:5050";
-final String apiUrl = "https://backend.app.scv.si";
+final String apiUrl = "http://localhost:5050";
+// final String apiUrl = "https://backend.app.scv.si";
 
 final String keyForAccessToken = "key_AccessToken";
 final String keyForRefreshToken = "key_RefreshToken";

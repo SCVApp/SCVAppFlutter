@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
+import 'package:scv_app/DoorUnlock/DoorUnlockUser.dart';
 import 'package:scv_app/eA/easistent.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/eA_icon/ea_flutter_icon.dart';
@@ -119,35 +120,47 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   bool isLoading = true;
   bool noUser = false;
   CacheData cacheData = new CacheData();
-
   final List<Widget> _childrenWidgets = [];
+  String appOpenUrl = "";
 
   StreamSubscription _streamSubscription;
-
-  void _incomingLinkHandler() {
-    try {
-      _streamSubscription = uriLinkStream.listen((Uri uri) {
-        if (!mounted) {
-          return;
-        }
-        print('Received URI: $uri');
-        // 3
-      }, onError: (Object err) {
-        if (!mounted) {
-          return;
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    _incomingLinkHandler();
     WidgetsBinding.instance.addObserver(this);
     loadDataToScreen();
+  }
+
+  void initUniLinks() async {
+    try {
+      final initialLink = await getInitialLink();
+      if (isUrlForOpeinDoor(initialLink)) {
+        goToOpenDoor(context, initialLink);
+      }
+    } catch (e) {}
+    _incomingLinkHandler();
+  }
+
+  void _incomingLinkHandler() {
+    _streamSubscription = uriLinkStream.listen((Uri uri) {
+      if (!mounted) {
+        return;
+      }
+      if (uri != null) {
+        setState(() {
+          appOpenUrl = uri.toString();
+        });
+      } else {
+        setState(() {
+          appOpenUrl = "";
+        });
+      }
+    }, onError: (Object err) {
+      if (!mounted) {
+        return;
+      }
+    });
   }
 
   void loadDataToScreen() async {
@@ -200,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         selectedIndex = prevS;
       });
     }
+    await initUniLinks();
   }
 
   void changeView(int index) {
@@ -228,7 +242,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           await refreshToken();
         }
         if (data != null) {
-          if (!mounted) return;
           await data.ureUrnikData.getFromWeb(accessToken);
         } else {
           await cacheData.ureUrnikData.getFromWeb(accessToken);
@@ -244,10 +257,25 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         if (isBio == true) {
           prefs.remove(keyForAppAutoLock);
           if (zdaj >= autoLock) {
-            Navigator.of(context).push(MaterialPageRoute(
+            await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ZaklepPage(
                       isFromAutoLock: true,
                     )));
+            if (isUrlForOpeinDoor(appOpenUrl)) {
+              print("open door");
+              goToOpenDoor(context, appOpenUrl);
+              setState(() {
+                appOpenUrl = "";
+              });
+            }
+          }
+        } else {
+          if (isUrlForOpeinDoor(appOpenUrl)) {
+            print("open door without biometrics");
+            goToOpenDoor(context, appOpenUrl);
+            setState(() {
+              appOpenUrl = "";
+            });
           }
         }
       } catch (e) {

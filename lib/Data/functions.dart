@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/Data/data.dart';
+import 'package:scv_app/DoorUnlock/DoorUnlockUser.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:scv_app/Intro_And__Login/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,3 +34,15 @@ extension ListSpaceBetweenExtension on List<Widget> {
         ],
       ];
 }
+
+bool isUrlForOpeinDoor(String url) {
+  if (url == null) return false;
+  return url.startsWith("scvapp://app.scv.si/open_door");
+}
+
+void goToOpenDoor(BuildContext context, String url) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => DoorUnlockUserPage(url: url,)));
+}
+
+// Language: dart
