@@ -99,7 +99,10 @@ class _DetailUrnikState extends State<DetailUrnik> {
                   Padding(padding: EdgeInsets.only(top: spaceBetweenLines)),
                   widget.styleOfBox != OtherStyleBox.dogodek
                       ? SizedBox(
-                          width: sizeOfBox - 15,
+                          width: sizeOfBox -
+                              (widget.styleOfBox == OtherStyleBox.normalno
+                                  ? 15
+                                  : 20),
                           child: Text("Profesor/ica: ${widget.ucitelj}",
                               style: TextStyle(
                                   fontSize: mainFontSize, color: textColor)))
