@@ -27,8 +27,9 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
   ThemeColorForStatus themeColorForStatus = ThemeColorForStatus.unknown;
   bool isLoading = false;
   String doorCode = '';
+  ScrollController scrollController = new ScrollController();
 
-  String doorNameId = '';
+  String doorNameId = 'Ne obstaja';
 
   void checkUri() {
     if (isUrlForOpeinDoor(widget.url)) {
@@ -54,11 +55,14 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
       'Authorization': '$accessToken',
     });
     if (respons.statusCode == 200) {
-      this.doorNameId = respons.body ?? "";
+      this.doorNameId = respons.body ?? this.doorNameId;
     }
   }
 
   unlockDoor() async {
+    if (this.themeColorForStatus == ThemeColorForStatus.error) {
+      return;
+    }
     setState(() {
       isLoading = true;
     });
@@ -98,62 +102,68 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
         body: SafeArea(
             child: Column(
       children: [
-        backButton(context),
+        backButton(context, icon: Icons.close_rounded),
         Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
+                controller: this.scrollController,
                 children: [
-          Padding(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Izbrana učilnica:",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    "${this.doorNameId}",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 70)),
-          GestureDetector(
-              child: Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  height: MediaQuery.of(context).size.width * 0.65,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.transparent,
-                      border: Border.all(
-                          color: this.themeColorForStatus.color, width: 20)),
-                  child: Center(
-                      child: !isLoading
-                          ? Icon(
-                              this.themeColorForStatus.icon,
-                              color: this.themeColorForStatus.color,
-                              size: MediaQuery.of(context).size.width * 0.3,
-                            )
-                          : CircularProgressIndicator(
-                              color: this.themeColorForStatus.color,
-                            ))),
-              onTap: unlockDoor),
-          !isLoading
-              ? Text(
-                  this.themeColorForStatus.message,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              : SizedBox(),
-          !isLoading
-              ? Text("Pritisni ključavnico za odklep",
-                  style: TextStyle(fontSize: 15), textAlign: TextAlign.center)
-              : SizedBox(),
-        ].withSpaceBetween(spacing: 30))),
+                  Padding(
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        runAlignment: WrapAlignment.spaceBetween,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            "Izbrana učilnica:",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Text(
+                            "${this.doorNameId}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 70)),
+                  GestureDetector(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.65,
+                          height: MediaQuery.of(context).size.width * 0.65,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: this.themeColorForStatus.color,
+                                  width: 20)),
+                          child: Center(
+                              child: !isLoading
+                                  ? Icon(
+                                      this.themeColorForStatus.icon,
+                                      color: this.themeColorForStatus.color,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.3,
+                                    )
+                                  : CircularProgressIndicator(
+                                      color: this.themeColorForStatus.color,
+                                    ))),
+                      onTap: unlockDoor),
+                  !isLoading
+                      ? Text(
+                          this.themeColorForStatus.message,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      : SizedBox(),
+                  !isLoading
+                      ? Text(this.themeColorForStatus.infoMessage,
+                          style: TextStyle(fontSize: 15),
+                          textAlign: TextAlign.center)
+                      : SizedBox(),
+                ].withSpaceBetween(spacing: 30))),
       ],
     )));
   }
@@ -210,5 +220,12 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       default:
         return "Neznana napaka";
     }
+  }
+
+  String get infoMessage {
+    if (this == ThemeColorForStatus.error) {
+      return "Prosim poskusite ponovno";
+    }
+    return "Pritisni ključavnico za odklep";
   }
 }

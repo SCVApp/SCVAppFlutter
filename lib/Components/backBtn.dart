@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget backButton(BuildContext context) {
+Widget backButton(BuildContext context,
+    {IconData icon = Icons.arrow_back_ios}) {
   return Row(
     mainAxisSize: MainAxisSize.max,
     mainAxisAlignment: MainAxisAlignment.start,
@@ -10,7 +11,7 @@ Widget backButton(BuildContext context) {
         backgroundColor: Colors.transparent,
         child: IconButton(
             icon: Icon(
-              Icons.arrow_back_ios,
+              icon,
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () => {Navigator.of(context).pop()}),

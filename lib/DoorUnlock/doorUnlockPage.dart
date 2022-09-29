@@ -6,7 +6,6 @@ import 'package:scv_app/DoorUnlock/components/DoorCardWidget.dart';
 import 'package:scv_app/DoorUnlock/components/DoorCardsWidget.dart';
 import '../Data/data.dart';
 
-
 class DoorUnlockPage extends StatefulWidget {
   DoorUnlockPage({Key key, this.data}) : super(key: key);
 
@@ -28,19 +27,19 @@ class _DoorUnlockPage extends State<DoorUnlockPage> {
             child: Column(
       children: [
         backButton(context),
-        DoorCardsWidget(),
-        Text("Test"),
+        // DoorCardsWidget(),
         //button go to another page
         TextButton(
           child: Text("Odkleni vrata"),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DoorUnlockUserPage()),
+              MaterialPageRoute(
+                  builder: (context) => DoorUnlockUserPage(
+                      url: "scvapp://app.scv.si/open_door/123456789")),
             );
           },
         ),
-      
       ],
     )));
   }

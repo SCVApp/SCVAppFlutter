@@ -1,16 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/Components/backBtn.dart';
-import 'package:scv_app/Components/settingsUserCard.dart';
-import 'package:scv_app/Intro_And__Login/prijava.dart';
-import 'package:scv_app/Intro_And__Login/uvod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Data/data.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:get/get.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
