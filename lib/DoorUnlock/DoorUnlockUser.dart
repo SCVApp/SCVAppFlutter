@@ -17,11 +17,19 @@ class DoorUnlockUserPage extends StatefulWidget {
   _DoorUnlockUserPage createState() => _DoorUnlockUserPage();
 }
 
-class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
+class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
     checkUri();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   ThemeColorForStatus themeColorForStatus = ThemeColorForStatus.unknown;
@@ -59,6 +67,15 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
     }
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.paused) {
+      this.closePage();
+    }
+  }
+
   unlockDoor() async {
     if (this.themeColorForStatus == ThemeColorForStatus.error) {
       return;
@@ -86,14 +103,50 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage> {
           themeColorForStatus = ThemeColorForStatus.error;
           isLoading = false;
         });
+        ShowError(
+            "Vrata niso bila najdena. Poskusite znova. Ali pa se obrnite na skrbnika sistema.",
+            closeInTheEnd: false);
       } else if (message == "User doesn't have access to this door") {
         setState(() {
           themeColorForStatus = ThemeColorForStatus.promisson_denied;
           isLoading = false;
         });
+      } else {
+        setState(() {
+          themeColorForStatus = ThemeColorForStatus.unknown;
+          isLoading = false;
+        });
+        ShowError("Nekaj je šlo narobe. Prosim poskusite ponovno.");
       }
       return;
     }
+  }
+
+  void closePage() {
+    Navigator.of(context).pop();
+  }
+
+  Future<void> ShowError(String napaka, {bool closeInTheEnd = false}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Napaka!'),
+          content: Text("$napaka"),
+          actions: <Widget>[
+            TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context, 'Cancel');
+                  if (closeInTheEnd) {
+                    this.closePage();
+                  }
+                }),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -199,7 +252,7 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       case ThemeColorForStatus.promisson_denied:
         return Icons.lock_outline;
       case ThemeColorForStatus.error:
-        return Icons.lock_outline;
+        return Icons.error_outline;
       case ThemeColorForStatus.unknown:
         return Icons.lock_outline;
       default:
