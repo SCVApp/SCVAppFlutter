@@ -261,7 +261,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       isFromAutoLock: true,
                     )));
             if (isUrlForOpeinDoor(appOpenUrl)) {
-              print("open door");
               goToOpenDoor(context, appOpenUrl);
               setState(() {
                 appOpenUrl = "";
@@ -270,7 +269,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           }
         } else {
           if (isUrlForOpeinDoor(appOpenUrl)) {
-            print("open door without biometrics");
             goToOpenDoor(context, appOpenUrl);
             setState(() {
               appOpenUrl = "";

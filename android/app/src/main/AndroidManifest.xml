@@ -34,6 +34,16 @@
               android:resource="@drawable/launch_background"
               />
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
+                <data
+                  android:scheme="scvapp"
+                  android:host="app.scv.si"
+                  android:pathPrefix="/open_door" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -42,7 +52,7 @@
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>
-                <data android:host="app.scv.si" android:scheme="scvapp" />
+                <data android:host="app.scv.si" android:scheme="scvapp" android:pathPrefix="/open_door" />
             </intent-filter>
 
             <!-- Required to fetch data from the internet. -->
@@ -55,7 +65,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="scvapp" />
+                <data android:scheme="scvapp" android:host="app.scv.si" android:pathPrefix="/mobileapp"  />
             </intent-filter>
         </activity>
         <meta-data
