@@ -10,7 +10,7 @@
         
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -49,11 +49,6 @@
             </intent-filter>
             <!-- Deep linking -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <data android:host="app.scv.si" android:scheme="scvapp" android:pathPrefix="/open_door" />
-            </intent-filter>
 
             <!-- Required to fetch data from the internet. -->
             
