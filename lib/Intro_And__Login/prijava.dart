@@ -80,16 +80,10 @@ Future<String> refreshToken() async {
       prefs.setString(keyForExpiresOn, newToken.expiresOn);
       return newToken.accessToken;
     } else {
-      prefs.remove(keyForAccessToken);
-      prefs.remove(keyForRefreshToken);
-      prefs.remove(keyForExpiresOn);
-      return "";
+      return null;
     }
   } catch (e) {
-    prefs.remove(keyForAccessToken);
-    prefs.remove(keyForRefreshToken);
-    prefs.remove(keyForExpiresOn);
-    return "";
+    return null;
   }
 }
 
