@@ -117,7 +117,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int selectedIndex = 0;
   Data data = new Data();
   bool isLoading = true;
-  bool noUser = false;
   CacheData cacheData = new CacheData();
   final List<Widget> _childrenWidgets = [];
   String appOpenUrl = "";
@@ -179,38 +178,34 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       _childrenWidgets.add(new NastavitvePage(cacheData: cacheData));
       isLoading = !cacheData2.dataLoaded;
     });
-    if (!await this.data.loadData(cacheData)) {
+    if (await this.data.loadData(cacheData)) {
       setState(() {
-        noUser = true;
+        DomovPage page = _childrenWidgets[0];
+        page.updateData(data);
+        UrnikPage page2 = _childrenWidgets[3];
+        page2.updateData(data);
+        NastavitvePage page3 = _childrenWidgets[4];
+        page3.updateData(data);
+        isLoading = false;
       });
-      await logOutUser(context);
-    }
-    setState(() {
-      DomovPage page = _childrenWidgets[0];
-      page.updateData(data);
-      UrnikPage page2 = _childrenWidgets[3];
-      page2.updateData(data);
-      NastavitvePage page3 = _childrenWidgets[4];
-      page3.updateData(data);
-      isLoading = false;
-    });
-    var prevS = selectedIndex;
-    if (prevS != 0) {
-      setState(() {
-        selectedIndex = 0;
-      });
-      await Future.delayed(Duration(milliseconds: 10));
-      setState(() {
-        selectedIndex = prevS;
-      });
-    } else if (cacheData.schoolUrl == "") {
-      setState(() {
-        selectedIndex = 1;
-      });
-      await Future.delayed(Duration(milliseconds: 10));
-      setState(() {
-        selectedIndex = prevS;
-      });
+      var prevS = selectedIndex;
+      if (prevS != 0) {
+        setState(() {
+          selectedIndex = 0;
+        });
+        await Future.delayed(Duration(milliseconds: 10));
+        setState(() {
+          selectedIndex = prevS;
+        });
+      } else if (cacheData.schoolUrl == "") {
+        setState(() {
+          selectedIndex = 1;
+        });
+        await Future.delayed(Duration(milliseconds: 10));
+        setState(() {
+          selectedIndex = prevS;
+        });
+      }
     }
     await initUniLinks();
   }

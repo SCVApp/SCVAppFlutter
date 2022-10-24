@@ -35,12 +35,13 @@ Widget profilePictureWithStatus(Data data, BuildContext context) {
           alignment: Alignment.bottomRight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Image(
-              image: data != null
-                  ? data.user.status.assetImage
-                  : AssetImage("assets/statusIcons/Unknown.png"),
-              height: imageSize / 3.75,
-            ),
+            child: data != null
+                ? Image(
+                    image: data.user.status.assetImage ??
+                        AssetImage("assets/statusIcons/Unknown.png"),
+                    height: imageSize / 3.75,
+                  )
+                : CircularProgressIndicator(),
           ),
         )
       ],

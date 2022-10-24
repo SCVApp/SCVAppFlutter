@@ -203,7 +203,6 @@ class NastavitvePageState extends State<NastavitvePage> {
                 userName: widget.data != null
                     ? widget.data.user.displayName
                     : widget.cacheData.userDisplayName,
-                // userName: "",
                 userProfilePic: widget.data != null
                     ? widget.data.user.image
                     : AssetImage("asstes/profilePicture.png"),
@@ -222,8 +221,24 @@ class NastavitvePageState extends State<NastavitvePage> {
               ),
               widget.data == null
                   ? Center(
-                      child: CircularProgressIndicator(
-                      color: widget.cacheData.schoolColor,
+                      child: Column(
+                      children: [
+                        CircularProgressIndicator(
+                          color: widget.cacheData.schoolColor,
+                        ),
+                        SettingsItem(
+                          onTap: _showMyDialog,
+                          icons: Icons.logout,
+                          title: "Odjava",
+                          subtitle: "Odjava iz aplikacije",
+                          iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: widget.cacheData.schoolColor ??
+                                  Theme.of(context).backgroundColor //Barva šole
+                              ),
+                        )
+                      ],
                     ))
                   : NastavitveGroup(
                       items: [
