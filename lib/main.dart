@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
+import 'package:scv_app/alerts/cantLoadAlert.dart';
 import 'package:scv_app/eA/easistent.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/eA_icon/ea_flutter_icon.dart';
@@ -206,6 +207,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           selectedIndex = prevS;
         });
       }
+    } else {
+      showCantLoad(context);
     }
     await initUniLinks();
   }
