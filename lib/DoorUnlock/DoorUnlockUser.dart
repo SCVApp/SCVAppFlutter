@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:scv_app/Components/CircleProgressBar.dart';
 import 'package:scv_app/Components/backBtn.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Data/data.dart';
 import 'package:http/http.dart' as http;
 import '../Intro_And__Login/prijava.dart';
+import 'package:getwidget/getwidget.dart';
 
 class DoorUnlockUserPage extends StatefulWidget {
   DoorUnlockUserPage({Key key, this.data, this.url}) : super(key: key);
@@ -18,12 +20,22 @@ class DoorUnlockUserPage extends StatefulWidget {
 }
 
 class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, TickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> procentageAnimation;
+
   @override
   void initState() {
     super.initState();
     checkUri();
     WidgetsBinding.instance.addObserver(this);
+    this.controller =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+    this.procentageAnimation =
+        Tween<double>(begin: 0, end: 1).animate(controller);
+    controller.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -77,10 +89,12 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
   }
 
   unlockDoor() async {
-    if (this.themeColorForStatus == ThemeColorForStatus.error) {
+    if (this.themeColorForStatus == ThemeColorForStatus.error ||
+        this.themeColorForStatus == ThemeColorForStatus.success) {
       return;
     }
     setState(() {
+      this.themeColorForStatus = ThemeColorForStatus.unknown;
       isLoading = true;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -91,8 +105,15 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
     });
     if (respons.statusCode == 200) {
       setState(() {
-        themeColorForStatus = ThemeColorForStatus.success;
+        this.themeColorForStatus = ThemeColorForStatus.success;
         isLoading = false;
+      });
+      this.controller.forward().whenComplete(() {
+        setState(() {
+          print("Vrata so zakljenjena");
+          this.themeColorForStatus = ThemeColorForStatus.lock_status;
+          this.controller.reset();
+        });
       });
       return;
     } else {
@@ -181,25 +202,24 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
                       padding: EdgeInsets.symmetric(horizontal: 70)),
                   GestureDetector(
                       child: Container(
-                          width: MediaQuery.of(context).size.width * 0.65,
-                          height: MediaQuery.of(context).size.width * 0.65,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
-                              border: Border.all(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        height: MediaQuery.of(context).size.width * 0.65,
+                        child: CircleProgressBar(
+                          foregroundColor: ThemeColorForStatus.error.color,
+                          value: this.procentageAnimation.value ?? 1,
+                          backgroundColor: this.themeColorForStatus.color,
+                          strokeWidth: 20,
+                          child: !isLoading
+                              ? Icon(
+                                  this.themeColorForStatus.icon,
                                   color: this.themeColorForStatus.color,
-                                  width: 20)),
-                          child: Center(
-                              child: !isLoading
-                                  ? Icon(
-                                      this.themeColorForStatus.icon,
-                                      color: this.themeColorForStatus.color,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.3,
-                                    )
-                                  : CircularProgressIndicator(
-                                      color: this.themeColorForStatus.color,
-                                    ))),
+                                  size: MediaQuery.of(context).size.width * 0.3,
+                                )
+                              : CircularProgressIndicator(
+                                  color: this.themeColorForStatus.color,
+                                ),
+                        ),
+                      ),
                       onTap: unlockDoor),
                   !isLoading
                       ? Text(
@@ -227,6 +247,7 @@ enum ThemeColorForStatus {
   promisson_denied,
   error,
   unknown,
+  lock_status,
 }
 
 extension ThemeColorForStatusExtension on ThemeColorForStatus {
@@ -237,6 +258,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       case ThemeColorForStatus.promisson_denied:
         return Colors.orange;
       case ThemeColorForStatus.error:
+        return Colors.red;
+      case ThemeColorForStatus.lock_status:
         return Colors.red;
       case ThemeColorForStatus.unknown:
         return Colors.grey;
@@ -268,6 +291,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
         return "Trenutno nimaš pouka v tej učilnici";
       case ThemeColorForStatus.error:
         return "Učilnica ne obstaja";
+      case ThemeColorForStatus.lock_status:
+        return "Vrata so zaklenjena";
       case ThemeColorForStatus.unknown:
         return "Neznana napaka";
       default:
@@ -278,6 +303,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
   String get infoMessage {
     if (this == ThemeColorForStatus.error) {
       return "Prosim poskusite ponovno";
+    } else if (this == ThemeColorForStatus.success) {
+      return "";
     }
     return "Pritisni ključavnico za odklep";
   }
