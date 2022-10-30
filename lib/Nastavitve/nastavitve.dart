@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/Components/nastavitveGroup.dart';
 import 'package:scv_app/Components/settingsUserCard.dart';
 import 'package:scv_app/Nastavitve/aboutAplication.dart';
 import 'package:scv_app/Nastavitve/aboutMe.dart';
+import 'package:scv_app/Nastavitve/appAppearance.dart';
 import 'package:scv_app/Nastavitve/biometricPage.dart';
 import 'package:scv_app/Nastavitve/changeStatus.dart';
 import 'package:scv_app/DoorUnlock/doorUnlockPage.dart';
@@ -43,6 +43,7 @@ class NastavitvePageState extends State<NastavitvePage> {
   void initState() {
     super.initState();
     loadToken();
+    handleGetTheme();
   }
 
   bool jeSistemskaTema = false;
@@ -53,16 +54,6 @@ class NastavitvePageState extends State<NastavitvePage> {
       setState(() {
         token = prefs.getString(keyForAccessToken);
       });
-    } catch (e) {
-      print(e);
-    }
-    try {
-      bool test = prefs.getBool(keyForThemeDark);
-      if (test == null) {
-        setState(() {
-          jeSistemskaTema = true;
-        });
-      }
     } catch (e) {
       print(e);
     }
@@ -80,21 +71,33 @@ class NastavitvePageState extends State<NastavitvePage> {
 
   bool _value = Get.isDarkMode;
 
-  toggleThemeBtn(toggle) async {
+  Future<void> handleGetTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _value = toggle;
-    });
-    if (!toggle) {
-      Get.changeThemeMode(ThemeMode.light);
-      prefs.setBool(keyForThemeDark, false);
-    } else {
-      Get.changeThemeMode(ThemeMode.dark);
-      prefs.setBool(keyForThemeDark, true);
+    try {
+      bool isDarkTheme = prefs.getBool(keyForThemeDark);
+      print(isDarkTheme);
+      if (isDarkTheme == null) {
+        setState(() {
+          _value = false;
+          jeSistemskaTema = true;
+        });
+      } else if (isDarkTheme == true) {
+        setState(() {
+          _value = true;
+          jeSistemskaTema = false;
+        });
+      } else {
+        setState(() {
+          _value = false;
+          jeSistemskaTema = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _value = false;
+        jeSistemskaTema = true;
+      });
     }
-    setState(() {
-      jeSistemskaTema = false;
-    });
   }
 
   void refreshBio() async {
@@ -141,6 +144,13 @@ class NastavitvePageState extends State<NastavitvePage> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AboutMePage(
                 data: widget.data,
+              )));
+    }
+
+    void goToPageAppAppearance() {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => AppAppearance(
+                onThemeChanged: handleGetTheme,
               )));
     }
 
@@ -264,26 +274,19 @@ class NastavitvePageState extends State<NastavitvePage> {
                           subtitle: "Orodja za šolo",
                         ),
                         SettingsItem(
-                          onTap: () {},
+                          onTap: goToPageAppAppearance,
                           icons: Icons.dark_mode_rounded,
                           iconStyle: IconStyle(
                             iconsColor: Theme.of(context).hintColor,
                             withBackground: true,
                             backgroundColor: HexColor.fromHex("#EE5BA0"),
                           ),
-                          title: 'Temni način',
+                          title: 'Videz aplikacije',
                           subtitle: jeSistemskaTema
-                              ? "Samodejno"
+                              ? "Sistemsko"
                               : _value
-                                  ? "Vklopljen"
-                                  : "Izklopljen",
-                          trailing: CupertinoSwitch(
-                            activeColor: widget.data != null
-                                ? widget.data.schoolData.schoolColor
-                                : widget.cacheData.schoolColor,
-                            value: _value,
-                            onChanged: toggleThemeBtn,
-                          ),
+                                  ? "Temni način"
+                                  : "Svetli način",
                         ),
                         SettingsItem(
                           onTap: goToPageBiometric,
