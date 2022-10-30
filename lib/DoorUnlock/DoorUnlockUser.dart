@@ -110,7 +110,6 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
       });
       this.controller.forward().whenComplete(() {
         setState(() {
-          print("Vrata so zakljenjena");
           this.themeColorForStatus = ThemeColorForStatus.lock_status;
           this.controller.reset();
         });
@@ -130,6 +129,11 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
       } else if (message == "User doesn't have access to this door") {
         setState(() {
           themeColorForStatus = ThemeColorForStatus.promisson_denied;
+          isLoading = false;
+        });
+      } else if (message == "User is in timeout") {
+        setState(() {
+          themeColorForStatus = ThemeColorForStatus.time_out;
           isLoading = false;
         });
       } else {
@@ -248,6 +252,7 @@ enum ThemeColorForStatus {
   error,
   unknown,
   lock_status,
+  time_out,
 }
 
 extension ThemeColorForStatusExtension on ThemeColorForStatus {
@@ -256,6 +261,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       case ThemeColorForStatus.success:
         return Colors.green;
       case ThemeColorForStatus.promisson_denied:
+        return Colors.orange;
+      case ThemeColorForStatus.time_out:
         return Colors.orange;
       case ThemeColorForStatus.error:
         return Colors.red;
@@ -289,6 +296,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
         return "Vrata so uspešno odklenjena";
       case ThemeColorForStatus.promisson_denied:
         return "Trenutno nimaš pouka v tej učilnici";
+      case ThemeColorForStatus.time_out:
+        return "Malo počakaj, da lahko ponovno odkleneš vrata";
       case ThemeColorForStatus.error:
         return "Učilnica ne obstaja";
       case ThemeColorForStatus.lock_status:
@@ -305,6 +314,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       return "Prosim poskusite ponovno";
     } else if (this == ThemeColorForStatus.success) {
       return "";
+    } else if (this == ThemeColorForStatus.time_out) {
+      return "Presegli ste število odklepanj v določenem času";
     }
     return "Pritisni ključavnico za odklep";
   }
