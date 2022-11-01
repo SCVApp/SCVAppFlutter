@@ -68,15 +68,21 @@ Widget otherStyleBox(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "${styleOfBox != OtherStyleBox.dogodek ? krajsava : dogodek}",
-                          style: TextStyle(
-                              fontSize: someValuesForSize.secundaryFontSize,
-                              color: textColorsForStyle[styleOfBox],
-                              decoration: OtherStyleBox.odpadlo == styleOfBox
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none),
-                        ),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width - 150,
+                            child: Text(
+                              "${styleOfBox != OtherStyleBox.dogodek ? krajsava : dogodek}",
+                              style: TextStyle(
+                                  fontSize: someValuesForSize.secundaryFontSize,
+                                  color: textColorsForStyle[styleOfBox],
+                                  decoration:
+                                      OtherStyleBox.odpadlo == styleOfBox
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                            )),
                         Text(
                           "$trajanje",
                           style: TextStyle(
