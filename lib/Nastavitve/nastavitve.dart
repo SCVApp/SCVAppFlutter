@@ -98,6 +98,7 @@ class NastavitvePageState extends State<NastavitvePage> {
         jeSistemskaTema = true;
       });
     }
+    _value = Get.isDarkMode;
   }
 
   void refreshBio() async {
@@ -275,7 +276,9 @@ class NastavitvePageState extends State<NastavitvePage> {
                         ),
                         SettingsItem(
                           onTap: goToPageAppAppearance,
-                          icons: Icons.dark_mode_rounded,
+                          icons: Get.isDarkMode
+                              ? Icons.dark_mode
+                              : Icons.light_mode,
                           iconStyle: IconStyle(
                             iconsColor: Theme.of(context).hintColor,
                             withBackground: true,
