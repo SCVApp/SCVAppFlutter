@@ -330,19 +330,19 @@ class NastavitvePageState extends State<NastavitvePage> {
                           title: 'Moj račun',
                           subtitle: "Podatki mojega računa",
                         ), */
-                        // SettingsItem(
-                        //   onTap: goToDoorUnlock,
-                        //   icons: Icons.door_back_door,
-                        //   iconStyle: IconStyle(
-                        //       iconsColor: Theme.of(context).hintColor,
-                        //       withBackground: true,
-                        //       backgroundColor: widget.data != null
-                        //           ? widget.data.schoolData.schoolColor
-                        //           : widget.cacheData.schoolColor //Barva šole
-                        //       ),
-                        //   title: 'Odklep vrat',
-                        //   subtitle: "Odklep vrat s pomočjo QR kode",
-                        // ),
+                        SettingsItem(
+                          onTap: goToDoorUnlock,
+                          icons: Icons.door_back_door,
+                          iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: widget.data != null
+                                  ? widget.data.schoolData.schoolColor
+                                  : widget.cacheData.schoolColor //Barva šole
+                              ),
+                          title: 'Odklep vrat',
+                          subtitle: "Odklep vrat s pomočjo QR kode",
+                        ),
                         SettingsItem(
                           onTap: _showMyDialog,
                           icons: Icons.logout,

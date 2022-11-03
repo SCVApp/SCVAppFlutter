@@ -76,7 +76,6 @@ class _AppAppearanceState extends State<AppAppearance> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Get.changeThemeMode(ThemeMode.light);
     prefs.setBool(keyForThemeDark, false);
-    Get.changeTheme(ThemeData.light());
   }
 
   Future<void> changeToDarkTheme() async {

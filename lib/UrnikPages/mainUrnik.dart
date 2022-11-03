@@ -70,8 +70,10 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
         Offset position = box.localToGlobal(Offset.zero);
         double y = position.dy;
         double sizeOfScreen = box.size.height;
+        print(sizeOfScreen);
+        print(y);
         setState(() {
-          this.bottomOffsetOfListView = sizeOfScreen - 120;
+          this.bottomOffsetOfListView = sizeOfScreen - 60;
         });
       } catch (e) {}
     }
@@ -164,8 +166,8 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
           Padding(padding: EdgeInsets.only(bottom: this.gap)),
           Expanded(
               child: RefreshIndicator(
-                  key: _keyForListView,
                   child: ListView(
+                    key: _keyForListView,
                     physics: AlwaysScrollableScrollPhysics(),
                     controller: scrollController,
                     padding:

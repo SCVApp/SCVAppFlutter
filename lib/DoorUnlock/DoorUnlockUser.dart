@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Data/data.dart';
 import 'package:http/http.dart' as http;
 import '../Intro_And__Login/prijava.dart';
-import 'package:getwidget/getwidget.dart';
 
 class DoorUnlockUserPage extends StatefulWidget {
   DoorUnlockUserPage({Key key, this.data, this.url}) : super(key: key);
@@ -85,6 +84,7 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
 
     if (state == AppLifecycleState.paused) {
       this.closePage();
+      this.closePage();
     }
   }
 
@@ -148,14 +148,15 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
   }
 
   void closePage() {
-    Navigator.of(context).pop();
+    if (context.widget.toString().toLowerCase() ==
+        "DoorUnlockUserPage".toLowerCase()) {}
   }
 
   Future<void> ShowError(String napaka, {bool closeInTheEnd = false}) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
+      builder: (BuildContext contextOfDialog) {
         return AlertDialog(
           title: const Text('Napaka!'),
           content: Text("$napaka"),
@@ -163,7 +164,7 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
             TextButton(
                 child: const Text('OK'),
                 onPressed: () {
-                  Navigator.pop(context, 'Cancel');
+                  Navigator.pop(contextOfDialog, 'Cancel');
                   if (closeInTheEnd) {
                     this.closePage();
                   }
