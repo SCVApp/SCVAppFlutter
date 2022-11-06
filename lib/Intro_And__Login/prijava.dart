@@ -79,11 +79,13 @@ Future<String> refreshToken() async {
       prefs.setString(keyForRefreshToken, newToken.refreshToken);
       prefs.setString(keyForExpiresOn, newToken.expiresOn);
       return newToken.accessToken;
+    } else if (respons.statusCode == 401) {
+      throw Exception("401");
     } else {
-      return null;
+      throw Exception("Something went wrong.");
     }
   } catch (e) {
-    return null;
+    throw e;
   }
 }
 

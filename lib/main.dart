@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scv_app/Components/NavBarItemv2.dart';
 import 'package:scv_app/alerts/cantLoadAlert.dart';
+import 'package:scv_app/alerts/unAuthoritizedAlert.dart';
 import 'package:scv_app/eA/easistent.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/eA_icon/ea_flutter_icon.dart';
@@ -179,35 +180,46 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       _childrenWidgets.add(new NastavitvePage(cacheData: cacheData));
       isLoading = !cacheData2.dataLoaded;
     });
-    if (await this.data.loadData(cacheData)) {
-      setState(() {
-        DomovPage page = _childrenWidgets[0];
-        page.updateData(data);
-        UrnikPage page2 = _childrenWidgets[3];
-        page2.updateData(data);
-        NastavitvePage page3 = _childrenWidgets[4];
-        page3.updateData(data);
-        isLoading = false;
-      });
-      var prevS = selectedIndex;
-      if (prevS != 0) {
+    try {
+      if (await this.data.loadData(cacheData)) {
         setState(() {
-          selectedIndex = 0;
+          DomovPage page = _childrenWidgets[0];
+          page.updateData(data);
+          UrnikPage page2 = _childrenWidgets[3];
+          page2.updateData(data);
+          NastavitvePage page3 = _childrenWidgets[4];
+          page3.updateData(data);
+          isLoading = false;
         });
-        await Future.delayed(Duration(milliseconds: 10));
-        setState(() {
-          selectedIndex = prevS;
-        });
-      } else if (cacheData.schoolUrl == "") {
-        setState(() {
-          selectedIndex = 1;
-        });
-        await Future.delayed(Duration(milliseconds: 10));
-        setState(() {
-          selectedIndex = prevS;
-        });
+        var prevS = selectedIndex;
+        if (prevS != 0) {
+          setState(() {
+            selectedIndex = 0;
+          });
+          await Future.delayed(Duration(milliseconds: 10));
+          setState(() {
+            selectedIndex = prevS;
+          });
+        } else if (cacheData.schoolUrl == "") {
+          setState(() {
+            selectedIndex = 1;
+          });
+          await Future.delayed(Duration(milliseconds: 10));
+          setState(() {
+            selectedIndex = prevS;
+          });
+        }
+      } else {
+        showCantLoad(context);
       }
-    } else {
+    } catch (e) {
+      List<String> error = e.toString().split(" ");
+      if (error.length >= 1) {
+        if (error[1] == "401") {
+          showUnAuthoritized(context);
+          return;
+        }
+      }
       showCantLoad(context);
     }
     await initUniLinks();
