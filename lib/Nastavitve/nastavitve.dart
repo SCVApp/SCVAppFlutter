@@ -97,7 +97,6 @@ class NastavitvePageState extends State<NastavitvePage> {
         jeSistemskaTema = true;
       });
     }
-    _value = Get.isDarkMode;
   }
 
   void refreshBio() async {

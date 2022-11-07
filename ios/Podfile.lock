@@ -4,7 +4,7 @@ PODS:
   - babstrap_settings_screen (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_web_auth (0.4.3):
+  - flutter_web_auth (0.4.1):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -80,7 +80,7 @@ SPEC CHECKSUMS:
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   babstrap_settings_screen: 535097da0fa521a47fef6f6678ff2b464ee15937
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_web_auth: 71382897b8dc10ad94a2928cbb09ddf515749808
+  flutter_web_auth: 09a0abd245f1a07a3ff4dcf1247a048d89ee12a9
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
   local_auth_ios: 0d333dde7780f669e66f19d2ff6005f3ea84008d
