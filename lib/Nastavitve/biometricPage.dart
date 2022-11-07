@@ -278,6 +278,9 @@ class _BiometricPage extends State<BiometricPage> {
 
   showPicker(BuildContext context) {
     Picker picker = new Picker(
+        confirmText: "Izberi",
+        cancelText: "Prekliči",
+        backgroundColor: Theme.of(context).backgroundColor,
         adapter: PickerDataAdapter(data: createPickerItems()),
         onConfirm: selectAutoLock,
         selecteds: [selectedAutoLockItem]);
