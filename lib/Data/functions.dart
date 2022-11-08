@@ -41,8 +41,10 @@ bool isUrlForOpeinDoor(String url) {
 }
 
 void goToOpenDoor(BuildContext context, String url) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => DoorUnlockUserPage(url: url,)));
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => DoorUnlockUserPage(
+            url: url,
+          )));
 }
 
 // Language: dart

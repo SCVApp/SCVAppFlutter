@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/Data/functions.dart';
 
 Future<void> showUnAuthoritized(BuildContext context) {
   return showDialog<void>(
@@ -20,7 +21,7 @@ Future<void> showUnAuthoritized(BuildContext context) {
           TextButton(
             child: const Text('Odjava'),
             onPressed: () {
-              Navigator.of(context).pop();
+              logOutUser(context);
             },
           ),
           TextButton(
