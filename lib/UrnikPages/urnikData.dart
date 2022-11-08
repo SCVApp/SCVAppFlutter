@@ -13,13 +13,9 @@ class UreUrnikData {
   final String urnikDataKey = "urnikDataKey";
   DateTime lastUpdate = DateTime.now();
 
+  ///Če je urnik že bil shranjen v spominu telefona, ga prebere iz spomina
   Future<void> getFromWeb(String token, {bool force = false}) async {
-    DateTime casZdaj = DateTime.now();
-
-    if (casZdaj.day != lastUpdate.day ||
-        casZdaj.month != lastUpdate.month ||
-        casZdaj.year != lastUpdate.year ||
-        force) {
+    if (this.canGetFromWeb() || force) {
       final response = await http.get(Uri.parse('$apiUrl/user/schedule'),
           headers: {"Authorization": token});
 
@@ -33,6 +29,13 @@ class UreUrnikData {
       print("Update urnik same day");
       this.getFromPrefs(prefs);
     }
+  }
+
+  bool canGetFromWeb() {
+    DateTime casZdaj = DateTime.now();
+    return casZdaj.day != lastUpdate.day ||
+        casZdaj.month != lastUpdate.month ||
+        casZdaj.year != lastUpdate.year;
   }
 
   void getFromPrefs(SharedPreferences prefs) async {

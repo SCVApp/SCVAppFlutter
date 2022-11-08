@@ -70,8 +70,6 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
         Offset position = box.localToGlobal(Offset.zero);
         double y = position.dy;
         double sizeOfScreen = box.size.height;
-        print(sizeOfScreen);
-        print(y);
         setState(() {
           this.bottomOffsetOfListView = sizeOfScreen - 60;
         });

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:scv_app/UrnikPages/detailUrnik.dart';
 import 'package:scv_app/UrnikPages/mainUrnik.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Data/data.dart';
 
 class UrnikPage extends StatefulWidget {
@@ -16,6 +18,25 @@ class UrnikPage extends StatefulWidget {
 }
 
 class _UrnikPageState extends State<UrnikPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getReloadSchedule();
+  }
+
+  void getReloadSchedule() async {
+    if (widget.data != null) {
+      if (widget.data.ureUrnikData.canGetFromWeb()) {
+        print("getReloadSchedule");
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var accessToken = prefs.getString(keyForAccessToken);
+        await widget.data.ureUrnikData.getFromWeb(accessToken);
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MainUrnikPage(
