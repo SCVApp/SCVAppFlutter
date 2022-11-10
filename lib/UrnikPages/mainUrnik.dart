@@ -259,7 +259,13 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
       }
     }
 
-    bool isNext = widget.ureUrnikData.zacetekNaslednjeUre != -1;
+    int trenutniCas = DateTime.now().millisecondsSinceEpoch;
+    int konecZadnjeUre = widget
+        .ureUrnikData
+        .urnikUre[widget.ureUrnikData.urnikUre.length - 1]
+        .zacetek
+        .millisecondsSinceEpoch;
+    bool isNext = trenutniCas <= konecZadnjeUre;
     return Wrap(
       alignment: WrapAlignment.center,
       children: [
