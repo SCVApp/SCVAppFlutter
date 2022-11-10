@@ -186,7 +186,7 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
             ((element) => element.style == widget.urnikData.nowStyle),
             orElse: () => null)
         : null;
-    if (trajanjeUra != null) {
+    if (trajanjeUra != null && !classIsEmpty(trajanjeUra)) {
       return Padding(
         child: HoursBoxUrnik(
             urnikBoxStyle:
@@ -215,6 +215,12 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
               ? "0" + zacetekPrveUre.minute.toString()
               : zacetekPrveUre.minute.toString();
           title = "Začetek pouka ob $zacetekH.$zacetekM";
+        } else if (classIsEmpty(trajanjeUra)) {
+          UraTrajanje nextFullClass = findNextFullClass();
+          if (nextFullClass != null) {
+            title =
+                "Odmor do ${nextFullClass.zacetek.hour}.${nextFullClass.zacetek.minute}";
+          }
         }
       }
       return Padding(
@@ -225,6 +231,39 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
             urnikData: widget.urnikData),
         padding: EdgeInsets.only(bottom: this.gap, left: 15, right: 15),
       );
+    }
+  }
+
+  bool classIsEmpty(UraTrajanje uraTrajanje) {
+    //make foreach loop for all classes in uraTrajanje
+    if (uraTrajanje == null) return true;
+    if (uraTrajanje.ura.length <= 0) return true;
+    for (Ura ura in uraTrajanje.ura) {
+      if (ura.nadomescanje == true ||
+          ura.dogodek != "" ||
+          ura.krajsava != "" ||
+          ura.odpadlo == true ||
+          ura.zaposlitev == true ||
+          ura.ucilnica != "" ||
+          ura.ucitelj != "") {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  UraTrajanje findNextFullClass() {
+    if (widget.ureUrnikData == null) return null;
+    UraTrajanje trenutnaNaslednjaUra = widget.ureUrnikData.urnikUre.firstWhere(
+        ((element) => element.style == widget.urnikData.nextStyle),
+        orElse: () => null);
+    if (trenutnaNaslednjaUra == null) return null;
+    if (!classIsEmpty(trenutnaNaslednjaUra)) return trenutnaNaslednjaUra;
+    int index = widget.ureUrnikData.urnikUre.indexOf(trenutnaNaslednjaUra);
+    for (int i = index + 1; i < widget.ureUrnikData.urnikUre.length; i++) {
+      if (!classIsEmpty(widget.ureUrnikData.urnikUre[i])) {
+        return widget.ureUrnikData.urnikUre[i];
+      }
     }
   }
 
