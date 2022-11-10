@@ -69,17 +69,17 @@ Widget otherStyleBox(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            width: MediaQuery.of(context).size.width - 150,
+                            width: MediaQuery.of(context).size.width - 200,
                             child: Text(
                               "${styleOfBox != OtherStyleBox.dogodek ? krajsava : dogodek}",
                               style: TextStyle(
                                   fontSize: someValuesForSize.secundaryFontSize,
                                   color: textColorsForStyle[styleOfBox],
+                                  overflow: TextOverflow.ellipsis,
                                   decoration:
                                       OtherStyleBox.odpadlo == styleOfBox
                                           ? TextDecoration.lineThrough
                                           : TextDecoration.none),
-                              overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               softWrap: false,
                             )),
@@ -96,7 +96,7 @@ Widget otherStyleBox(
               ),
               styleOfBox != OtherStyleBox.dogodek
                   ? Padding(
-                      padding: EdgeInsets.only(right: 45),
+                      padding: EdgeInsets.only(right: 15),
                       child: Text(
                         "$ucilnica",
                         style: TextStyle(
@@ -105,7 +105,7 @@ Widget otherStyleBox(
                             decoration: OtherStyleBox.odpadlo == styleOfBox
                                 ? TextDecoration.lineThrough
                                 : TextDecoration.none),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.right,
                       ),
                     )
                   : SizedBox()
@@ -116,8 +116,8 @@ Widget otherStyleBox(
             width: someValuesForSize.widthOfIcon,
             height: someValuesForSize.widthOfIcon,
           ),
-          right: 10,
-          top: 10,
+          right: 0,
+          top: -2,
         ),
       ]));
 }

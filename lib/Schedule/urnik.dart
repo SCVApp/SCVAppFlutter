@@ -28,12 +28,13 @@ class _UrnikPageState extends State<UrnikPage> {
   void getReloadSchedule() async {
     if (widget.data != null) {
       if (widget.data.ureUrnikData.canGetFromWeb()) {
-        print("getReloadSchedule");
         SharedPreferences prefs = await SharedPreferences.getInstance();
         var accessToken = prefs.getString(keyForAccessToken);
+        print("State changing");
         await widget.data.ureUrnikData.getFromWeb(accessToken);
-        setState(() {});
       }
+      setState(() {});
+      print("State changed");
     }
   }
 
