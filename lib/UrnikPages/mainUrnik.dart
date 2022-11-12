@@ -297,14 +297,17 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
         naslednaUraText = "začetek pouka";
       }
     }
-
-    int trenutniCas = DateTime.now().millisecondsSinceEpoch;
-    int konecZadnjeUre = widget
-        .ureUrnikData
-        .urnikUre[widget.ureUrnikData.urnikUre.length - 1]
-        .zacetek
-        .millisecondsSinceEpoch;
-    bool isNext = trenutniCas <= konecZadnjeUre;
+    bool isNext = false;
+    if (widget.ureUrnikData.urnikUre.length >= 1) {
+      int trenutniCas = DateTime.now().millisecondsSinceEpoch;
+      int konecZadnjeUre = widget
+              .ureUrnikData
+              .urnikUre[widget.ureUrnikData.urnikUre.length - 1]
+              .zacetek
+              .millisecondsSinceEpoch ??
+          0;
+      isNext = trenutniCas <= konecZadnjeUre;
+    }
     return Wrap(
       alignment: WrapAlignment.center,
       children: [
