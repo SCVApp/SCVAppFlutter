@@ -22,6 +22,21 @@ final defualtStyleBox = new UrnikBoxStyle(
     primaryTextColor: Colors.white,
     secundaryTextColor: Colors.white);
 
+String shortenTeacherName(String teacherName) {
+  if (teacherName == null) return "";
+  if (teacherName.length <= 0) return "";
+  List<String> teacherNameSplit = teacherName.split(" ");
+  if (teacherNameSplit.length <= 0) return "";
+  String shortenedName = "";
+  for (int i = 0; i < teacherNameSplit.length - 1; i++) {
+    if (teacherNameSplit[i].length > 0) {
+      shortenedName += teacherNameSplit[i][0] + ". ";
+    }
+  }
+  shortenedName += teacherNameSplit[teacherNameSplit.length - 1];
+  return shortenedName;
+}
+
 Widget HourBoxUrnik(
     {bool isSmall = false,
     UrnikBoxStyle urnikBoxStyle,
@@ -72,7 +87,7 @@ Widget HourBoxUrnik(
       }
       return GestureDetector(
         child: otherStyleBox(someValuesForSize, context, id, krajsava, trajanje,
-            ucilnica, styleOfBox, ura.dogodek, urnikData),
+            ucilnica, ucitelj, styleOfBox, ura.dogodek, urnikData),
         onTap: () {
           Navigator.push(
               context,
@@ -185,14 +200,18 @@ Widget HourBoxUrnik(
                                       : urnikBoxStyle.primaryTextColor
                                   : Colors.white),
                         ),
-                        Text(
-                          "$trajanje",
-                          style: TextStyle(
-                              fontSize: someValuesForSize.secundaryFontSize,
-                              color: urnikBoxStyle != null
-                                  ? urnikBoxStyle.secundaryTextColor
-                                  : Colors.white),
-                        )
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width - 200,
+                            child: Text(
+                              "$trajanje, ${shortenTeacherName(ucitelj)}",
+                              style: TextStyle(
+                                  fontSize: someValuesForSize.secundaryFontSize,
+                                  color: urnikBoxStyle != null
+                                      ? urnikBoxStyle.secundaryTextColor
+                                      : Colors.white),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ))
                       ],
                     ),
                   ],

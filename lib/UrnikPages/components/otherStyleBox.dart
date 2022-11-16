@@ -32,6 +32,7 @@ Widget otherStyleBox(
     String krajsava,
     String trajanje,
     String ucilnica,
+    String ucitelj,
     OtherStyleBox styleOfBox,
     String dogodek,
     UrnikData urnikData) {
@@ -83,12 +84,17 @@ Widget otherStyleBox(
                               maxLines: 1,
                               softWrap: false,
                             )),
-                        Text(
-                          "$trajanje",
-                          style: TextStyle(
-                              fontSize: someValuesForSize.secundaryFontSize,
-                              color: textColorsForStyle[styleOfBox]),
-                        )
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width - 200,
+                            child: Text(
+                              "$trajanje, ${shortenTeacherName(ucitelj)}",
+                              style: TextStyle(
+                                fontSize: someValuesForSize.secundaryFontSize,
+                                color: textColorsForStyle[styleOfBox],
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ))
                       ],
                     ),
                   ],
