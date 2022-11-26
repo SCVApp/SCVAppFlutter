@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:scv_app/Components/loginInPage.dart';
+import 'package:scv_app/Intro_And__Login/loginInPage.dart';
 import 'package:scv_app/Data/data.dart';
 import 'package:get/get.dart';
 
@@ -8,8 +8,8 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void goToHome() async {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => LoginInPage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginInPage()));
     }
 
     return Scaffold(
@@ -25,7 +25,9 @@ class OnBoardingPage extends StatelessWidget {
             PageViewModel(
               title: 'Dobrodošel/a v aplikaciji ŠCVApp!',
               body: '',
-              image: buildImage('assets/school_logo.png'),
+              image: buildImage(Theme.of(context).primaryColor == Colors.black
+                  ? 'assets/school_logo.png'
+                  : 'assets/school_logo_dark.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(

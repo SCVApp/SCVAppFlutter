@@ -1,12 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scv_app/Components/backBtn.dart';
-import 'package:scv_app/Components/costumeRadioBtn.dart';
+import 'package:scv_app/Components/moonIcon.dart';
+import 'package:scv_app/Components/sunIcon.dart';
+import 'package:scv_app/Components/themeSelector.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
+import 'package:scv_app/api/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-
-enum SingingCharacter { system, light, dark }
+import 'package:scv_app/api/theme.dart';
 
 class AppAppearance extends StatefulWidget {
   AppAppearance({Key key, this.onThemeChanged}) : super(key: key);
@@ -16,7 +20,7 @@ class AppAppearance extends StatefulWidget {
 }
 
 class _AppAppearanceState extends State<AppAppearance> {
-  SingingCharacter _character = SingingCharacter.system;
+  ThemeEnum appTheme = ThemeEnum.system;
 
   @override
   void initState() {
@@ -25,94 +29,48 @@ class _AppAppearanceState extends State<AppAppearance> {
   }
 
   Future<void> handleGetTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      bool isDarkTheme = prefs.getBool(keyForThemeDark);
-      if (isDarkTheme == null) {
-        setState(() {
-          _character = SingingCharacter.system;
-        });
-      } else if (isDarkTheme == true) {
-        setState(() {
-          _character = SingingCharacter.dark;
-        });
-      } else {
-        setState(() {
-          _character = SingingCharacter.light;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _character = SingingCharacter.system;
-      });
-    }
-  }
-
-  void handleChanged(SingingCharacter value) async {
+    var t = await UseTheme.getTheme();
     setState(() {
-      _character = value;
+      appTheme = t;
     });
-    switch (value) {
-      case SingingCharacter.system:
-        await changeToSystemTheme();
-        break;
-      case SingingCharacter.light:
-        await changeToLightTheme();
-        break;
-      case SingingCharacter.dark:
-        await changeToDarkTheme();
-        break;
-    }
+  }
+
+  void handleChanged(ThemeEnum value) async {
+    setState(() {
+      appTheme = value;
+    });
+    await UseTheme.handleChanged(value);
     widget.onThemeChanged();
-  }
-
-  Future<void> changeToSystemTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Get.changeThemeMode(ThemeMode.system);
-    prefs.remove(keyForThemeDark);
-  }
-
-  Future<void> changeToLightTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Get.changeThemeMode(ThemeMode.light);
-    prefs.setBool(keyForThemeDark, false);
-  }
-
-  Future<void> changeToDarkTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Get.changeThemeMode(ThemeMode.dark);
-    prefs.setBool(keyForThemeDark, true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-      value: Theme.of(context).backgroundColor == Colors.black
-          ? SystemUiOverlayStyle.light
-          : SystemUiOverlayStyle.dark,
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            backButton(context),
-            CostumeRadioBtn(
-                value: _character,
-                type: SingingCharacter.system,
-                title: "Sistemski način",
-                onChanged: handleChanged),
-            CostumeRadioBtn(
-                value: _character,
-                type: SingingCharacter.dark,
-                title: "Temni način",
-                onChanged: handleChanged),
-            CostumeRadioBtn(
-                value: _character,
-                type: SingingCharacter.light,
-                title: "Svetli način",
-                onChanged: handleChanged),
-          ],
-        ),
-      ),
-    ));
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: Theme.of(context).backgroundColor == Colors.black
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark,
+          child: SafeArea(
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                backButton(context),
+                Get.isDarkMode
+                    ? MoonIcon(Theme.of(context).scaffoldBackgroundColor,
+                        size: min(200, MediaQuery.of(context).size.width * 0.5))
+                    : SunIcon(
+                        size:
+                            min(200, MediaQuery.of(context).size.width * 0.5)),
+                Text(
+                  "Izberi temo",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                ThemesSelector(context, appTheme, handleChanged, padding: 70),
+              ],
+            )),
+          )),
+    );
   }
 }

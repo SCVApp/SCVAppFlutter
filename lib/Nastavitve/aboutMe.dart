@@ -22,7 +22,7 @@ import 'package:scv_app/Nastavitve/biometricPage.dart';
 import 'package:scv_app/Nastavitve/changeStatus.dart';
 import 'package:scv_app/Nastavitve/otherToolsPage.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
-import 'package:scv_app/Data/theme.dart';
+import 'package:scv_app/Data/themes.dart';
 import 'package:scv_app/Intro_And__Login/uvod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';

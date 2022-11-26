@@ -12,6 +12,7 @@ import 'package:scv_app/DoorUnlock/doorUnlockPage.dart';
 import 'package:scv_app/Nastavitve/otherToolsPage.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
+import 'package:scv_app/api/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Data/data.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
@@ -69,34 +70,14 @@ class NastavitvePageState extends State<NastavitvePage> {
     }
   }
 
-  bool _value = Get.isDarkMode;
+  ThemeEnum appTheme = ThemeEnum.light;
 
   Future<void> handleGetTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      bool isDarkTheme = prefs.getBool(keyForThemeDark);
-      if (isDarkTheme == null) {
-        setState(() {
-          _value = false;
-          jeSistemskaTema = true;
-        });
-      } else if (isDarkTheme == true) {
-        setState(() {
-          _value = true;
-          jeSistemskaTema = false;
-        });
-      } else {
-        setState(() {
-          _value = false;
-          jeSistemskaTema = false;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _value = false;
-        jeSistemskaTema = true;
-      });
-    }
+    var t = await UseTheme.getTheme();
+
+    setState(() {
+      appTheme = t;
+    });
   }
 
   void refreshBio() async {
@@ -283,11 +264,7 @@ class NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#EE5BA0"),
                           ),
                           title: 'Videz aplikacije',
-                          subtitle: jeSistemskaTema
-                              ? "Sistemsko"
-                              : _value
-                                  ? "Temni način"
-                                  : "Svetli način",
+                          subtitle: UseTheme.getNameOfTheme(appTheme),
                         ),
                         SettingsItem(
                           onTap: goToPageBiometric,

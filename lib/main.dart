@@ -10,7 +10,7 @@ import 'package:scv_app/eA/easistent.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:scv_app/eA_icon/ea_flutter_icon.dart';
 import 'package:scv_app/Intro_And__Login/prijava.dart';
-import 'package:scv_app/Data/theme.dart';
+import 'package:scv_app/Data/themes.dart';
 import 'package:scv_app/Intro_And__Login/uvod.dart';
 import 'package:scv_app/Lock/zaklep.dart';
 import 'package:shared_preferences/shared_preferences.dart';

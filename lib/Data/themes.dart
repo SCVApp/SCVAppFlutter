@@ -10,7 +10,7 @@ class Themes {
     bottomAppBarColor: Colors.white, //Menu bar spodnji
     cardColor: HexColor.fromHex("#FAFAFA"), //Barva oblački
     hintColor: Colors.white, //Barva za ikone v oblčkih
-    shadowColor: Colors.grey.withOpacity(0.5),//Barva senc
+    shadowColor: Colors.grey.withOpacity(0.5), //Barva senc
   );
   static final dark = ThemeData.dark().copyWith(
     //Zamenjaj barve za temno temo
@@ -20,6 +20,6 @@ class Themes {
     bottomAppBarColor: HexColor.fromHex("#1C1C1E"),
     cardColor: HexColor.fromHex("#1C1C1E"),
     hintColor: HexColor.fromHex("#1C1C1E"),
-    shadowColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0.5),
+    shadowColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0),
   );
 }
