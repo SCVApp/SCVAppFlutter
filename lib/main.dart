@@ -132,6 +132,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     loadDataToScreen();
   }
 
+  void resetApp() {
+    setState(() {
+      isLoading = true;
+      data = new Data();
+      cacheData = new CacheData();
+      _childrenWidgets.clear();
+    });
+    loadDataToScreen();
+  }
+
   void initUniLinks() async {
     try {
       final initialLink = await getInitialLink();
@@ -216,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       List<String> error = e.toString().split(" ");
       if (error.length >= 1) {
         if (error[1] == "401") {
-          showUnAuthoritized(context);
+          showUnAuthoritized(context, resetApp);
           return;
         }
       }

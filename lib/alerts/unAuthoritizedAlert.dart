@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/Data/functions.dart';
 import 'package:restart_app/restart_app.dart';
 
-Future<void> showUnAuthoritized(BuildContext context) {
+Future<void> showUnAuthoritized(BuildContext context, Function resetApp) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -27,11 +27,11 @@ Future<void> showUnAuthoritized(BuildContext context) {
             },
           ),
           TextButton(
-            child: const Text('Ponovno naloži'),
-            onPressed: () {
-              Restart.restartApp();
-            },
-          ),
+              child: const Text('Ponovno naloži'),
+              onPressed: () {
+                Navigator.pop(_context);
+                resetApp();
+              }),
         ],
       );
     },
