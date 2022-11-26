@@ -23,8 +23,7 @@ final defualtStyleBox = new UrnikBoxStyle(
     secundaryTextColor: Colors.white);
 
 String shortenTeacherName(String teacherName) {
-  if (teacherName == null) return "";
-  if (teacherName.length <= 0) return "";
+  if (teacherName == null || teacherName == "") return "";
   List<String> teacherNameSplit = teacherName.split(" ");
   if (teacherNameSplit.length <= 0) return ", $teacherName";
   String shortenedName = ", ";

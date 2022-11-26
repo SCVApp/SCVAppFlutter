@@ -57,6 +57,7 @@ dependencies:
   animate_icons: ^2.0.0
   getwidget: ^3.0.1
   restart_app: ^1.1.0+1
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

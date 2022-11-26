@@ -12,9 +12,9 @@ Future<void> showUnAuthoritized(BuildContext context) {
         content: SingleChildScrollView(
           child: ListBody(
             children: const <Widget>[
-              Text('Napaka pri nalaganju aplikacije, nimate pravic.'),
+              Text('Napaka, pridobivanje podatkov je bilo neuspešno.'),
               Text(
-                  'Prosimo poskusite ponovno naložiti aplikacijo ali se pa poskusite odjaviti. Če nič od tega ne deluje se obrnite na podporo(info.app@scv.si).'),
+                  'Aplikacija se ni naložila zaradi primanjkanja pravic. Prosim, ponovno naloži aplikacijo. Če problem ni odpravljen po nekaj poskusih, se prosim obrni na podporo (info.app@scv.si).'),
             ],
           ),
         ),

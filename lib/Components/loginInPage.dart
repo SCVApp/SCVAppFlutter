@@ -61,7 +61,7 @@ class _LoginInPage extends State<LoginInPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Prijava v aplikacijo ni uspela. Poskusite znova!'),
+                Text('Napaka pri prijavi. Prosim, poskusi znova'),
               ],
             ),
           ),
@@ -98,7 +98,7 @@ class _LoginInPage extends State<LoginInPage> {
               width: MediaQuery.of(context).size.width * 0.5,
             ),
             Padding(padding: EdgeInsets.only(bottom: 20)),
-            Text("Prosim počakajte, da vas prijavimo...",
+            Text("Prosim počakaj, prijava poteka...",
                 style: TextStyle(fontSize: 17)),
             Padding(padding: EdgeInsets.only(bottom: 20)),
             isLoginIn ? CircularProgressIndicator() : SizedBox(),

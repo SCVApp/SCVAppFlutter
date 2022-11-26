@@ -246,7 +246,7 @@ class _BiometricPage extends State<BiometricPage> {
                             fontWeight: FontWeight.bold)),
                     Padding(padding: EdgeInsets.only(top: 20)),
                     Text(
-                      "Z omogočanjem te nastavitve lahko nato v aplikacijo vstopite preko biometričnih podatkov (prepoznava obraza ali Face ID, prepoznava prstnega odtisa ali Touch ID ter PIN ali geslo telefona). V primeru, da na telefonu nimate nič od navedenega, vas aplikacija opozori, da dodate vsaj en varnostni pogoj, naveden zgoraj.",
+                      "Z omogočanjem te nastavitve lahko nato v aplikacijo vstopiš preko biometričnih podatkov (prepoznava obraza ali Face ID, prepoznava prstnega odtisa ali Touch ID ter PIN ali geslo telefona). V primeru, da na telefonu nimaš nič od navedenega, te aplikacija opozori, da dodaš vsaj en varnostni pogoj, naveden zgoraj.",
                       style: textStyle,
                       textAlign: TextAlign.justify,
                     ),

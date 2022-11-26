@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:scv_app/Components/komponeneteZaMalico.dart';
+import 'package:scv_app/Intro_And__Login/prijava.dart';
 import 'package:scv_app/MalicePages/izberiJed.dart';
 import 'package:scv_app/MalicePages/ostaleInformacije.dart';
 import 'package:scv_app/MalicePages/mainMalice.dart';
@@ -23,13 +25,13 @@ class MaliceUser {
   String referenceNumber;
   int pinNumber;
 
-  MaliceUser(String body){
-    if(body != ""){
+  MaliceUser(String body) {
+    if (body != "") {
       this.loadJson(body);
     }
   }
 
-  loadJson(String body){
+  loadJson(String body) {
     final decoded = jsonDecode(body);
     this.accessToken = decoded['access_token'];
     this.email = decoded['student']['email'];
@@ -43,34 +45,36 @@ class MaliceUser {
   Map<String, dynamic> toJson() => {
         'access_token': this.accessToken,
         'student': {
-          'email':this.email,
-          'first_name':this.firstName,
-          'last_name':this.lastName,
-          'budget':this.buget,
-          'reference':this.referenceNumber,
-          'pin_number':this.pinNumber,
+          'email': this.email,
+          'first_name': this.firstName,
+          'last_name': this.lastName,
+          'budget': this.buget,
+          'reference': this.referenceNumber,
+          'pin_number': this.pinNumber,
         },
       };
-  void saveUser() async{
+  void saveUser() async {
     String jsonString = jsonEncode(this);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("userMalica", jsonString);
   }
-  Future<bool> loadUser() async{
+
+  Future<bool> loadUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       String jsonString = prefs.getString("userMalica");
-      if(jsonString != ""){
+      if (jsonString != "") {
         this.loadJson(jsonString);
         return true;
-      }else{
+      } else {
         return false;
       }
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
-  void logOutUser() async{
+
+  void logOutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("userMalica");
   }
@@ -85,7 +89,6 @@ class MalicePage extends StatefulWidget {
 }
 
 class _MalicePageState extends State<MalicePage> {
-
   bool isLoggingIn = false;
   bool isLogedIn = false;
 
@@ -93,9 +96,9 @@ class _MalicePageState extends State<MalicePage> {
   final field_password_controller = TextEditingController();
 
   String errorMessage = "";
-  void showError(String errMsg){
+  void showError(String errMsg) {
     setState(() {
-      errorMessage=errMsg;
+      errorMessage = errMsg;
     });
   }
 
@@ -103,18 +106,29 @@ class _MalicePageState extends State<MalicePage> {
   // void initState() {
   //   // TODO: implement initState
   //   super.initState();
-  //   loadIfLogedIn();
+  //   // loadIfLogedIn();
   // }
 
-  logedOutUser(){
+  Future<String> getAccessTokenFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString(keyForAccessToken);
+    if (accessToken != null) {
+      Map<String, dynamic> payload = Jwt.parseJwt(accessToken);
+      if (payload["access_token"] != null) {
+        return payload["access_token"];
+      }
+    }
+  }
+
+  logedOutUser() {
     setState(() {
-      isLogedIn=false;
-      isLoggingIn=false;
+      isLogedIn = false;
+      isLoggingIn = false;
     });
   }
 
-  loadIfLogedIn() async{
-    if(await maliceUser.loadUser() == true){
+  loadIfLogedIn() async {
+    if (await maliceUser.loadUser() == true) {
       setState(() {
         isLogedIn = true;
       });
@@ -123,7 +137,9 @@ class _MalicePageState extends State<MalicePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new WebView(initialUrl: "https://malice.scv.si/",javascriptMode: JavascriptMode.unrestricted);
+    return new WebView(
+        initialUrl: "https://malice.scv.si/",
+        javascriptMode: JavascriptMode.unrestricted);
 
     /* logInUser() async {
       String username = field_username_controller.text.toString();
