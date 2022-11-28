@@ -218,8 +218,10 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
         } else if (classIsEmpty(trajanjeUra)) {
           UraTrajanje nextFullClass = findNextFullClass();
           if (nextFullClass != null) {
-            title =
-                "Odmor do ${nextFullClass.zacetek.hour}.${nextFullClass.zacetek.minute}";
+            String minutes = nextFullClass.zacetek.minute < 10
+                ? "0" + nextFullClass.zacetek.minute.toString()
+                : nextFullClass.zacetek.minute.toString();
+            title = "Odmor do ${nextFullClass.zacetek.hour}.$minutes";
           }
         }
       }
