@@ -47,6 +47,7 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
   bool isLoading = false;
   String doorCode = '';
   ScrollController scrollController = new ScrollController();
+  bool isAlertShown = false;
 
   String doorNameId = 'Ne obstaja';
 
@@ -83,7 +84,6 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.paused) {
-      this.closePage();
       this.closePage();
     }
   }
@@ -148,11 +148,15 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
   }
 
   void closePage() {
-    if (context.widget.toString().toLowerCase() ==
-        "DoorUnlockUserPage".toLowerCase()) {}
+    Navigator.of(context).pop();
+    if (isAlertShown) {
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> ShowError(String napaka, {bool closeInTheEnd = false}) async {
+    if (isAlertShown) return;
+    isAlertShown = true;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
