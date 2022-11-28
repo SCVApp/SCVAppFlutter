@@ -45,31 +45,37 @@ class _AppAppearanceState extends State<AppAppearance> {
 
   @override
   Widget build(BuildContext context) {
+    double spaceInView =
+        min(60, max(MediaQuery.of(context).size.height / 15, 20));
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: Theme.of(context).backgroundColor == Colors.black
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark,
           child: SafeArea(
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: SingleChildScrollView(
+                child: Center(
+                    child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 backButton(context),
+                SizedBox(height: 20),
                 Get.isDarkMode
                     ? MoonIcon(Theme.of(context).scaffoldBackgroundColor,
                         size: min(200, MediaQuery.of(context).size.width * 0.5))
                     : SunIcon(
                         size:
                             min(200, MediaQuery.of(context).size.width * 0.5)),
+                SizedBox(height: spaceInView),
                 Text(
                   "Izberi temo",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
+                SizedBox(height: spaceInView),
                 ThemesSelector(context, appTheme, handleChanged, padding: 70),
               ],
-            )),
+            ))),
           )),
     );
   }
