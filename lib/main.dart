@@ -220,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           });
         }
       } else {
-        showCantLoad(context);
+        showCantLoad(context, resetApp);
       }
     } catch (e) {
       List<String> error = e.toString().split(" ");
@@ -230,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           return;
         }
       }
-      showCantLoad(context);
+      showCantLoad(context, resetApp);
     }
     await initUniLinks();
   }
@@ -261,7 +261,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           await refreshToken();
         }
         if (data != null) {
-          await data.ureUrnikData.getFromWeb(accessToken);
+          if (data.ureUrnikData.canGetFromWeb()) {
+            await data.ureUrnikData.getFromWeb(accessToken);
+          }
         } else {
           await cacheData.ureUrnikData.getFromWeb(accessToken);
         }

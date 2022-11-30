@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<void> showCantLoad(BuildContext context) {
+Future<void> showCantLoad(BuildContext context, Function restartApp) {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -22,6 +22,13 @@ Future<void> showCantLoad(BuildContext context) {
             child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Poskusi znova'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              restartApp();
             },
           ),
         ],
