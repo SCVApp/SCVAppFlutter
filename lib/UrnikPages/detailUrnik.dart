@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:scv_app/UrnikPages/components/otherStyleBox.dart';
 import 'package:scv_app/UrnikPages/urnikData.dart';
@@ -34,11 +36,13 @@ class _DetailUrnikState extends State<DetailUrnik> {
 
   Widget content() {
     return LayoutBuilder(builder: ((context, constraints) {
-      final double mainFontSize = MediaQuery.of(context).size.width * 0.045;
+      final double mainFontSize =
+          min(MediaQuery.of(context).size.width * 0.045, 16.3);
       final Color textColor = widget.styleOfBox == OtherStyleBox.normalno
           ? Theme.of(context).primaryColor
           : Colors.black;
-      final double bigFontSize = MediaQuery.of(context).size.width * 0.069;
+      final double bigFontSize =
+          min(MediaQuery.of(context).size.width * 0.069, 20);
       final double spaceBetweenLines = 10;
 
       var textForClass = TextPainter(
