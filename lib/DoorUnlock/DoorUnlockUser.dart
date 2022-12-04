@@ -136,6 +136,11 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
           themeColorForStatus = ThemeColorForStatus.time_out;
           isLoading = false;
         });
+      } else if (message == "Door not opened") {
+        setState(() {
+          themeColorForStatus = ThemeColorForStatus.door_not_opened;
+          isLoading = false;
+        });
       } else {
         setState(() {
           themeColorForStatus = ThemeColorForStatus.unknown;
@@ -258,6 +263,7 @@ enum ThemeColorForStatus {
   unknown,
   lock_status,
   time_out,
+  door_not_opened
 }
 
 extension ThemeColorForStatusExtension on ThemeColorForStatus {
@@ -272,6 +278,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
       case ThemeColorForStatus.error:
         return Colors.red;
       case ThemeColorForStatus.lock_status:
+        return Colors.red;
+      case ThemeColorForStatus.door_not_opened:
         return Colors.red;
       case ThemeColorForStatus.unknown:
         return Colors.grey;
@@ -288,6 +296,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
         return Icons.lock_outline;
       case ThemeColorForStatus.error:
         return Icons.error_outline;
+      case ThemeColorForStatus.door_not_opened:
+        return Icons.lock_outline;
       case ThemeColorForStatus.unknown:
         return Icons.lock_outline;
       default:
@@ -307,6 +317,8 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
         return "Učilnica ne obstaja";
       case ThemeColorForStatus.lock_status:
         return "Vrata so zaklenjena";
+      case ThemeColorForStatus.door_not_opened:
+        return "Vrata niso bila odprta";
       case ThemeColorForStatus.unknown:
         return "Neznana napaka";
       default:
