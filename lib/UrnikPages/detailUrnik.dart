@@ -65,6 +65,7 @@ class _DetailUrnikState extends State<DetailUrnik> {
       return SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Stack(
+            clipBehavior: Clip.none,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
