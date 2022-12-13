@@ -231,7 +231,7 @@ class _MainUrnikPageState extends State<MainUrnikPage> {
             context: context,
             mainTitle: title,
             urnikData: widget.urnikData),
-        padding: EdgeInsets.only(bottom: this.gap, left: 15, right: 15),
+        padding: EdgeInsets.only(bottom: this.gap, left: 25, right: 25),
       );
     }
   }
