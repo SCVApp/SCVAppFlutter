@@ -155,6 +155,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _incomingLinkHandler() {
     _streamSubscription = uriLinkStream.listen((Uri uri) {
       if (!mounted) {
+        setState(() {
+          appOpenUrl = "";
+        });
         return;
       }
       if (uri != null) {
@@ -168,6 +171,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       }
     }, onError: (Object err) {
       if (!mounted) {
+        setState(() {
+          appOpenUrl = "";
+        });
         return;
       }
     });
