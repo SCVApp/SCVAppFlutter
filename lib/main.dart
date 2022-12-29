@@ -170,12 +170,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         });
       }
     }, onError: (Object err) {
-      if (!mounted) {
-        setState(() {
-          appOpenUrl = "";
-        });
-        return;
-      }
+      setState(() {
+        appOpenUrl = "";
+      });
     });
   }
 
@@ -289,18 +286,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       isFromAutoLock: true,
                     )));
             if (isUrlForOpeinDoor(appOpenUrl)) {
-              goToOpenDoor(context, appOpenUrl);
+              var link = appOpenUrl;
               setState(() {
                 appOpenUrl = "";
               });
+              goToOpenDoor(context, link);
             }
           }
         } else {
           if (isUrlForOpeinDoor(appOpenUrl)) {
-            goToOpenDoor(context, appOpenUrl);
+            var link = appOpenUrl;
             setState(() {
               appOpenUrl = "";
             });
+            goToOpenDoor(context, link);
           }
         }
       } catch (e) {

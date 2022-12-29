@@ -83,7 +83,7 @@ class _DoorUnlockUserPage extends State<DoorUnlockUserPage>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.paused) {
+    if (state == AppLifecycleState.detached) {
       this.closePage();
     }
   }
