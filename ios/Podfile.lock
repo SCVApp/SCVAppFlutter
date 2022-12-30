@@ -4,6 +4,8 @@ PODS:
   - babstrap_settings_screen (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
   - flutter_web_auth (0.4.1):
     - Flutter
   - FMDB (2.7.5):
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - babstrap_settings_screen (from `.symlinks/plugins/babstrap_settings_screen/ios`)
   - Flutter (from `Flutter`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
   - home_widget (from `.symlinks/plugins/home_widget/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
@@ -55,6 +58,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/babstrap_settings_screen/ios"
   Flutter:
     :path: Flutter
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_web_auth:
     :path: ".symlinks/plugins/flutter_web_auth/ios"
   home_widget:
@@ -80,6 +85,7 @@ SPEC CHECKSUMS:
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   babstrap_settings_screen: 535097da0fa521a47fef6f6678ff2b464ee15937
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_web_auth: 09a0abd245f1a07a3ff4dcf1247a048d89ee12a9
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
