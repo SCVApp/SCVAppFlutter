@@ -45,7 +45,7 @@ class _LoginPage extends State<LoginPage> {
       await global.token.saveToken();
 
       final User user = StoreProvider.of<AppState>(context).state.user;
-      await user.fetchData();
+      await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
     } catch (e) {
       print(e);

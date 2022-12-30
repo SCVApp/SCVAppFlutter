@@ -97,4 +97,12 @@ class User {
       this.loading = false;
     }
   }
+
+  Future<void> fetchAll() async {
+    await Future.wait([
+      this.fetchData(),
+      this.school.fetchData(),
+      this.status.fetchData(),
+    ]);
+  }
 }

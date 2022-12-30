@@ -30,11 +30,7 @@ class _PageManagerState extends State<PageManager> {
       await loadFromCache();
       await global.token.refresh();
       final User user = StoreProvider.of<AppState>(context).state.user;
-      await Future.wait([
-        user.fetchData(),
-        user.school.fetchData(),
-        user.status.fetchData(),
-      ]);
+      await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
