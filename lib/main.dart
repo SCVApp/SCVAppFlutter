@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/manager/pageManager.dart';
-import 'package:scv_app/pages/home.dart';
+import 'package:get/get.dart';
 import 'package:scv_app/store/AppReducer.dart';
 import 'dart:async';
 
@@ -46,7 +46,7 @@ class myApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: MaterialApp(
+      child: GetMaterialApp(
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         title: 'ŠCVApp',
         debugShowCheckedModeBanner: false,

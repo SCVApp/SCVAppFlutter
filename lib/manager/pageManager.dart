@@ -28,6 +28,7 @@ class _PageManagerState extends State<PageManager> {
     await global.token.loadToken();
     if (global.token.accessToken != null) {
       await loadFromCache();
+      await global.token.refresh();
       final User user = StoreProvider.of<AppState>(context).state.user;
       await Future.wait([
         user.fetchData(),

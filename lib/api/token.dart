@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:scv_app/global/global.dart' as global;
 
 class Token {
   String accessToken;
@@ -37,5 +41,33 @@ class Token {
     await storage.delete(key: accessTokenKey);
     await storage.delete(key: refreshTokenKey);
     await storage.delete(key: expiresKey);
+  }
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'accessToken': this.accessToken,
+      'refreshToken': this.refreshToken,
+      'expiresOn': this.expiresOn,
+    };
+  }
+
+  void fromJSON(Map<String, dynamic> json) {
+    this.accessToken = json['accessToken'];
+    this.refreshToken = json['refreshToken'];
+    this.expiresOn = json['expiresOn'];
+  }
+
+  Future<void> refresh() async {
+    try {
+      final respons = await http.post(
+          Uri.parse("${global.apiUrl}/auth/refreshToken/"),
+          body: this.toJSON());
+      if (respons.statusCode == 200) {
+        this.fromJSON(jsonDecode(respons.body));
+        await this.saveToken();
+      } else {
+        throw Exception('Failed to refresh token');
+      }
+    } catch (e) {}
   }
 }

@@ -2,6 +2,10 @@ import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/NavBarItem.dart';
+import 'package:scv_app/pages/Malice/malicePage.dart';
+import 'package:scv_app/pages/Nastavitve/main.dart';
+import 'package:scv_app/pages/Urnik/main.dart';
+import 'package:scv_app/pages/easistentPage.dart';
 import 'package:scv_app/pages/schoolHomePage.dart';
 
 import '../api/user.dart';
@@ -17,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedTab = 0;
-  final int numOfTabs = 1;
+  final int numOfTabs = 5;
 
   @override
   void initState() {
@@ -32,7 +36,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final List<Widget> _children = [SchoolHomePage()];
+  final List<Widget> _children = [
+    SchoolHomePage(),
+    MalicePage(),
+    EasistentPage(),
+    UrnikPage(),
+    NastavitvePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +52,12 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           backgroundColor: selectedTab == 0
               ? user.school.schoolColor
-              : Theme.of(context).scaffoldBackgroundColor ?? Colors.white,
+              : Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
             child: _children[selectedTab],
           ),
           bottomNavigationBar: FFNavigationBar(
-            onSelectTab: onSelectTab, 
+            onSelectTab: onSelectTab,
             selectedIndex: selectedTab,
             items: [
               NavBarItem(

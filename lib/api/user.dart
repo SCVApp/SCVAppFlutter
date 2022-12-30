@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:scv_app/api/school.dart';
 import 'package:scv_app/api/status.dart';
 import 'package:scv_app/global/global.dart' as global;
@@ -42,7 +43,7 @@ class User {
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(global.apiUrl + "/user/get"),
         headers: {"Authorization": global.token.accessToken});
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       this.fromJSON(json);
