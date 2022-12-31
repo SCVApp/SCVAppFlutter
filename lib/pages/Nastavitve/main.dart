@@ -3,6 +3,7 @@ import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/appTheme.dart';
+import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 
 import '../../api/user.dart';
 import '../../extension/hexColor.dart';
+import 'biometricPage.dart';
 
 class NastavitvePage extends StatefulWidget {
   @override
@@ -28,6 +30,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AppAppearance()),
+    );
+  }
+
+  void goToBiomericPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BiometicPage()),
     );
   }
 
@@ -95,16 +104,19 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             subtitle: appTheme.displayName() ?? "",
                             onTap: goToAppAppearance,
                           )),
-                  SettingsItem(
-                    icons: Icons.fingerprint,
-                    iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).hintColor,
-                      withBackground: true,
-                      backgroundColor: HexColor.fromHex("#FFCA05"),
-                    ),
-                    title: 'Biometrično odklepanje',
-                    onTap: () {},
-                  ),
+                  StoreConnector<AppState, Biometric>(
+                      converter: ((store) => store.state.biometric),
+                      builder: (context, biometric) => SettingsItem(
+                            icons: Icons.fingerprint,
+                            iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: HexColor.fromHex("#FFCA05"),
+                            ),
+                            title: 'Biometrično odklepanje',
+                            subtitle: biometric.displayName() ?? "",
+                            onTap: goToBiomericPage,
+                          )),
                   SettingsItem(
                     icons: Icons.info_rounded,
                     iconStyle: IconStyle(

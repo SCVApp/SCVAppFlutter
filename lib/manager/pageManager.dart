@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
@@ -23,6 +24,7 @@ class _PageManagerState extends State<PageManager> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadToken();
       loadAppTheme();
+      loadBiometric();
     });
   }
 
@@ -48,6 +50,13 @@ class _PageManagerState extends State<PageManager> {
         StoreProvider.of<AppState>(context).state.appTheme;
     await appTheme.load();
     StoreProvider.of<AppState>(context).dispatch(appTheme);
+  }
+
+  void loadBiometric() async {
+    final Biometric biometric =
+        StoreProvider.of<AppState>(context).state.biometric;
+    await biometric.load();
+    StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
   Future<void> loadFromCache() async {
