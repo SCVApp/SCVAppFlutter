@@ -14,7 +14,9 @@ import 'package:get/get.dart';
 
 import '../../api/user.dart';
 import '../../extension/hexColor.dart';
+import 'aboutApp.dart';
 import 'biometricPage.dart';
+import 'otherToolsPage.dart';
 
 class NastavitvePage extends StatefulWidget {
   @override
@@ -37,6 +39,20 @@ class _NastavitvePageState extends State<NastavitvePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BiometicPage()),
+    );
+  }
+
+  void goToOtherToolsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => OtherToolsPage()),
+    );
+  }
+
+  void goToAboutPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AboutAppPage()),
     );
   }
 
@@ -86,7 +102,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           ),
                           title: 'Ostala orodja',
                           subtitle: "Orodja za šolo",
-                          onTap: (() {}),
+                          onTap: goToOtherToolsPage,
                         )
                       : loadingItem(user.school.schoolColor),
                   StoreConnector<AppState, AppTheme>(
@@ -125,7 +141,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                     ),
                     title: 'O aplikaciji',
                     subtitle: "Podatki o aplikaciji",
-                    onTap: () {},
+                    onTap: goToAboutPage,
                   ),
                 ],
               ),
