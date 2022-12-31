@@ -7,6 +7,7 @@ import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/global/global.dart' as global;
 
+import '../api/appTheme.dart';
 import '../pages/home.dart';
 
 class PageManager extends StatefulWidget {
@@ -21,6 +22,7 @@ class _PageManagerState extends State<PageManager> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadToken();
+      loadAppTheme();
     });
   }
 
@@ -39,6 +41,13 @@ class _PageManagerState extends State<PageManager> {
       user.loadingFromWeb = false;
       StoreProvider.of<AppState>(context).dispatch(user);
     }
+  }
+
+  void loadAppTheme() async {
+    final AppTheme appTheme =
+        StoreProvider.of<AppState>(context).state.appTheme;
+    await appTheme.load();
+    StoreProvider.of<AppState>(context).dispatch(appTheme);
   }
 
   Future<void> loadFromCache() async {

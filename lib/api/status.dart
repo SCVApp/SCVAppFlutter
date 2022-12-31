@@ -31,7 +31,6 @@ class Status {
     final response = await http.get(
         Uri.parse(global.apiUrl + "/user/get/status"),
         headers: {"Authorization": global.token.accessToken});
-    print(response.statusCode);
     if (response.statusCode == 200) {
       this.fromJSON(jsonDecode(response.body));
     } else {

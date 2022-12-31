@@ -27,7 +27,6 @@ class School {
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(global.apiUrl + "/user/school"),
         headers: {"Authorization": global.token.accessToken});
-    print(response.statusCode);
     if (response.statusCode == 200) {
       this.fromJSON(jsonDecode(response.body));
       this.saveToCache();

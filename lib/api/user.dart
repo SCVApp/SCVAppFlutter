@@ -43,7 +43,6 @@ class User {
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(global.apiUrl + "/user/get"),
         headers: {"Authorization": global.token.accessToken});
-    print(response.statusCode);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       this.fromJSON(json);

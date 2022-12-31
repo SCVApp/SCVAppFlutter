@@ -2,10 +2,12 @@ import 'dart:math';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
 import 'package:scv_app/components/nastavitve/settingsUserCard.dart';
+import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +22,13 @@ class NastavitvePage extends StatefulWidget {
 class _NastavitvePageState extends State<NastavitvePage> {
   void odjava() {
     logOutPopup(context);
+  }
+
+  void goToAppAppearance() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AppAppearance()),
+    );
   }
 
   @override
@@ -71,16 +80,21 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           onTap: (() {}),
                         )
                       : loadingItem(user.school.schoolColor),
-                  SettingsItem(
-                    icons: Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
-                    iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).hintColor,
-                      withBackground: true,
-                      backgroundColor: HexColor.fromHex("#EE5BA0"),
-                    ),
-                    title: 'Videz aplikacije',
-                    onTap: () {},
-                  ),
+                  StoreConnector<AppState, AppTheme>(
+                      converter: (store) => store.state.appTheme,
+                      builder: (context, appTheme) => SettingsItem(
+                            icons: Get.isDarkMode
+                                ? Icons.dark_mode
+                                : Icons.light_mode,
+                            iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: HexColor.fromHex("#EE5BA0"),
+                            ),
+                            title: 'Videz aplikacije',
+                            subtitle: appTheme.displayName() ?? "",
+                            onTap: goToAppAppearance,
+                          )),
                   SettingsItem(
                     icons: Icons.fingerprint,
                     iconStyle: IconStyle(
