@@ -29,12 +29,18 @@ class _BiometicPageState extends State<BiometicPage> {
   void handleChangeBiometricUnlock(bool value) async {
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
-    if (value == true) {
-      await biometric.turnOnBiometric();
-    } else {
-      await biometric.turnOffBiometric();
+    if (await biometric.authenticate(context, actions: [
+          TextButton(
+              child: const Text('Odpri nastavitve',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  )),
+              onPressed: () => Navigator.pop(context))
+        ]) ==
+        true) {
+      await biometric.setBiometric(value);
+      StoreProvider.of<AppState>(context).dispatch(biometric);
     }
-    StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
   @override

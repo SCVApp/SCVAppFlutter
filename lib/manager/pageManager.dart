@@ -5,6 +5,7 @@ import 'package:scv_app/api/user.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
 import 'package:scv_app/pages/loading.dart';
+import 'package:scv_app/pages/lockPage.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/global/global.dart' as global;
 
@@ -16,16 +17,22 @@ class PageManager extends StatefulWidget {
   _PageManagerState createState() => _PageManagerState();
 }
 
-class _PageManagerState extends State<PageManager> {
+class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadToken();
       loadAppTheme();
       loadBiometric();
     });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void loadToken() async {
@@ -45,6 +52,15 @@ class _PageManagerState extends State<PageManager> {
     }
   }
 
+  Future<void> loadFromCache() async {
+    final User user = StoreProvider.of<AppState>(context).state.user;
+    await Future.wait([
+      user.loadFromCache(),
+      user.school.loadFromCache(),
+    ]);
+    StoreProvider.of<AppState>(context).dispatch(user);
+  }
+
   void loadAppTheme() async {
     final AppTheme appTheme =
         StoreProvider.of<AppState>(context).state.appTheme;
@@ -56,16 +72,30 @@ class _PageManagerState extends State<PageManager> {
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
     await biometric.load();
+    biometric.isPaused = false;
+    biometric.showLockScreen();
+    await biometric.save();
     StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
-  Future<void> loadFromCache() async {
-    final User user = StoreProvider.of<AppState>(context).state.user;
-    await Future.wait([
-      user.loadFromCache(),
-      user.school.loadFromCache(),
-    ]);
-    StoreProvider.of<AppState>(context).dispatch(user);
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      final Biometric biometric =
+          StoreProvider.of<AppState>(context).state.biometric;
+      await biometric.load();
+      if (biometric.isPaused == true) {
+        biometric.showLockScreen(fromBackground: true);
+        biometric.isPaused = false;
+        await biometric.save();
+      }
+      StoreProvider.of<AppState>(context).dispatch(biometric);
+    } else if (state == AppLifecycleState.paused) {
+      final Biometric biometric =
+          StoreProvider.of<AppState>(context).state.biometric;
+      await biometric.updateLastActivity(isPaused: true);
+      StoreProvider.of<AppState>(context).dispatch(biometric);
+    }
   }
 
   @override
@@ -76,10 +106,19 @@ class _PageManagerState extends State<PageManager> {
         return user.loading
             ? LoadingPage()
             : user.loggedIn
-                ? HomePage()
+                ? mainPage()
                 : user.logingIn
                     ? LoginPage()
                     : LoginIntro();
+      },
+    );
+  }
+
+  Widget mainPage() {
+    return StoreConnector<AppState, Biometric>(
+      converter: (store) => store.state.biometric,
+      builder: (context, biometric) {
+        return biometric.locked ? LockPage() : HomePage();
       },
     );
   }

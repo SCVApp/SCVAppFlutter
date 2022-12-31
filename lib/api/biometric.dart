@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:scv_app/components/nastavitve/biomatricPage/biometricAlert.dart';
 import 'package:scv_app/global/global.dart' as global;
 
 class Biometric {
@@ -30,6 +33,10 @@ class Biometric {
 
   int autoLockMode = 0;
 
+  bool isPaused = false;
+
+  static final LocalAuthentication localAuthentication = LocalAuthentication();
+
   Biometic() {
     this.locked = false;
     this.biometric = false;
@@ -40,6 +47,7 @@ class Biometric {
     this.biometric = json['biometric'];
     this.autoLockMode = json['autoLockMode'];
     this.lastActivity = DateTime.parse(json['lastActivity']);
+    this.isPaused = json['isPaused'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +55,7 @@ class Biometric {
       'lastActivity': this.lastActivity.toString(),
       'biometric': this.biometric,
       'autoLockMode': this.autoLockMode,
+      'isPaused': this.isPaused
     };
   }
 
@@ -70,8 +79,9 @@ class Biometric {
     await storage.delete(key: biometricKey);
   }
 
-  Future<void> updateLastActivity() async {
+  Future<void> updateLastActivity({bool isPaused = false}) async {
     this.lastActivity = DateTime.now();
+    this.isPaused = isPaused;
     await this.save();
   }
 
@@ -91,13 +101,8 @@ class Biometric {
     }
   }
 
-  Future<void> turnOffBiometric() async {
-    this.biometric = false;
-    await this.save();
-  }
-
-  Future<void> turnOnBiometric() async {
-    this.biometric = true;
+  Future<void> setBiometric(bool value) async {
+    this.biometric = value;
     await this.save();
   }
 
@@ -107,10 +112,33 @@ class Biometric {
   }
 
   String displayName() {
-    if(biometric == true) {
+    if (biometric == true) {
       return "Vklopljeno";
     } else {
       return "Izklopljeno";
+    }
+  }
+
+  Future<bool> authenticate(BuildContext context,
+      {List<Widget> actions}) async {
+    bool authenticated = false;
+    try {
+      authenticated = await localAuthentication.authenticate(
+          localizedReason: "Prijavite se z biometrično varnostjo",
+          options:
+              AuthenticationOptions(stickyAuth: true, useErrorDialogs: true));
+    } catch (e) {
+      if (e.code == "NotAvailable" &&
+          e.message == "Required security features not enabled") {
+        await biometricAlert(context, actions: actions);
+      }
+    }
+    return authenticated;
+  }
+
+  Future<void> unlock(BuildContext context, {List<Widget> actions}) async {
+    if (await this.authenticate(context, actions: actions) == true) {
+      this.locked = false;
     }
   }
 }
