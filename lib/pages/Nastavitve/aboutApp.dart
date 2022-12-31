@@ -65,7 +65,7 @@ class _AboutAppPage extends State<AboutAppPage> {
                   child: Container(
                       width: 200,
                       height: 150,
-                      child: Image.asset('assets/ikona_appa.png')),
+                      child: Image.asset('assets/images/ikona_appa.png')),
                 ),
               ),
               Padding(

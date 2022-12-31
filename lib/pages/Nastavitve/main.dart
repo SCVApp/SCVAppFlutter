@@ -9,6 +9,7 @@ import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
 import 'package:scv_app/components/nastavitve/settingsUserCard.dart';
 import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
+import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:get/get.dart';
 
@@ -56,6 +57,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
     );
   }
 
+  void goToChangeStatusPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChangeStatusPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, User>(
@@ -88,7 +96,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#A6CE39"),
                           ),
                           icons: Icons.change_circle,
-                          onTap: () {},
+                          onTap: goToChangeStatusPage,
                           title: "Status",
                           subtitle: "Spremeni status",
                         )

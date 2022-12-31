@@ -37,4 +37,15 @@ class Status {
       throw Exception('Failed to load status');
     }
   }
+
+  Future<void> changeStatus(String statusId) async {
+    final response = await http.get(
+        Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),
+        headers: {"Authorization": global.token.accessToken});
+    if (response.statusCode == 200) {
+      await this.fetchData();
+    } else {
+      throw Exception('Failed to change status');
+    }
+  }
 }
