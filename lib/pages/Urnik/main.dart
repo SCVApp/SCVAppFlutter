@@ -6,11 +6,21 @@ class UrnikPage extends StatefulWidget {
 }
 
 class _UrnikPageState extends State<UrnikPage> {
+  final double gap = 5;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Urnik'),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(bottom: 5)),
+            Padding(
+                child: Text("Trenutno na urniku"),
+                padding:
+                    EdgeInsets.only(bottom: this.gap, left: 15, right: 15)),
+          ],
+        ),
       ),
     );
   }
