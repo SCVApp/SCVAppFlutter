@@ -29,11 +29,11 @@ class Urnik {
     }
   }
 
-  Future<void> refresh() async {
-    await this.load();
+  Future<void> refresh({bool forceFetch = false}) async {
     if (this
-        .nazadnjePosodobljeno
-        .isBefore(DateTime.now().subtract(Duration(hours: 1)))) {
+            .nazadnjePosodobljeno
+            .isBefore(DateTime.now().subtract(Duration(hours: 1))) ||
+        forceFetch) {
       await this.fetchFromWeb();
     }
   }
@@ -47,6 +47,7 @@ class Urnik {
       obdobjaUr.fromJSON(obdobje);
       this.obdobjaUr.add(obdobjaUr);
     }
+    this.setTypeForObdobjaUr();
   }
 
   Map<String, dynamic> toJson() => {
