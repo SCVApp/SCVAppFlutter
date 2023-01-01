@@ -1,5 +1,7 @@
 import 'package:scv_app/api/urnik/ura.dart';
 
+enum ObdobjaUrType { trenutno, naslednje, normalno }
+
 class ObdobjaUr {
   int id = 0;
   String ime = "";
@@ -7,6 +9,7 @@ class ObdobjaUr {
   DateTime zacetek = DateTime.now();
   DateTime konec = DateTime.now();
   List<Ura> ure = [];
+  ObdobjaUrType type = ObdobjaUrType.normalno;
 
   void fromJSON(Map<String, dynamic> json) {
     this.id = json["id"];
@@ -39,12 +42,10 @@ class ObdobjaUr {
     return DateTime(dateTime.year, dateTime.month, dateTime.day, hour, minute);
   }
 
-  Map<String, dynamic> toJSON() {
-    return {
-      "id": this.id,
-      "ime": this.ime,
-      "trajanje": this.trajanje,
-      "ura": this.ure,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "id": this.id,
+        "ime": this.ime,
+        "trajanje": this.trajanje,
+        "ura": this.ure,
+      };
 }

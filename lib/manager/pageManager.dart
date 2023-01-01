@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
@@ -43,6 +44,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
+      await refreshUrnik();
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;
@@ -78,6 +80,13 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
+  Future<void> refreshUrnik() async {
+    final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
+    await urnik.refresh();
+    // await urnik.delete();
+    StoreProvider.of<AppState>(context).dispatch(urnik);
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
@@ -90,6 +99,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         await biometric.save();
       }
       StoreProvider.of<AppState>(context).dispatch(biometric);
+      await global.token.refresh();
     } else if (state == AppLifecycleState.paused) {
       final Biometric biometric =
           StoreProvider.of<AppState>(context).state.biometric;

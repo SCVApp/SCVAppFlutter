@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
+import 'package:intl/intl.dart';
 
 class Token {
   String accessToken;
@@ -59,14 +61,20 @@ class Token {
 
   Future<void> refresh() async {
     try {
-      final respons = await http.post(
-          Uri.parse("${global.apiUrl}/auth/refreshToken/"),
-          body: this.toJSON());
-      if (respons.statusCode == 200) {
-        this.fromJSON(jsonDecode(respons.body));
-        await this.saveToken();
-      } else {
-        throw Exception('Failed to refresh token');
+      DateTime expires = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
+          .parse(this.expiresOn)
+          .toUtc()
+          .subtract(Duration(minutes: 3));
+      if (expires.isBefore(DateTime.now().toUtc())) {
+        final respons = await http.post(
+            Uri.parse("${global.apiUrl}/auth/refreshToken/"),
+            body: this.toJSON());
+        if (respons.statusCode == 200) {
+          this.fromJSON(jsonDecode(respons.body));
+          await this.saveToken();
+        } else {
+          throw Exception('Failed to refresh token');
+        }
       }
     } catch (e) {}
   }
