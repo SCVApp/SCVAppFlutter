@@ -153,6 +153,10 @@ class Urnik {
         );
     if (naslednjeObdobje != null) {
       Duration duration = naslednjeObdobje.zacetek.difference(now);
+      if (duration.inSeconds < 0) {
+        this.doNaslednjeUre = "";
+        return;
+      }
       this.doNaslednjeUre =
           "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
     } else {
