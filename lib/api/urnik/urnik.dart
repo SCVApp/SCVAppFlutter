@@ -45,10 +45,25 @@ class Urnik {
       this.nazadnjePosodobljeno = DateTime.parse(json["nazadnjePosodobljeno"]);
     }
     this.obdobjaUr.clear();
+    int firstEmptyElementInTheEnd = -1;
+    int index = 0;
     for (var obdobje in json["urnik"]) {
       ObdobjaUr obdobjaUr = new ObdobjaUr();
       obdobjaUr.fromJSON(obdobje);
       this.obdobjaUr.add(obdobjaUr);
+      if (obdobjaUr.obdobjeJePrazno()) {
+        if (firstEmptyElementInTheEnd == -1) {
+          firstEmptyElementInTheEnd = index;
+        }
+      } else {
+        firstEmptyElementInTheEnd = -1;
+      }
+      index++;
+    }
+    if (firstEmptyElementInTheEnd != -1) {
+      this
+          .obdobjaUr
+          .removeRange(firstEmptyElementInTheEnd, this.obdobjaUr.length);
     }
     this.setTypeForObdobjaUr();
   }
@@ -150,7 +165,9 @@ class Urnik {
         .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
     if (naslednjeObdobje == null) return "";
     if (naslednjeObdobje.obdobjeJePrazno()) {
-      for (int i = this.obdobjaUr.indexOf(naslednjeObdobje); i < this.obdobjaUr.length; i++) {
+      for (int i = this.obdobjaUr.indexOf(naslednjeObdobje);
+          i < this.obdobjaUr.length;
+          i++) {
         if (!this.obdobjaUr[i].obdobjeJePrazno()) {
           naslednjeObdobje = this.obdobjaUr[i];
           break;
