@@ -13,15 +13,32 @@ class School {
   String name;
   String razred;
   Color schoolColor;
+  Color schoolSecondaryColor;
+
+  static final Map<String, Color> tabelaZaSvetlejseBarve = {
+    "ERS": HexColor.fromHex("#85C9E9"),
+    "GIM": HexColor.fromHex("#FDE792"),
+    "SSD": HexColor.fromHex("#F7B4D2"),
+    "SSGO": HexColor.fromHex("#D4E8A6"),
+  };
 
   School() {
     this.color = "#0094d9";
     this.schoolColor = HexColor.fromHex("#0094d9");
+    this.schoolSecondaryColor = HexColor.fromHex("#0094d9");
     this.id = "";
     this.urnikUrl = "";
     this.schoolUrl = "";
     this.name = "";
     this.razred = "";
+  }
+
+  void setSecondaryColor() {
+    if (tabelaZaSvetlejseBarve.containsKey(this.id)) {
+      this.schoolSecondaryColor = tabelaZaSvetlejseBarve[this.id];
+    } else {
+      this.schoolSecondaryColor = this.schoolColor;
+    }
   }
 
   Future<void> fetchData() async {
@@ -46,6 +63,7 @@ class School {
       this.color = "#8253D7";
     }
     this.schoolColor = HexColor.fromHex(this.color);
+    this.setSecondaryColor();
   }
 
   Map<String, dynamic> toJSON() {
