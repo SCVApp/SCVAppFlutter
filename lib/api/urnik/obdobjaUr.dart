@@ -48,4 +48,13 @@ class ObdobjaUr {
         "trajanje": this.trajanje,
         "ura": this.ure,
       };
+  
+  bool obdobjeJePrazno(){
+    for(Ura ura in this.ure){
+      if(ura.uraJePrazna() == false){
+        return false;
+      }
+    }
+    return true;
+  }
 }

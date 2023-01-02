@@ -143,4 +143,24 @@ class Urnik {
       this.doNaslednjeUre = "";
     }
   }
+
+  String zacetekNaslednjegaObdobja() {
+    ObdobjaUr naslednjeObdobje = this
+        .obdobjaUr
+        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
+    if (naslednjeObdobje == null) return "";
+    if (naslednjeObdobje.obdobjeJePrazno()) {
+      for (int i = this.obdobjaUr.indexOf(naslednjeObdobje); i < this.obdobjaUr.length; i++) {
+        if (!this.obdobjaUr[i].obdobjeJePrazno()) {
+          naslednjeObdobje = this.obdobjaUr[i];
+          break;
+        }
+      }
+    }
+    String hours = naslednjeObdobje.zacetek.hour.toString();
+    if (hours.length == 1) hours = "0$hours";
+    String minutes = naslednjeObdobje.zacetek.minute.toString();
+    if (minutes.length == 1) minutes = "0$minutes";
+    return "$hours:$minutes";
+  }
 }

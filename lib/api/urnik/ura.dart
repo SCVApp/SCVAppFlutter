@@ -58,4 +58,14 @@ class Ura {
     shortenedName += teacherNameSplit[teacherNameSplit.length - 1];
     return shortenedName;
   }
+
+  bool uraJePrazna() {
+    return this.krajsava == "" &&
+        this.ucitelj == "" &&
+        this.ucilnica == "" &&
+        this.dogodek == "" &&
+        !this.nadomescanje &&
+        !this.zaposlitev &&
+        !this.odpadlo;
+  }
 }

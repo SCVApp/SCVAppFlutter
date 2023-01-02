@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/urnik/ura.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/extension/hexColor.dart';
+import 'package:scv_app/store/AppState.dart';
 
 class UrnikStyle {
   static final viewStyleBig = ViewSizes(90, 24, 15, 30, Size.square(9.0));
@@ -57,6 +59,29 @@ class UrnikStyle {
         return Colors.black;
     }
     return Theme.of(context).primaryColor;
+  }
+
+  static Widget mainTitleForBox() {
+    return StoreConnector<AppState, Urnik>(
+      converter: (store) => store.state.urnik,
+      builder: (context, urnik) {
+        String text = "";
+        if (urnik.poukType == PoukType.konecPouka) {
+          text = "Konec pouka";
+        } else if (urnik.poukType == PoukType.odmor) {
+          text = "Odmor do ${urnik.zacetekNaslednjegaObdobja()}";
+        } else if (urnik.poukType == PoukType.zacetekPouka) {
+          text = "Začetek pouka ob ${urnik.zacetekNaslednjegaObdobja()}";
+        }
+        return Text(
+          text,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      },
+    );
   }
 }
 

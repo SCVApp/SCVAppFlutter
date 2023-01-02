@@ -10,13 +10,6 @@ Widget viewForUra(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: UrnikStyle.colorForUraViewBG(ura.type, context),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor,
-            blurRadius: 3,
-            offset: Offset(4, 4), // Shadow position
-          ),
-        ],
       ),
       child: Stack(children: [
         Row(

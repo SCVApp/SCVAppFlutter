@@ -13,7 +13,7 @@ Widget viewForUre(ObdobjaUr obdobjeUr, Function(int) callback,
       for (Ura ura in obdobjeUr.ure)
         Padding(
             child: viewForUra(obdobjeUr, ura, viewSizes, context),
-            padding: EdgeInsets.symmetric(horizontal: 10)),
+            padding: EdgeInsets.symmetric(horizontal: 25)),
     ],
   );
 }

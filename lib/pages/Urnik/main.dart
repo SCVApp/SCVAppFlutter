@@ -6,6 +6,7 @@ import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/urnik/mainTitle.dart';
 import 'package:scv_app/components/urnik/seeOtherDays.dart';
+import 'package:scv_app/components/urnik/titleBox.dart';
 import 'package:scv_app/components/urnik/viewForObdobjaUr.dart';
 import 'package:scv_app/components/urnik/viewForObdobjeUre.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
@@ -55,7 +56,7 @@ class _UrnikPageState extends State<UrnikPage> {
                   Padding(
                       child: mainTitle(),
                       padding: EdgeInsets.only(
-                          bottom: this.gap, left: 15, right: 15)),
+                          bottom: this.gap, left: 25, right: 25)),
                   urnik.poukType == PoukType.pouk && urnik.obdobjaUr.length > 0
                       ? ViewForObdobjeUre(
                           viewSizes: UrnikStyle.viewStyleBig,
@@ -63,8 +64,12 @@ class _UrnikPageState extends State<UrnikPage> {
                                   obdobjeUr.type == ObdobjaUrType.trenutno) ??
                               null,
                         )
-                      : SizedBox(),
-                  Padding(padding: EdgeInsets.only(bottom: this.gap)),
+                      : Padding(
+                          padding: EdgeInsets.only(left: 25, right: 25),
+                          child: titleBox()),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          bottom: this.gap)),
                   seeOtherDays(gap, context),
                   Padding(
                     child: Align(
