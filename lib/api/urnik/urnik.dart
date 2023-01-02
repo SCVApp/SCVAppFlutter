@@ -5,14 +5,16 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-enum PoukType { zacetekPouka, konecPouka, odmor, pouk }
+enum PoukType { zacetekPouka, konecPouka, odmor, pouk, niPouka }
 
 class Urnik {
   List<ObdobjaUr> obdobjaUr = [];
-  PoukType poukType = PoukType.pouk;
+  PoukType poukType = PoukType.niPouka;
   DateTime nazadnjePosodobljeno = DateTime.fromMillisecondsSinceEpoch(0);
 
   static final String urnikKey = "SCV-App-Urnik";
+
+  String doNaslednjeUre = "";
 
   Future<void> fetchFromWeb() async {
     try {
@@ -42,6 +44,7 @@ class Urnik {
     if (json["nazadnjePosodobljeno"] != null) {
       this.nazadnjePosodobljeno = DateTime.parse(json["nazadnjePosodobljeno"]);
     }
+    this.obdobjaUr.clear();
     for (var obdobje in json["urnik"]) {
       ObdobjaUr obdobjaUr = new ObdobjaUr();
       obdobjaUr.fromJSON(obdobje);
@@ -86,12 +89,13 @@ class Urnik {
     final DateTime now = DateTime.now();
     int indexZaTreutno = -1;
     int indexZaNaslednje = -1;
-    this.poukType = PoukType.pouk;
+    this.poukType = PoukType.niPouka;
     for (int i = 0; i < this.obdobjaUr.length; i++) {
       ObdobjaUr obdobje = this.obdobjaUr[i];
       if (obdobje.zacetek.isBefore(now) && obdobje.konec.isAfter(now)) {
         obdobje.type = ObdobjaUrType.trenutno;
         indexZaTreutno = i;
+        this.poukType = PoukType.pouk;
       } else {
         obdobje.type = ObdobjaUrType.normalno;
       }
@@ -121,6 +125,22 @@ class Urnik {
 
     if (indexZaTreutno == -1 && indexZaNaslednje == -1) {
       this.poukType = PoukType.konecPouka;
+    }
+
+    minutesAndSecundsToNextObdobjeUr();
+  }
+
+  void minutesAndSecundsToNextObdobjeUr() {
+    DateTime now = DateTime.now();
+    ObdobjaUr naslednjeObdobje = this
+        .obdobjaUr
+        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
+    if (naslednjeObdobje != null) {
+      Duration duration = naslednjeObdobje.zacetek.difference(now);
+      this.doNaslednjeUre =
+          "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
+    } else {
+      this.doNaslednjeUre = "";
     }
   }
 }

@@ -18,7 +18,7 @@ Widget mainTitle() {
           Padding(padding: EdgeInsets.only(left: 5)),
           urnik.poukType != PoukType.konecPouka
               ? Text(
-                  "${UrnikStyle.mainTitle(urnik.poukType)} do ....",
+                  "(${urnik.doNaslednjeUre} do ${UrnikStyle.mainTitle(urnik.poukType)}):",
                 )
               : SizedBox(),
         ],

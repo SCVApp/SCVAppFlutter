@@ -44,4 +44,18 @@ class Ura {
         "zaposlitev": this.zaposlitev,
         "odpadlo": this.odpadlo,
       };
+
+  String shortenTeacherName() {
+    if (this.ucitelj == null || this.ucitelj == "") return "";
+    List<String> teacherNameSplit = this.ucitelj.split(" ");
+    if (teacherNameSplit.length <= 0) return ", ${this.ucitelj}";
+    String shortenedName = ", ";
+    for (int i = 0; i < teacherNameSplit.length - 1; i++) {
+      if (teacherNameSplit[i].length > 0) {
+        shortenedName += teacherNameSplit[i][0] + ". ";
+      }
+    }
+    shortenedName += teacherNameSplit[teacherNameSplit.length - 1];
+    return shortenedName;
+  }
 }
