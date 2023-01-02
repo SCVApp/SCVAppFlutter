@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
 
 import 'package:scv_app/pages/Login/intro.dart';
@@ -15,8 +16,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool isLoginIn = false;
 
   void loginUser() async {
@@ -48,15 +47,14 @@ class _LoginPage extends State<LoginPage> {
       await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
     } catch (e) {
-      print(e);
-      return null;
+      ErrorInLogin();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    loginUser();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loginUser());
   }
 
   void reTryLogin() {
@@ -65,9 +63,9 @@ class _LoginPage extends State<LoginPage> {
   }
 
   void goToOnBoardPage() {
-    Navigator.pop(context);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => LoginIntro()));
+    User user = StoreProvider.of<AppState>(context).state.user;
+    user.logingIn = false;
+    StoreProvider.of<AppState>(context).dispatch(user);
   }
 
   Future<void> ErrorInLogin() async {
@@ -96,7 +94,10 @@ class _LoginPage extends State<LoginPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     )),
-                onPressed: goToOnBoardPage),
+                onPressed: (() {
+                  Navigator.pop(context);
+                  goToOnBoardPage();
+                })),
           ],
         );
       },
@@ -117,10 +118,15 @@ class _LoginPage extends State<LoginPage> {
               width: MediaQuery.of(context).size.width * 0.5,
             ),
             Padding(padding: EdgeInsets.only(bottom: 20)),
-            Text("Prosim počakaj, prijava poteka...",
-                style: TextStyle(fontSize: 17)),
+            isLoginIn
+                ? Text("Prosim počakaj, prijava poteka...",
+                    style: TextStyle(fontSize: 17))
+                : Text("Napaka pri prijavi. Prosim, poskusi znova",
+                    style: TextStyle(fontSize: 17)),
             Padding(padding: EdgeInsets.only(bottom: 20)),
-            isLoginIn ? CircularProgressIndicator() : SizedBox(),
+            TextButton(onPressed: goToOnBoardPage, child: Text("Prekliči")),
+            Padding(padding: EdgeInsets.only(bottom: 20)),
+            isLoginIn == true ? loadingItem(Colors.blue) : SizedBox(),
           ]),
     )));
   }

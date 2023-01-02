@@ -60,16 +60,16 @@ class _UrnikPageState extends State<UrnikPage> {
                   urnik.poukType == PoukType.pouk && urnik.obdobjaUr.length > 0
                       ? ViewForObdobjeUre(
                           viewSizes: UrnikStyle.viewStyleBig,
-                          obdobjeUr: urnik.obdobjaUr.firstWhere((obdobjeUr) =>
-                                  obdobjeUr.type == ObdobjaUrType.trenutno) ??
+                          obdobjeUr: urnik.obdobjaUr.firstWhere(
+                                  (obdobjeUr) =>
+                                      obdobjeUr.type == ObdobjaUrType.trenutno,
+                                  orElse: () => null) ??
                               null,
                         )
                       : Padding(
                           padding: EdgeInsets.only(left: 25, right: 25),
                           child: titleBox()),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: this.gap)),
+                  Padding(padding: EdgeInsets.only(bottom: this.gap)),
                   seeOtherDays(gap, context),
                   Padding(
                     child: Align(

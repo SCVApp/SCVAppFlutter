@@ -27,7 +27,7 @@ class Urnik {
         await this.save();
       }
     } catch (e) {
-      print("Error: $e");
+      print("Failed to load urnik from web: $e");
     }
   }
 
@@ -147,9 +147,10 @@ class Urnik {
 
   void minutesAndSecundsToNextObdobjeUr() {
     DateTime now = DateTime.now();
-    ObdobjaUr naslednjeObdobje = this
-        .obdobjaUr
-        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
+    ObdobjaUr naslednjeObdobje = this.obdobjaUr.firstWhere(
+          (element) => element.type == ObdobjaUrType.naslednje,
+          orElse: () => null,
+        );
     if (naslednjeObdobje != null) {
       Duration duration = naslednjeObdobje.zacetek.difference(now);
       this.doNaslednjeUre =
@@ -160,9 +161,10 @@ class Urnik {
   }
 
   String zacetekNaslednjegaObdobja() {
-    ObdobjaUr naslednjeObdobje = this
-        .obdobjaUr
-        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
+    ObdobjaUr naslednjeObdobje = this.obdobjaUr.firstWhere(
+          (element) => element.type == ObdobjaUrType.naslednje,
+          orElse: () => null,
+        );
     if (naslednjeObdobje == null) return "";
     if (naslednjeObdobje.obdobjeJePrazno()) {
       for (int i = this.obdobjaUr.indexOf(naslednjeObdobje);

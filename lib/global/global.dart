@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 
 final Token token = new Token();
 
-final String apiUrl = "https://backend.app.scv.si";
+final String apiUrl = "http://10.0.2.2:5050";
+// final String apiUrl = "https://backend.app.scv.si";
 
 final String appVersion = "1.0.0";
 
