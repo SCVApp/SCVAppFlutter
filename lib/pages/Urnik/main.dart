@@ -82,7 +82,9 @@ class _UrnikPageState extends State<UrnikPage> {
                     padding:
                         EdgeInsets.only(bottom: this.gap, left: 15, right: 15),
                   ),
-                  viewForObdobjaUr(this.gap),
+                  ViewForObdobjaUr(
+                    gap: this.gap,
+                  ),
                 ],
               )),
             ),
