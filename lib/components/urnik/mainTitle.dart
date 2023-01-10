@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
 import 'package:scv_app/store/AppState.dart';
@@ -18,7 +19,11 @@ Widget mainTitle() {
           Padding(padding: EdgeInsets.only(left: 5)),
           urnik.poukType != PoukType.konecPouka
               ? Text(
-                  "(${urnik.doNaslednjeUre} do ${UrnikStyle.mainTitle(urnik.poukType)}):",
+                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhere(
+                        (obdobjeUr) =>
+                            obdobjeUr.type == ObdobjaUrType.naslednje,
+                        orElse: () => null,
+                      ) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
                 )
               : SizedBox(),
         ],

@@ -57,6 +57,7 @@ Widget viewForUra(
                                             : TextDecoration.none),
                                     maxLines: 1,
                                     softWrap: false,
+                                    textAlign: TextAlign.left,
                                   )),
                               SizedBox(
                                   width:

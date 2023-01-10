@@ -73,6 +73,7 @@ class UrnikStyle {
         } else if (urnik.poukType == PoukType.zacetekPouka) {
           text = "Začetek pouka ob ${urnik.zacetekNaslednjegaObdobja()}";
         }
+
         return Text(
           text,
           style: TextStyle(

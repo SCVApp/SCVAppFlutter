@@ -110,7 +110,11 @@ class Urnik {
       if (obdobje.zacetek.isBefore(now) && obdobje.konec.isAfter(now)) {
         obdobje.type = ObdobjaUrType.trenutno;
         indexZaTreutno = i;
-        this.poukType = PoukType.pouk;
+        if (obdobje.obdobjeJePrazno()) {
+          this.poukType = PoukType.odmor;
+        } else {
+          this.poukType = PoukType.pouk;
+        }
       } else {
         obdobje.type = ObdobjaUrType.normalno;
       }
@@ -160,7 +164,21 @@ class Urnik {
       this.doNaslednjeUre =
           "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
     } else {
-      this.doNaslednjeUre = "";
+      ObdobjaUr trenutnoObdobje = this.obdobjaUr.firstWhere(
+            (element) => element.type == ObdobjaUrType.trenutno,
+            orElse: () => null,
+          );
+      if (trenutnoObdobje != null) {
+        Duration duration = trenutnoObdobje.konec.difference(now);
+        if (duration.inSeconds < 0) {
+          this.doNaslednjeUre = "";
+          return;
+        }
+        this.doNaslednjeUre =
+            "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
+      } else {
+        this.doNaslednjeUre = "";
+      }
     }
   }
 

@@ -10,20 +10,17 @@ Widget titleBox() {
     converter: (store) => store.state.user,
     builder: (context, user) {
       return Container(
-        height: UrnikStyle.viewStyleBig.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: user.school.schoolColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            UrnikStyle.mainTitleForBox()
-          ],
-        ),
-      );
+          height: UrnikStyle.viewStyleBig.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: user.school.schoolColor,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [UrnikStyle.mainTitleForBox()],
+          ));
     },
   );
 }
