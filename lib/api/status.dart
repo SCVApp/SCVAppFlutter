@@ -39,16 +39,17 @@ class Status {
   }
 
   Future<void> changeStatus(String statusId) async {
-    try{
-    final response = await http.get(
-        Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),
-        headers: {"Authorization": global.token.accessToken});
-    if (response.statusCode == 200) {
-      await this.fetchData();
-    } else {
-      throw Exception('Failed to change status');
-    }
-    }catch(e){
+    try {
+      final response = await http.get(
+          Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),
+          headers: {"Authorization": global.token.accessToken});
+      if (response.statusCode == 200) {
+        await this.fetchData();
+        global.showGlobalAlert(text: "Status uspešno spremenjen");
+      } else {
+        throw Exception('Failed to change status');
+      }
+    } catch (e) {
       global.showGlobalAlert(text: "Napaka pri spremembi statusa");
     }
   }

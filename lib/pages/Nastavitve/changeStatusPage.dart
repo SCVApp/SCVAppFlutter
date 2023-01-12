@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/backButton.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/changeStatusPage/statusItem.dart';
@@ -75,44 +76,47 @@ class _ChangeStatusPageState extends State<ChangeStatusPage> {
       converter: (store) => store.state.user,
       builder: (context, user) {
         return Scaffold(
-            body: SafeArea(
-                child: Column(children: [
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          backButton(context),
-          isLoading
-              ? Text("")
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ProfilePictureWithStatus(context),
-                  ],
-                ),
-          Padding(padding: EdgeInsets.only(top: 10)),
-          isLoading
-              ? Text("")
-              : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40, top: 10),
-                    child: Text(
-                      "Izberi prikazan status:",
-                      style: TextStyle(
-                          fontSize: 22 * MediaQuery.of(context).textScaleFactor,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
+          body: SafeArea(
+              child: Column(children: [
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            backButton(context),
+            isLoading
+                ? Text("")
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ProfilePictureWithStatus(context),
+                    ],
                   ),
-                ]),
-          Padding(padding: EdgeInsets.only(top: 10)),
-          isLoading
-              ? loadingItem(user.school.schoolColor)
-              : Expanded(
-                  child: ListView(
-                  padding: EdgeInsets.only(right: 15, left: 15),
-                  children: [
-                    NastavitveGroup(items: listOfStatus()),
-                  ],
-                )),
-        ])));
+            Padding(padding: EdgeInsets.only(top: 10)),
+            isLoading
+                ? Text("")
+                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40, top: 10),
+                      child: Text(
+                        "Izberi prikazan status:",
+                        style: TextStyle(
+                            fontSize:
+                                22 * MediaQuery.of(context).textScaleFactor,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ]),
+            Padding(padding: EdgeInsets.only(top: 10)),
+            isLoading
+                ? loadingItem(user.school.schoolColor)
+                : Expanded(
+                    child: ListView(
+                    padding: EdgeInsets.only(right: 15, left: 15),
+                    children: [
+                      NastavitveGroup(items: listOfStatus()),
+                    ],
+                  )),
+          ])),
+          bottomSheet: AlertContainer(),
+        );
       },
     );
   }

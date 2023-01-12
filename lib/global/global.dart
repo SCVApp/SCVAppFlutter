@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/alert.dart';
+import 'package:scv_app/api/user.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../api/token.dart';
@@ -23,14 +24,17 @@ Future<void> logOutUser(BuildContext context) async {
   }
   await CookieManager().clearCookies();
   await token.deleteToken();
+  User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
+  user.loggedIn = false;
+  StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
 }
 
-void showGlobalAlert({String text = ""}) {
+void showGlobalAlert({String text = "", Widget action, int duration = 3}) {
   if (globalBuildContext != null) {
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(globalBuildContext).state.globalAlert;
-    if (globalAlert.show(text)) {
-      Future.delayed(Duration(seconds: 3), () {
+    if (globalAlert.show(text, action)) {
+      Future.delayed(Duration(seconds: duration), () {
         globalAlert.hide();
         StoreProvider.of<AppState>(globalBuildContext).dispatch(globalAlert);
       });

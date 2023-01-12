@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
@@ -59,7 +60,7 @@ class Token {
     this.expiresOn = json['expiresOn'];
   }
 
-  Future<void> refresh() async {
+  Future<void> refresh({int depth = 0}) async {
     try {
       DateTime expires = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
           .parse(this.expiresOn)
@@ -77,7 +78,22 @@ class Token {
         }
       }
     } catch (e) {
-      global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
+      if (depth == 0) {
+        global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
+      }
+      if (depth >= 5) {
+        global.showGlobalAlert(
+            text: "Napaka pri osveževanju podatkov",
+            action: TextButton(
+                onPressed: () async {
+                  global.logOutUser(global.globalBuildContext);
+                },
+                child: Text("Odjava")),
+            duration: 10);
+      } else {
+        await Future.delayed(Duration(seconds: 7));
+        await this.refresh(depth: depth + 1);
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ class Urnik {
 
   String doNaslednjeUre = "";
 
-  Future<void> fetchFromWeb() async {
+  Future<void> fetchFromWeb({bool force = false}) async {
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/user/schedule'),
@@ -25,6 +25,7 @@ class Urnik {
         this.fromJSON(jsonDecode(response.body));
         this.nazadnjePosodobljeno = DateTime.now();
         await this.save();
+        global.showGlobalAlert(text: "Urnik uspešno posodobljen");
       }
     } catch (e) {
       global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
@@ -36,7 +37,7 @@ class Urnik {
             .nazadnjePosodobljeno
             .isBefore(DateTime.now().subtract(Duration(hours: 1))) ||
         forceFetch) {
-      await this.fetchFromWeb();
+      await this.fetchFromWeb(force: forceFetch);
     }
   }
 

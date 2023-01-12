@@ -25,6 +25,7 @@ Widget AlertContainer() {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  state.globalAlert.action ?? SizedBox(),
                 ],
               ))
           : SizedBox();
