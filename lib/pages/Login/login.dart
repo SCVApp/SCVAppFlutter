@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
 
@@ -46,6 +47,9 @@ class _LoginPage extends State<LoginPage> {
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
+      final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
+      await urnik.refresh();
+      StoreProvider.of<AppState>(context).dispatch(urnik);
     } catch (e) {
       ErrorInLogin();
     }
