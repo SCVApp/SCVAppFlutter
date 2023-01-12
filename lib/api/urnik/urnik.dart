@@ -25,7 +25,9 @@ class Urnik {
         this.fromJSON(jsonDecode(response.body));
         this.nazadnjePosodobljeno = DateTime.now();
         await this.save();
-        global.showGlobalAlert(text: "Urnik uspešno posodobljen");
+        if (force) {
+          global.showGlobalAlert(text: "Urnik uspešno posodobljen");
+        }
       }
     } catch (e) {
       global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
