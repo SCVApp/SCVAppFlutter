@@ -7,10 +7,12 @@ import 'package:get/get.dart';
 
 final Token token = new Token();
 
+BuildContext globalBuildContext;
+
 // final String apiUrl = "http://10.0.2.2:5050";
 final String apiUrl = "https://backend.app.scv.si";
 
-final String appVersion = "1.0.0";
+final String appVersion = "2.2.1";
 
 Future<void> logOutUser(BuildContext context) async {
   if (MediaQuery.of(context).platformBrightness == Brightness.dark) {

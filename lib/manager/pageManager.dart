@@ -28,6 +28,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       loadBiometric();
     });
     WidgetsBinding.instance.addObserver(this);
+    global.globalBuildContext = context;
   }
 
   @override

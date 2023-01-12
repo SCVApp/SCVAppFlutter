@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../global/global.dart' as global;
 
 import '../../components/backButton.dart';
 
@@ -103,7 +104,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   ? Column(children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
                       Text(
-                        "ŠCVApp, 2022. Vse pravice pridržane.",
+                        "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
                         textAlign: TextAlign.center,
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 20))
@@ -115,7 +116,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           !isListViewBigger
               ? Column(children: [
                   Text(
-                    "ŠCVApp, 2022. Vse pravice pridržane.",
+                    "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 5))
