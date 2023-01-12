@@ -43,7 +43,12 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       await loadFromCache();
       await global.token.refresh();
       final User user = StoreProvider.of<AppState>(context).state.user;
-      await user.fetchAll();
+      try {
+        await user.fetchAll();
+      } catch (e) {
+        global.showGlobalAlert(
+            text: "Prišlo je do napake pri nalaganju podatkov.");
+      }
       StoreProvider.of<AppState>(context).dispatch(user);
       await refreshUrnik();
     } else {
@@ -57,10 +62,15 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
 
   Future<void> loadFromCache() async {
     final User user = StoreProvider.of<AppState>(context).state.user;
-    await Future.wait([
-      user.loadFromCache(),
-      user.school.loadFromCache(),
-    ]);
+    try {
+      await Future.wait([
+        user.loadFromCache(),
+        user.school.loadFromCache(),
+      ]);
+    } catch (e) {
+      global.showGlobalAlert(
+          text: "Prišlo je do napake pri nalaganju podatkov.");
+    }
     StoreProvider.of<AppState>(context).dispatch(user);
   }
 

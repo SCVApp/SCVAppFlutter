@@ -2,6 +2,7 @@ import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/NavBarItem.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/pages/Malice/malicePage.dart';
 import 'package:scv_app/pages/Nastavitve/main.dart';
 import 'package:scv_app/pages/Urnik/main.dart';
@@ -56,6 +57,7 @@ class _HomePageState extends State<HomePage> {
           body: SafeArea(
             child: _children[selectedTab],
           ),
+          bottomSheet: AlertContainer(),
           bottomNavigationBar: FFNavigationBar(
             onSelectTab: onSelectTab,
             selectedIndex: selectedTab,

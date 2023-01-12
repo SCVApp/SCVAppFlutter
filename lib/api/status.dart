@@ -39,6 +39,7 @@ class Status {
   }
 
   Future<void> changeStatus(String statusId) async {
+    try{
     final response = await http.get(
         Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),
         headers: {"Authorization": global.token.accessToken});
@@ -46,6 +47,9 @@ class Status {
       await this.fetchData();
     } else {
       throw Exception('Failed to change status');
+    }
+    }catch(e){
+      global.showGlobalAlert(text: "Napaka pri spremembi statusa");
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/user.dart';
+import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/store/AppState.dart';
 
 Widget ProfilePictureWithStatus(BuildContext context) {
@@ -21,29 +22,33 @@ Widget ProfilePictureWithStatus(BuildContext context) {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(imageSize / 2),
-                    child: Image(
-                      image: user != null
-                          ? user.image
-                          : AssetImage("assets/images/profilePicture.png"),
-                      height: imageSize,
-                    ),
-                  ),
+                  child: !user.loadingFromWeb
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(imageSize / 2),
+                          child: Image(
+                            image: user.image ??
+                                AssetImage(
+                                    "assets/images/profile_placeholder.png"),
+                            height: imageSize,
+                          ),
+                        )
+                      : loadingItem(user.school.schoolColor),
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: user != null
-                        ? Image(
-                            image: user.status.assetImage ??
-                                AssetImage(
-                                    "assets/images/statusIcons/Unknown.png"),
-                            height: imageSize / 3.75,
-                          )
-                        : CircularProgressIndicator(),
-                  ),
+                  child: !user.loadingFromWeb
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: user != null
+                              ? Image(
+                                  image: user.status.assetImage ??
+                                      AssetImage(
+                                          "assets/images/statusIcons/Unknown.png"),
+                                  height: imageSize / 3.75,
+                                )
+                              : CircularProgressIndicator(),
+                        )
+                      : SizedBox(),
                 )
               ],
             ),

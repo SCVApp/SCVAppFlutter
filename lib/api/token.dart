@@ -76,6 +76,8 @@ class Token {
           throw Exception('Failed to refresh token');
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
+    }
   }
 }

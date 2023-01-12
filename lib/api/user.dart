@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:scv_app/api/school.dart';
 import 'package:scv_app/api/status.dart';
 import 'package:scv_app/global/global.dart' as global;
@@ -35,7 +34,6 @@ class User {
     this.mobilePhone = "";
     this.surname = "";
     this.userPrincipalName = "";
-    this.image = CachedNetworkImageProvider("https://via.placeholder.com/150");
     this.loggedIn = true;
     this.logingIn = false;
   }
@@ -47,11 +45,15 @@ class User {
       final json = jsonDecode(response.body);
       this.fromJSON(json);
       this.loggedIn = true;
-      image = CachedNetworkImageProvider(
-        "${global.apiUrl}/user/get/profilePicture?=${json['mail']}",
-        headers: {"Authorization": global.token.accessToken},
-        errorListener: () => print("Error in image"),
-      );
+      try {
+        image = CachedNetworkImageProvider(
+          "${global.apiUrl}/user/get/profilePicture?=${json['mail']}",
+          headers: {"Authorization": global.token.accessToken},
+          errorListener: () => print("Error in image"),
+        );
+      } catch (e) {
+        image = null;
+      }
       this.saveToCache();
     } else {
       throw Exception('Failed to load user');
@@ -84,8 +86,12 @@ class User {
   }
 
   Future<void> saveToCache() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("user", jsonEncode(this.toJSON()));
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("user", jsonEncode(this.toJSON()));
+    } catch (e) {
+      global.showGlobalAlert(text: "Napaka pri shranjevanju podatkov.");
+    }
   }
 
   Future<void> loadFromCache() async {

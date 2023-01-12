@@ -1,8 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/alert.dart';
+import 'package:scv_app/store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../api/token.dart';
-import '../api/biometric.dart';
 import 'package:get/get.dart';
 
 final Token token = new Token();
@@ -22,6 +23,20 @@ Future<void> logOutUser(BuildContext context) async {
   }
   await CookieManager().clearCookies();
   await token.deleteToken();
+}
+
+void showGlobalAlert({String text = ""}) {
+  if (globalBuildContext != null) {
+    GlobalAlert globalAlert =
+        StoreProvider.of<AppState>(globalBuildContext).state.globalAlert;
+    if (globalAlert.show(text)) {
+      Future.delayed(Duration(seconds: 3), () {
+        globalAlert.hide();
+        StoreProvider.of<AppState>(globalBuildContext).dispatch(globalAlert);
+      });
+    }
+    StoreProvider.of<AppState>(globalBuildContext).dispatch(globalAlert);
+  }
 }
 
 // Path: lib/global/global.dart

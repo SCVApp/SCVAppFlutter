@@ -27,7 +27,7 @@ class Urnik {
         await this.save();
       }
     } catch (e) {
-      print("Failed to load urnik from web: $e");
+      global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
     }
   }
 
@@ -79,7 +79,7 @@ class Urnik {
       String json = jsonEncode(this);
       await prefs.setString(urnikKey, json);
     } catch (e) {
-      print("Failed to save Urnik: $e");
+      global.showGlobalAlert(text: "Napaka pri shranjevanju urnika");
     }
   }
 
@@ -91,7 +91,7 @@ class Urnik {
         this.fromJSON(jsonDecode(urnik));
       }
     } catch (e) {
-      print(e);
+      global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
     }
   }
 

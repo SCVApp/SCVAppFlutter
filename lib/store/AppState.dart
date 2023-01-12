@@ -1,6 +1,7 @@
 //create class AppState
 
 import 'package:meta/meta.dart';
+import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
@@ -11,12 +12,14 @@ class AppState {
   final AppTheme appTheme;
   final Biometric biometric;
   final Urnik urnik;
+  final GlobalAlert globalAlert;
 
   AppState({
     @required this.user,
     @required this.appTheme,
     @required this.biometric,
     @required this.urnik,
+    @required this.globalAlert,
   });
 
   factory AppState.initial() {
@@ -25,6 +28,7 @@ class AppState {
       appTheme: new AppTheme(),
       biometric: new Biometric(),
       urnik: new Urnik(),
+      globalAlert: new GlobalAlert(),
     );
   }
 }
