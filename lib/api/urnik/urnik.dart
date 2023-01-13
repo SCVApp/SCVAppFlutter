@@ -205,6 +205,6 @@ class Urnik {
     if (hours.length == 1) hours = "0$hours";
     String minutes = naslednjeObdobje.zacetek.minute.toString();
     if (minutes.length == 1) minutes = "0$minutes";
-    return "$hours:$minutes";
+    return "$hours.$minutes";
   }
 }

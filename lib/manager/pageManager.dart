@@ -97,6 +97,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     StoreProvider.of<AppState>(context).dispatch(urnik);
     await urnik.refresh();
     StoreProvider.of<AppState>(context).dispatch(urnik);
+    print("Urnik refreshed");
   }
 
   @override
@@ -112,6 +113,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       }
       StoreProvider.of<AppState>(context).dispatch(biometric);
       await global.token.refresh();
+      await refreshUrnik();
     } else if (state == AppLifecycleState.paused) {
       final Biometric biometric =
           StoreProvider.of<AppState>(context).state.biometric;
