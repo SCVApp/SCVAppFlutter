@@ -78,6 +78,10 @@ class Token {
         }
       }
     } catch (e) {
+      //Check if date is not parsable
+      if (e is FormatException) {
+        return;
+      }
       if (depth == 0) {
         global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
       }

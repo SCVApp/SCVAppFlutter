@@ -16,7 +16,6 @@ class GlobalAlert {
   }
 
   void hide() {
-    this.text = '';
     this.isShow = false;
   }
 }
