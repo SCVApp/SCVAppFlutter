@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/alert.dart';
@@ -15,6 +16,8 @@ BuildContext globalBuildContext;
 final String apiUrl = "https://backend.app.scv.si";
 
 final String appVersion = "2.2.1";
+
+Connectivity connectivity = new Connectivity();
 
 Future<void> logOutUser(BuildContext context) async {
   if (MediaQuery.of(context).platformBrightness == Brightness.dark) {

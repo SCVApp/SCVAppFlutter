@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -55,9 +53,13 @@ class Token {
   }
 
   void fromJSON(Map<String, dynamic> json) {
-    this.accessToken = json['accessToken'];
-    this.refreshToken = json['refreshToken'];
-    this.expiresOn = json['expiresOn'];
+    try {
+      this.accessToken = json['accessToken'];
+      this.refreshToken = json['refreshToken'];
+      this.expiresOn = json['expiresOn'];
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> refresh({int depth = 0}) async {
@@ -78,7 +80,6 @@ class Token {
         }
       }
     } catch (e) {
-      //Check if date is not parsable
       if (e is FormatException) {
         return;
       }

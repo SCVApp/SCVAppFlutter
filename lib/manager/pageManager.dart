@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
@@ -19,6 +24,8 @@ class PageManager extends StatefulWidget {
 }
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
+  StreamSubscription<ConnectivityResult> connectivity;
+
   @override
   void initState() {
     super.initState();
@@ -29,18 +36,61 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     });
     WidgetsBinding.instance.addObserver(this);
     global.globalBuildContext = context;
+
+    try {
+      connectivity = Connectivity()
+          .onConnectivityChanged
+          .listen((ConnectivityResult result) {
+        handleConnectivityChange();
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+    if (connectivity != null) connectivity.cancel();
+  }
+
+  Future<bool> canConnectToNetwork() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } catch (_) {
+      return false;
+    }
+    return false;
+  }
+
+  void handleConnectivityChange() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    GlobalAlert globalAlert =
+        StoreProvider.of<AppState>(context).state.globalAlert;
+    if (await canConnectToNetwork() == true) {
+      if (globalAlert.text == "Nimate internetne povezave") {
+        globalAlert.hide();
+        loadToken();
+      }
+    } else {
+      globalAlert.show("Nimate internetne povezave", null);
+    }
+    StoreProvider.of<AppState>(context).dispatch(globalAlert);
   }
 
   void loadToken() async {
     await global.token.loadToken();
     if (global.token.accessToken != null) {
       await loadFromCache();
+      if (await canConnectToNetwork() == false) {
+        handleConnectivityChange();
+        return;
+      }
       await global.token.refresh();
       final User user = StoreProvider.of<AppState>(context).state.user;
       try {
