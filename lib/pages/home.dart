@@ -20,7 +20,9 @@ class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  final PageController _pageController = PageController();
   int selectedTab = 0;
   final int numOfTabs = 5;
 
@@ -34,8 +36,12 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         selectedTab = index;
       });
+      _pageController.jumpToPage(index);
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   final List<Widget> _children = [
     SchoolHomePage(),
@@ -55,8 +61,11 @@ class _HomePageState extends State<HomePage> {
               ? user.school.schoolColor
               : Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
-            child: _children[selectedTab],
-          ),
+              child: PageView(
+            controller: _pageController,
+            children: _children,
+            physics: NeverScrollableScrollPhysics(),
+          )),
           bottomSheet: AlertContainer(),
           bottomNavigationBar: FFNavigationBar(
             onSelectTab: onSelectTab,

@@ -25,11 +25,15 @@ class PageManager extends StatefulWidget {
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   StreamSubscription<ConnectivityResult> connectivity;
+  final PageController pageControllerForLock = PageController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      StoreProvider.of<AppState>(context).onChange.listen((state) {
+        onStateChange();
+      });
       loadToken();
       loadAppTheme();
       loadBiometric();
@@ -53,6 +57,17 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
     if (connectivity != null) connectivity.cancel();
+  }
+
+  void onStateChange() {
+    int currentPage = pageControllerForLock.page.round();
+    int nextPage =
+        StoreProvider.of<AppState>(context).state.biometric.locked == true
+            ? 1
+            : 0;
+    if (currentPage != nextPage) {
+      pageControllerForLock.jumpToPage(nextPage);
+    }
   }
 
   Future<bool> canConnectToNetwork() async {
@@ -188,11 +203,13 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   Widget mainPage() {
-    return StoreConnector<AppState, Biometric>(
-      converter: (store) => store.state.biometric,
-      builder: (context, biometric) {
-        return biometric.locked ? LockPage() : HomePage();
-      },
+    return PageView(
+      controller: this.pageControllerForLock,
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        HomePage(),
+        LockPage(),
+      ],
     );
   }
 }
