@@ -103,6 +103,9 @@ class Biometric {
 
   Future<void> setBiometric(bool value) async {
     this.biometric = value;
+    if (value == false) {
+      this.locked = false;
+    }
     await this.save();
   }
 

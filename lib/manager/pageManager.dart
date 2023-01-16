@@ -159,6 +159,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   Future<void> refreshUrnik() async {
     final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
     await urnik.load();
+    urnik.preveriCeJeUrnikOsvezenDanes();
     StoreProvider.of<AppState>(context).dispatch(urnik);
     await urnik.refresh();
     StoreProvider.of<AppState>(context).dispatch(urnik);

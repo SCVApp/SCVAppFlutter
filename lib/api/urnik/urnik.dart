@@ -10,6 +10,7 @@ enum PoukType { zacetekPouka, konecPouka, odmor, pouk, niPouka }
 class Urnik {
   List<ObdobjaUr> obdobjaUr = [];
   PoukType poukType = PoukType.niPouka;
+  bool loadingFromWeb = false;
   DateTime nazadnjePosodobljeno = DateTime.fromMillisecondsSinceEpoch(0);
 
   static final String urnikKey = "SCV-App-Urnik";
@@ -32,15 +33,17 @@ class Urnik {
     } catch (e) {
       global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
     }
+
+    this.loadingFromWeb = false;
   }
 
   Future<void> refresh({bool forceFetch = false}) async {
-    if (this
-            .nazadnjePosodobljeno
-            .isBefore(DateTime.now().subtract(Duration(hours: 1))) ||
-        forceFetch) {
+    final Duration differenceFromLoadedAndNow =
+        this.nazadnjePosodobljeno.difference(DateTime.now()).abs();
+    if (differenceFromLoadedAndNow.inHours >= 1 || forceFetch) {
       await this.fetchFromWeb(force: forceFetch);
     }
+    this.loadingFromWeb = false;
   }
 
   void fromJSON(Map<String, dynamic> json) {
@@ -145,7 +148,9 @@ class Urnik {
       }
     }
 
-    if (indexZaTreutno == -1 && indexZaNaslednje == -1) {
+    if (this.obdobjaUr.length == 0) {
+      this.poukType = PoukType.niPouka;
+    } else if (indexZaTreutno == -1 && indexZaNaslednje == -1) {
       this.poukType = PoukType.konecPouka;
     }
 
@@ -206,5 +211,15 @@ class Urnik {
     String minutes = naslednjeObdobje.zacetek.minute.toString();
     if (minutes.length == 1) minutes = "0$minutes";
     return "$hours.$minutes";
+  }
+
+  void preveriCeJeUrnikOsvezenDanes() {
+    DateTime now = DateTime.now();
+    if (this.nazadnjePosodobljeno.day != now.day ||
+        this.nazadnjePosodobljeno.month != now.month ||
+        this.nazadnjePosodobljeno.year != now.year) {
+      this.delete();
+      this.loadingFromWeb = true;
+    }
   }
 }

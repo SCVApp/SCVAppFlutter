@@ -72,6 +72,8 @@ class UrnikStyle {
           text = "Odmor do ${urnik.zacetekNaslednjegaObdobja()}";
         } else if (urnik.poukType == PoukType.zacetekPouka) {
           text = "Začetek pouka ob ${urnik.zacetekNaslednjegaObdobja()}";
+        } else if (urnik.poukType == PoukType.niPouka) {
+          text = "Ni pouka";
         }
 
         return Text(
