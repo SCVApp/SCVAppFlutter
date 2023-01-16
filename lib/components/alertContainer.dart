@@ -25,6 +25,9 @@ class _AlertContainerState extends State<AlertContainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    state.globalAlert.icon != null
+                        ? Icon(state.globalAlert.icon)
+                        : SizedBox(),
                     Expanded(
                       child: Text(
                         state.globalAlert.text ?? "",

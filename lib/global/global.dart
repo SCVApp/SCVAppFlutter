@@ -32,11 +32,12 @@ Future<void> logOutUser(BuildContext context) async {
   StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
 }
 
-void showGlobalAlert({String text = "", Widget action, int duration = 3}) {
+void showGlobalAlert(
+    {String text = "", Widget action, int duration = 3, IconData icon}) {
   if (globalBuildContext != null) {
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(globalBuildContext).state.globalAlert;
-    if (globalAlert.show(text, action)) {
+    if (globalAlert.show(text, action, icon)) {
       Future.delayed(Duration(seconds: duration), () {
         globalAlert.hide();
         StoreProvider.of<AppState>(globalBuildContext).dispatch(globalAlert);

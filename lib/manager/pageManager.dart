@@ -93,7 +93,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         loadToken();
       }
     } else {
-      globalAlert.show("Nimate internetne povezave", null);
+      globalAlert.show("Nimate internetne povezave", null, Icons.wifi_off);
     }
     StoreProvider.of<AppState>(context).dispatch(globalAlert);
   }
