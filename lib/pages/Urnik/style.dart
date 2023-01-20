@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/school.dart';
 import 'package:scv_app/api/urnik/ura.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/store/AppState.dart';
+
+import '../../api/urnik/obdobjaUr.dart';
 
 class UrnikStyle {
   static final viewStyleBig = ViewSizes(90, 24, 15, 30, Size.square(9.0));
@@ -33,7 +36,8 @@ class UrnikStyle {
     }
   }
 
-  static Color colorForUraViewBG(UraType uraType, BuildContext context) {
+  static Color colorForUraViewBG(UraType uraType, ObdobjaUrType obdobjaUrType,
+      BuildContext context, School school) {
     switch (uraType) {
       case UraType.dogodek:
         return HexColor.fromHex("#FFE2AC");
@@ -43,6 +47,12 @@ class UrnikStyle {
         return HexColor.fromHex("#FFB9AE");
       case UraType.zaposlitev:
         return HexColor.fromHex("#FFB0F7");
+    }
+    switch (obdobjaUrType) {
+      case ObdobjaUrType.trenutno:
+        return school.schoolColor;
+      case ObdobjaUrType.naslednje:
+        return school.schoolSecondaryColor;
     }
     return Theme.of(context).cardColor;
   }

@@ -14,13 +14,9 @@ Widget viewForUra(
         return Container(
             height: viewSizes.height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: obdobjeUre.type == ObdobjaUrType.normalno
-                  ? UrnikStyle.colorForUraViewBG(ura.type, context)
-                  : obdobjeUre.type == ObdobjaUrType.trenutno
-                      ? user.school.schoolColor
-                      : user.school.schoolSecondaryColor,
-            ),
+                borderRadius: BorderRadius.circular(12),
+                color: UrnikStyle.colorForUraViewBG(
+                    ura.type, obdobjeUre.type, context, user.school)),
             child: Stack(children: [
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

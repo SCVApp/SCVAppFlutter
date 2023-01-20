@@ -43,7 +43,8 @@ class _viewForObdobjeUreState extends State<ViewForObdobjeUre> {
                   child: widget.obdobjeUr.ure.length > 1
                       ? DotsIndicator(
                           decorator: DotsDecorator(
-                            activeColor: Theme.of(context).primaryColor,
+                            activeColor: UrnikStyle.colorForUraViewText(
+                                widget.obdobjeUr.ure[izbranaUra].type, context),
                             color: Colors.grey.withOpacity(0.4),
                             size: widget.viewSizes.sizeOfDots,
                             activeSize: widget.viewSizes.sizeOfDots,
