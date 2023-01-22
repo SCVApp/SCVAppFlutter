@@ -8,12 +8,15 @@ import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
+import 'package:scv_app/api/windowManager/windowManager.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
+import 'package:scv_app/pages/PassDoor/unlock.dart';
 import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/pages/lockPage.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
 
 import '../api/appTheme.dart';
 import '../pages/home.dart';
@@ -31,12 +34,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      StoreProvider.of<AppState>(context).onChange.listen((state) {
-        onStateChange();
-      });
-      loadToken();
-      loadAppTheme();
-      loadBiometric();
+      onWidgetDidBuild();
     });
     WidgetsBinding.instance.addObserver(this);
     global.globalBuildContext = context;
@@ -47,9 +45,9 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
           .listen((ConnectivityResult result) {
         handleConnectivityChange();
       });
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
+    universalLinks.initURIHandler(context);
+    universalLinks.incomingURIHandler(context);
   }
 
   @override
@@ -57,14 +55,33 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
     if (connectivity != null) connectivity.cancel();
+    if (universalLinks.universalLinkSubscription != null)
+      universalLinks.universalLinkSubscription.cancel();
+  }
+
+  void onWidgetDidBuild() {
+    StoreProvider.of<AppState>(context).onChange.listen((state) {
+      onStateChange();
+    });
+    loadToken();
+    loadAppTheme();
+    loadBiometric();
   }
 
   void onStateChange() {
-    int currentPage = pageControllerForLock.page.round();
-    int nextPage =
-        StoreProvider.of<AppState>(context).state.biometric.locked == true
-            ? 1
-            : 0;
+    final int currentPage = pageControllerForLock.page.round();
+    final bool locked =
+        StoreProvider.of<AppState>(context).state.biometric.locked;
+    final int nextPage = locked ? 1 : 0;
+    final WindowManager windowManager =
+        StoreProvider.of<AppState>(context).state.windowManager;
+    print(windowManager.haveToChangeWindow(currentPage));
+    if (!locked && windowManager.haveToChangeWindow(currentPage)) {
+      final int newPage = windowManager.getIndexOfWindow();
+      pageControllerForLock.jumpToPage(newPage);
+    } else if (!locked && windowManager.getIndexOfWindow() != 0) {
+      return;
+    }
     if (currentPage != nextPage) {
       pageControllerForLock.jumpToPage(nextPage);
     }
@@ -210,6 +227,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       children: <Widget>[
         HomePage(),
         LockPage(),
+        UnlockedPassDoor(),
       ],
     );
   }

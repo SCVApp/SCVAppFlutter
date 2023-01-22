@@ -6,6 +6,7 @@ import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
+import 'package:scv_app/api/windowManager/windowManager.dart';
 
 class AppState {
   final User user;
@@ -13,6 +14,7 @@ class AppState {
   final Biometric biometric;
   final Urnik urnik;
   final GlobalAlert globalAlert;
+  final WindowManager windowManager;
 
   AppState({
     @required this.user,
@@ -20,6 +22,7 @@ class AppState {
     @required this.biometric,
     @required this.urnik,
     @required this.globalAlert,
+    @required this.windowManager,
   });
 
   factory AppState.initial() {
@@ -29,6 +32,7 @@ class AppState {
       biometric: new Biometric(),
       urnik: new Urnik(),
       globalAlert: new GlobalAlert(),
+      windowManager: new WindowManager(),
     );
   }
 }
