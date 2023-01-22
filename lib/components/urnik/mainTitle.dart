@@ -17,7 +17,8 @@ Widget mainTitle() {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Padding(padding: EdgeInsets.only(left: 5)),
-          urnik.poukType != PoukType.konecPouka
+          urnik.poukType != PoukType.konecPouka &&
+                  urnik.poukType != PoukType.niPouka
               ? Text(
                   "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhere(
                         (obdobjeUr) =>
