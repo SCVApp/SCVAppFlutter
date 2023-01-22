@@ -46,4 +46,13 @@ class WindowManager {
       }
     }
   }
+
+  Map<String, dynamic> getAttributes(String name) {
+    for (var window in windows) {
+      if (window.name == name) {
+        return window.attributes;
+      }
+    }
+    return {};
+  }
 }

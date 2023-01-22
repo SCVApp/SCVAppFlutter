@@ -46,8 +46,8 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         handleConnectivityChange();
       });
     } catch (e) {}
-    universalLinks.initURIHandler(context);
-    universalLinks.incomingURIHandler(context);
+    universalLinks.initURIHandler();
+    universalLinks.incomingURIHandler();
   }
 
   @override
@@ -75,7 +75,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     final int nextPage = locked ? 1 : 0;
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
-    print(windowManager.haveToChangeWindow(currentPage));
     if (!locked && windowManager.haveToChangeWindow(currentPage)) {
       final int newPage = windowManager.getIndexOfWindow();
       pageControllerForLock.jumpToPage(newPage);
@@ -174,6 +173,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   Future<void> refreshUrnik() async {
+    universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
     final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
     await urnik.load();
     urnik.preveriCeJeUrnikOsvezenDanes();
@@ -197,6 +197,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       await global.token.refresh();
       await refreshUrnik();
     } else if (state == AppLifecycleState.paused) {
+      universalLinks.goToUnlockPassDoor(context, "", close: true);
       final Biometric biometric =
           StoreProvider.of<AppState>(context).state.biometric;
       await biometric.updateLastActivity(isPaused: true);

@@ -8,35 +8,39 @@ import 'package:uni_links/uni_links.dart';
 
 bool initialURILinkHandled = false;
 StreamSubscription universalLinkSubscription;
+String universalLink = "";
 
-Future<void> initURIHandler(BuildContext context) async {
+Future<void> initURIHandler() async {
   if (!initialURILinkHandled) {
     initialURILinkHandled = true;
     try {
       final initialURI = await getInitialUri();
       if (initialURI != null) {
-        goToUnlockPassDoor(context, initialURI.toString());
+        universalLink = initialURI.toString();
       }
     } catch (_) {}
   }
 }
 
-void incomingURIHandler(BuildContext context) {
+void incomingURIHandler() {
   try {
     universalLinkSubscription = uriLinkStream.listen((Uri uri) {
-      goToUnlockPassDoor(context, uri.toString());
+      universalLink = uri.toString();
     }, onError: (Object err) {});
   } catch (e) {}
 }
 
-void goToUnlockPassDoor(BuildContext context, String uri) {
-  print(uri);
-  if (chechURI(uri)) {
-    print(uri);
+void goToUnlockPassDoor(BuildContext context, String uri,
+    {bool close = false}) {
+  universalLink = "";
+  if (chechURI(uri) || close) {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
-
-    windowManager.showWindow("PassDoor");
+    if (!close) {
+      windowManager.showWindow("PassDoor", attributes: {"uri": uri});
+    } else {
+      windowManager.hideWindow("PassDoor");
+    }
 
     StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
