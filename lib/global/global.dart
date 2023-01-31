@@ -2,6 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/alert.dart';
+import 'package:scv_app/api/appTheme.dart';
+import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -20,6 +22,17 @@ final String appVersion = "2.2.1";
 Connectivity connectivity = new Connectivity();
 
 Future<void> logOutUser(BuildContext context) async {
+  User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
+  user.loggedIn = false;
+  StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
+  Biometric biometric =
+      StoreProvider.of<AppState>(globalBuildContext).state.biometric;
+  await biometric.delete();
+  StoreProvider.of<AppState>(globalBuildContext).dispatch(biometric);
+  AppTheme appTheme =
+      StoreProvider.of<AppState>(globalBuildContext).state.appTheme;
+  appTheme.delete();
+  StoreProvider.of<AppState>(globalBuildContext).dispatch(appTheme);
   if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
     Get.changeThemeMode(ThemeMode.dark);
   } else {
@@ -27,9 +40,6 @@ Future<void> logOutUser(BuildContext context) async {
   }
   await CookieManager().clearCookies();
   await token.deleteToken();
-  User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
-  user.loggedIn = false;
-  StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
 }
 
 void showGlobalAlert(

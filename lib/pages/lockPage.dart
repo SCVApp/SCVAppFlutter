@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/nastavitve/lockPage/unlockButton.dart';
+import 'package:scv_app/global/global.dart' as global;
 
 import '../api/biometric.dart';
 import '../store/AppState.dart';
@@ -21,13 +22,28 @@ class _LockPageState extends State<LockPage> {
     });
   }
 
+  Future<void> logout() async {
+    Navigator.pop(context);
+    await global.logOutUser(context);
+  }
+
   Future<void> authenticate() async {
     setState(() {
       loading = true;
     });
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
-    await biometric.unlock(context);
+    await biometric.unlock(context,
+        text:
+            "V telefonu nimaš nastavljenih varnostnih nastavitev. Zato vam nemoremo odkleniti aplikacije.",
+        actions: [
+          TextButton(
+              onPressed: logout,
+              child: Text(
+                "Odjava",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))
+        ]);
     StoreProvider.of<AppState>(context).dispatch(biometric);
     setState(() {
       loading = false;

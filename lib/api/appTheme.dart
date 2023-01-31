@@ -29,6 +29,11 @@ class AppTheme {
     await prefs.setString('theme', this.type.toString());
   }
 
+  Future<void> delete() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('theme');
+  }
+
   void changeTheme(AppThemeType type) {
     this.type = type;
     this.save();
