@@ -86,24 +86,12 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     }
   }
 
-  Future<bool> canConnectToNetwork() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      }
-    } catch (_) {
-      return false;
-    }
-    return false;
-  }
-
   void handleConnectivityChange() async {
     await Future.delayed(Duration(seconds: 1));
 
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(context).state.globalAlert;
-    if (await canConnectToNetwork() == true) {
+    if (await global.canConnectToNetwork() == true) {
       if (globalAlert.text == "Nimate internetne povezave") {
         globalAlert.hide();
         loadToken();
@@ -118,7 +106,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     await global.token.loadToken();
     if (global.token.accessToken != null) {
       await loadFromCache();
-      if (await canConnectToNetwork() == false) {
+      if (await global.canConnectToNetwork() == false) {
         handleConnectivityChange();
         return;
       }

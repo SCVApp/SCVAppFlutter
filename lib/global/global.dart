@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -59,6 +61,18 @@ void showGlobalAlert(
     }
     StoreProvider.of<AppState>(globalBuildContext).dispatch(globalAlert);
   }
+}
+
+Future<bool> canConnectToNetwork() async {
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      return true;
+    }
+  } catch (_) {
+    return false;
+  }
+  return false;
 }
 
 // Path: lib/global/global.dart
