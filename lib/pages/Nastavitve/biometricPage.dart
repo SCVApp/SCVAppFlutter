@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/nastavitve/biomatricPage/autoLockPicekr.dart';
 
 import '../../components/backButton.dart';
@@ -52,6 +53,7 @@ class _BiometicPageState extends State<BiometicPage> {
         converter: (store) => store.state.biometric,
         builder: (context, biometric) {
           return Scaffold(
+            bottomSheet: AlertContainer(),
               body: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.max,
