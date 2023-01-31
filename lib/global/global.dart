@@ -22,24 +22,28 @@ final String appVersion = "2.2.1";
 Connectivity connectivity = new Connectivity();
 
 Future<void> logOutUser(BuildContext context) async {
-  User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
-  user.loggedIn = false;
-  StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
-  Biometric biometric =
-      StoreProvider.of<AppState>(globalBuildContext).state.biometric;
-  await biometric.delete();
-  StoreProvider.of<AppState>(globalBuildContext).dispatch(biometric);
-  AppTheme appTheme =
-      StoreProvider.of<AppState>(globalBuildContext).state.appTheme;
-  appTheme.delete();
-  StoreProvider.of<AppState>(globalBuildContext).dispatch(appTheme);
-  if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
-    Get.changeThemeMode(ThemeMode.dark);
-  } else {
-    Get.changeThemeMode(ThemeMode.light);
+  try {
+    User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
+    user.loggedIn = false;
+    StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
+    Biometric biometric =
+        StoreProvider.of<AppState>(globalBuildContext).state.biometric;
+    await biometric.delete();
+    StoreProvider.of<AppState>(globalBuildContext).dispatch(biometric);
+    AppTheme appTheme =
+        StoreProvider.of<AppState>(globalBuildContext).state.appTheme;
+    await appTheme.delete();
+    StoreProvider.of<AppState>(globalBuildContext).dispatch(appTheme);
+    await CookieManager().clearCookies();
+    await token.deleteToken();
+    if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
+      Get.changeThemeMode(ThemeMode.dark);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+    }
+  } catch (e) {
+    print(e);
   }
-  await CookieManager().clearCookies();
-  await token.deleteToken();
 }
 
 void showGlobalAlert(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/components/confirmAlert.dart';
 import 'package:scv_app/components/nastavitve/lockPage/unlockButton.dart';
 import 'package:scv_app/global/global.dart' as global;
 
@@ -22,6 +23,11 @@ class _LockPageState extends State<LockPage> {
     });
   }
 
+  void confirmLogout() async {
+    confirmAlert(context, "Ali si prepričan, da se želiš odjaviti?", logout,
+        () => Navigator.pop(context));
+  }
+
   Future<void> logout() async {
     Navigator.pop(context);
     await global.logOutUser(context);
@@ -38,7 +44,7 @@ class _LockPageState extends State<LockPage> {
             "V telefonu nimaš nastavljenih varnostnih nastavitev. Zato vam nemoremo odkleniti aplikacije.",
         actions: [
           TextButton(
-              onPressed: logout,
+              onPressed: confirmLogout,
               child: Text(
                 "Odjava",
                 style: TextStyle(fontWeight: FontWeight.bold),

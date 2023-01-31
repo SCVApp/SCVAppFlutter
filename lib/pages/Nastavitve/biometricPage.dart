@@ -26,12 +26,12 @@ class _BiometicPageState extends State<BiometicPage> {
   void handleChangeBiometricUnlock(bool value) async {
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
+    if (biometric.locked == true) {
+      return;
+    }
     final String text =
         "V telefonu nimaš nastavljenih varnostnih nastavitev, zato vam nemoremo spremeniti nastavitve biometričnega odklepanja.";
-    if (await biometric.authenticate(context,
-
-            text: text) ==
-        true) {
+    if (await biometric.authenticate(context, text: text) == true) {
       await biometric.setBiometric(value);
       StoreProvider.of<AppState>(context).dispatch(biometric);
     } else {
