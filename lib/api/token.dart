@@ -68,6 +68,9 @@ class Token {
   }
 
   Future<void> refresh({int depth = 0}) async {
+    if (!(await global.canConnectToNetwork())) {
+      return;
+    }
     try {
       DateTime expires = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
           .parse(this.expiresOn)
