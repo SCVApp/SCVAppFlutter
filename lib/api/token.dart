@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Token {
   String accessToken;
@@ -33,6 +34,10 @@ class Token {
       accessToken = await storage.read(key: accessTokenKey);
       refreshToken = await storage.read(key: refreshTokenKey);
       expiresOn = await storage.read(key: expiresKey);
+
+      if (accessToken == null || refreshToken == null || expiresOn == null) {
+        await loadTokenFromSheredPrefs();
+      }
     } catch (e) {
       print(e);
     }
@@ -111,5 +116,19 @@ class Token {
         }
       }
     }
+  }
+
+  Future<void> loadTokenFromSheredPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      this.accessToken = this.accessToken ?? prefs.getString('key_AccessToken');
+      this.refreshToken =
+          this.refreshToken ?? prefs.getString('key_RefreshToken');
+      this.expiresOn = this.expiresOn ?? prefs.getString('key_ExpiresOn');
+
+      prefs.remove('key_AccessToken');
+      prefs.remove('key_RefreshToken');
+      prefs.remove('key_ExpiresOn');
+    } catch (_) {}
   }
 }
