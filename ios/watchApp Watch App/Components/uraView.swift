@@ -17,7 +17,7 @@ struct UraView: View{
                 Spacer()
                 Text(ura?.ucilnica ?? "")
             }.padding(.horizontal,10).padding(.top, 10)
-            HStack{
+            LazyHStack{
                 Text(obdonjeUr.trajanje).font(.footnote)
                 Spacer()
                 Text(ura?.skrajsajIme() ?? "").font(.footnote)

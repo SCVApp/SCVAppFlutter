@@ -11,7 +11,7 @@ import SwiftUI
 struct watchApp_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(UrnikManager())
+            ContentView().environmentObject(UrnikManager()).environmentObject(AppManager())
         }
     }
 }

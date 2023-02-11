@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject private var urnikManager:UrnikManager
+    @EnvironmentObject private var appManager:AppManager
     var body: some View {
-        UrnikView().onAppear{
-            urnikManager.loadUrnik()
+        VStack{
+            if(appManager.user.loggedIn){
+                HomePage()
+            }else{
+                LoginPage()
+            }
+        }.onAppear{
+            appManager.onLoad()
         }
     }
 }
