@@ -3,7 +3,7 @@ import 'package:scv_app/components/confirmAlert.dart';
 import 'package:scv_app/global/global.dart' as global;
 
 class WatchManager {
-  final channel = const MethodChannel("is.urbankrepel.appForWater");
+  final channel = const MethodChannel("com.SCVApp.si");
 
   void sendMessagesToWatch(String method, Map<String, dynamic> data) {
     this
@@ -22,7 +22,7 @@ class WatchManager {
   void handelMessagesFromWatch(
       String methodName, Map<String, dynamic> arguments) {
     switch (methodName) {
-      case "reqestLoginFromWatch":
+      case "requestLoginFromWatch":
         this.handelLoginFromWatch(arguments);
         break;
     }

@@ -54,7 +54,7 @@ class AppManager:NSObject,ObservableObject{
     
     func loginWithPhone(){
         let message:[String:Any] = [
-            "method":"reqestLoginFromWatch",
+            "method":"requestLoginFromWatch",
             "data":["login":"login"]
         ]
         self.session.sendMessage(message, replyHandler: nil,errorHandler: nil)
