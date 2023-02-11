@@ -27,7 +27,7 @@ import WatchConnectivity
                   name: "com.SCVApp.si",
                   binaryMessenger: controller.binaryMessenger)
                 
-                channel?.setMethodCallHandler({ [weak self] (
+            self.channel?.setMethodCallHandler({ [weak self] (
                   call: FlutterMethodCall,
                   result: @escaping FlutterResult) -> Void in
                   switch call.method {

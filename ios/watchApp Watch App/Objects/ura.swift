@@ -25,11 +25,11 @@ struct Ura:Decodable{
         if(self.ucitelj.count < 1) {
             return "";
         }
-        var splitedName:Array<Substring> = self.ucitelj.split(separator: " ");
+        let splitedName:Array<Substring> = self.ucitelj.split(separator: " ");
         
         var skrajsanoIme:String = "";
         for i in 0...splitedName.count-2{
-            var subString:String = String(splitedName[i]);
+            let subString:String = String(splitedName[i]);
             if let firstLetter = subString.first?.uppercased(){
                 skrajsanoIme += firstLetter
                 skrajsanoIme += ". "
