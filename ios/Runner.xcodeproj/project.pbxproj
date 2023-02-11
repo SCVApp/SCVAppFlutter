@@ -11,8 +11,6 @@
 		28F8F79DA1E19058D35C13F9 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DA0CEC55A11FED45393FFF /* Pods_Runner.framework */; };
 		31AA02DD2996188200983FF7 /* watchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA02DC2996188200983FF7 /* watchAppApp.swift */; };
 		31AA02DF2996188200983FF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA02DE2996188200983FF7 /* ContentView.swift */; };
-		31AA02E12996188400983FF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31AA02E02996188400983FF7 /* Assets.xcassets */; };
-		31AA02E42996188400983FF7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31AA02E32996188400983FF7 /* Preview Assets.xcassets */; };
 		31AA02E9299618D500983FF7 /* watchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 31AA02DA2996188200983FF7 /* watchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		31AA02F3299619F400983FF7 /* urnikManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA02F2299619F400983FF7 /* urnikManager.swift */; };
 		31AA02F729961AC300983FF7 /* urnik.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AA02F629961AC300983FF7 /* urnik.swift */; };
@@ -353,9 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AA02E42996188400983FF7 /* Preview Assets.xcassets in Resources */,
 				31ABF529299790CC00523AC6 /* Assets.xcassets in Resources */,
-				31AA02E12996188400983FF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,7 +561,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -597,7 +593,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -639,7 +635,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -679,7 +675,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -828,7 +824,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -859,7 +855,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;

@@ -42,8 +42,22 @@ class AppManager:NSObject,ObservableObject{
         guard let accessToken:String = data["accessToken"] as? String,
               let refreshToken:String = data["refreshToken"] as? String,
               let expiresOn:String = data["expiresOn"] as? String else {return;}
-        self.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: expiresOn)
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "EEE MMM dd yyyy hh:mm:ss"
+        guard let expirationDate:Date = dateFormatter.date(from: expiresOn) else {return;}
+        guard let ExpDate:Date = Calendar.current.date(byAdding: .day, value: -1, to: expirationDate) else {return;} //Subtract 1 day
+        
+        self.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: dateFormatter.string(from: ExpDate))
         self.token.refresh(force: true)
+    }
+    
+    func loginWithPhone(){
+        let message:[String:Any] = [
+            "method":"reqestLoginFromWatch",
+            "data":["login":"login"]
+        ]
+        self.session.sendMessage(message, replyHandler: nil,errorHandler: nil)
     }
 }
 

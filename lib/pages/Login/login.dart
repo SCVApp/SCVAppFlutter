@@ -73,6 +73,7 @@ class _LoginPage extends State<LoginPage> {
   }
 
   Future<void> ErrorInLogin() async {
+    if (!mounted) return;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
