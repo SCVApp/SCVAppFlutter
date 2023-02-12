@@ -22,6 +22,7 @@ final class AppManager:NSObject,ObservableObject{
     }
     
     func onLoad(){
+        self.token.load()
         self.token.refresh()
         if(self.token.accessToken != nil){
             self.user.logIn()
@@ -42,28 +43,57 @@ final class AppManager:NSObject,ObservableObject{
         guard let accessToken:String = data["accessToken"] as? String,
               let refreshToken:String = data["refreshToken"] as? String,
               let expiresOn:String = data["expiresOn"] as? String else {return;}
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "EEE MMM dd yyyy hh:mm:ss"
-        guard let expirationDate:Date = dateFormatter.date(from: expiresOn) else {return;}
+        print(expiresOn)
+        guard let expirationDate:Date = AppManager.convertToDate(string: expiresOn) else {return;}
+        print(expirationDate)
         guard let ExpDate:Date = Calendar.current.date(byAdding: .day, value: -1, to: expirationDate) else {return;} //Subtract 1 day
-        
-        self.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: dateFormatter.string(from: ExpDate))
+        print(AppManager.convertToString(date: ExpDate))
+        self.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: AppManager.convertToString(date: ExpDate))
         self.token.refresh(force: true)
+        if(self.token.accessToken != nil){
+            self.user.logIn()
+        }
     }
     
     func loginWithPhone(){
+        print("Try to send")
+        if(!self.session.isReachable){
+            return
+        }
         let message:[String:Any] = [
             "method":"requestLoginFromWatch",
             "data":["login":"login"]
         ]
+        print("Send to phone")
         self.session.sendMessage(message, replyHandler: nil,errorHandler: nil)
+    }
+    
+    static func convertToDate(string:String) -> Date?{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_PL")
+        dateFormatter.dateFormat = "E MMM dd yyyy HH:mm:ss 'GMT'zzz (zzzz)"
+        let date = dateFormatter.date(from: string);
+        return date;
+    }
+    
+    static func convertToString(date:Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_PL")
+        dateFormatter.dateFormat = "E MMM d yyyy HH:mm:ss 'GMT'Z (zzzz)"
+        return dateFormatter.string(from: date);
     }
 }
 
 
 extension AppManager:WCSessionDelegate{
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        if let err = error{
+            print("Error wc-con: \(err)")
+            return;
+        }
+        if activationState == .activated{
+            print("activated wc")
+        }
     }
     
     

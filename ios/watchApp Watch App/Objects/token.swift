@@ -19,11 +19,11 @@ class Token: ObservableObject{
     static private var defualts:UserDefaults = UserDefaults.standard
     
     func load(){
-        DispatchQueue.main.async {
-            self.accessToken = Token.defualts.string(forKey: Token.accessTokenKey)
-            self.refreshToken = Token.defualts.string(forKey: Token.refreshTokenKey)
-            self.expiresOn = Token.defualts.string(forKey: Token.expiresOnKey)
-        }
+        self.accessToken = Token.defualts.string(forKey: Token.accessTokenKey)
+        self.refreshToken = Token.defualts.string(forKey: Token.refreshTokenKey)
+        self.expiresOn = Token.defualts.string(forKey: Token.expiresOnKey)
+        
+        print(self.expiresOn)
     }
     
     func set(newAccessToken:String?,newRefreshToken:String?,newExpiresOn:String?){
@@ -41,6 +41,7 @@ class Token: ObservableObject{
         Token.defualts.set(self.accessToken, forKey: Token.accessTokenKey)
         Token.defualts.set(self.refreshToken, forKey: Token.refreshTokenKey)
         Token.defualts.set(self.expiresOn, forKey: Token.expiresOnKey)
+        print("Token saved")
     }
     
     func refresh(force:Bool = false){
@@ -55,6 +56,8 @@ class Token: ObservableObject{
             
             urlRequest.httpBody = body;
             
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
             let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                         if let error = error {
                             print("Request error: ", error)
@@ -62,7 +65,7 @@ class Token: ObservableObject{
                         }
 
                         guard let response = response as? HTTPURLResponse else { return }
-
+                        print(response.statusCode)
                         if response.statusCode == 200 {
                             guard let data = data else { return }
                             self.fromJSON(json: data)
@@ -77,7 +80,9 @@ class Token: ObservableObject{
         do{
             let tokenObj:TokenObj = try JSONDecoder().decode(TokenObj.self, from: json)
             self.save(newAccessToken: tokenObj.accessToken, newRefreshToken: tokenObj.refreshToken, newExpiresOn: tokenObj.expiresOn)
-        }catch{}
+        }catch let err{
+            print("Decoding problem: \(err)")
+        }
     }
     
     func toJSON() -> Data?{
@@ -96,16 +101,13 @@ class Token: ObservableObject{
     
     func isTokenExpired() -> Bool{
         if(self.expiresOn == nil){
-            return true;
+            return false;
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-        dateFormatter.dateFormat = "EEE MMM dd yyyy hh:mm:ss"
-        guard let expirationDate:Date = dateFormatter.date(from: self.expiresOn!) else {return true;}
+        guard let expirationDate:Date = AppManager.convertToDate(string: self.expiresOn!) else {return false;}
         
         let dateNow:Date = Date.init()
         
-        if(expirationDate >= dateNow){
+        if(expirationDate <= dateNow){
             return true;
         }
         

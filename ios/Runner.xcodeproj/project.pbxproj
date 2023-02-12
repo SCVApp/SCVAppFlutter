@@ -12,7 +12,7 @@
 		3115B96A299929B1007C1022 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B969299929B1007C1022 /* ContentView.swift */; };
 		3115B96C299929B2007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96B299929B2007C1022 /* Assets.xcassets */; };
 		3115B96F299929B2007C1022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96E299929B2007C1022 /* Preview Assets.xcassets */; };
-		3115B975299929EE007C1022 /* ŠCVApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3115B965299929B1007C1022 /* ŠCVApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3115B975299929EE007C1022 /* SCVApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3115B965299929B1007C1022 /* SCVApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3115B979299929F8007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		3115B99429992C26007C1022 /* uraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99229992C26007C1022 /* uraView.swift */; };
 		3115B99529992C26007C1022 /* urnikView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99329992C26007C1022 /* urnikView.swift */; };
@@ -50,7 +50,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				3115B975299929EE007C1022 /* ŠCVApp.app in Embed Watch Content */,
+				3115B975299929EE007C1022 /* SCVApp.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,7 +70,7 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		3115B965299929B1007C1022 /* ŠCVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ŠCVApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3115B965299929B1007C1022 /* SCVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3115B967299929B1007C1022 /* watchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchAppApp.swift; sourceTree = "<group>"; };
 		3115B969299929B1007C1022 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3115B96B299929B2007C1022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
-				3115B965299929B1007C1022 /* ŠCVApp.app */,
+				3115B965299929B1007C1022 /* SCVApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,7 +266,7 @@
 			);
 			name = "watchApp Watch App";
 			productName = "watchApp Watch App";
-			productReference = 3115B965299929B1007C1022 /* ŠCVApp.app */;
+			productReference = 3115B965299929B1007C1022 /* SCVApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
@@ -571,6 +571,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
@@ -587,8 +588,9 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
-				PRODUCT_NAME = "ŠCVApp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
+				PRODUCT_NAME = SCVApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
@@ -612,6 +614,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
@@ -627,8 +630,9 @@
 				);
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
-				PRODUCT_NAME = "ŠCVApp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
+				PRODUCT_NAME = SCVApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
@@ -650,6 +654,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
@@ -665,8 +670,9 @@
 				);
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
-				PRODUCT_NAME = "ŠCVApp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
+				PRODUCT_NAME = SCVApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";

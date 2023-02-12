@@ -13,14 +13,14 @@ struct UraView: View{
     var body: some View{
         VStack {
             HStack{
-                Text(ura?.krajsava ?? "")
+                Text(ura?.krajsava ?? "VOS")
                 Spacer()
-                Text(ura?.ucilnica ?? "")
+                Text(ura?.ucilnica ?? "C503")
             }.padding(.horizontal,10).padding(.top, 10)
-            LazyHStack{
-                Text(obdonjeUr.trajanje).font(.footnote)
+            HStack{
+                Text("8.00 - 8.45fghjhgfghjghjkjhghjkjhjkjh hhhhhhh hhhhhh").font(.footnote)
                 Spacer()
-                Text(ura?.skrajsajIme() ?? "").font(.footnote)
+                Text(ura?.skrajsajIme() ?? "A.Spital").font(.footnote)
             }.padding(.horizontal,10).padding(.bottom, 10)
         }.background(RoundedRectangle(cornerRadius: 12.0).foregroundColor(.blue))
             .padding().onAppear{

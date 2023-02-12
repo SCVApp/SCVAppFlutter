@@ -60,7 +60,13 @@ extension AppDelegate: WCSessionDelegate{
         func sessionDidDeactivate(_ session: WCSession) {}
         func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error:
                      Error?) {
-            print(activationState.rawValue)
+            if let err = error{
+                print("Error wc-con: \(err)")
+                return;
+            }
+            if activationState == .activated{
+                print("activated wc")
+            }
         }
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         DispatchQueue.main.async{

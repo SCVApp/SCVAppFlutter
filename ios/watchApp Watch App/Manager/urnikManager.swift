@@ -13,7 +13,7 @@ var json:String = """
         {
             "id": 1,
             "ime": "1. ura",
-            "trajanje": "8:00 - 8:45",
+            "trajanje": "8:00aaaaaaa - 8:45",
             "ura": [
                 {
                     "krajsava": "SLO",

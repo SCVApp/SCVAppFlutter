@@ -7,18 +7,14 @@
 
 import Foundation
 
-class User:ObservableObject{
-    @Published var loggedIn:Bool = false;
+struct User{
+    var loggedIn:Bool = false;
     
-    func logIn(){
-        DispatchQueue.main.async {
-            self.loggedIn = true;
-        }
+    mutating func logIn(){
+        self.loggedIn = true;
     }
     
-    func logOut(){
-        DispatchQueue.main.async {
-            self.loggedIn = false;
-        }
+    mutating func logOut(){
+        self.loggedIn = false;
     }
 }
