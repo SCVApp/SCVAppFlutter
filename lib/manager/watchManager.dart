@@ -6,6 +6,7 @@ class WatchManager {
   final channel = const MethodChannel("com.SCVApp.si");
 
   void sendMessagesToWatch(String method, Map<String, dynamic> data) {
+    print("Sending message to watch: " + method);
     this
         .channel
         .invokeMethod("forwardToAppleWatch", {"method": method, "data": data});
@@ -13,9 +14,13 @@ class WatchManager {
 
   void listenForMessagesFromWatch() {
     this.channel.setMethodCallHandler((call) async {
-      final methodName = call.method;
-      final arguments = call.arguments;
-      this.handelMessagesFromWatch(methodName, arguments);
+      try {
+        final methodName = call.method;
+        final arguments = Map<String, dynamic>.from(call.arguments);
+        this.handelMessagesFromWatch(methodName, arguments);
+      } catch (e) {
+        print(e);
+      }
     });
   }
 

@@ -8,14 +8,53 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		3115B968299929B1007C1022 /* watchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B967299929B1007C1022 /* watchAppApp.swift */; };
+		3115B96A299929B1007C1022 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B969299929B1007C1022 /* ContentView.swift */; };
+		3115B96C299929B2007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96B299929B2007C1022 /* Assets.xcassets */; };
+		3115B96F299929B2007C1022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96E299929B2007C1022 /* Preview Assets.xcassets */; };
+		3115B975299929EE007C1022 /* ŠCVApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3115B965299929B1007C1022 /* ŠCVApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3115B979299929F8007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
+		3115B99429992C26007C1022 /* uraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99229992C26007C1022 /* uraView.swift */; };
+		3115B99529992C26007C1022 /* urnikView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99329992C26007C1022 /* urnikView.swift */; };
+		3115B99829992C35007C1022 /* urnikManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99629992C35007C1022 /* urnikManager.swift */; };
+		3115B99929992C35007C1022 /* appManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99729992C35007C1022 /* appManager.swift */; };
+		3115B99F29992C49007C1022 /* ura.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99A29992C48007C1022 /* ura.swift */; };
+		3115B9A029992C49007C1022 /* urnik.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99B29992C49007C1022 /* urnik.swift */; };
+		3115B9A129992C49007C1022 /* token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99C29992C49007C1022 /* token.swift */; };
+		3115B9A229992C49007C1022 /* obdobjeUr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99D29992C49007C1022 /* obdobjeUr.swift */; };
+		3115B9A329992C49007C1022 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99E29992C49007C1022 /* user.swift */; };
+		3115B9A629992C51007C1022 /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A429992C51007C1022 /* homePage.swift */; };
+		3115B9A729992C51007C1022 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A529992C51007C1022 /* loginPage.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		FEDDC44550C8C4BEBC8604B6 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DB2E89E31909D53D574CCD /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3115B976299929EE007C1022 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3115B964299929B1007C1022;
+			remoteInfo = "watchApp Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		3115B978299929EE007C1022 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				3115B975299929EE007C1022 /* ŠCVApp.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -31,6 +70,23 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		3115B965299929B1007C1022 /* ŠCVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ŠCVApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3115B967299929B1007C1022 /* watchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchAppApp.swift; sourceTree = "<group>"; };
+		3115B969299929B1007C1022 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3115B96B299929B2007C1022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3115B96E299929B2007C1022 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3115B99229992C26007C1022 /* uraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uraView.swift; sourceTree = "<group>"; };
+		3115B99329992C26007C1022 /* urnikView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnikView.swift; sourceTree = "<group>"; };
+		3115B99629992C35007C1022 /* urnikManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnikManager.swift; sourceTree = "<group>"; };
+		3115B99729992C35007C1022 /* appManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = appManager.swift; sourceTree = "<group>"; };
+		3115B99A29992C48007C1022 /* ura.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ura.swift; sourceTree = "<group>"; };
+		3115B99B29992C49007C1022 /* urnik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnik.swift; sourceTree = "<group>"; };
+		3115B99C29992C49007C1022 /* token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = token.swift; sourceTree = "<group>"; };
+		3115B99D29992C49007C1022 /* obdobjeUr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = obdobjeUr.swift; sourceTree = "<group>"; };
+		3115B99E29992C49007C1022 /* user.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
+		3115B9A429992C51007C1022 /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
+		3115B9A529992C51007C1022 /* loginPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
+		3AB70C04082E7B57D737F37D /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,19 +98,110 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9DB2E89E31909D53D574CCD /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED26FBEEF588A4CEE679C09C /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		FA909169B9CDED4676035F61 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		97C146EB1CF9000F007C117D /* Frameworks */ = {
+		3115B962299929B1007C1022 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97C146EB1CF9000F007C117D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEDDC44550C8C4BEBC8604B6 /* Pods_Runner.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3115B966299929B1007C1022 /* watchApp Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				3115B99129992C0C007C1022 /* Manager */,
+				3115B99029992C07007C1022 /* Objects */,
+				3115B98F29992BF7007C1022 /* Pages */,
+				3115B98E29992BEE007C1022 /* Components */,
+				3115B967299929B1007C1022 /* watchAppApp.swift */,
+				3115B969299929B1007C1022 /* ContentView.swift */,
+				3115B96B299929B2007C1022 /* Assets.xcassets */,
+				3115B96D299929B2007C1022 /* Preview Content */,
+			);
+			path = "watchApp Watch App";
+			sourceTree = "<group>";
+		};
+		3115B96D299929B2007C1022 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				3115B96E299929B2007C1022 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3115B974299929EE007C1022 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9DB2E89E31909D53D574CCD /* Pods_Runner.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3115B98E29992BEE007C1022 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3115B99229992C26007C1022 /* uraView.swift */,
+				3115B99329992C26007C1022 /* urnikView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3115B98F29992BF7007C1022 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				3115B9A429992C51007C1022 /* homePage.swift */,
+				3115B9A529992C51007C1022 /* loginPage.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		3115B99029992C07007C1022 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				3115B99D29992C49007C1022 /* obdobjeUr.swift */,
+				3115B99C29992C49007C1022 /* token.swift */,
+				3115B99A29992C48007C1022 /* ura.swift */,
+				3115B99B29992C49007C1022 /* urnik.swift */,
+				3115B99E29992C49007C1022 /* user.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		3115B99129992C0C007C1022 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				3115B99729992C35007C1022 /* appManager.swift */,
+				3115B99629992C35007C1022 /* urnikManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3288FBE4B3D27DDEA8B17493 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FA909169B9CDED4676035F61 /* Pods-Runner.debug.xcconfig */,
+				3AB70C04082E7B57D737F37D /* Pods-Runner.release.xcconfig */,
+				ED26FBEEF588A4CEE679C09C /* Pods-Runner.profile.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +218,10 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
+				3115B966299929B1007C1022 /* watchApp Watch App */,
 				97C146EF1CF9000F007C117D /* Products */,
+				3115B974299929EE007C1022 /* Frameworks */,
+				3288FBE4B3D27DDEA8B17493 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
+				3115B965299929B1007C1022 /* ŠCVApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,20 +252,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3115B964299929B1007C1022 /* watchApp Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3115B970299929B2007C1022 /* Build configuration list for PBXNativeTarget "watchApp Watch App" */;
+			buildPhases = (
+				3115B961299929B1007C1022 /* Sources */,
+				3115B962299929B1007C1022 /* Frameworks */,
+				3115B963299929B1007C1022 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "watchApp Watch App";
+			productName = "watchApp Watch App";
+			productReference = 3115B965299929B1007C1022 /* ŠCVApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
+				241D84070392A97D60D6FE4D /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+				3115B978299929EE007C1022 /* Embed Watch Content */,
+				38693F5A9D218E25AD1F72B7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3115B977299929EE007C1022 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -127,9 +299,13 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
+					3115B964299929B1007C1022 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 1100;
@@ -150,11 +326,22 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
+				3115B964299929B1007C1022 /* watchApp Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3115B963299929B1007C1022 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3115B96F299929B2007C1022 /* Preview Assets.xcassets in Resources */,
+				3115B979299929F8007C1022 /* Assets.xcassets in Resources */,
+				3115B96C299929B2007C1022 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C146EC1CF9000F007C117D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,6 +356,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		241D84070392A97D60D6FE4D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Runner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		38693F5A9D218E25AD1F72B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -197,11 +423,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3115B961299929B1007C1022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3115B9A129992C49007C1022 /* token.swift in Sources */,
+				3115B99F29992C49007C1022 /* ura.swift in Sources */,
+				3115B99829992C35007C1022 /* urnikManager.swift in Sources */,
+				3115B9A629992C51007C1022 /* homePage.swift in Sources */,
+				3115B99929992C35007C1022 /* appManager.swift in Sources */,
+				3115B9A229992C49007C1022 /* obdobjeUr.swift in Sources */,
+				3115B99429992C26007C1022 /* uraView.swift in Sources */,
+				3115B96A299929B1007C1022 /* ContentView.swift in Sources */,
+				3115B9A729992C51007C1022 /* loginPage.swift in Sources */,
+				3115B99529992C26007C1022 /* urnikView.swift in Sources */,
+				3115B968299929B1007C1022 /* watchAppApp.swift in Sources */,
+				3115B9A329992C49007C1022 /* user.swift in Sources */,
+				3115B9A029992C49007C1022 /* urnik.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C146EA1CF9000F007C117D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -212,6 +458,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3115B977299929EE007C1022 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3115B964299929B1007C1022 /* watchApp Watch App */;
+			targetProxy = 3115B976299929EE007C1022 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		97C146FA1CF9000F007C117D /* Main.storyboard */ = {
@@ -289,19 +543,137 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = UK3A2V9YVP;
+				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scvapp.scvApp;
+				MARKETING_VERSION = 1.3.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Profile;
+		};
+		3115B971299929B2007C1022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
+				PRODUCT_NAME = "ŠCVApp";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		3115B972299929B2007C1022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
+				PRODUCT_NAME = "ŠCVApp";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
+		3115B973299929B2007C1022 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watchApp;
+				PRODUCT_NAME = "ŠCVApp";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Profile;
 		};
@@ -418,15 +790,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = UK3A2V9YVP;
+				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scvapp.scvApp;
+				MARKETING_VERSION = 1.3.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -441,15 +814,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = UK3A2V9YVP;
+				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scvapp.scvApp;
+				MARKETING_VERSION = 1.3.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -460,6 +834,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3115B970299929B2007C1022 /* Build configuration list for PBXNativeTarget "watchApp Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3115B971299929B2007C1022 /* Debug */,
+				3115B972299929B2007C1022 /* Release */,
+				3115B973299929B2007C1022 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
