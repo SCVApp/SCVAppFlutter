@@ -43,11 +43,8 @@ final class AppManager:NSObject,ObservableObject{
         guard let accessToken:String = data["accessToken"] as? String,
               let refreshToken:String = data["refreshToken"] as? String,
               let expiresOn:String = data["expiresOn"] as? String else {return;}
-        print(expiresOn)
         guard let expirationDate:Date = AppManager.convertToDate(string: expiresOn) else {return;}
-        print(expirationDate)
         guard let ExpDate:Date = Calendar.current.date(byAdding: .day, value: -1, to: expirationDate) else {return;} //Subtract 1 day
-        print(AppManager.convertToString(date: ExpDate))
         AppManager.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: AppManager.convertToString(date: ExpDate))
         AppManager.token.refresh(force: true)
         if(AppManager.token.accessToken != nil){

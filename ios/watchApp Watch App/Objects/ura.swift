@@ -8,7 +8,7 @@
 import Foundation
 
 struct Ura:Identifiable,Decodable,Encodable{
-    var id:Int?
+    let id = UUID()
     var krajsava:String = "";
     var ucitelj:String = "";
     var ucilnica:String = "";

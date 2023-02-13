@@ -22,8 +22,6 @@ class Token: ObservableObject{
         self.accessToken = Token.defualts.string(forKey: Token.accessTokenKey)
         self.refreshToken = Token.defualts.string(forKey: Token.refreshTokenKey)
         self.expiresOn = Token.defualts.string(forKey: Token.expiresOnKey)
-        
-        print(self.expiresOn)
     }
     
     func set(newAccessToken:String?,newRefreshToken:String?,newExpiresOn:String?){

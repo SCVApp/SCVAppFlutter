@@ -11,8 +11,10 @@ class UrnikManager:ObservableObject{
     @Published var urnik:Urnik?
     private static var urnikKey:String = "scvapp-urnik-key";
     private static var defualts:UserDefaults = UserDefaults.standard
+    @Published var loading:Bool = false;
     
     func fetchFromWeb(){
+        self.loading = self.urnik?.isFromToday() ?? true
         guard let url = URL(string: "\(AppManager.APIUrl)/user/schedule") else {return;}
         
         var urlRequest = URLRequest(url: url)
@@ -33,11 +35,12 @@ class UrnikManager:ObservableObject{
                     guard let response = response as? HTTPURLResponse else { return }
                     if response.statusCode == 200 {
                         guard let data = data else { return }
-                        self.fromJSON(json: data)
+                        self.fromJSON(json: data, update: true)
                     }
                 }
 
         dataTask.resume()
+        self.loading = false
     }
     
     func loadUrnik(){
@@ -63,9 +66,12 @@ class UrnikManager:ObservableObject{
         self.fromJSON(json: json)
     }
     
-    func fromJSON(json:Data){
+    func fromJSON(json:Data, update:Bool = false){
         do{
             self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
+            if(self.urnik != nil && update){
+                self.urnik?.lastUpdated = Date()
+            }
         }catch{}
         self.saveToStorage()
     }

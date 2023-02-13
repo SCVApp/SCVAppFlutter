@@ -26,6 +26,7 @@
 		3115B9A629992C51007C1022 /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A429992C51007C1022 /* homePage.swift */; };
 		3115B9A729992C51007C1022 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A529992C51007C1022 /* loginPage.swift */; };
 		31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31378216299A087D0089C33A /* obdobjeUrView.swift */; };
+		3156F0B5299A30D800BB4281 /* date.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3156F0B4299A30D800BB4281 /* date.extension.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -88,6 +89,7 @@
 		3115B9A429992C51007C1022 /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
 		3115B9A529992C51007C1022 /* loginPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		31378216299A087D0089C33A /* obdobjeUrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = obdobjeUrView.swift; sourceTree = "<group>"; };
+		3156F0B4299A30D800BB4281 /* date.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = date.extension.swift; sourceTree = "<group>"; };
 		3AB70C04082E7B57D737F37D /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		3115B966299929B1007C1022 /* watchApp Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				3156F0B3299A30B100BB4281 /* extensions */,
 				3115B99129992C0C007C1022 /* Manager */,
 				3115B99029992C07007C1022 /* Objects */,
 				3115B98F29992BF7007C1022 /* Pages */,
@@ -193,6 +196,14 @@
 				3115B99629992C35007C1022 /* urnikManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		3156F0B3299A30B100BB4281 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3156F0B4299A30D800BB4281 /* date.extension.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		3288FBE4B3D27DDEA8B17493 /* Pods */ = {
@@ -447,6 +458,7 @@
 				3115B99529992C26007C1022 /* urnikView.swift in Sources */,
 				3115B968299929B1007C1022 /* watchAppApp.swift in Sources */,
 				3115B9A329992C49007C1022 /* user.swift in Sources */,
+				3156F0B5299A30D800BB4281 /* date.extension.swift in Sources */,
 				3115B9A029992C49007C1022 /* urnik.swift in Sources */,
 				31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */,
 			);

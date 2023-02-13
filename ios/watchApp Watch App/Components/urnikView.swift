@@ -10,18 +10,22 @@ import SwiftUI
 struct UrnikView:View{
     @EnvironmentObject private var urnikManager:UrnikManager
     var body: some View{
-        VStack{
-            if(urnikManager.urnik != nil){
-                List {
-                    ForEach((urnikManager.urnik?.urnik)!) { obdobjeUr in
-                        ObdobjeUrView(obdobjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
-                    }
-                }.listStyle(.carousel)
-            }else{
-                Text("Ni podatkov")
+        if(!urnikManager.loading){
+            VStack{
+                if(urnikManager.urnik != nil){
+                    List {
+                        ForEach((urnikManager.urnik?.urnik)!) { obdobjeUr in
+                            ObdobjeUrView(obdobjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
+                        }
+                    }.listStyle(.carousel)
+                }else{
+                    Text("Ni podatkov")
+                }
+            }.onAppear{
+                urnikManager.loadUrnik()
             }
-        }.onAppear{
-            urnikManager.loadUrnik()
+        }else{
+            ProgressView()
         }
     }
 }
