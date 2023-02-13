@@ -9,10 +9,15 @@ import Foundation
 import SwiftUI
 
 struct HomePage: View{
-    @EnvironmentObject private var urnikManager:UrnikManager
     var body: some View{
-        UrnikView().onAppear{
-            urnikManager.loadUrnik()
+        NavigationView{
+            Text("Home")
         }
+    }
+}
+
+struct HomePagePreview:PreviewProvider{
+    static var previews: some View{
+        HomePage()
     }
 }
