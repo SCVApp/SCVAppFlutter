@@ -9,9 +9,31 @@ import Foundation
 import SwiftUI
 
 struct HomePage: View{
+    @EnvironmentObject private var urnikManager:UrnikManager
     var body: some View{
         NavigationView{
-            Text("Home")
+            ScrollView{
+                if let trenutnoObdobje = self.urnikManager.dobiObdobje(obdobjeUrType: .trenutno){
+                    NavigationLink(destination:UrnikView()){
+                        VStack{
+                            ObdobjeUrView(obdobjeUr: trenutnoObdobje)
+                        }
+                    }.buttonStyle(PlainButtonStyle()) 
+                }
+                Button {
+                    
+                } label: {
+                    Label {
+                        Text("Nastavitve")
+                    } icon: {
+                        Image(systemName: "gear")
+                    }
+
+                }
+
+            }
+        }.onAppear{
+            urnikManager.loadUrnik()
         }
     }
 }

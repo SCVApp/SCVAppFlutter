@@ -75,4 +75,8 @@ class UrnikManager:ObservableObject{
         }catch{}
         self.saveToStorage()
     }
+    
+    func dobiObdobje(obdobjeUrType:ObdobjeUr.ObdobjeUrType) -> ObdobjeUr?{
+        return self.urnik?.urnik.first
+    }
 }
