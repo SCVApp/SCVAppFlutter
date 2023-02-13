@@ -25,6 +25,7 @@
 		3115B9A329992C49007C1022 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99E29992C49007C1022 /* user.swift */; };
 		3115B9A629992C51007C1022 /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A429992C51007C1022 /* homePage.swift */; };
 		3115B9A729992C51007C1022 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A529992C51007C1022 /* loginPage.swift */; };
+		31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31378216299A087D0089C33A /* obdobjeUrView.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -86,6 +87,7 @@
 		3115B99E29992C49007C1022 /* user.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
 		3115B9A429992C51007C1022 /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
 		3115B9A529992C51007C1022 /* loginPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
+		31378216299A087D0089C33A /* obdobjeUrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = obdobjeUrView.swift; sourceTree = "<group>"; };
 		3AB70C04082E7B57D737F37D /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				3115B99229992C26007C1022 /* uraView.swift */,
 				3115B99329992C26007C1022 /* urnikView.swift */,
+				31378216299A087D0089C33A /* obdobjeUrView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				3115B968299929B1007C1022 /* watchAppApp.swift in Sources */,
 				3115B9A329992C49007C1022 /* user.swift in Sources */,
 				3115B9A029992C49007C1022 /* urnik.swift in Sources */,
+				31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,7 +547,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -573,7 +577,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -616,7 +620,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -656,7 +660,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_PREVIEWS = YES;
@@ -796,7 +800,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -820,7 +824,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = VQNCFUD4J9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;

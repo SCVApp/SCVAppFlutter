@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ObdobjeUr:Identifiable,Decodable{
+struct ObdobjeUr:Identifiable,Decodable,Encodable{
     var id:Int = 0;
     var ime:String = "";
     var trajanje:String = "";
@@ -16,7 +16,7 @@ struct ObdobjeUr:Identifiable,Decodable{
     var ura:[Ura] = []
     var type:ObdobjeUrType? = .normalno;
     
-    enum ObdobjeUrType:Decodable{
+    enum ObdobjeUrType:Decodable,Encodable{
         case trenutno, naslednje, normalno
     }
 }

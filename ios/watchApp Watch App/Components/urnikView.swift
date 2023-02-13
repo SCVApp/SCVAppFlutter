@@ -14,12 +14,20 @@ struct UrnikView:View{
             if(urnikManager.urnik != nil){
                 List {
                     ForEach((urnikManager.urnik?.urnik)!) { obdobjeUr in
-                        UraView(obdonjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
+                        ObdobjeUrView(obdobjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
                     }
                 }.listStyle(.carousel)
             }else{
                 Text("Ni podatkov")
             }
+        }.onAppear{
+            urnikManager.loadUrnik()
         }
+    }
+}
+
+struct UrnikViewPreview:PreviewProvider{
+    static var previews: some View{
+        UrnikView().environmentObject(UrnikManager())
     }
 }

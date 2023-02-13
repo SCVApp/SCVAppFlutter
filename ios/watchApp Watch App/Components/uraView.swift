@@ -9,22 +9,20 @@ import SwiftUI
 
 struct UraView: View{
     var obdonjeUr:ObdobjeUr
-    @State var ura:Ura?
+    var ura:Ura
     var body: some View{
         VStack {
             HStack{
-                Text(ura?.krajsava ?? "VOS")
+                Text(ura.krajsava)
                 Spacer()
-                Text(ura?.ucilnica ?? "C503")
-            }.padding(.horizontal,10).padding(.top, 10)
-            HStack{
-                Text("8.00 - 8.45fghjhgfghjghjkjhghjkjhjkjh hhhhhhh hhhhhh").font(.footnote)
+                Text(ura.ucilnica)
+            }.padding(.horizontal,10).padding(.top, 10).lineLimit(5)
+            VStack{
+                Text(obdonjeUr.trajanje).font(.footnote).lineLimit(5)
                 Spacer()
-                Text(ura?.skrajsajIme() ?? "A.Spital").font(.footnote)
+                Text(ura.skrajsajIme()).font(.footnote).lineLimit(5)
             }.padding(.horizontal,10).padding(.bottom, 10)
         }.background(RoundedRectangle(cornerRadius: 12.0).foregroundColor(.blue))
-            .padding().onAppear{
-                self.ura = self.obdonjeUr.ura.first
-            }
+            .padding()
     }
 }

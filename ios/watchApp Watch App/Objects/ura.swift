@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Ura:Decodable{
+struct Ura:Identifiable,Decodable,Encodable{
+    var id:Int?
     var krajsava:String = "";
     var ucitelj:String = "";
     var ucilnica:String = "";
@@ -17,7 +18,7 @@ struct Ura:Decodable{
     var odpadlo:Bool = false;
     var type:UraType? = .normalno
     
-    enum UraType:Decodable{
+    enum UraType:Decodable,Encodable{
         case nadomescanje, zaposlitev, odpadlo, normalno, dogodek
     }
     

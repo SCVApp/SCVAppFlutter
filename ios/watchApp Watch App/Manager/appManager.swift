@@ -11,7 +11,7 @@ import WatchConnectivity
 final class AppManager:NSObject,ObservableObject{
     let session:WCSession
     @Published var user:User = User()
-    @Published var token:Token = Token()
+    static var token:Token = Token()
     public static let APIUrl = "https://backend.app.scv.si"
     
     init(session: WCSession = .default) {
@@ -22,9 +22,9 @@ final class AppManager:NSObject,ObservableObject{
     }
     
     func onLoad(){
-        self.token.load()
-        self.token.refresh()
-        if(self.token.accessToken != nil){
+        AppManager.token.load()
+        AppManager.token.refresh()
+        if(AppManager.token.accessToken != nil){
             self.user.logIn()
         }
     }
@@ -48,9 +48,9 @@ final class AppManager:NSObject,ObservableObject{
         print(expirationDate)
         guard let ExpDate:Date = Calendar.current.date(byAdding: .day, value: -1, to: expirationDate) else {return;} //Subtract 1 day
         print(AppManager.convertToString(date: ExpDate))
-        self.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: AppManager.convertToString(date: ExpDate))
-        self.token.refresh(force: true)
-        if(self.token.accessToken != nil){
+        AppManager.token.set(newAccessToken: accessToken, newRefreshToken: refreshToken, newExpiresOn: AppManager.convertToString(date: ExpDate))
+        AppManager.token.refresh(force: true)
+        if(AppManager.token.accessToken != nil){
             self.user.logIn()
         }
     }
