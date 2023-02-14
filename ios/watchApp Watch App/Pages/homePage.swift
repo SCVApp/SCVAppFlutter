@@ -20,15 +20,12 @@ struct HomePage: View{
                         }
                     }.buttonStyle(PlainButtonStyle()) 
                 }
-                Button {
-                    
-                } label: {
+                NavigationLink(destination: SettingPage()) {
                     Label {
                         Text("Nastavitve")
                     } icon: {
                         Image(systemName: "gear")
                     }
-
                 }
 
             }
@@ -40,6 +37,6 @@ struct HomePage: View{
 
 struct HomePagePreview:PreviewProvider{
     static var previews: some View{
-        HomePage()
+        HomePage().environmentObject(UrnikManager())
     }
 }

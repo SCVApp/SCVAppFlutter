@@ -58,4 +58,18 @@ struct Ura:Identifiable,Decodable,Encodable{
             self.type = .normalno;
         }
     }
+    
+    func isEmpty() -> Bool {
+        if(self.krajsava == "" &&
+           self.ucitelj == "" &&
+           self.ucilnica == "" &&
+           !self.nadomescanje &&
+           !self.odpadlo &&
+           !self.zaposlitev &&
+           self.dogodek == ""){
+            return true;
+        }
+            
+            return false;
+    }
 }

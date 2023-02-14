@@ -104,7 +104,6 @@ class Token: ObservableObject{
         guard let expirationDate:Date = AppManager.convertToDate(string: self.expiresOn!) else {return false;}
         
         let dateNow:Date = Date.init()
-        
         if(expirationDate <= dateNow){
             return true;
         }

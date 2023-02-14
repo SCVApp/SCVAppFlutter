@@ -16,8 +16,8 @@ struct Urnik:Encodable,Decodable{
             return true;
         }
         let dateNow:Date = Date()
-        guard let date:Date = Calendar.current.date(byAdding: .hour, value: 1, to: dateNow) else {return true;}
-        if(lastUpdated! > date){
+        guard let date:Date = Calendar.current.date(byAdding: .hour, value: -1, to: dateNow) else {return true;}
+        if(lastUpdated! < date){
             return true;
         }
         return false;

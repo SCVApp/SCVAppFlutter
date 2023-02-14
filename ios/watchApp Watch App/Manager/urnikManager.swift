@@ -14,7 +14,9 @@ class UrnikManager:ObservableObject{
     @Published var loading:Bool = false;
     
     func fetchFromWeb(){
-        self.loading = self.urnik?.isFromToday() ?? true
+        DispatchQueue.main.async {
+            self.loading = self.urnik?.isFromToday() ?? true
+        }
         guard let url = URL(string: "\(AppManager.APIUrl)/user/schedule") else {return;}
         
         var urlRequest = URLRequest(url: url)
@@ -23,7 +25,6 @@ class UrnikManager:ObservableObject{
         
         AppManager.token.refresh()
         guard let accessToken = AppManager.token.accessToken else {return;}
-        
         urlRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
@@ -40,7 +41,9 @@ class UrnikManager:ObservableObject{
                 }
 
         dataTask.resume()
-        self.loading = false
+        DispatchQueue.main.async {
+            self.loading = false
+        }
     }
     
     func loadUrnik(){
