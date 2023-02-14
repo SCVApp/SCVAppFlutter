@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Ura:Identifiable,Decodable,Encodable{
+struct Ura:Identifiable, Codable{
     let id = UUID()
     var krajsava:String = "";
     var ucitelj:String = "";

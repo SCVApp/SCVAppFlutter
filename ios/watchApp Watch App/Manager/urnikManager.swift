@@ -12,6 +12,7 @@ class UrnikManager:ObservableObject{
     private static var urnikKey:String = "scvapp-urnik-key";
     private static var defualts:UserDefaults = UserDefaults.standard
     @Published var loading:Bool = false;
+    var timer:Timer?
     
     func fetchFromWeb(){
         DispatchQueue.main.async {
@@ -46,6 +47,15 @@ class UrnikManager:ObservableObject{
         }
     }
     
+    private func setUpTimer(){
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            DispatchQueue.main.async {
+                self.setTypesForUrnik()
+            }
+        }
+        self.timer!.fire()
+    }
+    
     func loadUrnik(){
         self.loadFromStorage()
         guard let urnik = self.urnik else {
@@ -55,6 +65,7 @@ class UrnikManager:ObservableObject{
         if(urnik.isItOld()){
             self.fetchFromWeb()
         }
+        self.setUpTimer()
     }
     
     func saveToStorage(){
@@ -70,16 +81,82 @@ class UrnikManager:ObservableObject{
     }
     
     func fromJSON(json:Data, update:Bool = false){
-        do{
-            self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
-            if(self.urnik != nil && update){
-                self.urnik?.lastUpdated = Date()
-            }
-        }catch{}
+        DispatchQueue.main.async {
+            do{
+                self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
+                if(self.urnik != nil && update){
+                    self.urnik?.lastUpdated = Date()
+                }
+                if(self.urnik != nil){
+                    self.urnik!.onLoad()
+                }
+            }catch{}
+        }
         self.saveToStorage()
     }
     
     func dobiObdobje(obdobjeUrType:ObdobjeUr.ObdobjeUrType) -> ObdobjeUr?{
-        return self.urnik?.urnik.first
+        return self.urnik?.urnik.first(where: { obdobjeUr in
+            obdobjeUr.type == obdobjeUrType
+        })
+    }
+    
+    func setTypesForUrnik(){
+        if(self.urnik == nil){
+            return;
+        }
+        let dateNow:Date = Date()
+        var indexZaTrenutno:Int = -1
+        var indexZaNaslednjo:Int = -1
+        self.urnik?.poukType = .niPouka
+        var index:Int = 0
+        for var obdobjeUr:ObdobjeUr in self.urnik!.urnik{
+            if(obdobjeUr.zacetek == nil || obdobjeUr.konec == nil){
+                obdobjeUr.setStartAndEnd()
+                if(index > 0){
+                    self.urnik!.urnik[index - 1].setStartAndEnd()
+                }
+            }
+            if(obdobjeUr.zacetek!.isBefore(dateNow) && obdobjeUr.konec!.isAfter(dateNow)){
+                obdobjeUr.type = .trenutno
+                indexZaTrenutno = index
+                self.urnik?.poukType = .pouk
+                if(obdobjeUr.isEmpty()){
+                    self.urnik?.poukType = .odmor
+                }
+            }else{
+                obdobjeUr.type = .normalno
+            }
+            
+            if(indexZaTrenutno >= 0){
+                if(index == indexZaTrenutno + 1){
+                    obdobjeUr.type = .naslednje
+                }
+            }else{
+                if(index == 0){
+                    if(obdobjeUr.zacetek!.isAfter(dateNow)){
+                        obdobjeUr.type = .naslednje
+                        self.urnik?.poukType = .zacetekPouka
+                    }
+                }else{
+                    if(obdobjeUr.zacetek!.isAfter(dateNow) && self.urnik!.urnik[index - 1].konec!.isBefore(dateNow)){
+                        obdobjeUr.type = .naslednje
+                        self.urnik?.poukType = .odmor
+                    }
+                }
+            }
+            
+            if(obdobjeUr.type == .naslednje){
+                indexZaNaslednjo = index
+            }
+            
+            index += 1
+        }
+        
+        if(self.urnik?.urnik.count == 0){
+            self.urnik?.poukType = .niPouka
+        }else if(indexZaTrenutno == -1 && indexZaNaslednjo == -1){
+            self.urnik?.poukType = .konecPouka
+        }
     }
 }

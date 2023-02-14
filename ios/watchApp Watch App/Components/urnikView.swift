@@ -23,7 +23,7 @@ struct UrnikView:View{
                 }
             }.onAppear{
                 urnikManager.loadUrnik()
-            }
+            }.navigationTitle("Urnik")
         }else{
             ProgressView()
         }

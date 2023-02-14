@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ObdobjeUr:Identifiable,Decodable,Encodable{
+struct ObdobjeUr:Identifiable, Codable{
     var id:Int = 0;
     var ime:String = "";
     var trajanje:String = "";
@@ -25,8 +25,10 @@ struct ObdobjeUr:Identifiable,Decodable,Encodable{
         if(splitedTrajnje.count != 2){return;}
         let zacetekString = splitedTrajnje[0].trimmingCharacters(in: .whitespacesAndNewlines)
         let konecString = splitedTrajnje[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        self.zacetek = self.fromStringToHour(string: zacetekString)
-        self.konec = self.fromStringToHour(string: konecString)
+        guard let zac = self.fromStringToHour(string: zacetekString),
+              let konc = self.fromStringToHour(string: konecString) else{return;}
+        self.zacetek = zac
+        self.konec = konc
     }
     
     private func fromStringToHour(string:String) -> Date?{
@@ -36,7 +38,6 @@ struct ObdobjeUr:Identifiable,Decodable,Encodable{
         guard let hour:Int = Int(splitedString[0]), let minutes:Int = Int(splitedString[1]) else {return nil;}
         
         guard let date = Calendar.current.date(bySettingHour: hour, minute: minutes, second: 0, of: Date()) else{return nil;}
-        
         return date;
     }
     

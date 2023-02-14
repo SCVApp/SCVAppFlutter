@@ -13,12 +13,28 @@ struct HomePage: View{
     var body: some View{
         NavigationView{
             ScrollView{
+                Text(urnikManager.urnik?.poukType == .pouk ? "Pouk":"")
                 if let trenutnoObdobje = self.urnikManager.dobiObdobje(obdobjeUrType: .trenutno){
                     NavigationLink(destination:UrnikView()){
                         VStack{
                             ObdobjeUrView(obdobjeUr: trenutnoObdobje)
                         }
                     }.buttonStyle(PlainButtonStyle()) 
+                }else if let naslednjeObdobje = self.urnikManager.dobiObdobje(obdobjeUrType: .naslednje){
+                    NavigationLink(destination:UrnikView()){
+                        VStack{
+                            ObdobjeUrView(obdobjeUr: naslednjeObdobje)
+                        }
+                    }.buttonStyle(PlainButtonStyle())
+                }
+                else{
+                    NavigationLink(destination:UrnikView()){
+                        Label {
+                            Text("Urnik")
+                        } icon: {
+                            Image(systemName: "calendar")
+                        }
+                    }
                 }
                 NavigationLink(destination: SettingPage()) {
                     Label {
