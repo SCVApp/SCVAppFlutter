@@ -24,7 +24,7 @@ struct ObdobjeUr:Identifiable, Codable{
         let splitedTrajnje:[String] = self.trajanje.components(separatedBy: "-")
         if(splitedTrajnje.count != 2){return;}
         let zacetekString = splitedTrajnje[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        let konecString = splitedTrajnje[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        let konecString = splitedTrajnje[1].trimmingCharacters(in: .whitespacesAndNewlines)
         guard let zac = self.fromStringToHour(string: zacetekString),
               let konc = self.fromStringToHour(string: konecString) else{return;}
         self.zacetek = zac

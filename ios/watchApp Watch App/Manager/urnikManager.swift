@@ -49,23 +49,20 @@ class UrnikManager:ObservableObject{
     
     private func setUpTimer(){
         self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            DispatchQueue.main.async {
                 self.setTypesForUrnik()
-            }
         }
-        self.timer!.fire()
     }
     
     func loadUrnik(){
         self.loadFromStorage()
         guard let urnik = self.urnik else {
             self.fetchFromWeb()
+            self.setUpTimer()
             return;
         }
         if(urnik.isItOld()){
             self.fetchFromWeb()
         }
-        self.setUpTimer()
     }
     
     func saveToStorage(){
@@ -81,17 +78,16 @@ class UrnikManager:ObservableObject{
     }
     
     func fromJSON(json:Data, update:Bool = false){
-        DispatchQueue.main.async {
-            do{
-                self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
-                if(self.urnik != nil && update){
-                    self.urnik?.lastUpdated = Date()
-                }
-                if(self.urnik != nil){
-                    self.urnik!.onLoad()
-                }
-            }catch{}
-        }
+        do{
+            self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
+            if(self.urnik != nil && update){
+                self.urnik?.lastUpdated = Date()
+            }
+            if(self.urnik != nil){
+                self.urnik!.onLoad()
+                self.setTypesForUrnik()
+            }
+        }catch{}
         self.saveToStorage()
     }
     
@@ -109,48 +105,46 @@ class UrnikManager:ObservableObject{
         var indexZaTrenutno:Int = -1
         var indexZaNaslednjo:Int = -1
         self.urnik?.poukType = .niPouka
-        var index:Int = 0
-        for var obdobjeUr:ObdobjeUr in self.urnik!.urnik{
-            if(obdobjeUr.zacetek == nil || obdobjeUr.konec == nil){
-                obdobjeUr.setStartAndEnd()
+        for index:Int in 0...self.urnik!.urnik.count-1{
+            if(self.urnik!.urnik[index].zacetek == nil || self.urnik!.urnik[index].konec == nil){
+                self.urnik!.urnik[index].setStartAndEnd()
                 if(index > 0){
                     self.urnik!.urnik[index - 1].setStartAndEnd()
                 }
             }
-            if(obdobjeUr.zacetek!.isBefore(dateNow) && obdobjeUr.konec!.isAfter(dateNow)){
-                obdobjeUr.type = .trenutno
+            
+            if(self.urnik!.urnik[index].zacetek!.isBefore(dateNow) && self.urnik!.urnik[index].konec!.isAfter(dateNow)){
+                self.urnik!.urnik[index].type = .trenutno
                 indexZaTrenutno = index
                 self.urnik?.poukType = .pouk
-                if(obdobjeUr.isEmpty()){
+                if(self.urnik!.urnik[index].isEmpty()){
                     self.urnik?.poukType = .odmor
                 }
             }else{
-                obdobjeUr.type = .normalno
+                self.urnik!.urnik[index].type = .normalno
             }
             
             if(indexZaTrenutno >= 0){
                 if(index == indexZaTrenutno + 1){
-                    obdobjeUr.type = .naslednje
+                    self.urnik!.urnik[index].type = .naslednje
                 }
             }else{
                 if(index == 0){
-                    if(obdobjeUr.zacetek!.isAfter(dateNow)){
-                        obdobjeUr.type = .naslednje
+                    if(self.urnik!.urnik[index].zacetek!.isAfter(dateNow)){
+                        self.urnik!.urnik[index].type = .naslednje
                         self.urnik?.poukType = .zacetekPouka
                     }
                 }else{
-                    if(obdobjeUr.zacetek!.isAfter(dateNow) && self.urnik!.urnik[index - 1].konec!.isBefore(dateNow)){
-                        obdobjeUr.type = .naslednje
+                    if(self.urnik!.urnik[index].zacetek!.isAfter(dateNow) && self.urnik!.urnik[index - 1].konec!.isBefore(dateNow)){
+                        self.urnik!.urnik[index].type = .naslednje
                         self.urnik?.poukType = .odmor
                     }
                 }
             }
             
-            if(obdobjeUr.type == .naslednje){
+            if(self.urnik!.urnik[index].type == .naslednje){
                 indexZaNaslednjo = index
             }
-            
-            index += 1
         }
         
         if(self.urnik?.urnik.count == 0){

@@ -22,6 +22,19 @@ struct Ura:Identifiable, Codable{
         case nadomescanje, zaposlitev, odpadlo, normalno, dogodek
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.krajsava = try container.decode(String.self, forKey: .krajsava)
+        self.ucitelj = try container.decode(String.self, forKey: .ucitelj)
+        self.ucilnica = try container.decode(String.self, forKey: .ucilnica)
+        self.dogodek = try container.decode(String.self, forKey: .dogodek)
+        self.nadomescanje = try container.decode(Bool.self, forKey: .nadomescanje)
+        self.zaposlitev = try container.decode(Bool.self, forKey: .zaposlitev)
+        self.odpadlo = try container.decode(Bool.self, forKey: .odpadlo)
+        
+        self.setType()
+    }
+    
     func skrajsajIme() -> String{
         if(self.ucitelj.count < 1) {
             return "";
@@ -71,5 +84,20 @@ struct Ura:Identifiable, Codable{
         }
             
             return false;
+    }
+    
+    func getTextForType() -> String{
+        switch self.type{
+        case .nadomescanje:
+            return "Nadomescanje"
+        case .dogodek:
+            return "Dogodek"
+        case .odpadlo:
+            return "Odpadlo"
+        case .zaposlitev:
+            return "Zaposlitev"
+        default:
+            return ""
+        }
     }
 }

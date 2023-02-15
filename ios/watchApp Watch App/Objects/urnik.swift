@@ -45,21 +45,15 @@ struct Urnik:Encodable,Decodable{
     
     mutating func onLoad(){
         var deleteIndex:Int?
-        var index:Int = 0
-        for var obdobjeUr:ObdobjeUr in self.urnik{
-            obdobjeUr.setStartAndEnd()
-            for var ura:Ura in obdobjeUr.ura{
-                ura.setType()
-            }
-            if(obdobjeUr.isEmpty()){
+        for index:Int in 0...self.urnik.count-1{
+            self.urnik[index].setStartAndEnd()
+            if(self.urnik[index].isEmpty()){
                 if(deleteIndex == nil){
                     deleteIndex = index
                 }
             }else{
                 deleteIndex = nil
             }
-            
-            index += 1
         }
         if(deleteIndex != nil){
             self.urnik.removeSubrange(deleteIndex!...(self.urnik.count-1))
