@@ -13,11 +13,17 @@ struct UrnikView:View{
         if(!urnikManager.loading){
             VStack{
                 if(urnikManager.urnik != nil){
-                    List {
-                        ForEach((urnikManager.urnik?.urnik)!) { obdobjeUr in
-                            ObdobjeUrView(obdobjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
+                    ScrollViewReader{ scrollView in
+                        List {
+                            ForEach((urnikManager.urnik?.urnik)!) { obdobjeUr in
+                                ObdobjeUrView(obdobjeUr: obdobjeUr).listRowInsets(EdgeInsets()).listRowPlatterColor(.clear)
+                            }
+                        }.listStyle(.carousel).onAppear{
+                            if let trenutnoObdobje = urnikManager.dobiObdobje(obdobjeUrType: .trenutno){
+                                scrollView.scrollTo(trenutnoObdobje.id)
+                            }
                         }
-                    }.listStyle(.carousel)
+                    }
                 }else{
                     Text("Ni podatkov")
                 }
