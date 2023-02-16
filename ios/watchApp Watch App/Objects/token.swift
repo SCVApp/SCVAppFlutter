@@ -110,6 +110,12 @@ class Token: ObservableObject{
         
         return false;
     }
+    
+    func deleteAll(){
+        Token.defualts.removeObject(forKey: Token.accessTokenKey)
+        Token.defualts.removeObject(forKey: Token.refreshTokenKey)
+        Token.defualts.removeObject(forKey: Token.expiresOnKey)
+    }
 }
 
 struct TokenObj:Decodable,Encodable{

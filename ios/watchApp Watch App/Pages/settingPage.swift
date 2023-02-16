@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 struct SettingPage : View{
+    @EnvironmentObject private var appManager:AppManager
     var body: some View{
             VStack{
                 Button {
-                    
+                    appManager.logOut()
                 } label: {
                     Label {
                         Text("Odjava")

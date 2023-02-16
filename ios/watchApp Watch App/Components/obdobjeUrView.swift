@@ -11,9 +11,17 @@ import SwiftUI
 struct ObdobjeUrView:View{
     var obdobjeUr:ObdobjeUr
     var body:some View{
-        Text("\(obdobjeUr.ime) \(obdobjeUr.type == .naslednje ? "Naslednja ura":"")")
+        HStack{
+            Text(obdobjeUr.ime)
+            if obdobjeUr.type == .naslednje{
+                if let zacetek = obdobjeUr.zacetek{
+                    Text("sledi čez:")
+                    Text(zacetek, style: .timer)
+                }
+            }
+        }.lineLimit(nil)
             ForEach(obdobjeUr.ura) { ura in
-                UraView(obdonjeUr: obdobjeUr, ura: ura).listRowInsets(EdgeInsets())
+                UraView(obdonjeUr: obdobjeUr, ura: ura).listRowInsets(EdgeInsets()).id(ura.id)
             }
         }
     }

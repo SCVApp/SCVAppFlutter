@@ -13,11 +13,18 @@ struct HomePage: View{
     var body: some View{
         NavigationView{
             ScrollView{
-                Text(urnikManager.urnik?.poukType == .pouk ? "Pouk":"")
                 if let trenutnoObdobje = self.urnikManager.dobiObdobje(obdobjeUrType: .trenutno){
                     NavigationLink(destination:UrnikView()){
                         VStack{
                             ObdobjeUrView(obdobjeUr: trenutnoObdobje)
+                            if let obdobjeUr = self.urnikManager.dobiObdobje(obdobjeUrType: .naslednje){
+                                if let zacetek = obdobjeUr.zacetek{
+                                    VStack{
+                                        Text("Naslednja ura čez:")
+                                        Text(zacetek, style: .timer)
+                                    }
+                                }
+                            }
                         }
                     }.buttonStyle(PlainButtonStyle()) 
                 }else if let naslednjeObdobje = self.urnikManager.dobiObdobje(obdobjeUrType: .naslednje){

@@ -38,6 +38,10 @@ struct UrnikView:View{
 
 struct UrnikViewPreview:PreviewProvider{
     static var previews: some View{
-        UrnikView().environmentObject(UrnikManager())
+        UrnikView().environmentObject(UrnikManager(urnik: Urnik(urnik: [
+            ObdobjeUr(id: 1,ime: "1.ura",zacetek: Calendar.current.date(byAdding: .minute, value: 10, to: Date()),konec: Calendar.current.date(byAdding: .minute, value: 45, to: Date()),ura: [
+                Ura(krajsava: "VOS", ucitelj: "Ales Spital")
+            ],type: .naslednje)
+        ])))
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var appManager:AppManager
+    @EnvironmentObject private var urnikManager:UrnikManager
     var body: some View {
         VStack{
             if(appManager.user.loggedIn){
@@ -17,7 +18,7 @@ struct ContentView: View {
                 LoginPage()
             }
         }.onAppear{
-            appManager.onLoad()
+            appManager.onLoad(urnikManager: urnikManager)
         }
     }
 }

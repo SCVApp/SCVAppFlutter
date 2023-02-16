@@ -14,7 +14,7 @@ Future<void> initURIHandler() async {
   if (!initialURILinkHandled) {
     initialURILinkHandled = true;
     try {
-      final initialURI = await getInitialUri();
+      final initialURI = await getInitialUri(); // Dobimo povezavo s katero je bila aplikacija zagnana
       if (initialURI != null) {
         universalLink = initialURI.toString();
       }

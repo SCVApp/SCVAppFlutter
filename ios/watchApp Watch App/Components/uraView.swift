@@ -13,7 +13,7 @@ struct UraView: View{
     var body: some View{
         VStack {
             HStack{
-                Text(ura.krajsava)
+                Text(ura.type == .dogodek ? ura.dogodek : ura.krajsava)
                 Spacer()
                 Text(ura.ucilnica)
             }.padding(.horizontal,10).padding(.top, 10).lineLimit(5)

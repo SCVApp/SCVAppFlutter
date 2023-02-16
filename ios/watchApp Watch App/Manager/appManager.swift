@@ -21,11 +21,12 @@ final class AppManager:NSObject,ObservableObject{
         self.session.activate()
     }
     
-    func onLoad(){
+    func onLoad(urnikManager:UrnikManager){
         AppManager.token.load()
         AppManager.token.refresh()
         if(AppManager.token.accessToken != nil){
             self.user.logIn()
+            urnikManager.loadUrnik()
         }
     }
     
@@ -50,6 +51,11 @@ final class AppManager:NSObject,ObservableObject{
         if(AppManager.token.accessToken != nil){
             self.user.logIn()
         }
+    }
+    
+    func logOut(){
+        AppManager.token.deleteAll()
+        self.user.logOut()
     }
     
     func loginWithPhone(){

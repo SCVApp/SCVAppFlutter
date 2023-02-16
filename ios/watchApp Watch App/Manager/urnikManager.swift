@@ -14,6 +14,10 @@ class UrnikManager:ObservableObject{
     @Published var loading:Bool = false;
     var timer:Timer?
     
+    init(urnik: Urnik? = nil) {
+        self.urnik = urnik
+    }
+    
     func fetchFromWeb(){
         DispatchQueue.main.async {
             self.loading = self.urnik?.isFromToday() ?? true
@@ -49,7 +53,9 @@ class UrnikManager:ObservableObject{
     
     private func setUpTimer(){
         self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            DispatchQueue.main.async {
                 self.setTypesForUrnik()
+            }
         }
     }
     
@@ -78,16 +84,18 @@ class UrnikManager:ObservableObject{
     }
     
     func fromJSON(json:Data, update:Bool = false){
-        do{
-            self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
-            if(self.urnik != nil && update){
-                self.urnik?.lastUpdated = Date()
-            }
-            if(self.urnik != nil){
-                self.urnik!.onLoad()
-                self.setTypesForUrnik()
-            }
-        }catch{}
+        DispatchQueue.main.async {
+            do{
+                self.urnik = try JSONDecoder().decode(Urnik.self, from: json)
+                if(self.urnik != nil && update){
+                    self.urnik?.lastUpdated = Date()
+                }
+                if(self.urnik != nil){
+                    self.urnik!.onLoad()
+                    self.setTypesForUrnik()
+                }
+            }catch{}
+        }
         self.saveToStorage()
     }
     

@@ -35,6 +35,11 @@ struct Ura:Identifiable, Codable{
         self.setType()
     }
     
+    init(krajsava:String,ucitelj:String){
+        self.krajsava = krajsava
+        self.ucitelj = ucitelj
+    }
+    
     func skrajsajIme() -> String{
         if(self.ucitelj.count < 1) {
             return "";
