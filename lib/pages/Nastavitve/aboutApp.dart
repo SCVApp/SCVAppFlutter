@@ -39,6 +39,8 @@ class _AboutAppPage extends State<AboutAppPage> {
 
   bool isListViewBigger = true;
 
+  int currentYear = DateTime.now().year;
+
   @override
   Widget build(BuildContext context) {
     odpriLink(link) async {
@@ -104,7 +106,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   ? Column(children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
                       Text(
-                        "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
+                        "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
                         textAlign: TextAlign.center,
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 20))
@@ -116,7 +118,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           !isListViewBigger
               ? Column(children: [
                   Text(
-                    "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
+                    "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 5))
