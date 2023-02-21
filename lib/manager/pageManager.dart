@@ -107,6 +107,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
 
   void loadToken() async {
     await global.token.loadToken();
+    universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
     if (global.token.accessToken != null) {
       await loadFromCache();
       if (await global.canConnectToNetwork() == false) {
@@ -164,7 +165,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   Future<void> refreshUrnik() async {
-    universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
     final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
     await urnik.load();
     urnik.preveriCeJeUrnikOsvezenDanes();
@@ -185,6 +185,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         await biometric.save();
       }
       StoreProvider.of<AppState>(context).dispatch(biometric);
+      universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
       await global.token.refresh();
       await refreshUrnik();
     } else if (state == AppLifecycleState.paused) {

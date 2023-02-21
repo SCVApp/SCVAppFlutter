@@ -13,7 +13,8 @@ class AboutAppPage extends StatefulWidget {
 
 Future<void> _onOpen(LinkableElement link) async {
   if (await canLaunchUrl(Uri.parse(link.url))) {
-    // await launch(link.url);
+    await launchUrl(Uri.parse(link.url),
+        mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not launch $link';
   }
