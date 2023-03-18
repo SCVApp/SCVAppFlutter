@@ -40,6 +40,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
 
   @override
   void dispose() {
+    this.animationController.dispose();
     super.dispose();
   }
 
@@ -50,7 +51,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
 
   String doorNameId = '';
 
-  void checkUri() {
+  void checkUri() async {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
     final attributes = windowManager.getAttributes("PassDoor");
@@ -64,7 +65,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
 
     if (universalLinks.chechURI(uri)) {
       this.doorCode = uri.replaceFirst("scvapp://app.scv.si/open_door/", "");
-
+      await global.token.refresh();
       this.getDoorInfo();
       this.unlockDoor();
     }

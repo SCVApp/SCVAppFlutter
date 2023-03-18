@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
-
-import 'package:scv_app/pages/Login/intro.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 
 import '../../api/user.dart';
 import '../../store/AppState.dart';
@@ -24,6 +22,7 @@ class _LoginPage extends State<LoginPage> {
       isLoginIn = true;
     });
     await signInUser();
+    if (!mounted) return;
     setState(() {
       isLoginIn = false;
     });
@@ -31,7 +30,7 @@ class _LoginPage extends State<LoginPage> {
 
   Future<void> signInUser() async {
     try {
-      final result = await FlutterWebAuth.authenticate(
+      final result = await FlutterWebAuth2.authenticate(
           url: "${global.apiUrl}/auth/authUrl", callbackUrlScheme: "scvapp");
 
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
@@ -73,6 +72,7 @@ class _LoginPage extends State<LoginPage> {
   }
 
   Future<void> ErrorInLogin() async {
+    if (!mounted) return;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

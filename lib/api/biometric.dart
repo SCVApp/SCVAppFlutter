@@ -77,6 +77,11 @@ class Biometric {
   Future<void> delete() async {
     final FlutterSecureStorage storage = global.token.storage;
     await storage.delete(key: biometricKey);
+    this.biometric = false;
+    this.autoLockMode = 0;
+    this.lastActivity = DateTime.now();
+    this.isPaused = false;
+    this.locked = false;
   }
 
   Future<void> updateLastActivity({bool isPaused = false}) async {
@@ -123,7 +128,7 @@ class Biometric {
   }
 
   Future<bool> authenticate(BuildContext context,
-      {List<Widget> actions}) async {
+      {List<Widget> actions, String text}) async {
     bool authenticated = false;
     try {
       authenticated = await localAuthentication.authenticate(
@@ -133,14 +138,16 @@ class Biometric {
     } catch (e) {
       if (e.code == "NotAvailable" &&
           e.message == "Required security features not enabled") {
-        await biometricAlert(context, actions: actions);
+        await biometricAlert(context, actions: actions, text: text);
       }
     }
     return authenticated;
   }
 
-  Future<void> unlock(BuildContext context, {List<Widget> actions}) async {
-    if (await this.authenticate(context, actions: actions) == true) {
+  Future<void> unlock(BuildContext context,
+      {List<Widget> actions, String text}) async {
+    if (await this.authenticate(context, actions: actions, text: text) ==
+        true) {
       this.locked = false;
     }
   }

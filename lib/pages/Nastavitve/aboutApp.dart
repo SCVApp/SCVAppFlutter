@@ -13,7 +13,8 @@ class AboutAppPage extends StatefulWidget {
 
 Future<void> _onOpen(LinkableElement link) async {
   if (await canLaunchUrl(Uri.parse(link.url))) {
-    // await launch(link.url);
+    await launchUrl(Uri.parse(link.url),
+        mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not launch $link';
   }
@@ -38,6 +39,8 @@ class _AboutAppPage extends State<AboutAppPage> {
   bool _value = true;
 
   bool isListViewBigger = true;
+
+  int currentYear = DateTime.now().year;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   ? Column(children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
                       Text(
-                        "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
+                        "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
                         textAlign: TextAlign.center,
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 20))
@@ -116,7 +119,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           !isListViewBigger
               ? Column(children: [
                   Text(
-                    "ŠCVApp, 2022. Vse pravice pridržane. v${global.appVersion}",
+                    "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 5))

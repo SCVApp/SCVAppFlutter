@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/nastavitve/biomatricPage/autoLockPicekr.dart';
 
 import '../../components/backButton.dart';
-
-import 'package:scv_app/global/global.dart' as global;
-
 import '../../store/AppState.dart';
 
 class BiometicPage extends StatefulWidget {
@@ -29,16 +27,16 @@ class _BiometicPageState extends State<BiometicPage> {
   void handleChangeBiometricUnlock(bool value) async {
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
-    if (await biometric.authenticate(context, actions: [
-          TextButton(
-              child: const Text('Odpri nastavitve',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  )),
-              onPressed: () => Navigator.pop(context))
-        ]) ==
-        true) {
+    if (biometric.locked == true) {
+      return;
+    }
+    final String text =
+        "V telefonu nimaš nastavljenih varnostnih nastavitev, zato vam nemoremo spremeniti nastavitve biometričnega odklepanja.";
+    if (await biometric.authenticate(context, text: text) == true) {
       await biometric.setBiometric(value);
+      StoreProvider.of<AppState>(context).dispatch(biometric);
+    } else {
+      await biometric.setBiometric(false);
       StoreProvider.of<AppState>(context).dispatch(biometric);
     }
   }
@@ -55,6 +53,7 @@ class _BiometicPageState extends State<BiometicPage> {
         converter: (store) => store.state.biometric,
         builder: (context, biometric) {
           return Scaffold(
+            bottomSheet: AlertContainer(),
               body: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.max,

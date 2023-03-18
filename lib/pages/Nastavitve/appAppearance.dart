@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/appTheme.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/backButton.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,7 @@ class _AppAppearanceState extends State<AppAppearance> {
       converter: (store) => store.state.appTheme,
       builder: (context, appTheme) {
         return Scaffold(
+          bottomSheet: AlertContainer(),
             body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: Theme.of(context).backgroundColor == Colors.black
               ? SystemUiOverlayStyle.light

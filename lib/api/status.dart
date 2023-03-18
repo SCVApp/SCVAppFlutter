@@ -28,6 +28,7 @@ class Status {
   }
 
   Future<void> fetchData() async {
+    await global.token.refresh();
     final response = await http.get(
         Uri.parse(global.apiUrl + "/user/get/status"),
         headers: {"Authorization": global.token.accessToken});
@@ -39,6 +40,7 @@ class Status {
   }
 
   Future<void> changeStatus(String statusId) async {
+    await global.token.refresh();
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),

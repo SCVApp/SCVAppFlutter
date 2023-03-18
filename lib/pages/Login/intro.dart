@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:get/get.dart';
+import 'package:scv_app/components/alertContainer.dart';
 import '../../api/user.dart';
 import '../../extension/hexColor.dart';
 import '../../store/AppState.dart';
@@ -20,6 +21,7 @@ class LoginIntro extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
+      bottomSheet: AlertContainer(),
       body: SafeArea(
         child: IntroductionScreen(
           pages: [

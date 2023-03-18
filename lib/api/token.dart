@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Token {
   String accessToken;
@@ -33,6 +34,10 @@ class Token {
       accessToken = await storage.read(key: accessTokenKey);
       refreshToken = await storage.read(key: refreshTokenKey);
       expiresOn = await storage.read(key: expiresKey);
+
+      if (accessToken == null || refreshToken == null || expiresOn == null) {
+        await loadTokenFromSheredPrefs();
+      }
     } catch (e) {
       print(e);
     }
@@ -63,11 +68,15 @@ class Token {
   }
 
   Future<void> refresh({int depth = 0}) async {
+    if (!(await global.canConnectToNetwork())) {
+      return;
+    }
     try {
       DateTime expires = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
           .parse(this.expiresOn)
           .toUtc()
           .subtract(Duration(minutes: 3));
+
       if (expires.isBefore(DateTime.now().toUtc())) {
         final respons = await http.post(
             Uri.parse("${global.apiUrl}/auth/refreshToken/"),
@@ -75,6 +84,8 @@ class Token {
         if (respons.statusCode == 200) {
           this.fromJSON(jsonDecode(respons.body));
           await this.saveToken();
+        } else if (respons.statusCode == 402) {
+          throw Exception('402');
         } else {
           throw Exception('Failed to refresh token');
         }
@@ -83,10 +94,16 @@ class Token {
       if (e is FormatException) {
         return;
       }
+      final bool is402Error = e.toString() == 'Exception: 402';
       if (depth == 0) {
         global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
       }
-      if (depth >= 5) {
+      if (!is402Error) {
+        if (!(await global.canConnectToNetwork())) {
+          return;
+        }
+      }
+      if (depth >= 3 && is402Error) {
         global.showGlobalAlert(
             text: "Napaka pri osveževanju podatkov",
             action: TextButton(
@@ -96,9 +113,25 @@ class Token {
                 child: Text("Odjava")),
             duration: 10);
       } else {
-        await Future.delayed(Duration(seconds: 7));
-        await this.refresh(depth: depth + 1);
+        await Future.delayed(Duration(seconds: is402Error ? 5 : 10));
+        if (depth < 10) {
+          await this.refresh(depth: depth + 1);
+        }
       }
     }
+  }
+
+  Future<void> loadTokenFromSheredPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      this.accessToken = this.accessToken ?? prefs.getString('key_AccessToken');
+      this.refreshToken =
+          this.refreshToken ?? prefs.getString('key_RefreshToken');
+      this.expiresOn = this.expiresOn ?? prefs.getString('key_ExpiresOn');
+
+      prefs.remove('key_AccessToken');
+      prefs.remove('key_RefreshToken');
+      prefs.remove('key_ExpiresOn');
+    } catch (_) {}
   }
 }

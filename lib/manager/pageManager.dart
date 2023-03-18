@@ -9,6 +9,7 @@ import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
+import 'package:scv_app/manager/watchManager.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
 import 'package:scv_app/pages/PassDoor/unlock.dart';
@@ -28,6 +29,7 @@ class PageManager extends StatefulWidget {
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   StreamSubscription<ConnectivityResult> connectivity;
+  final WatchManager watchManager = WatchManager();
   final PageController pageControllerForLock = PageController();
 
   @override
@@ -66,6 +68,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     loadToken();
     loadAppTheme();
     loadBiometric();
+    watchManager.listenForMessagesFromWatch();
   }
 
   void onStateChange() {
@@ -86,24 +89,12 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     }
   }
 
-  Future<bool> canConnectToNetwork() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      }
-    } catch (_) {
-      return false;
-    }
-    return false;
-  }
-
   void handleConnectivityChange() async {
     await Future.delayed(Duration(seconds: 1));
 
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(context).state.globalAlert;
-    if (await canConnectToNetwork() == true) {
+    if (await global.canConnectToNetwork() == true) {
       if (globalAlert.text == "Nimate internetne povezave") {
         globalAlert.hide();
         loadToken();
@@ -116,9 +107,10 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
 
   void loadToken() async {
     await global.token.loadToken();
+    universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
     if (global.token.accessToken != null) {
       await loadFromCache();
-      if (await canConnectToNetwork() == false) {
+      if (await global.canConnectToNetwork() == false) {
         handleConnectivityChange();
         return;
       }
@@ -173,7 +165,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   Future<void> refreshUrnik() async {
-    universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
     final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
     await urnik.load();
     urnik.preveriCeJeUrnikOsvezenDanes();
@@ -194,9 +185,12 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         await biometric.save();
       }
       StoreProvider.of<AppState>(context).dispatch(biometric);
+      universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
+      universalLinks.universalLink = "";
       await global.token.refresh();
       await refreshUrnik();
     } else if (state == AppLifecycleState.paused) {
+      universalLinks.universalLink = "";
       universalLinks.goToUnlockPassDoor(context, "", close: true);
       final Biometric biometric =
           StoreProvider.of<AppState>(context).state.biometric;

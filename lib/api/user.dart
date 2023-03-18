@@ -39,6 +39,7 @@ class User {
   }
 
   Future<void> fetchData() async {
+    await global.token.refresh();
     final response = await http.get(Uri.parse(global.apiUrl + "/user/get"),
         headers: {"Authorization": global.token.accessToken});
     if (response.statusCode == 200) {

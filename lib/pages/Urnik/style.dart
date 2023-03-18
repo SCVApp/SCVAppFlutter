@@ -20,6 +20,8 @@ class UrnikStyle {
         return "naslednje ure";
       case PoukType.odmor:
         return "naslednje ure";
+      default:
+        break;
     }
   }
 
@@ -33,6 +35,8 @@ class UrnikStyle {
         return "assets/images/urnikIcons/odpadlo.png";
       case UraType.zaposlitev:
         return "assets/images/urnikIcons/zaposlitev.png";
+      default:
+        break;
     }
   }
 
@@ -47,12 +51,16 @@ class UrnikStyle {
         return HexColor.fromHex("#FFB9AE");
       case UraType.zaposlitev:
         return HexColor.fromHex("#FFB0F7");
+      default:
+        break;
     }
     switch (obdobjaUrType) {
       case ObdobjaUrType.trenutno:
         return school.schoolColor;
       case ObdobjaUrType.naslednje:
         return school.schoolSecondaryColor;
+      default:
+        break;
     }
     return Theme.of(context).cardColor;
   }
@@ -67,22 +75,33 @@ class UrnikStyle {
         return Colors.black;
       case UraType.zaposlitev:
         return Colors.black;
+      default:
+        break;
     }
     return Theme.of(context).primaryColor;
   }
 
+  static Color schoolTextPrimaryColor(School school) {
+    switch (school.id) {
+      case "GIM":
+        return Colors.black;
+      default:
+        return Colors.white;
+    }
+  }
+
   static Widget mainTitleForBox() {
-    return StoreConnector<AppState, Urnik>(
-      converter: (store) => store.state.urnik,
-      builder: (context, urnik) {
+    return StoreConnector<AppState, AppState>(
+      converter: (store) => store.state,
+      builder: (context, state) {
         String text = "";
-        if (urnik.poukType == PoukType.konecPouka) {
+        if (state.urnik.poukType == PoukType.konecPouka) {
           text = "Konec pouka";
-        } else if (urnik.poukType == PoukType.odmor) {
-          text = "Odmor do ${urnik.zacetekNaslednjegaObdobja()}";
-        } else if (urnik.poukType == PoukType.zacetekPouka) {
-          text = "Začetek pouka ob ${urnik.zacetekNaslednjegaObdobja()}";
-        } else if (urnik.poukType == PoukType.niPouka) {
+        } else if (state.urnik.poukType == PoukType.odmor) {
+          text = "Odmor do ${state.urnik.zacetekNaslednjegaObdobja()}";
+        } else if (state.urnik.poukType == PoukType.zacetekPouka) {
+          text = "Začetek pouka ob ${state.urnik.zacetekNaslednjegaObdobja()}";
+        } else if (state.urnik.poukType == PoukType.niPouka) {
           text = "Ni pouka";
         }
 
@@ -91,6 +110,7 @@ class UrnikStyle {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: schoolTextPrimaryColor(state.user.school),
           ),
         );
       },

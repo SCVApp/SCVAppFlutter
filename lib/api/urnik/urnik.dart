@@ -18,6 +18,7 @@ class Urnik {
   String doNaslednjeUre = "";
 
   Future<void> fetchFromWeb({bool force = false}) async {
+    await global.token.refresh();
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/user/schedule'),
