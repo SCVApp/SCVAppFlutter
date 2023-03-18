@@ -40,6 +40,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
 
   @override
   void dispose() {
+    this.animationController.dispose();
     super.dispose();
   }
 

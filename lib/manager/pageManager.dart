@@ -186,9 +186,11 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       }
       StoreProvider.of<AppState>(context).dispatch(biometric);
       universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
+      universalLinks.universalLink = "";
       await global.token.refresh();
       await refreshUrnik();
     } else if (state == AppLifecycleState.paused) {
+      universalLinks.universalLink = "";
       universalLinks.goToUnlockPassDoor(context, "", close: true);
       final Biometric biometric =
           StoreProvider.of<AppState>(context).state.biometric;
