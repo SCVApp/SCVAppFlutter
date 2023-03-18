@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/NavBarItem.dart';
 import 'package:scv_app/components/alertContainer.dart';
-import 'package:scv_app/pages/Malice/malicePage.dart';
 import 'package:scv_app/pages/Nastavitve/main.dart';
 import 'package:scv_app/pages/Urnik/main.dart';
 import 'package:scv_app/pages/easistentPage.dart';
@@ -12,6 +11,7 @@ import 'package:scv_app/pages/schoolHomePage.dart';
 import '../api/user.dart';
 import '../icons/ea_icon.dart';
 import '../store/AppState.dart';
+import 'Malice/main.dart';
 
 class HomePage extends StatefulWidget {
   @override

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class MalicePage extends StatefulWidget {
+class MaliceWebPage extends StatefulWidget {
   @override
-  _MalicePageState createState() => _MalicePageState();
+  _MaliceWebPageState createState() => _MaliceWebPageState();
 }
 
-class _MalicePageState extends State<MalicePage> {
+class _MaliceWebPageState extends State<MaliceWebPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
