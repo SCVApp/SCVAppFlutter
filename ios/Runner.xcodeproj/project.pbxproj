@@ -8,26 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		3115B968299929B1007C1022 /* watchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B967299929B1007C1022 /* watchAppApp.swift */; };
-		3115B96A299929B1007C1022 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B969299929B1007C1022 /* ContentView.swift */; };
-		3115B96C299929B2007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96B299929B2007C1022 /* Assets.xcassets */; };
-		3115B96F299929B2007C1022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3115B96E299929B2007C1022 /* Preview Assets.xcassets */; };
-		3115B975299929EE007C1022 /* SCVApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3115B965299929B1007C1022 /* SCVApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3115B979299929F8007C1022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
-		3115B99429992C26007C1022 /* uraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99229992C26007C1022 /* uraView.swift */; };
-		3115B99529992C26007C1022 /* urnikView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99329992C26007C1022 /* urnikView.swift */; };
-		3115B99829992C35007C1022 /* urnikManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99629992C35007C1022 /* urnikManager.swift */; };
-		3115B99929992C35007C1022 /* appManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99729992C35007C1022 /* appManager.swift */; };
-		3115B99F29992C49007C1022 /* ura.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99A29992C48007C1022 /* ura.swift */; };
-		3115B9A029992C49007C1022 /* urnik.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99B29992C49007C1022 /* urnik.swift */; };
-		3115B9A129992C49007C1022 /* token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99C29992C49007C1022 /* token.swift */; };
-		3115B9A229992C49007C1022 /* obdobjeUr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99D29992C49007C1022 /* obdobjeUr.swift */; };
-		3115B9A329992C49007C1022 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B99E29992C49007C1022 /* user.swift */; };
-		3115B9A629992C51007C1022 /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A429992C51007C1022 /* homePage.swift */; };
-		3115B9A729992C51007C1022 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3115B9A529992C51007C1022 /* loginPage.swift */; };
-		31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31378216299A087D0089C33A /* obdobjeUrView.swift */; };
-		3137E9D4299B77E700550A49 /* settingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3137E9D3299B77E700550A49 /* settingPage.swift */; };
-		3156F0B5299A30D800BB4281 /* date.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3156F0B4299A30D800BB4281 /* date.extension.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		57D855A56826B8C99E50A336 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D814436B1DED9655F1E3E602 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -36,16 +16,6 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3115B976299929EE007C1022 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3115B964299929B1007C1022;
-			remoteInfo = "watchApp Watch App";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		3115B978299929EE007C1022 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -53,7 +23,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				3115B975299929EE007C1022 /* SCVApp.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,25 +42,6 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		3115B965299929B1007C1022 /* SCVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3115B967299929B1007C1022 /* watchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchAppApp.swift; sourceTree = "<group>"; };
-		3115B969299929B1007C1022 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3115B96B299929B2007C1022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3115B96E299929B2007C1022 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3115B99229992C26007C1022 /* uraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uraView.swift; sourceTree = "<group>"; };
-		3115B99329992C26007C1022 /* urnikView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnikView.swift; sourceTree = "<group>"; };
-		3115B99629992C35007C1022 /* urnikManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnikManager.swift; sourceTree = "<group>"; };
-		3115B99729992C35007C1022 /* appManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = appManager.swift; sourceTree = "<group>"; };
-		3115B99A29992C48007C1022 /* ura.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ura.swift; sourceTree = "<group>"; };
-		3115B99B29992C49007C1022 /* urnik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = urnik.swift; sourceTree = "<group>"; };
-		3115B99C29992C49007C1022 /* token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = token.swift; sourceTree = "<group>"; };
-		3115B99D29992C49007C1022 /* obdobjeUr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = obdobjeUr.swift; sourceTree = "<group>"; };
-		3115B99E29992C49007C1022 /* user.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
-		3115B9A429992C51007C1022 /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
-		3115B9A529992C51007C1022 /* loginPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
-		31378216299A087D0089C33A /* obdobjeUrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = obdobjeUrView.swift; sourceTree = "<group>"; };
-		3137E9D3299B77E700550A49 /* settingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingPage.swift; sourceTree = "<group>"; };
-		3156F0B4299A30D800BB4281 /* date.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = date.extension.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		454CEC824A4BAD8453CBD115 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -110,13 +60,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3115B962299929B1007C1022 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		97C146EB1CF9000F007C117D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,79 +71,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3115B966299929B1007C1022 /* watchApp Watch App */ = {
-			isa = PBXGroup;
-			children = (
-				3156F0B3299A30B100BB4281 /* extensions */,
-				3115B99129992C0C007C1022 /* Manager */,
-				3115B99029992C07007C1022 /* Objects */,
-				3115B98F29992BF7007C1022 /* Pages */,
-				3115B98E29992BEE007C1022 /* Components */,
-				3115B967299929B1007C1022 /* watchAppApp.swift */,
-				3115B969299929B1007C1022 /* ContentView.swift */,
-				3115B96B299929B2007C1022 /* Assets.xcassets */,
-				3115B96D299929B2007C1022 /* Preview Content */,
-			);
-			path = "watchApp Watch App";
-			sourceTree = "<group>";
-		};
-		3115B96D299929B2007C1022 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				3115B96E299929B2007C1022 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		3115B98E29992BEE007C1022 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				3115B99229992C26007C1022 /* uraView.swift */,
-				3115B99329992C26007C1022 /* urnikView.swift */,
-				31378216299A087D0089C33A /* obdobjeUrView.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		3115B98F29992BF7007C1022 /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-				3115B9A429992C51007C1022 /* homePage.swift */,
-				3115B9A529992C51007C1022 /* loginPage.swift */,
-				3137E9D3299B77E700550A49 /* settingPage.swift */,
-			);
-			path = Pages;
-			sourceTree = "<group>";
-		};
-		3115B99029992C07007C1022 /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-				3115B99D29992C49007C1022 /* obdobjeUr.swift */,
-				3115B99C29992C49007C1022 /* token.swift */,
-				3115B99A29992C48007C1022 /* ura.swift */,
-				3115B99B29992C49007C1022 /* urnik.swift */,
-				3115B99E29992C49007C1022 /* user.swift */,
-			);
-			path = Objects;
-			sourceTree = "<group>";
-		};
-		3115B99129992C0C007C1022 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				3115B99729992C35007C1022 /* appManager.swift */,
-				3115B99629992C35007C1022 /* urnikManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		3156F0B3299A30B100BB4281 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				3156F0B4299A30D800BB4281 /* date.extension.swift */,
-			);
-			path = extensions;
-			sourceTree = "<group>";
-		};
 		3288FBE4B3D27DDEA8B17493 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,7 +97,6 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				3115B966299929B1007C1022 /* watchApp Watch App */,
 				97C146EF1CF9000F007C117D /* Products */,
 				3288FBE4B3D27DDEA8B17493 /* Pods */,
 				DB8B0DF8005911F94D6E4356 /* Frameworks */,
@@ -238,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
-				3115B965299929B1007C1022 /* SCVApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -269,23 +137,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3115B964299929B1007C1022 /* watchApp Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3115B970299929B2007C1022 /* Build configuration list for PBXNativeTarget "watchApp Watch App" */;
-			buildPhases = (
-				3115B961299929B1007C1022 /* Sources */,
-				3115B962299929B1007C1022 /* Frameworks */,
-				3115B963299929B1007C1022 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "watchApp Watch App";
-			productName = "watchApp Watch App";
-			productReference = 3115B965299929B1007C1022 /* SCVApp.app */;
-			productType = "com.apple.product-type.application";
-		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
@@ -303,7 +154,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3115B977299929EE007C1022 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -320,9 +170,6 @@
 				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
-					3115B964299929B1007C1022 = {
-						CreatedOnToolsVersion = 14.2;
-					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 1100;
@@ -343,22 +190,11 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
-				3115B964299929B1007C1022 /* watchApp Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3115B963299929B1007C1022 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3115B96F299929B2007C1022 /* Preview Assets.xcassets in Resources */,
-				3115B979299929F8007C1022 /* Assets.xcassets in Resources */,
-				3115B96C299929B2007C1022 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		97C146EC1CF9000F007C117D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -445,29 +281,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3115B961299929B1007C1022 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3115B9A129992C49007C1022 /* token.swift in Sources */,
-				3115B99F29992C49007C1022 /* ura.swift in Sources */,
-				3115B99829992C35007C1022 /* urnikManager.swift in Sources */,
-				3115B9A629992C51007C1022 /* homePage.swift in Sources */,
-				3115B99929992C35007C1022 /* appManager.swift in Sources */,
-				3115B9A229992C49007C1022 /* obdobjeUr.swift in Sources */,
-				3115B99429992C26007C1022 /* uraView.swift in Sources */,
-				3137E9D4299B77E700550A49 /* settingPage.swift in Sources */,
-				3115B96A299929B1007C1022 /* ContentView.swift in Sources */,
-				3115B9A729992C51007C1022 /* loginPage.swift in Sources */,
-				3115B99529992C26007C1022 /* urnikView.swift in Sources */,
-				3115B968299929B1007C1022 /* watchAppApp.swift in Sources */,
-				3115B9A329992C49007C1022 /* user.swift in Sources */,
-				3156F0B5299A30D800BB4281 /* date.extension.swift in Sources */,
-				3115B9A029992C49007C1022 /* urnik.swift in Sources */,
-				31378217299A087D0089C33A /* obdobjeUrView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		97C146EA1CF9000F007C117D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -478,14 +291,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3115B977299929EE007C1022 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3115B964299929B1007C1022 /* watchApp Watch App */;
-			targetProxy = 3115B976299929EE007C1022 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		97C146FA1CF9000F007C117D /* Main.storyboard */ = {
@@ -577,129 +382,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Profile;
-		};
-		3115B971299929B2007C1022 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = VQNCFUD4J9;
-				ENABLE_PREVIEWS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
-				PRODUCT_NAME = SCVApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
-			};
-			name = Debug;
-		};
-		3115B972299929B2007C1022 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = VQNCFUD4J9;
-				ENABLE_PREVIEWS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
-				PRODUCT_NAME = SCVApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
-			};
-			name = Release;
-		};
-		3115B973299929B2007C1022 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"watchApp Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = VQNCFUD4J9;
-				ENABLE_PREVIEWS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.SCVApp.si;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SCVApp.si.watch;
-				PRODUCT_NAME = SCVApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Profile;
 		};
@@ -860,16 +542,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3115B970299929B2007C1022 /* Build configuration list for PBXNativeTarget "watchApp Watch App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3115B971299929B2007C1022 /* Debug */,
-				3115B972299929B2007C1022 /* Release */,
-				3115B973299929B2007C1022 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
