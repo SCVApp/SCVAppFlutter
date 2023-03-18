@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/components/malice/mealsBoxDecoration.dart';
 
-Widget MealInfoBox(String info, String value,
+Widget MealInfoBox(BuildContext context, String info, String value,
     {TextAlign textAlignForValue = TextAlign.right,
     Function onTap,
     Icon icon}) {
   return GestureDetector(
     child: Container(
-      decoration: mealsBoxDecoration(),
+      decoration: mealsBoxDecoration(context),
       padding: EdgeInsets.all(10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

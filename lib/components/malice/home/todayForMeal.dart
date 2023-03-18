@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/components/malice/mealsBoxDecoration.dart';
-import 'package:scv_app/extension/hexColor.dart';
 
-Widget TodayForMeal() {
+Widget TodayForMeal(BuildContext context) {
   return Container(
-    decoration: mealsBoxDecoration(),
+    decoration: mealsBoxDecoration(context),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

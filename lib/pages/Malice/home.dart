@@ -16,15 +16,15 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
       body: ListView(
         padding: EdgeInsets.all(10),
         children: [
-          TodayForMeal(),
-          MealInfoBox("PIN:", "69420"),
-          MealInfoBox(
-              "Malica za jutri:", "Perutničke z medom, dušen riž, solata",
+          TodayForMeal(context),
+          MealInfoBox(context, "PIN:", "69420"),
+          MealInfoBox(context, "Malica za jutri:",
+              "Perutničke z medom, dušen riž, solata",
               textAlignForValue: TextAlign.center),
-          MealInfoBox("Stanje na računu:", "69,42€"),
-          MealInfoBox("Naroči za naslednje dni:", "",
+          MealInfoBox(context, "Stanje na računu:", "69,42€"),
+          MealInfoBox(context, "Naroči za naslednje dni:", "",
               icon: Icon(Icons.arrow_forward_ios)),
-          MealInfoBox("Ostale informacije:", "",
+          MealInfoBox(context, "Ostale informacije:", "",
               icon: Icon(Icons.arrow_forward_ios)),
         ].withSpaceBetween(spacing: 15),
       ),
