@@ -4,6 +4,9 @@ import 'package:scv_app/components/malice/home/todayForMeal.dart';
 import 'package:scv_app/extension/withSpaceBetween.dart';
 
 class MaliceHomePage extends StatefulWidget {
+  MaliceHomePage(this.goToSelectMenu, {Key key}) : super(key: key);
+
+  final Function goToSelectMenu;
   @override
   _MaliceHomePageState createState() => _MaliceHomePageState();
 }
@@ -23,7 +26,8 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
               textAlignForValue: TextAlign.center),
           MealInfoBox(context, "Stanje na računu:", "69,42€"),
           MealInfoBox(context, "Naroči za naslednje dni:", "",
-              icon: Icon(Icons.arrow_forward_ios)),
+              icon: Icon(Icons.arrow_forward_ios),
+              onTap: widget.goToSelectMenu),
           MealInfoBox(context, "Ostale informacije:", "",
               icon: Icon(Icons.arrow_forward_ios)),
         ].withSpaceBetween(spacing: 15),
