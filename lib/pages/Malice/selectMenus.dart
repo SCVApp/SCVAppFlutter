@@ -33,7 +33,8 @@ class _MaliceSelectMenusState extends State<MaliceSelectMenus> {
           Align(
             alignment: Alignment.centerLeft,
             child: TextButton(
-              child: Icon(Icons.arrow_back_ios, color: Colors.black),
+              child: Icon(Icons.arrow_back_ios,
+                  color: Theme.of(context).primaryColor),
               onPressed: widget.goToHomePage,
             ),
           ),
