@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/components/malice/selectMeals/selectDateCalander.dart';
 import 'package:scv_app/components/malice/selectMeals/selectMenus.dart';
 import 'package:scv_app/extension/withSpaceBetween.dart';
 
@@ -13,24 +14,38 @@ class MaliceSelectMenus extends StatefulWidget {
 }
 
 class _MaliceSelectMenusState extends State<MaliceSelectMenus> {
+  bool isCalanderOpen = false;
+
+  void toggleCalander() {
+    setState(() {
+      isCalanderOpen = !isCalanderOpen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton(
-            child: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: widget.goToHomePage,
+        body: Stack(alignment: Alignment.bottomCenter, children: [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              child: Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: widget.goToHomePage,
+            ),
           ),
-        ),
-        MealsSelectedDate(),
-        Padding(padding: EdgeInsets.only(top: 20)),
-        MealSelectMenus(context),
-      ],
-    ));
+          MealsSelectedDate(toggleCalander),
+          Padding(padding: EdgeInsets.only(top: 20)),
+          MealSelectMenus(context),
+        ],
+      ),
+      Positioned(
+        child: isCalanderOpen ? MealsSelectDateCalander(context) : SizedBox(),
+        height: MediaQuery.of(context).size.height / 2,
+      )
+    ]));
   }
 }

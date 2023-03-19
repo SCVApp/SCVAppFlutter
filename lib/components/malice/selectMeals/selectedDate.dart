@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget MealsSelectedDate() {
+Widget MealsSelectedDate(Function toggleCalander) {
   return Center(
       child: Row(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -11,10 +11,11 @@ Widget MealsSelectedDate() {
         Icons.arrow_back_ios,
         size: 35,
       ),
+      GestureDetector(child:
       Text(
         "Izbran datum: 30.2.2022",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-      ),
+      ),onTap: toggleCalander,),
       Icon(
         Icons.arrow_forward_ios,
         size: 35,
