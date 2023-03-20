@@ -9,7 +9,6 @@ import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
-import 'package:scv_app/manager/watchManager.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
 import 'package:scv_app/pages/PassDoor/unlock.dart';
@@ -29,7 +28,6 @@ class PageManager extends StatefulWidget {
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   StreamSubscription<ConnectivityResult> connectivity;
-  final WatchManager watchManager = WatchManager();
   final PageController pageControllerForLock = PageController();
 
   @override
@@ -68,7 +66,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     loadToken();
     loadAppTheme();
     loadBiometric();
-    watchManager.listenForMessagesFromWatch();
   }
 
   void onStateChange() {
@@ -101,8 +98,17 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       }
     } else {
       globalAlert.show("Nimate internetne povezave", null, Icons.wifi_off);
+      chechIfInternetConnectionIsBack();
     }
     StoreProvider.of<AppState>(context).dispatch(globalAlert);
+  }
+
+  void chechIfInternetConnectionIsBack() {
+    //on new thread
+    Future.delayed(Duration(seconds: 5), () {
+      //on main thread
+      handleConnectivityChange();
+    });
   }
 
   void loadToken() async {
