@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/pages/Malice/home.dart';
 import 'package:scv_app/pages/Malice/login.dart';
+import 'package:scv_app/pages/Malice/otherInformations.dart';
 import 'package:scv_app/pages/Malice/selectMenus.dart';
 
 class MalicePage extends StatefulWidget {
@@ -19,6 +20,10 @@ class _MalicePageState extends State<MalicePage> {
     _pageController.jumpToPage(0);
   }
 
+  void goToOtherInformations() {
+    _pageController.jumpToPage(3);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +31,10 @@ class _MalicePageState extends State<MalicePage> {
         body: PageView(
           controller: _pageController,
           children: <Widget>[
-            MaliceHomePage(goToSelectMenu),
+            MaliceHomePage(goToSelectMenu, goToOtherInformations),
             MaliceLoginPage(),
-            MaliceSelectMenus(goToHomePage)
+            MaliceSelectMenus(goToHomePage),
+            MaliceOtherInformations(goToHomePage),
           ],
           physics: NeverScrollableScrollPhysics(),
         ));
