@@ -72,12 +72,11 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     final int currentPage = pageControllerForLock.page.round();
     final bool locked =
         StoreProvider.of<AppState>(context).state.biometric.locked;
-    final int nextPage = locked ? 1 : 0;
+    int nextPage = locked ? 1 : 0;
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
     if (!locked && windowManager.haveToChangeWindow(currentPage)) {
-      final int newPage = windowManager.getIndexOfWindow();
-      pageControllerForLock.jumpToPage(newPage);
+      nextPage = windowManager.getIndexOfWindow();
     } else if (!locked && windowManager.getIndexOfWindow() != 0) {
       return;
     }
