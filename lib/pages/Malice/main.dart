@@ -10,7 +10,7 @@ class MalicePage extends StatefulWidget {
 }
 
 class _MalicePageState extends State<MalicePage> {
-  PageController _pageController = PageController(initialPage: 1);
+  PageController _pageController = PageController(initialPage: 0);
 
   void goToSelectMenu() {
     _pageController.jumpToPage(2);

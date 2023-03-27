@@ -23,11 +23,11 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
         padding: EdgeInsets.all(10),
         children: [
           TodayForMeal(context),
-          MealInfoBox(context, "PIN:", "69420"),
+          MealInfoBox(context, "PIN:", "678534"),
           MealInfoBox(context, "Malica za jutri:",
               "Perutničke z medom, dušen riž, solata",
               textAlignForValue: TextAlign.center),
-          MealInfoBox(context, "Stanje na računu:", "69,42€"),
+          MealInfoBox(context, "Stanje na računu:", "27,03€"),
           MealInfoBox(context, "Naroči za naslednje dni:", "",
               icon: Icon(Icons.arrow_forward_ios),
               onTap: widget.goToSelectMenu),
