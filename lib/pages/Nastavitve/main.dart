@@ -167,6 +167,16 @@ class _NastavitvePageState extends State<NastavitvePage> {
                         backgroundColor: user.school.schoolColor //Barva šole
                         ),
                   ),
+                  SettingsItem(
+                    onTap: () {},
+                    icons: Icons.public,
+                    title: "EPAS",
+                    subtitle: "Dan Evrope",
+                    iconStyle: IconStyle(
+                      iconsColor: Theme.of(context).hintColor,
+                      backgroundColor: HexColor.fromHex("#50C878"),
+                    ),
+                  )
                 ],
               )
             ],
