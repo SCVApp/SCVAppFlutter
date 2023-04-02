@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:scv_app/components/nastavitve/profilePictureWithStatus.dart';
 
@@ -23,7 +25,7 @@ class SettingsUserCard extends StatelessWidget {
     var mediaQueryHeight = MediaQuery.of(context).size.height;
     if (this.userMoreInfo == null) this.userMoreInfo = Container();
     return Container(
-      height: mediaQueryHeight / 4,
+      height: max(mediaQueryHeight / 4, 140),
       margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         color: cardColor,
@@ -68,7 +70,7 @@ class SettingsUserCard extends StatelessWidget {
                             userName,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: mediaQueryHeight / 31,
+                              fontSize: max(mediaQueryHeight / 31, 16),
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.right,

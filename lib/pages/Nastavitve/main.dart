@@ -81,8 +81,9 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   user.mail,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize:
-                          min(MediaQuery.of(context).size.height / 42, 14.0)),
+                      fontSize: min(
+                          max(MediaQuery.of(context).size.height / 42, 14),
+                          14.0)),
                 ),
                 cardColor: user.school.schoolColor,
               ),
