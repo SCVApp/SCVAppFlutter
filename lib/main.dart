@@ -12,7 +12,6 @@ import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/theme/Themes.dart';
 
 void main() {
-  //use redux to handle state
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.initial(),
