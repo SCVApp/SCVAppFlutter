@@ -5,6 +5,7 @@ class WindowManager {
 
   WindowManager() {
     windows.add(new Window(name: "PassDoor", pageViewIndex: 2));
+    windows.add(new Window(name: "EPAS", pageViewIndex: 3));
   }
 
   bool haveToChangeWindow(int currentIndex) {

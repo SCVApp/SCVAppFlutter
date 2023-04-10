@@ -34,38 +34,40 @@ class _AppAppearanceState extends State<AppAppearance> {
       converter: (store) => store.state.appTheme,
       builder: (context, appTheme) {
         return Scaffold(
-          bottomSheet: AlertContainer(),
+            bottomSheet: AlertContainer(),
             body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: Theme.of(context).backgroundColor == Colors.black
-              ? SystemUiOverlayStyle.light
-              : SystemUiOverlayStyle.dark,
-          child: SafeArea(
-              child: SingleChildScrollView(
-                  child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                backButton(context),
-                SizedBox(height: 20),
-                Get.isDarkMode
-                    ? MoonIcon(Theme.of(context).scaffoldBackgroundColor,
-                        size: min(200, MediaQuery.of(context).size.width * 0.5))
-                    : SunIcon(
-                        size:
-                            min(200, MediaQuery.of(context).size.width * 0.5)),
-                SizedBox(height: spaceInView),
-                Text(
-                  "Izberi temo",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              value: Theme.of(context).primaryColor == Colors.white
+                  ? SystemUiOverlayStyle.light
+                  : SystemUiOverlayStyle.dark,
+              child: SafeArea(
+                  child: SingleChildScrollView(
+                      child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    backButton(context),
+                    SizedBox(height: 20),
+                    Get.isDarkMode
+                        ? MoonIcon(Theme.of(context).scaffoldBackgroundColor,
+                            size: min(
+                                200, MediaQuery.of(context).size.width * 0.5))
+                        : SunIcon(
+                            size: min(
+                                200, MediaQuery.of(context).size.width * 0.5)),
+                    SizedBox(height: spaceInView),
+                    Text(
+                      "Izberi temo",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    SizedBox(height: spaceInView),
+                    ThemesSelector(context, appTheme.type, handleChanged,
+                        padding: 70),
+                  ],
                 ),
-                SizedBox(height: spaceInView),
-                ThemesSelector(context, appTheme.type, handleChanged,
-                    padding: 70),
-              ],
-            ),
-          ))),
-        ));
+              ))),
+            ));
       },
     );
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/biometric.dart';
@@ -19,6 +20,7 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
 
 import '../api/appTheme.dart';
+import '../pages/EPAS/home.dart';
 import '../pages/home.dart';
 
 class PageManager extends StatefulWidget {
@@ -221,14 +223,19 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   Widget mainPage() {
-    return PageView(
-      controller: this.pageControllerForLock,
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        HomePage(),
-        LockPage(),
-        UnlockedPassDoor(),
-      ],
-    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: Theme.of(context).primaryColor == Colors.white
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark,
+        child: PageView(
+          controller: this.pageControllerForLock,
+          physics: NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            HomePage(),
+            LockPage(),
+            UnlockedPassDoor(),
+            EPASHomePage(),
+          ],
+        ));
   }
 }

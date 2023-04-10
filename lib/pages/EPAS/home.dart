@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/components/EPAS/home/card.dart';
+import 'package:scv_app/components/EPAS/home/list.dart';
+import 'package:scv_app/extension/hexColor.dart';
+
+import '../../api/windowManager/windowManager.dart';
+import '../../store/AppState.dart';
+
+class EPASHomePage extends StatefulWidget {
+  @override
+  _EPASHomePageState createState() => _EPASHomePageState();
+}
+
+class _EPASHomePageState extends State<EPASHomePage> {
+  void goBack() {
+    final WindowManager windowManager =
+        StoreProvider.of<AppState>(context).state.windowManager;
+    windowManager.hideWindow("EPAS");
+    StoreProvider.of<AppState>(context).dispatch(windowManager);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: HexColor.fromHex("#009D65"),
+        body: SafeArea(
+            bottom: false,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          BackButton(
+                            onPressed: goBack,
+                          ),
+                          Icon(
+                            Icons.info_outline,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    EPASHomeList(context)
+                  ],
+                ),
+                Positioned(
+                  child: EPASHomeCard(context),
+                  top: 70,
+                  left: 20,
+                ),
+              ],
+            )));
+  }
+}

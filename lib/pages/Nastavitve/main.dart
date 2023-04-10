@@ -14,6 +14,7 @@ import 'package:scv_app/store/AppState.dart';
 import 'package:get/get.dart';
 
 import '../../api/user.dart';
+import '../../api/windowManager/windowManager.dart';
 import '../../extension/hexColor.dart';
 import 'aboutApp.dart';
 import 'biometricPage.dart';
@@ -62,6 +63,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
       context,
       MaterialPageRoute(builder: (context) => ChangeStatusPage()),
     );
+  }
+
+  void goToEPAS() {
+    final WindowManager windowManager =
+        StoreProvider.of<AppState>(context).state.windowManager;
+    windowManager.showWindow("EPAS");
+    StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
 
   @override
@@ -169,7 +177,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                         ),
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: goToEPAS,
                     icons: Icons.public,
                     title: "EPAS",
                     subtitle: "Dan Evrope",
