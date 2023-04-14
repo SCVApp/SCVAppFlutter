@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
@@ -15,6 +16,7 @@ class AppState {
   final Urnik urnik;
   final GlobalAlert globalAlert;
   final WindowManager windowManager;
+  final EPASApi epasApi;
 
   AppState({
     @required this.user,
@@ -23,6 +25,7 @@ class AppState {
     @required this.urnik,
     @required this.globalAlert,
     @required this.windowManager,
+    @required this.epasApi,
   });
 
   factory AppState.initial() {
@@ -33,6 +36,7 @@ class AppState {
       urnik: new Urnik(),
       globalAlert: new GlobalAlert(),
       windowManager: new WindowManager(),
+      epasApi: new EPASApi(),
     );
   }
 }
