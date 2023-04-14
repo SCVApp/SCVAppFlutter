@@ -5,11 +5,30 @@ import 'package:scv_app/api/epas/workshop.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 
-class EPASApi {
+import '../extension.dart';
+
+class EPASApi extends Extension {
   List<EPASWorkshop> workshops = [];
   List<EPASTimetable> timetables = [];
   bool loading = false;
-  static final String EPASapiUrl = 'http://localhost:3000/api';
+  static final String EPASapiUrl = 'http://localhost:3001/api';
+
+  EPASApi() {
+    this.name = 'EPAS';
+  }
+
+  @override
+  void checkAuth() async {
+    try {
+      final response = await http.get(Uri.parse('${EPASapiUrl}/user'),
+          headers: {'Authorization': global.token.accessToken});
+      if (response.statusCode == 200) {
+        this.authorised = true;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void loadTimetables() async {
     try {

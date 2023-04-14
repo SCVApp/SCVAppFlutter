@@ -8,6 +8,7 @@ import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
+import 'package:scv_app/manager/extensionManager.dart';
 
 class AppState {
   final User user;
@@ -16,7 +17,7 @@ class AppState {
   final Urnik urnik;
   final GlobalAlert globalAlert;
   final WindowManager windowManager;
-  final EPASApi epasApi;
+  final ExtensionManager extensionManager;
 
   AppState({
     @required this.user,
@@ -25,7 +26,7 @@ class AppState {
     @required this.urnik,
     @required this.globalAlert,
     @required this.windowManager,
-    @required this.epasApi,
+    @required this.extensionManager,
   });
 
   factory AppState.initial() {
@@ -36,7 +37,7 @@ class AppState {
       urnik: new Urnik(),
       globalAlert: new GlobalAlert(),
       windowManager: new WindowManager(),
-      epasApi: new EPASApi(),
+      extensionManager: new ExtensionManager(),
     );
   }
 }

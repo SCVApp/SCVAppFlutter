@@ -10,6 +10,7 @@ import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
+import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
 import 'package:scv_app/pages/PassDoor/unlock.dart';
@@ -130,7 +131,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
             text: "Prišlo je do napake pri nalaganju podatkov.");
       }
       StoreProvider.of<AppState>(context).dispatch(user);
-      await refreshUrnik();
+      await Future.wait([refreshUrnik(), loadAuthExtensions()]);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;
@@ -169,6 +170,13 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     biometric.showLockScreen();
     await biometric.save();
     StoreProvider.of<AppState>(context).dispatch(biometric);
+  }
+
+  Future<void> loadAuthExtensions() async {
+    final ExtensionManager extensionManager =
+        StoreProvider.of<AppState>(context).state.extensionManager;
+    await extensionManager.checkAuth();
+    StoreProvider.of<AppState>(context).dispatch(extensionManager);
   }
 
   Future<void> refreshUrnik() async {

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:app_settings/app_settings.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,6 +9,7 @@ import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
 import 'package:scv_app/components/nastavitve/settingsUserCard.dart';
+import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
 import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
@@ -162,32 +164,38 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   ),
                 ],
               ),
-              NastavitveGroup(
-                settingsGroupTitle: "Račun",
-                items: [
-                  SettingsItem(
-                    onTap: odjava,
-                    icons: Icons.logout,
-                    title: "Odjava",
-                    subtitle: "Odjava iz aplikacije",
-                    iconStyle: IconStyle(
-                        iconsColor: Theme.of(context).hintColor,
-                        withBackground: true,
-                        backgroundColor: user.school.schoolColor //Barva šole
+              StoreConnector<AppState, ExtensionManager>(
+                  converter: (store) => store.state.extensionManager,
+                  builder: (context, extensionManager) {
+                    return NastavitveGroup(
+                      settingsGroupTitle: "Račun",
+                      items: [
+                        SettingsItem(
+                          onTap: odjava,
+                          icons: Icons.logout,
+                          title: "Odjava",
+                          subtitle: "Odjava iz aplikacije",
+                          iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor:
+                                  user.school.schoolColor //Barva šole
+                              ),
                         ),
-                  ),
-                  SettingsItem(
-                    onTap: goToEPAS,
-                    icons: Icons.public,
-                    title: "EPAS",
-                    subtitle: "Dan Evrope",
-                    iconStyle: IconStyle(
-                      iconsColor: Theme.of(context).hintColor,
-                      backgroundColor: HexColor.fromHex("#50C878"),
-                    ),
-                  )
-                ],
-              )
+                        if (extensionManager.getExtensionAuthorised("EPAS"))
+                          SettingsItem(
+                            onTap: goToEPAS,
+                            icons: Icons.public,
+                            title: "EPAS",
+                            subtitle: "Dan Evrope",
+                            iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              backgroundColor: HexColor.fromHex("#50C878"),
+                            ),
+                          )
+                      ],
+                    );
+                  })
             ],
           )),
         );
