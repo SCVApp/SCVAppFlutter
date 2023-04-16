@@ -30,18 +30,20 @@ class EPASApi extends Extension {
     }
   }
 
-  void loadTimetables() async {
+  Future<void> loadTimetables() async {
     try {
       final response = await http.get(Uri.parse('${EPASapiUrl}/timetable/all'),
           headers: {'Authorization': global.token.accessToken});
       if (response.statusCode == 200) {
-        this.timetables = jsonDecode(response.body)
+        final List<dynamic> json = jsonDecode(response.body);
+        this.timetables = json
             .map<EPASTimetable>((json) => EPASTimetable.fromJSON(json))
             .toList();
       }
     } catch (e) {
       print(e);
     }
+    loading = false;
   }
 
   void loadWorkshops(int timetable_id) async {
@@ -50,7 +52,8 @@ class EPASApi extends Extension {
           Uri.parse('${EPASapiUrl}/workshop/timetable/$timetable_id'),
           headers: {'Authorization': global.token.accessToken});
       if (response.statusCode == 200) {
-        this.workshops = jsonDecode(response.body)
+        final List<dynamic> json = jsonDecode(response.body);
+        this.workshops = json
             .map<EPASWorkshop>(
                 (json) => EPASWorkshop.fromJSON(json, timetable_id))
             .toList();
@@ -58,5 +61,6 @@ class EPASApi extends Extension {
     } catch (e) {
       print(e);
     }
+    loading = false;
   }
 }

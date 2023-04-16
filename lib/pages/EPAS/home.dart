@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/components/EPAS/home/card.dart';
 import 'package:scv_app/components/EPAS/home/list.dart';
 import 'package:scv_app/extension/hexColor.dart';
+import 'package:scv_app/manager/extensionManager.dart';
+import 'package:scv_app/pages/EPAS/style.dart';
 
 import '../../api/windowManager/windowManager.dart';
 import '../../store/AppState.dart';
@@ -20,10 +23,28 @@ class _EPASHomePageState extends State<EPASHomePage> {
     StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
 
+  void loadTimetables() async {
+    final ExtensionManager extensionManager =
+        StoreProvider.of<AppState>(context).state.extensionManager;
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    epasApi.loading = true;
+    StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    await epasApi.loadTimetables();
+    StoreProvider.of<AppState>(context).dispatch(extensionManager);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      loadTimetables();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: HexColor.fromHex("#009D65"),
+        backgroundColor: EPASStyle.backgroundColor,
         body: SafeArea(
             bottom: false,
             child: Stack(
