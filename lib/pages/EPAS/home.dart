@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/components/EPAS/home/card.dart';
 import 'package:scv_app/components/EPAS/home/list.dart';
-import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 

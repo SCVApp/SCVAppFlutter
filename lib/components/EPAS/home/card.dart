@@ -19,7 +19,7 @@ Widget EPASHomeCard(BuildContext context) {
     child: Column(
       children: <Widget>[
         QrImage(
-          data: "https://www.google.com",
+          data: "436218",
           size: 170,
           embeddedImage: AssetImage("assets/images/1024.png"),
         ),

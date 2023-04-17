@@ -39,6 +39,7 @@ class EPASApi extends Extension {
         this.timetables = json
             .map<EPASTimetable>((json) => EPASTimetable.fromJSON(json))
             .toList();
+        this.timetables.sort((a, b) => a.start.compareTo(b.start));
       }
     } catch (e) {
       print(e);
@@ -47,6 +48,7 @@ class EPASApi extends Extension {
   }
 
   void loadWorkshops(int timetable_id) async {
+    if (timetable_id == null) return;
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/workshop/timetable/$timetable_id'),
@@ -57,6 +59,7 @@ class EPASApi extends Extension {
             .map<EPASWorkshop>(
                 (json) => EPASWorkshop.fromJSON(json, timetable_id))
             .toList();
+        this.workshops.sort((a, b) => a.name.compareTo(b.name));
       }
     } catch (e) {
       print(e);
