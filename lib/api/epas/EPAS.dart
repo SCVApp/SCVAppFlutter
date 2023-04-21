@@ -9,6 +9,7 @@ import '../extension.dart';
 
 class EPASApi extends Extension {
   List<EPASWorkshop> workshops = [];
+  List<EPASWorkshop> joinedWorkshops = [];
   List<EPASTimetable> timetables = [];
   bool loading = false;
   static final String EPASapiUrl = 'http://localhost:3001/api';
@@ -91,11 +92,11 @@ class EPASApi extends Extension {
           headers: {'Authorization': global.token.accessToken});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
-        this.workshops = json
+        this.joinedWorkshops = json
             .map<EPASWorkshop>((json) => EPASWorkshop.fromJSON(json, null))
             .toList();
         for (EPASTimetable timetable in this.timetables) {
-          for (EPASWorkshop workshop in this.workshops) {
+          for (EPASWorkshop workshop in this.joinedWorkshops) {
             if (workshop.timetable_id == timetable.id) {
               timetable.selected_workshop_id = workshop.id;
             }
@@ -115,9 +116,7 @@ class EPASApi extends Extension {
       if (response.statusCode == 200) {
         print("Joined workshop");
         return true;
-      } else {
-        
-      }
+      } else {}
     } catch (e) {
       print(e);
     }

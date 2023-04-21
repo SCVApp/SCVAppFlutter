@@ -21,7 +21,7 @@ class EPASTimetableSelection extends StatefulWidget {
 
 class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   int selectedTimetable = 0;
-  int selectedWorkshop = 0;
+  int selectedWorkshopId = 0;
   void goBack() {
     Navigator.pushReplacement(
       context,
@@ -71,7 +71,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
     });
     setState(() {
       selectedTimetable = widget.timetableId;
-      selectedWorkshop = widget.workshopId;
+      selectedWorkshopId = widget.workshopId;
     });
   }
 
@@ -82,7 +82,21 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   }
 
   void joinWorkshop() async {
-    if (await EPASApi.joinWorkshop(selectedWorkshop)) {
+    ExtensionManager extensionManager =
+        StoreProvider.of<AppState>(context).state.extensionManager;
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    EPASWorkshop selectedWorkshop = epasApi.workshops.firstWhere(
+        (workshop) => workshop.id == selectedWorkshopId,
+        orElse: () => null);
+    if (selectedWorkshop.timetable_id != selectedTimetable) {
+      selectedWorkshop = epasApi.workshops.firstWhere(
+          (workshop) =>
+              workshop.timetable_id == selectedTimetable &&
+              workshop.name == selectedWorkshop.name,
+          orElse: () => null);
+      selectedWorkshopId = selectedWorkshop.id;
+    }
+    if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
       final ExtensionManager extensionManager =
           StoreProvider.of<AppState>(context).state.extensionManager;
       final EPASApi epasApi = extensionManager.getExtensions("EPAS");
@@ -129,7 +143,8 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
                         ],
                       ),
                     ]),
-                    EPASTimetableSelectionList(context, selectedTimetable,
+                    EPASTimetableSelectionList(
+                        context, selectedTimetable, selectedWorkshopId,
                         changeSelectedTimetableId:
                             changeCurrentSelectedTimetable,
                         joinWorkshop: joinWorkshop),
