@@ -20,7 +20,8 @@ Widget EPASWorkshopSelectionList(
       height: 15,
     ),
     itemBuilder: (context, index) {
-      return EPASWorkshopSelectionListItem(workshops[index], onTap: () {
+      return EPASWorkshopSelectionListItem(context, workshops[index],
+          onTap: () {
         goToTimetableSelection(workshops[index].id);
       });
     },

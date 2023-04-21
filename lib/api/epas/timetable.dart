@@ -22,9 +22,8 @@ class EPASTimetable {
   }
 
   String getStartHour() {
-    print(start); 
     return start.hour.toString().padLeft(2, "0") +
-        ":" +
+        "." +
         start.minute.toString().padLeft(2, "0");
   }
 }

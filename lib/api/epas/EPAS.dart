@@ -66,4 +66,21 @@ class EPASApi extends Extension {
     }
     loading = false;
   }
+
+  void loadWorkshopsByName(String name) async {
+    if (name == null) return;
+    try {
+      final response = await http.get(
+          Uri.parse('${EPASapiUrl}/workshop/name/$name'),
+          headers: {'Authorization': global.token.accessToken});
+      if (response.statusCode == 200) {
+        final List<dynamic> json = jsonDecode(response.body);
+        this.workshops = json
+            .map<EPASWorkshop>((json) => EPASWorkshop.fromJSON(json, null))
+            .toList();
+        this.workshops.sort((a, b) => a.timetable_id.compareTo(b.timetable_id));
+      }
+    } catch (e) {}
+    loading = false;
+  }
 }

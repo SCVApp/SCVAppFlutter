@@ -27,7 +27,7 @@ Widget EPASHomeList(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(padding: EdgeInsets.only(top: 70)),
+                Padding(padding: EdgeInsets.only(top: 120)),
                 for (int i = 0; i < epasApi.timetables.length; i++)
                   EPASHomeListItem(i + 1, "Ni določeno", onTap: () {
                     goToSelectWorkshop(epasApi.timetables[i].id);

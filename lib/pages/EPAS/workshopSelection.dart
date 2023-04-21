@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/timetable.dart';
+import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 
@@ -40,6 +41,11 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await epasApi.loadWorkshops(widget.timetableId);
+    final prommises = <Future>[];
+    for (EPASWorkshop workshop in epasApi.workshops) {
+      prommises.add(workshop.getCountAndMaxUsers());
+    }
+    await Future.wait(prommises);
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
   }
 
