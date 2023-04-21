@@ -29,6 +29,7 @@ class _EPASHomePageState extends State<EPASHomePage> {
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await epasApi.loadTimetables();
+    await epasApi.loadJoinedWorkshops();
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
   }
 

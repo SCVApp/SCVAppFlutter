@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/components/EPAS/halfScreenCard.dart';
 import 'package:scv_app/components/EPAS/home/listItem.dart';
 import 'package:scv_app/components/loadingItem.dart';
@@ -29,7 +30,7 @@ Widget EPASHomeList(BuildContext context) {
               children: [
                 Padding(padding: EdgeInsets.only(top: 120)),
                 for (int i = 0; i < epasApi.timetables.length; i++)
-                  EPASHomeListItem(i + 1, "Ni določeno", onTap: () {
+                  EPASHomeListItem(i + 1, epasApi.timetables[i],epasApi.workshops, onTap: () {
                     goToSelectWorkshop(epasApi.timetables[i].id);
                   }),
                 if (epasApi.loading) loadingItem(EPASStyle.backgroundColor),

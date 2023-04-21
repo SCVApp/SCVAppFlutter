@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/api/epas/timetable.dart';
+import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/extension/hexColor.dart';
 
-Widget EPASHomeListItem(int number, String text, {Function onTap}) {
+Widget EPASHomeListItem(
+    int number, EPASTimetable timetable, List<EPASWorkshop> workshops,
+    {Function onTap}) {
+  final EPASWorkshop workshop = workshops.firstWhere(
+      (workshop) => workshop.id == timetable.selected_workshop_id,
+      orElse: () => null);
   return GestureDetector(
       onTap: onTap,
       child: Row(
@@ -17,7 +24,9 @@ Widget EPASHomeListItem(int number, String text, {Function onTap}) {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  text,
+                  workshop != null
+                      ? "${workshop?.name} - ${timetable.getStartHour()}"
+                      : "Ni izbrana",
                   textAlign: TextAlign.left,
                   style: TextStyle(color: HexColor.fromHex("#838383")),
                 ),

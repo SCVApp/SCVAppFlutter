@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/components/EPAS/halfScreenCard.dart';
 import 'package:scv_app/components/EPAS/timetableSelection/button.dart';
@@ -14,7 +13,8 @@ import '../../../api/epas/EPAS.dart';
 import '../../../manager/extensionManager.dart';
 
 Widget EPASTimetableSelectionList(
-    BuildContext context, int currentSelectedTimetableId) {
+    BuildContext context, int currentSelectedTimetableId,
+    {Function changeSelectedTimetableId, Function joinWorkshop}) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
@@ -39,12 +39,12 @@ Widget EPASTimetableSelectionList(
                   if (epasApi.workshops.length == epasApi.timetables.length)
                     for (EPASWorkshop workshop in epasApi.workshops)
                       EPASTimetableSelectionListItem(context, workshop,
-                          epasApi.timetables, currentSelectedTimetableId),
+                          epasApi.timetables, currentSelectedTimetableId, changeSelectedTimetableId: changeSelectedTimetableId),
                   if (epasApi.workshops.length != epasApi.timetables.length)
                     loadingItem(EPASStyle.backgroundColor),
                 ].withSpaceBetween(spacing: 20))),
                 EPASTimetableSelectionButton(
-                    context, currentSelectedTimetableId, epasApi.timetables)
+                    context, currentSelectedTimetableId, epasApi.timetables, onTap: joinWorkshop)
               ],
             ),
             rightPadding: 25);

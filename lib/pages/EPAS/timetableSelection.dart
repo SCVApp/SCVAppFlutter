@@ -20,6 +20,8 @@ class EPASTimetableSelection extends StatefulWidget {
 }
 
 class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
+  int selectedTimetable = 0;
+  int selectedWorkshop = 0;
   void goBack() {
     Navigator.pushReplacement(
       context,
@@ -63,11 +65,31 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       onWidgetBuild();
     });
+    setState(() {
+      selectedTimetable = widget.timetableId;
+      selectedWorkshop = widget.workshopId;
+    });
+  }
+
+  void changeCurrentSelectedTimetable(int newTimetableId, int newWorkshopId) {
+    setState(() {
+      selectedTimetable = newTimetableId;
+    });
+  }
+
+  void joinWorkshop() async {
+    if (await EPASApi.joinWorkshop(selectedWorkshop)) {
+      final ExtensionManager extensionManager =
+          StoreProvider.of<AppState>(context).state.extensionManager;
+      final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+      await epasApi.loadJoinedWorkshops();
+      StoreProvider.of<AppState>(context).dispatch(extensionManager);
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -107,7 +129,10 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
                         ],
                       ),
                     ]),
-                    EPASTimetableSelectionList(context, widget.timetableId)
+                    EPASTimetableSelectionList(context, selectedTimetable,
+                        changeSelectedTimetableId:
+                            changeCurrentSelectedTimetable,
+                        joinWorkshop: joinWorkshop),
                   ],
                 );
               })),

@@ -83,4 +83,44 @@ class EPASApi extends Extension {
     } catch (e) {}
     loading = false;
   }
+
+  void loadJoinedWorkshops() async {
+    try {
+      final response = await http.get(
+          Uri.parse('${EPASapiUrl}/user/joinedworkshops'),
+          headers: {'Authorization': global.token.accessToken});
+      if (response.statusCode == 200) {
+        final List<dynamic> json = jsonDecode(response.body);
+        this.workshops = json
+            .map<EPASWorkshop>((json) => EPASWorkshop.fromJSON(json, null))
+            .toList();
+        for (EPASTimetable timetable in this.timetables) {
+          for (EPASWorkshop workshop in this.workshops) {
+            if (workshop.timetable_id == timetable.id) {
+              timetable.selected_workshop_id = workshop.id;
+            }
+          }
+        }
+      }
+    } catch (e) {}
+    loading = false;
+  }
+
+  static Future<bool> joinWorkshop(int workshop_id) async {
+    try {
+      final response = await http.post(
+          Uri.parse('${EPASapiUrl}/user/joinworkshop'),
+          headers: {'Authorization': global.token.accessToken},
+          body: {'workshopId': workshop_id.toString()});
+      if (response.statusCode == 200) {
+        print("Joined workshop");
+        return true;
+      } else {
+        
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
 }

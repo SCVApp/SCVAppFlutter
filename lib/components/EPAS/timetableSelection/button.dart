@@ -4,7 +4,7 @@ import 'package:scv_app/api/epas/timetable.dart';
 import '../../../pages/EPAS/style.dart';
 
 Widget EPASTimetableSelectionButton(BuildContext context,
-    int currentSelectedTimetableId, List<EPASTimetable> timetables) {
+    int currentSelectedTimetableId, List<EPASTimetable> timetables, {Function onTap}) {
   final EPASTimetable currentSelectedTimetable = timetables.firstWhere(
       (timetable) => timetable.id == currentSelectedTimetableId,
       orElse: () => null);
@@ -25,7 +25,7 @@ Widget EPASTimetableSelectionButton(BuildContext context,
             ),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           ),
-          onPressed: () {},
+          onPressed: onTap,
         )
       ],
     ),
