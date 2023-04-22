@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/api/epas/EPAS.dart';
+import 'package:scv_app/components/EPAS/timetableSelection/dialog.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:scv_app/pages/EPAS/style.dart';
 
 class EPASWorkshop {
   int id;
@@ -40,5 +43,45 @@ class EPASWorkshop {
         this.maxUsers = json['capacity'];
       }
     } catch (e) {}
+  }
+
+  static void errorJoinWithSameName(
+      BuildContext context, Function joinWorkshop, int workshopWithSameNameId) {
+    AlertDialog alertDialog = EPASTimetableSelectionDialog("Enaka delavnica!",
+        "Nemorete se prijaviti na delavnico z istim imenom. Ali želi spremeniti termin delavnice?",
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.transparent,
+            ),
+            child:
+                Text("Ne", style: TextStyle(color: EPASStyle.backgroundColor)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.transparent,
+            ),
+            child:
+                Text("Da", style: TextStyle(color: EPASStyle.backgroundColor)),
+            onPressed: () =>
+                changeWorkshop(context, joinWorkshop, workshopWithSameNameId),
+          ),
+        ]);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      },
+    );
+  }
+
+  static void changeWorkshop(BuildContext context, Function joinWorkshop,
+      int workshopWithSameNameId) async {
+    await EPASApi.leaveWorkshop(workshopWithSameNameId);
+    Navigator.of(context).pop();
+    joinWorkshop(successMessage: "Sprememba termina delavnice uspešna!");
   }
 }

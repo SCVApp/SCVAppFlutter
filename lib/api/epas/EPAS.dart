@@ -102,6 +102,7 @@ class EPASApi extends Extension {
             .map<EPASWorkshop>((json) => EPASWorkshop.fromJSON(json, null))
             .toList();
         for (EPASTimetable timetable in this.timetables) {
+          timetable.selected_workshop_id = null;
           for (EPASWorkshop workshop in this.joinedWorkshops) {
             if (workshop.timetable_id == timetable.id) {
               timetable.selected_workshop_id = workshop.id;
@@ -142,15 +143,19 @@ class EPASApi extends Extension {
     return false;
   }
 
-  static void showAlert(BuildContext context, String info, bool isOk) {
+  static void showAlert(String info, bool isOk) {
     final ExtensionManager extensionManager =
-        StoreProvider.of<AppState>(context).state.extensionManager;
+        StoreProvider.of<AppState>(global.globalBuildContext)
+            .state
+            .extensionManager;
     final EPASApi epasApi = extensionManager.getExtensions('EPAS');
     epasApi.alert.show(info, isOk);
-    StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    StoreProvider.of<AppState>(global.globalBuildContext)
+        .dispatch(extensionManager);
     Future.delayed(Duration(seconds: 3), () {
       epasApi.alert.hide();
-      StoreProvider.of<AppState>(context).dispatch(extensionManager);
+      StoreProvider.of<AppState>(global.globalBuildContext)
+          .dispatch(extensionManager);
     });
   }
 }

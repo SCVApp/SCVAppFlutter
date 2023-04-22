@@ -87,23 +87,28 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   void handleError(e) {
     try {
       final String error = e.toString().replaceFirst("Exception: ", "");
-      final String message = jsonDecode(error)["message"];
+      final dynamic errorObj = jsonDecode(error);
+      final String message = errorObj["message"];
       if (message == "You can't join two workshops with the same name") {
+        final int workshopWithSameNameId = errorObj["workshopWithSameNameId"];
+        EPASWorkshop.errorJoinWithSameName(
+            context, joinWorkshop, workshopWithSameNameId);
         return;
       }
-      EPASApi.showAlert(context, message, false);
+      EPASApi.showAlert(message, false);
     } catch (err) {
       print(err);
     }
   }
 
-  void joinWorkshop() async {
+  void joinWorkshop(
+      {String successMessage = "Prijava na delavnico uspešna!"}) async {
     try {
       if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
         final ExtensionManager extensionManager =
             StoreProvider.of<AppState>(context).state.extensionManager;
         final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-        EPASApi.showAlert(context, "Prijava na delavnico uspešna!", true);
+        EPASApi.showAlert(successMessage, true);
         StoreProvider.of<AppState>(context).dispatch(extensionManager);
         await epasApi.loadJoinedWorkshops();
         StoreProvider.of<AppState>(context).dispatch(extensionManager);
