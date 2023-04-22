@@ -1,16 +1,22 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/epas/EPASAlert.dart';
 import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
+import 'package:scv_app/manager/extensionManager.dart';
 
+import '../../store/AppState.dart';
 import '../extension.dart';
 
 class EPASApi extends Extension {
   List<EPASWorkshop> workshops = [];
   List<EPASWorkshop> joinedWorkshops = [];
   List<EPASTimetable> timetables = [];
+  final EPASAlert alert = new EPASAlert();
   bool loading = false;
   static final String EPASapiUrl = 'http://localhost:3001/api';
 
@@ -114,12 +120,37 @@ class EPASApi extends Extension {
           headers: {'Authorization': global.token.accessToken},
           body: {'workshopId': workshop_id.toString()});
       if (response.statusCode == 200) {
-        print("Joined workshop");
         return true;
-      } else {}
+      } else {
+        throw Exception(response.body);
+      }
     } catch (e) {
-      print(e);
+      throw e;
     }
+  }
+
+  static Future<bool> leaveWorkshop(int workshop_id) async {
+    try {
+      final response = await http.post(
+          Uri.parse('${EPASapiUrl}/user/leaveworkshop'),
+          headers: {'Authorization': global.token.accessToken},
+          body: {'workshopId': workshop_id.toString()});
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
     return false;
+  }
+
+  static void showAlert(BuildContext context, String info, bool isOk) {
+    final ExtensionManager extensionManager =
+        StoreProvider.of<AppState>(context).state.extensionManager;
+    final EPASApi epasApi = extensionManager.getExtensions('EPAS');
+    epasApi.alert.show(info, isOk);
+    StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    Future.delayed(Duration(seconds: 3), () {
+      epasApi.alert.hide();
+      StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    });
   }
 }

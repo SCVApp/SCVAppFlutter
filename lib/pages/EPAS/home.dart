@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
+import 'package:scv_app/components/EPAS/alert.dart';
 import 'package:scv_app/components/EPAS/home/card.dart';
 import 'package:scv_app/components/EPAS/home/list.dart';
 import 'package:scv_app/manager/extensionManager.dart';
@@ -45,6 +46,7 @@ class _EPASHomePageState extends State<EPASHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: EPASStyle.backgroundColor,
+        bottomSheet: EPASAlertContainer(),
         body: SafeArea(
             bottom: false,
             child: Stack(

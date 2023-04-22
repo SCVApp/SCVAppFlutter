@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
+import 'package:scv_app/components/EPAS/alert.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 
@@ -52,38 +53,39 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomSheet: EPASAlertContainer(),
         body: SafeArea(
-      child: StoreConnector<AppState, ExtensionManager>(
-          converter: (store) => store.state.extensionManager,
-          builder: (context, extensionManager) {
-            final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-            final EPASTimetable timetable = epasApi.timetables.firstWhere(
-                (timetable) => timetable.id == widget.timetableId,
-                orElse: () => null);
-            return Column(
-              children: [
-                Stack(
-                  alignment: Alignment.centerLeft,
+          child: StoreConnector<AppState, ExtensionManager>(
+              converter: (store) => store.state.extensionManager,
+              builder: (context, extensionManager) {
+                final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+                final EPASTimetable timetable = epasApi.timetables.firstWhere(
+                    (timetable) => timetable.id == widget.timetableId,
+                    orElse: () => null);
+                return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Stack(
+                      alignment: Alignment.centerLeft,
                       children: [
-                        Text(
-                          "IZBIRA DELAVNICE (${timetable?.getStartHour() ?? ""})",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "IZBIRA DELAVNICE (${timetable?.getStartHour() ?? ""})",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        Positioned(child: BackButton(onPressed: goBack))
                       ],
                     ),
-                    Positioned(child: BackButton(onPressed: goBack))
+                    !epasApi.loading
+                        ? EPASWorkshopSelectionList(
+                            epasApi.workshops, widget.timetableId, context)
+                        : loadingItem(EPASStyle.backgroundColor)
                   ],
-                ),
-                !epasApi.loading
-                    ? EPASWorkshopSelectionList(
-                        epasApi.workshops, widget.timetableId, context)
-                    : loadingItem(EPASStyle.backgroundColor)
-              ],
-            );
-          }),
-    ));
+                );
+              }),
+        ));
   }
 }

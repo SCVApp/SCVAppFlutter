@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget EPASTimetableSelectionDialog() {
+Widget EPASTimetableSelectionDialog(String title, String content,
+    {List<Widget> actions}) {
   return AlertDialog(
-    title: Text("Izberi delavnico"),
-    content: Text("Izberi delavnico, ki jo želiš obiskati"),
+    title: Text(title),
+    content: Text(content),
+    actions: actions,
   );
 }

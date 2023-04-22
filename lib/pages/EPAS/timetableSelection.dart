@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/workshop.dart';
-import 'package:scv_app/components/EPAS/halfScreenCard.dart';
+import 'package:scv_app/components/EPAS/alert.dart';
 import 'package:scv_app/components/EPAS/timetableSelection/list.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
@@ -78,31 +80,37 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   void changeCurrentSelectedTimetable(int newTimetableId, int newWorkshopId) {
     setState(() {
       selectedTimetable = newTimetableId;
+      selectedWorkshopId = newWorkshopId;
     });
   }
 
-  void joinWorkshop() async {
-    ExtensionManager extensionManager =
-        StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-    EPASWorkshop selectedWorkshop = epasApi.workshops.firstWhere(
-        (workshop) => workshop.id == selectedWorkshopId,
-        orElse: () => null);
-    if (selectedWorkshop.timetable_id != selectedTimetable) {
-      selectedWorkshop = epasApi.workshops.firstWhere(
-          (workshop) =>
-              workshop.timetable_id == selectedTimetable &&
-              workshop.name == selectedWorkshop.name,
-          orElse: () => null);
-      selectedWorkshopId = selectedWorkshop.id;
+  void handleError(e) {
+    try {
+      final String error = e.toString().replaceFirst("Exception: ", "");
+      final String message = jsonDecode(error)["message"];
+      if (message == "You can't join two workshops with the same name") {
+        return;
+      }
+      EPASApi.showAlert(context, message, false);
+    } catch (err) {
+      print(err);
     }
-    if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
-      final ExtensionManager extensionManager =
-          StoreProvider.of<AppState>(context).state.extensionManager;
-      final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-      await epasApi.loadJoinedWorkshops();
-      StoreProvider.of<AppState>(context).dispatch(extensionManager);
-      Navigator.pop(context);
+  }
+
+  void joinWorkshop() async {
+    try {
+      if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
+        final ExtensionManager extensionManager =
+            StoreProvider.of<AppState>(context).state.extensionManager;
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        EPASApi.showAlert(context, "Prijava na delavnico uspešna!", true);
+        StoreProvider.of<AppState>(context).dispatch(extensionManager);
+        await epasApi.loadJoinedWorkshops();
+        StoreProvider.of<AppState>(context).dispatch(extensionManager);
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      this.handleError(e);
     }
   }
 
@@ -110,6 +118,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: EPASStyle.backgroundColor,
+      bottomSheet: EPASAlertContainer(),
       body: SafeArea(
           bottom: false,
           child: StoreConnector<AppState, ExtensionManager>(
