@@ -47,6 +47,7 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
       prommises.add(workshop.getCountAndMaxUsers());
     }
     await Future.wait(prommises);
+    if (!mounted) return;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
   }
 

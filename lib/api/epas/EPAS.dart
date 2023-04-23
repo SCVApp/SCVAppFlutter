@@ -18,7 +18,8 @@ class EPASApi extends Extension {
   List<EPASTimetable> timetables = [];
   final EPASAlert alert = new EPASAlert();
   bool loading = false;
-  static final String EPASapiUrl = 'http://localhost:3001/api';
+  // static final String EPASapiUrl = 'http://localhost:3001/api';
+  static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
 
   EPASApi() {
     this.name = 'EPAS';
@@ -32,9 +33,7 @@ class EPASApi extends Extension {
       if (response.statusCode == 200) {
         this.authorised = true;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   Future<void> loadTimetables() async {
@@ -48,9 +47,7 @@ class EPASApi extends Extension {
             .toList();
         this.timetables.sort((a, b) => a.start.compareTo(b.start));
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     loading = false;
   }
 
@@ -68,9 +65,7 @@ class EPASApi extends Extension {
             .toList();
         this.workshops.sort((a, b) => a.name.compareTo(b.name));
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     loading = false;
   }
 

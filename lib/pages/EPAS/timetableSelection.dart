@@ -96,9 +96,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
         return;
       }
       EPASApi.showAlert(message, false);
-    } catch (err) {
-      print(err);
-    }
+    } catch (err) {}
   }
 
   void joinWorkshop(
@@ -116,6 +114,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
       }
     } catch (e) {
       this.handleError(e);
+      await this.loadWorkshopsWithSameName();
     }
   }
 

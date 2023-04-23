@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/timetable.dart';
+import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/store/AppState.dart';
 
 import '../../../api/epas/EPAS.dart';
@@ -18,6 +19,9 @@ Widget EPASTimetableSelectionButton(BuildContext context,
             .firstWhere(
                 (timetable) => timetable.id == currentSelectedTimetableId,
                 orElse: () => null);
+        final EPASWorkshop currentSelectedWorkshop = epasApi.workshops
+            .firstWhere((workshop) => workshop.id == currentSelectedWorkshopId,
+                orElse: () => null);
         String textForButton =
             "PRIJAVI SE NA DELAVNICO (${currentSelectedTimetable?.getStartHour() ?? "--.--"})";
         Color colorForButton = EPASStyle.backgroundColor;
@@ -25,6 +29,10 @@ Widget EPASTimetableSelectionButton(BuildContext context,
             currentSelectedWorkshopId) {
           textForButton = "NA TO DELAVNICO SI ŽE PRIJAVLJEN/NA";
           colorForButton = EPASStyle.alreadyJoinedColor;
+        } else if (currentSelectedWorkshop.usersCount >=
+            currentSelectedWorkshop.maxUsers) {
+          textForButton = "DELAVNICA JE POLNA";
+          colorForButton = EPASStyle.fullPlaceColor;
         }
         return Padding(
           child: Container(
