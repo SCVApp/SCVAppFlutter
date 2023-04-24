@@ -14,5 +14,6 @@ Widget HalfScreenCard(BuildContext context,
           topLeft: Radius.circular(20), topRight: Radius.circular(20)),
     ),
     child: child,
+    clipBehavior: Clip.none,
   );
 }

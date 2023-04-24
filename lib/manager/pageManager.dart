@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +9,18 @@ import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
+import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/manager/extensionManager.dart';
+import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
+import 'package:scv_app/pages/EPAS/main.dart';
 import 'package:scv_app/pages/Login/intro.dart';
 import 'package:scv_app/pages/Login/login.dart';
 import 'package:scv_app/pages/PassDoor/unlock.dart';
 import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/pages/lockPage.dart';
 import 'package:scv_app/store/AppState.dart';
-import 'package:scv_app/global/global.dart' as global;
-import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
 
 import '../api/appTheme.dart';
-import '../pages/EPAS/home.dart';
 import '../pages/home.dart';
 
 class PageManager extends StatefulWidget {
@@ -242,7 +241,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
             HomePage(),
             LockPage(),
             UnlockedPassDoor(),
-            EPASHomePage(),
+            EPASMainPage(),
           ],
         ));
   }

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart' as http;
 import 'package:scv_app/api/epas/EPASAlert.dart';
 import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
-import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/manager/extensionManager.dart';
 
@@ -17,9 +16,10 @@ class EPASApi extends Extension {
   List<EPASWorkshop> joinedWorkshops = [];
   List<EPASTimetable> timetables = [];
   final EPASAlert alert = new EPASAlert();
+  int userCode = 0;
   bool loading = false;
-  // static final String EPASapiUrl = 'http://localhost:3001/api';
-  static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
+  static final String EPASapiUrl = 'http://localhost:3001/api';
+  // static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
 
   EPASApi() {
     this.name = 'EPAS';
@@ -69,7 +69,7 @@ class EPASApi extends Extension {
     loading = false;
   }
 
-  void loadWorkshopsByName(String name) async {
+  Future<void> loadWorkshopsByName(String name) async {
     if (name == null) return;
     try {
       final response = await http.get(
@@ -86,7 +86,23 @@ class EPASApi extends Extension {
     loading = false;
   }
 
-  void loadJoinedWorkshops() async {
+  Future<void> loadLeaderWorkshops() async {
+    try {
+      final response = await http.get(
+          Uri.parse('${EPASapiUrl}/user/myworkshops'),
+          headers: {'Authorization': global.token.accessToken});
+      if (response.statusCode == 200) {
+        final List<dynamic> json = jsonDecode(response.body);
+        this.workshops = json
+            .map<EPASWorkshop>((json) => EPASWorkshop.fromJSON(json, null))
+            .toList();
+        this.workshops.sort((a, b) => a.timetable_id.compareTo(b.timetable_id));
+      }
+    } catch (e) {}
+    loading = false;
+  }
+
+  Future<void> loadJoinedWorkshops() async {
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/user/joinedworkshops'),
@@ -104,6 +120,17 @@ class EPASApi extends Extension {
             }
           }
         }
+      }
+    } catch (e) {}
+    loading = false;
+  }
+
+  Future<void> loadUserCode() async{
+    try {
+      final response = await http.get(Uri.parse('${EPASapiUrl}/user/code'),
+          headers: {'Authorization': global.token.accessToken});
+      if (response.statusCode == 200) {
+        this.userCode = int.parse(response.body);
       }
     } catch (e) {}
     loading = false;
