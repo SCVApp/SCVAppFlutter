@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
+import 'package:scv_app/components/EPAS/adminHome/card.dart';
 import 'package:scv_app/components/EPAS/adminHome/listItem.dart';
 import 'package:scv_app/components/EPAS/halfScreenCard.dart';
 import 'package:scv_app/manager/extensionManager.dart';
@@ -15,11 +16,12 @@ Widget EPASAdminHomeList(BuildContext context) {
         return HalfScreenCard(context,
             rightPadding: 25,
             child: Stack(
+              clipBehavior: Clip.none,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(padding: EdgeInsets.only(top: 100)),
+                    Padding(padding: EdgeInsets.only(top: 150)),
                     Text(
                       "Zasedena mesta:",
                       style:
@@ -34,6 +36,10 @@ Widget EPASAdminHomeList(BuildContext context) {
                                 SizedBox(height: 15),
                             itemCount: epasApi.workshops.length))
                   ],
+                ),
+                Positioned(
+                  child: EPASAdminHomeCard(context),
+                  top: -110,
                 )
               ],
             ));
