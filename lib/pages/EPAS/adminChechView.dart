@@ -6,6 +6,7 @@ import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/components/EPAS/halfScreenCard.dart';
+import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/extension/withSpaceBetween.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
@@ -28,8 +29,12 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
   EPASTimetable otherTimetable;
   bool isJoinedAtWorkshop = false;
   String userAzureId;
+  bool loading = false;
 
   void chechUserIfJoinInWorkshop() async {
+    setState(() {
+      loading = true;
+    });
     try {
       final response = await http.post(
           Uri.parse('${EPASApi.EPASapiUrl}/user/chech_join_workshop'),
@@ -71,8 +76,34 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
             this.otherTimetable = timetable;
           });
         }
+      } else {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        showErrorDialog(data["message"]);
       }
     } catch (e) {}
+    setState(() {
+      loading = false;
+    });
+  }
+
+  void showErrorDialog(String error) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Napaka"),
+            content: Text(error),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text("OK",
+                      style: TextStyle(color: EPASStyle.backgroundColor))),
+            ],
+          );
+        });
   }
 
   void approveAttendenc() async {
@@ -117,89 +148,96 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
               ),
               HalfScreenCard(context,
                   rightPadding: 25,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(padding: EdgeInsets.only(top: 50)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Ime in priimek",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text("Urban Krepel")
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Prijavljen na to delavnico",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              Text(this.isJoinedAtWorkshop ? "DA" : "NE",
-                                  style: TextStyle(
-                                      color: this.backgroundColor,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Prijavljen ob uri",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              Text(this.isJoinedAtWorkshop ? "11.00" : "/")
-                            ],
-                          )
-                        ].withSpaceBetween(spacing: 20),
-                      ),
-                      Column(
-                        children: [
-                          if (this.otherWorkshop != null)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                  child: !this.loading
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
                               children: [
-                                Icon(
-                                  Icons.info_outline,
-                                  color: Colors.red,
-                                  size: 40,
+                                Padding(padding: EdgeInsets.only(top: 50)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Ime in priimek",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text("Urban Krepel")
+                                  ],
                                 ),
-                                Expanded(
-                                    child: Text(
-                                  "Uporabnik je prijavljen na delavnico ${this.otherWorkshop.name.toUpperCase()}, ob ${this.otherTimetable?.getStartHour() ?? ""}",
-                                  textAlign: TextAlign.center,
-                                ))
-                              ],
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Prijavljen na to delavnico",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text(this.isJoinedAtWorkshop ? "DA" : "NE",
+                                        style: TextStyle(
+                                            color: this.backgroundColor,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Prijavljen ob uri",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        this.isJoinedAtWorkshop ? "11.00" : "/")
+                                  ],
+                                )
+                              ].withSpaceBetween(spacing: 20),
                             ),
-                          Padding(padding: EdgeInsets.only(bottom: 20)),
-                          TextButton(
-                              style: TextButton.styleFrom(
-                                  backgroundColor: this.isJoinedAtWorkshop
-                                      ? EPASStyle.backgroundColor
-                                      : EPASStyle.alreadyJoinedColor),
-                              onPressed: this.isJoinedAtWorkshop
-                                  ? approveAttendenc
-                                  : () {},
-                              child: Padding(
-                                child: Text(
-                                  this.isJoinedAtWorkshop
-                                      ? "POTRDI UDELEŽBO"
-                                      : "POTRJEVANJE NI MOŽNO",
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 20),
-                              )),
-                          Padding(padding: EdgeInsets.only(bottom: 20))
-                        ],
-                      )
-                    ],
-                  ))
+                            Column(
+                              children: [
+                                if (this.otherWorkshop != null)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.red,
+                                        size: 40,
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        "Uporabnik je prijavljen na delavnico ${this.otherWorkshop.name.toUpperCase()}, ob ${this.otherTimetable?.getStartHour() ?? ""}",
+                                        textAlign: TextAlign.center,
+                                      ))
+                                    ],
+                                  ),
+                                Padding(padding: EdgeInsets.only(bottom: 20)),
+                                TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: this.isJoinedAtWorkshop
+                                            ? EPASStyle.backgroundColor
+                                            : EPASStyle.alreadyJoinedColor),
+                                    onPressed: this.isJoinedAtWorkshop
+                                        ? approveAttendenc
+                                        : () {},
+                                    child: Padding(
+                                      child: Text(
+                                        this.isJoinedAtWorkshop
+                                            ? "POTRDI UDELEŽBO"
+                                            : "POTRJEVANJE NI MOŽNO",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 20),
+                                    )),
+                                Padding(padding: EdgeInsets.only(bottom: 20))
+                              ],
+                            )
+                          ],
+                        )
+                      : loadingItem(EPASStyle.backgroundColor))
             ],
           )),
     );

@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/components/EPAS/flatingCard.dart';
+import 'package:scv_app/pages/EPAS/style.dart';
 
-Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId, Function setCode) {
+Widget EPASAdminHomeCard(
+    BuildContext context, int currentSelectedWorkshopId, Function setCode) {
   int code;
 
   void showInput() {
-    print("showInput");
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Vnesi kodo"),
             content: TextField(
+              cursorColor: EPASStyle.backgroundColor,
               keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "Koda uporabnika",
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: EPASStyle.backgroundColor),
+                ),
+              ),
               onChanged: (value) {
                 try {
                   code = int.parse(value);
@@ -26,13 +34,17 @@ Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId, Fu
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Prekliči")),
+                  child: Text(
+                    "Prekliči",
+                    style: TextStyle(color: EPASStyle.backgroundColor),
+                  )),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     setCode(code);
                   },
-                  child: Text("Potrdi")),
+                  child: Text("Potrdi",
+                      style: TextStyle(color: EPASStyle.backgroundColor))),
             ],
           );
         });
