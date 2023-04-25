@@ -7,7 +7,8 @@ import 'package:scv_app/components/EPAS/halfScreenCard.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/store/AppState.dart';
 
-Widget EPASAdminHomeList(BuildContext context) {
+Widget EPASAdminHomeList(BuildContext context,
+    Function changeSelectedWorkshopId, int currentSelectedWorkshopId) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
@@ -31,14 +32,17 @@ Widget EPASAdminHomeList(BuildContext context) {
                     Expanded(
                         child: ListView.separated(
                             itemBuilder: (context, index) =>
-                                EPASAdminHomeListItem(epasApi.workshops[index]),
+                                EPASAdminHomeListItem(
+                                    epasApi.workshops[index],
+                                    changeSelectedWorkshopId,
+                                    currentSelectedWorkshopId),
                             separatorBuilder: (context, index) =>
                                 SizedBox(height: 15),
                             itemCount: epasApi.workshops.length))
                   ],
                 ),
                 Positioned(
-                  child: EPASAdminHomeCard(context),
+                  child: EPASAdminHomeCard(context, currentSelectedWorkshopId),
                   top: -110,
                 )
               ],

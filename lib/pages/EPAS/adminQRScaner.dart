@@ -24,8 +24,16 @@ class _EPASAdminQRScannerState extends State<EPASAdminQRScanner> {
         onDetect: (capture) {
           final List<Barcode> barcodes = capture.barcodes;
           for (final barcode in barcodes) {
-            widget.setCode(int.parse(barcode.rawValue));
-            Navigator.pop(context);
+            final code = barcode.rawValue;
+            if (code.length != 6) {
+              continue;
+            }
+            try {
+              widget.setCode(int.parse(code));
+              Navigator.pop(context);
+            } catch (e) {
+              continue;
+            }
           }
         },
       ),

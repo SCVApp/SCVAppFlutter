@@ -18,7 +18,7 @@ class EPASApi extends Extension {
   final EPASAlert alert = new EPASAlert();
   int userCode = 0;
   bool loading = false;
-  static final String EPASapiUrl = 'http://10.0.2.2:3001/api';
+  static final String EPASapiUrl = 'http://localhost:3001/api';
   // static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
 
   EPASApi() {

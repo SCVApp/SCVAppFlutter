@@ -27,9 +27,7 @@ Widget EPASHomeCard(BuildContext context) {
                 children: [
                   Text("KODA: "),
                   Text(
-                    epasApi.userCode.toString().substring(0, 3) +
-                        " " +
-                        epasApi.userCode.toString().substring(3, 6),
+                    epasApi.userCode.toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],

@@ -28,7 +28,8 @@ class EPASWorkshop {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      timetable_id: timetable_id ?? json['timetable'],
+      timetable_id:
+          timetable_id ?? json['timetable']['id'] ?? json['timetable'] ?? 0,
     );
   }
 

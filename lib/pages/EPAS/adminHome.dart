@@ -14,6 +14,7 @@ class EPASAdminHome extends StatefulWidget {
 }
 
 class _EPASAdminHomeState extends State<EPASAdminHome> {
+  int currentSelectedWorkshopId = 0;
   void goBack() {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
@@ -26,6 +27,12 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadMyWorkshops();
+    });
+  }
+
+  void changeSelectedWorkshop(int newWorkshopId) {
+    setState(() {
+      currentSelectedWorkshopId = newWorkshopId;
     });
   }
 
@@ -55,7 +62,8 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 EPASAdminHomeTitle(context, goBack),
-                EPASAdminHomeList(context)
+                EPASAdminHomeList(context, changeSelectedWorkshop,
+                    currentSelectedWorkshopId)
               ],
             )));
   }

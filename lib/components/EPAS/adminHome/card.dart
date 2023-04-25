@@ -3,12 +3,12 @@ import 'package:scv_app/components/EPAS/flatingCard.dart';
 import 'package:scv_app/pages/EPAS/adminChechView.dart';
 import 'package:scv_app/pages/EPAS/adminQRScaner.dart';
 
-Widget EPASAdminHomeCard(BuildContext context) {
+Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId) {
   int code;
   void setCode(int newCode) {
     code = newCode;
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EPASAdminChechView(code)));
+        MaterialPageRoute(builder: (context) => EPASAdminChechView(code, currentSelectedWorkshopId)));
   }
 
   void goToQRScanner() {
@@ -16,10 +16,7 @@ Widget EPASAdminHomeCard(BuildContext context) {
         MaterialPageRoute(builder: (context) => EPASAdminQRScanner(setCode)));
   }
 
-  
-
   void showInput() {
-    //create input dialog
     showDialog(
         context: context,
         builder: (BuildContext context) {
