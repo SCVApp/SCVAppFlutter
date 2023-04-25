@@ -5,6 +5,7 @@ import 'package:scv_app/api/windowManager/windowManager.dart';
 import 'package:scv_app/components/EPAS/adminHome/list.dart';
 import 'package:scv_app/components/EPAS/adminHome/title.dart';
 import 'package:scv_app/manager/extensionManager.dart';
+import 'package:scv_app/pages/EPAS/adminChechView.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/store/AppState.dart';
 
@@ -15,6 +16,7 @@ class EPASAdminHome extends StatefulWidget {
 
 class _EPASAdminHomeState extends State<EPASAdminHome> {
   int currentSelectedWorkshopId = 0;
+  int userCode = 0;
   void goBack() {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
@@ -22,12 +24,61 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
 
+  void getCodeFromUrl() {
+    final WindowManager windowManager =
+        StoreProvider.of<AppState>(context).state.windowManager;
+    final attributes = windowManager.getAttributes("EPAS");
+
+    try {
+      final int code = int.parse(attributes["code"]);
+      setCode(code);
+    } catch (e) {}
+    windowManager.removeAttributes("EPAS");
+    StoreProvider.of<AppState>(context).dispatch(windowManager);
+  }
+
+  void setSelectedWorkshopId() {
+    final ExtensionManager extensionManager =
+        StoreProvider.of<AppState>(context).state.extensionManager;
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    if (epasApi.workshops.length > 0) {
+      setState(() {
+        currentSelectedWorkshopId = epasApi.workshops[0].id;
+      });
+    }
+    getCodeFromUrl();
+  }
+
+  void setCode(int newCode) {
+    if (newCode.toString().length != 6) return;
+    setState(() {
+      userCode = newCode;
+    });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EPASAdminChechView(newCode, currentSelectedWorkshopId)));
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadMyWorkshops();
+      StoreProvider.of<AppState>(context).onChange.listen((state) {
+        final WindowManager windowManager = state.windowManager;
+        final attributes = windowManager.getAttributes("EPAS");
+        if (attributes["code"] != null) {
+          getCodeFromUrl();
+        }
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void changeSelectedWorkshop(int newWorkshopId) {
@@ -50,6 +101,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     });
     await Future.wait(promisses);
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    setSelectedWorkshopId();
   }
 
   @override
@@ -63,7 +115,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
               children: [
                 EPASAdminHomeTitle(context, goBack),
                 EPASAdminHomeList(context, changeSelectedWorkshop,
-                    currentSelectedWorkshopId)
+                    currentSelectedWorkshopId, setCode)
               ],
             )));
   }

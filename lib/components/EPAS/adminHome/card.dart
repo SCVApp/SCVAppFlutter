@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/components/EPAS/flatingCard.dart';
-import 'package:scv_app/pages/EPAS/adminChechView.dart';
-import 'package:scv_app/pages/EPAS/adminQRScaner.dart';
 
-Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId) {
+Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId, Function setCode) {
   int code;
-  void setCode(int newCode) {
-    code = newCode;
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EPASAdminChechView(code, currentSelectedWorkshopId)));
-  }
-
-  void goToQRScanner() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EPASAdminQRScanner(setCode)));
-  }
 
   void showInput() {
+    print("showInput");
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -52,10 +41,6 @@ Widget EPASAdminHomeCard(BuildContext context, int currentSelectedWorkshopId) {
   return FloatingCard(context,
       child: Column(
         children: [
-          GestureDetector(
-            child: Icon(Icons.qr_code_scanner_outlined, size: 100),
-            onTap: goToQRScanner,
-          ),
           TextButton(
               onPressed: showInput,
               child: Text(

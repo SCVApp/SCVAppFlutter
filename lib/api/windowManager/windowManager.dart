@@ -44,6 +44,7 @@ class WindowManager {
     for (var window in windows) {
       if (window.name == name) {
         window.isShown = false;
+        window.attributes = {};
       }
     }
   }
@@ -55,5 +56,13 @@ class WindowManager {
       }
     }
     return {};
+  }
+
+  void removeAttributes(String windowName) {
+    for (var window in windows) {
+      if (window.name == windowName) {
+        window.attributes = {};
+      }
+    }
   }
 }

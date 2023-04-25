@@ -17,10 +17,9 @@ Widget EPASHomeCard(BuildContext context) {
           child: Column(
             children: <Widget>[
               QrImage(
-                data: epasApi.userCode.toString(),
+                data: "scvapp://app.scv.si/epas/code/${epasApi.userCode}",
                 size: 170,
                 foregroundColor: Theme.of(context).primaryColor,
-                embeddedImage: AssetImage("assets/images/1024.png"),
               ),
               Padding(padding: EdgeInsets.only(top: 20)),
               Wrap(

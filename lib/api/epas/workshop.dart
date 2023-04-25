@@ -23,13 +23,14 @@ class EPASWorkshop {
     this.timetable_id,
   });
 
-  static fromJSON(json, int timetable_id) {
+  static fromJSON(json, int timetable_id, {bool timetable_object = false}) {
+    final int id =
+        timetable_object ? json['timetable']['id'] : json['timetable'];
     return EPASWorkshop(
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      timetable_id:
-          timetable_id ?? json['timetable']['id'] ?? json['timetable'] ?? 0,
+      timetable_id: timetable_id ?? id ?? 0,
     );
   }
 

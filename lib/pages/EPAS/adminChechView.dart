@@ -58,7 +58,8 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
             this.isJoinedAtWorkshop = false;
           });
           setState(() {
-            this.otherWorkshop = EPASWorkshop.fromJSON(data["workshop"], null);
+            this.otherWorkshop = EPASWorkshop.fromJSON(data["workshop"], null,
+                timetable_object: true);
           });
           final ExtensionManager extensionManager =
               StoreProvider.of<AppState>(context).state.extensionManager;

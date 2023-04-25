@@ -18,8 +18,8 @@ class EPASApi extends Extension {
   final EPASAlert alert = new EPASAlert();
   int userCode = 0;
   bool loading = false;
-  static final String EPASapiUrl = 'http://localhost:3001/api';
-  // static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
+  // static final String EPASapiUrl = 'http://localhost:3001/api';
+  static final String EPASapiUrl = 'https://scvepas.herokuapp.com/api';
 
   EPASApi() {
     this.name = 'EPAS';
@@ -65,7 +65,9 @@ class EPASApi extends Extension {
             .toList();
         this.workshops.sort((a, b) => a.name.compareTo(b.name));
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     loading = false;
   }
 
