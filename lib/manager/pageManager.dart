@@ -48,7 +48,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         handleConnectivityChange();
       });
     } catch (e) {}
-    universalLinks.initURIHandler();
+    universalLinks.initURIHandler(context);
     universalLinks.incomingURIHandler();
   }
 

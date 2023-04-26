@@ -11,7 +11,7 @@ StreamSubscription universalLinkSubscription;
 String universalLink = "";
 var dummyDeepLinkedUrl;
 
-Future<void> initURIHandler() async {
+Future<void> initURIHandler(BuildContext context) async {
   if (!initialURILinkHandled) {
     initialURILinkHandled = true;
     try {
@@ -19,11 +19,11 @@ Future<void> initURIHandler() async {
           await getInitialUri(); // Dobimo povezavo s katero je bila aplikacija zagnana
       if (initialURI != null && initialURI != dummyDeepLinkedUrl) {
         universalLink = initialURI.toString();
-        print("Initial universal link: $universalLink");
+        goToUnlockPassDoor(context, initialURI.toString());
         dummyDeepLinkedUrl = initialURI;
       }
     } catch (_) {}
-    //delete initial uri
+
     universalLink = "";
   }
 }
