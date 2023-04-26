@@ -30,6 +30,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
   bool isJoinedAtWorkshop = false;
   String userAzureId;
   bool loading = false;
+  String username = "/";
 
   void chechUserIfJoinInWorkshop() async {
     setState(() {
@@ -57,6 +58,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
           setState(() {
             this.userAzureId = data["user"]["azureId"];
           });
+          getUsername(userAzureId);
         } else {
           setState(() {
             backgroundColor = EPASStyle.fullPlaceColor;
@@ -84,6 +86,25 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
     setState(() {
       loading = false;
     });
+  }
+
+  void getUsername(String azureId) async {
+    if (azureId == null) return;
+    try {
+      final response = await http.get(
+          Uri.parse("${global.apiUrl}/search/specificUser/$azureId"),
+          headers: {
+            'Authorization': '${global.token.accessToken}',
+            'Content-Type': 'application/json'
+          });
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        final String username = data["displayName"];
+        setState(() {
+          this.username = username;
+        });
+      }
+    } catch (e) {}
   }
 
   void showErrorDialog(String error) {
@@ -164,7 +185,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text("Urban Krepel")
+                                    Text(username)
                                   ],
                                 ),
                                 Row(
