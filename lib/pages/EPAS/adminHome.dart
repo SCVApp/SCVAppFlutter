@@ -113,7 +113,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                EPASAdminHomeTitle(context, goBack),
+                EPASAdminHomeTitle(context, goBack, currentSelectedWorkshopId),
                 EPASAdminHomeList(context, changeSelectedWorkshop,
                     currentSelectedWorkshopId, setCode)
               ],

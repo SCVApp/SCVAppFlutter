@@ -223,12 +223,12 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                       Icon(
                                         Icons.info_outline,
                                         color: Colors.red,
-                                        size: 40,
+                                        size: 50,
                                       ),
                                       Expanded(
                                           child: Text(
                                         "Uporabnik je prijavljen na delavnico ${this.otherWorkshop.name.toUpperCase()}, ob ${this.otherTimetable?.getStartHour() ?? ""}",
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.left,
                                       ))
                                     ],
                                   ),
