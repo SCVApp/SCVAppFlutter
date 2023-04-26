@@ -108,6 +108,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: EPASStyle.backgroundColor,
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
             bottom: false,
             child: Column(
