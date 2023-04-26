@@ -4,13 +4,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class Token {
   String accessToken;
   String refreshToken;
   String expiresOn;
   final FlutterSecureStorage storage = new FlutterSecureStorage();
+  final String publicKey =
+      "-----BEGIN PUBLIC KEY-----MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwuYUBLI1w19N3LG8nMt9kpmI/un0jToxDUZMIfRsL93u2vi4gR/UZ1vUlYdxJE6YObCsZRImrXoS5ZZr469L1Iua3FvfdZS1HpSNc5l0Vi4Ui/NFDYxGfcmPXYGsgc5Hoe1rYh0H9Z7FQuldVLIY06vPmf+qWCoOonHtizJke61wsXBOPO0Wriy54yJRtPtZMCO0xcovAiQJ18xSb8MpY0OI1bKAfLsv3/PqAKutkKoSZ/JsE1d7HMgjdXoL2gqb7bWdNqEdW2uwDbRLFCm/GAk6GQt4QlxkTFnG/pSIX0bRo8NCEXZ2HtmAIxN3bWNJ0gCR62aULJWzRSTtW0DDUMiOfDnYo/M/ljOtP72FcF9poOcB+ZQSXslI15NVXm8iN94yTcO3Ke0a12BTso2gOwrCLecoGrozDDpOQzOWRp/JI3GgDvkNALvFVgqqk1iYArcW/5q/l/Z4dE3yywKESNM7yxWIFwkYO5Rq4XK52GuGEgKpyk1TjZYzA7MfsSBkU/NNbzB8JpxeSOhzXEB4SUl4yRxRRlfFxkhkTbM5IBi46oJXyQo6+JLu+QqoXkdjxQGRsA2F7SVMukiAuhvf6fp0aipYJ3UZZuQHT7g8FfCcXP4xV1PYpdpXT9gqNMtI7WOErlI/QB0JwXT6ezbM+aI9SL7+pVB1UOLGvDcPNXcCAwEAAQ==-----END PUBLIC KEY-----";
 
   Token(
       {this.accessToken = "", this.refreshToken = "", this.expiresOn = null}) {
@@ -34,12 +36,20 @@ class Token {
       accessToken = await storage.read(key: accessTokenKey);
       refreshToken = await storage.read(key: refreshTokenKey);
       expiresOn = await storage.read(key: expiresKey);
-
-      if (accessToken == null || refreshToken == null || expiresOn == null) {
-        await loadTokenFromSheredPrefs();
-      }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> chechTokens() {
+    if (refreshToken != null) {
+      try {
+        JWT.verify(refreshToken, SecretKey(publicKey));
+      } catch (e) {
+        accessToken = null;
+        expiresOn = null;
+        refreshToken = null;
+      }
     }
   }
 
@@ -76,7 +86,6 @@ class Token {
           .parse(this.expiresOn)
           .toUtc()
           .subtract(Duration(minutes: 3));
-
       if (expires.isBefore(DateTime.now().toUtc())) {
         final respons = await http.post(
             Uri.parse("${global.apiUrl}/auth/refreshToken/"),
@@ -119,19 +128,5 @@ class Token {
         }
       }
     }
-  }
-
-  Future<void> loadTokenFromSheredPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      this.accessToken = this.accessToken ?? prefs.getString('key_AccessToken');
-      this.refreshToken =
-          this.refreshToken ?? prefs.getString('key_RefreshToken');
-      this.expiresOn = this.expiresOn ?? prefs.getString('key_ExpiresOn');
-
-      prefs.remove('key_AccessToken');
-      prefs.remove('key_RefreshToken');
-      prefs.remove('key_ExpiresOn');
-    } catch (_) {}
   }
 }

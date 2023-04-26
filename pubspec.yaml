@@ -54,7 +54,7 @@ dependencies:
   uni_links: ^0.5.1
   flutter_svg: ^1.1.5
   animate_icons: ^2.0.0
-  jwt_decode: ^0.3.1
+  dart_jsonwebtoken: ^2.7.1
   flutter_secure_storage: ^7.0.1
   flutter_hooks: ^0.18.5+1
   flutter_redux: ^0.10.0

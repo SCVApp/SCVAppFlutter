@@ -24,6 +24,7 @@ class EPASTimetableSelection extends StatefulWidget {
 class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
   int selectedTimetable = 0;
   int selectedWorkshopId = 0;
+  bool loading = false;
   void goBack() {
     Navigator.pushReplacement(
       context,
@@ -101,6 +102,10 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
 
   void joinWorkshop(
       {String successMessage = "Prijava na delavnico uspešna!"}) async {
+    if (this.loading) return;
+    setState(() {
+      this.loading = true;
+    });
     try {
       if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
         final ExtensionManager extensionManager =
@@ -116,6 +121,9 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
       this.handleError(e);
       await this.loadWorkshopsWithSameName();
     }
+    setState(() {
+      this.loading = false;
+    });
   }
 
   @override
