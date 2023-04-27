@@ -36,6 +36,7 @@ Widget EPASAdminHomeList(
                         child: ListView.separated(
                             itemBuilder: (context, index) =>
                                 EPASAdminHomeListItem(
+                                    context,
                                     epasApi.workshops[index],
                                     changeSelectedWorkshopId,
                                     currentSelectedWorkshopId),

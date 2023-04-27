@@ -41,7 +41,7 @@ class Token {
     }
   }
 
-  Future<void> chechTokens() {
+  void chechTokens() {
     if (refreshToken != null) {
       try {
         JWT.verify(refreshToken, SecretKey(publicKey));
@@ -77,6 +77,15 @@ class Token {
     }
   }
 
+  bool isExpired() {
+    try {
+      JWT.verify(accessToken, SecretKey(publicKey));
+    } catch (e) {
+      return true;
+    }
+    return false;
+  }
+
   Future<void> refresh({int depth = 0}) async {
     if (!(await global.canConnectToNetwork())) {
       return;
@@ -86,7 +95,7 @@ class Token {
           .parse(this.expiresOn)
           .toUtc()
           .subtract(Duration(minutes: 3));
-      if (expires.isBefore(DateTime.now().toUtc())) {
+      if (expires.isBefore(DateTime.now().toUtc()) || isExpired()) {
         final respons = await http.post(
             Uri.parse("${global.apiUrl}/auth/refreshToken/"),
             body: this.toJSON());

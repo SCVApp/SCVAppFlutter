@@ -3,5 +3,5 @@ abstract class Extension {
   bool enabled = true;
   bool authorised = false;
 
-  void checkAuth() async {}
+  Future<void> checkAuth() async {}
 }

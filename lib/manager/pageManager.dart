@@ -130,8 +130,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
             text: "Prišlo je do napake pri nalaganju podatkov.");
       }
       StoreProvider.of<AppState>(context).dispatch(user);
-      await Future.wait([refreshUrnik()]);
-      await loadAuthExtensions();
+      await Future.wait([refreshUrnik(), loadAuthExtensions()]);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;

@@ -24,9 +24,9 @@ class ExtensionManager {
         false;
   }
 
-  void checkAuth() {
+  Future<void> checkAuth() async {
     for (Extension extension in extensions) {
-      if (extension.enabled) extension.checkAuth();
+      if (extension.enabled) await extension.checkAuth();
     }
   }
 }
