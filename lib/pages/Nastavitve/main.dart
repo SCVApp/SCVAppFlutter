@@ -186,8 +186,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           SettingsItem(
                             onTap: goToEPAS,
                             icons: Icons.public,
-                            title: "EPAS",
-                            subtitle: "Dan Evrope",
+                            title: "Dan Evrope",
+                            subtitle: "EU na dlani",
                             iconStyle: IconStyle(
                               iconsColor: Theme.of(context).hintColor,
                               backgroundColor: HexColor.fromHex("#50C878"),
