@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scv_app/components/EPAS/flatingCard.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 
@@ -15,6 +16,10 @@ Widget EPASAdminHomeCard(
             content: TextField(
               cursorColor: EPASStyle.backgroundColor,
               keyboardType: TextInputType.number,
+              maxLength: 6,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               decoration: InputDecoration(
                 hintText: "Koda uporabnika",
                 focusedBorder: UnderlineInputBorder(
