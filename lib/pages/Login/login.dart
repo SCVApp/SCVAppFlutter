@@ -4,8 +4,10 @@ import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:scv_app/manager/pageManager.dart';
 
 import '../../api/user.dart';
+import '../../manager/extensionManager.dart';
 import '../../store/AppState.dart';
 
 class LoginPage extends StatefulWidget {
@@ -49,6 +51,7 @@ class _LoginPage extends State<LoginPage> {
       final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
       await urnik.refresh();
       StoreProvider.of<AppState>(context).dispatch(urnik);
+      await ExtensionManager.loadExtenstions(context);
     } catch (e) {
       ErrorInLogin();
     }

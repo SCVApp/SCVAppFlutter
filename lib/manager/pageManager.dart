@@ -130,7 +130,8 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
             text: "Prišlo je do napake pri nalaganju podatkov.");
       }
       StoreProvider.of<AppState>(context).dispatch(user);
-      await Future.wait([refreshUrnik(), loadAuthExtensions()]);
+      await Future.wait(
+          [refreshUrnik(), ExtensionManager.loadExtenstions(context)]);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;
@@ -171,13 +172,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
-  Future<void> loadAuthExtensions() async {
-    final ExtensionManager extensionManager =
-        StoreProvider.of<AppState>(context).state.extensionManager;
-    await extensionManager.checkAuth();
-    StoreProvider.of<AppState>(context).dispatch(extensionManager);
-  }
-
   Future<void> refreshUrnik() async {
     final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
     await urnik.load();
@@ -202,12 +196,13 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
       universalLinks.universalLink = "";
       await global.token.refresh();
-      await refreshUrnik();
+      await Future.wait(
+          [refreshUrnik()]);
     } else if (state == AppLifecycleState.paused) {
       universalLinks.universalLink = "";
       universalLinks.goToUnlockPassDoor(context, "", close: true);
       final Biometric biometric =
-          StoreProvider.of<AppState>(context).state.biometric;
+          StoreProvider.of<AppState>(context).state.biometric;  
       await biometric.updateLastActivity(isPaused: true);
       StoreProvider.of<AppState>(context).dispatch(biometric);
     }
