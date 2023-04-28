@@ -12,6 +12,7 @@ class EPASWorkshop {
   String name;
   String description;
   int timetable_id;
+  bool attended = false;
 
   int usersCount = 0;
   int maxUsers = 0;
@@ -21,6 +22,7 @@ class EPASWorkshop {
     this.name,
     this.description,
     this.timetable_id,
+    this.attended,
   });
 
   static fromJSON(json, int timetable_id, {bool timetable_object = false}) {
@@ -31,6 +33,7 @@ class EPASWorkshop {
       name: json['name'],
       description: json['description'],
       timetable_id: timetable_id ?? id ?? 0,
+      attended: json['attended'] ?? false,
     );
   }
 

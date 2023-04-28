@@ -32,7 +32,9 @@ Widget EPASHomeListItem(
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 Icon(
-                  Icons.arrow_forward_ios,
+                  workshop?.attended != true
+                      ? Icons.arrow_forward_ios
+                      : Icons.check,
                   size: 25,
                 )
               ],
