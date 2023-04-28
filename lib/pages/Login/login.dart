@@ -45,13 +45,13 @@ class _LoginPage extends State<LoginPage> {
 
       await global.token.saveToken();
 
+      ExtensionManager.loadExtenstions(context);
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
       StoreProvider.of<AppState>(context).dispatch(user);
       final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
       await urnik.refresh();
       StoreProvider.of<AppState>(context).dispatch(urnik);
-      await ExtensionManager.loadExtenstions(context);
     } catch (e) {
       ErrorInLogin();
     }
