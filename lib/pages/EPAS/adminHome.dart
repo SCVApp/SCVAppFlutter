@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
+import 'package:scv_app/api/epas/timetable.dart';
+import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
 import 'package:scv_app/components/EPAS/adminHome/list.dart';
 import 'package:scv_app/components/EPAS/adminHome/title.dart';
@@ -24,14 +26,14 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
 
-  void getCodeFromUrl() {
+  void getCodeFromUrl(int workshopId) {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
     final attributes = windowManager.getAttributes("EPAS");
 
     try {
       final int code = int.parse(attributes["code"]);
-      setCode(code);
+      setCode(code, workshopId: workshopId);
     } catch (e) {}
     windowManager.removeAttributes("EPAS");
     StoreProvider.of<AppState>(context).dispatch(windowManager);
@@ -41,15 +43,32 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
     final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    int workshopId = 0;
     if (epasApi.workshops.length > 0) {
       setState(() {
         currentSelectedWorkshopId = epasApi.workshops[0].id;
       });
+      workshopId = epasApi.workshops[0].id;
     }
-    getCodeFromUrl();
+
+    for (EPASWorkshop workshop in epasApi.workshops) {
+      final EPASTimetable timetable = epasApi.timetables
+          .firstWhere((element) => element.id == workshop.timetable_id);
+      DateTime now = DateTime.now();
+
+      DateTime start = timetable.start.subtract(Duration(minutes: 10));
+      if (now.isAfter(start) && now.isBefore(start)) {
+        setState(() {
+          currentSelectedWorkshopId = workshop.id;
+        });
+        workshopId = workshop.id;
+      }
+    }
+
+    getCodeFromUrl(workshopId);
   }
 
-  void setCode(int newCode) {
+  void setCode(int newCode, {int workshopId}) {
     if (newCode.toString().length != 6) return;
     setState(() {
       userCode = newCode;
@@ -57,8 +76,8 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                EPASAdminChechView(newCode, currentSelectedWorkshopId)));
+            builder: (context) => EPASAdminChechView(
+                newCode, workshopId ?? currentSelectedWorkshopId)));
   }
 
   @override
@@ -66,13 +85,6 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadMyWorkshops();
-      StoreProvider.of<AppState>(context).onChange.listen((state) {
-        final WindowManager windowManager = state.windowManager;
-        final attributes = windowManager.getAttributes("EPAS");
-        if (attributes["code"] != null) {
-          getCodeFromUrl();
-        }
-      });
     });
   }
 
@@ -96,12 +108,22 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     await Future.wait(
         [epasApi.loadTimetables(), epasApi.loadLeaderWorkshops()]);
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
+    checkForUrl();
     final promisses = epasApi.workshops.map((workshop) async {
       await workshop.getCountAndMaxUsers();
     });
     await Future.wait(promisses);
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
-    setSelectedWorkshopId();
+  }
+
+  void checkForUrl() {
+    StoreProvider.of<AppState>(context).onChange.listen((state) {
+      final WindowManager windowManager = state.windowManager;
+      final attributes = windowManager.getAttributes("EPAS");
+      if (attributes["code"] != null) {
+        setSelectedWorkshopId();
+      }
+    });
   }
 
   @override

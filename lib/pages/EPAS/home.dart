@@ -4,6 +4,7 @@ import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/components/EPAS/alert.dart';
 import 'package:scv_app/components/EPAS/home/list.dart';
 import 'package:scv_app/manager/extensionManager.dart';
+import 'package:scv_app/pages/EPAS/info.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 
 import '../../api/windowManager/windowManager.dart';
@@ -20,6 +21,11 @@ class _EPASHomePageState extends State<EPASHomePage> {
         StoreProvider.of<AppState>(context).state.windowManager;
     windowManager.hideWindow("EPAS");
     StoreProvider.of<AppState>(context).dispatch(windowManager);
+  }
+
+  void viewInfo() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EPASInfoPage()));
   }
 
   void loadTimetables() async {
@@ -58,8 +64,9 @@ class _EPASHomePageState extends State<EPASHomePage> {
                     BackButton(
                         onPressed: goBack,
                         color: Theme.of(context).scaffoldBackgroundColor),
-                    Icon(
-                      Icons.info_outline,
+                    IconButton(
+                      onPressed: viewInfo,
+                      icon: Icon(Icons.info_outline),
                       color: Theme.of(context).scaffoldBackgroundColor,
                     )
                   ],
