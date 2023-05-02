@@ -201,17 +201,37 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                             fontWeight: FontWeight.bold))
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Prijavljen ob uri",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text(
-                                        this.isJoinedAtWorkshop ? "11.00" : "/")
-                                  ],
-                                )
+                                StoreConnector<AppState, ExtensionManager>(
+                                    converter: (store) =>
+                                        store.state.extensionManager,
+                                    builder: (context, extensionManager) {
+                                      final EPASApi epasApi = extensionManager
+                                          .getExtensions("EPAS");
+                                      final EPASWorkshop workshop =
+                                          epasApi.workshops.firstWhere(
+                                              (element) =>
+                                                  element.id ==
+                                                  widget.workshopId,
+                                              orElse: () => null);
+                                      final EPASTimetable timetable =
+                                          epasApi.timetables.firstWhere(
+                                              (element) =>
+                                                  element.id ==
+                                                  workshop.timetable_id,
+                                              orElse: () => null);
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Prijavljen ob uri",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(this.isJoinedAtWorkshop
+                                              ? timetable?.getStartHour() ?? "/"
+                                              : "/")
+                                        ],
+                                      );
+                                    })
                               ].withSpaceBetween(spacing: 20),
                             ),
                             Column(

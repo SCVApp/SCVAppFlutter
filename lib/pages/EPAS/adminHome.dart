@@ -117,6 +117,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
   }
 
   void checkForUrl() {
+    setSelectedWorkshopId();
     StoreProvider.of<AppState>(context).onChange.listen((state) {
       final WindowManager windowManager = state.windowManager;
       final attributes = windowManager.getAttributes("EPAS");
