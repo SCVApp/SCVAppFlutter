@@ -13,8 +13,7 @@ class AboutAppPage extends StatefulWidget {
 
 Future<void> _onOpen(LinkableElement link) async {
   if (await canLaunchUrl(Uri.parse(link.url))) {
-    await launchUrl(Uri.parse(link.url),
-        mode: LaunchMode.externalApplication);
+    await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not launch $link';
   }
@@ -194,6 +193,30 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           ],
         ),
       ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Pravilnik o zasebnosti"),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+            GestureDetector(
+              child: Text(
+                "Klikni tukaj",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si/policy"),
+                    mode: LaunchMode.externalApplication);
+              },
+            )
+          ],
+        ),
+      ),
     ];
   }
 
@@ -239,6 +262,29 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
               ),
               onTap: () {
                 launchUrl(Uri.parse("https://app.scv.si/o-nas"),
+                    mode: LaunchMode.externalApplication);
+              },
+            )
+          ],
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Pravilnik o zasebnosti"),
+            GestureDetector(
+              child: Text(
+                "Klikni tukaj",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              onTap: () {
+                launchUrl(Uri.parse("https://app.scv.si/policy"),
                     mode: LaunchMode.externalApplication);
               },
             )
