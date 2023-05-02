@@ -217,7 +217,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                           epasApi.timetables.firstWhere(
                                               (element) =>
                                                   element.id ==
-                                                  workshop.timetable_id,
+                                                  workshop?.timetable_id,
                                               orElse: () => null);
                                       return Row(
                                         mainAxisAlignment:
