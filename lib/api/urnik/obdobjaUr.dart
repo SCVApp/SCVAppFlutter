@@ -1,4 +1,5 @@
 import 'package:scv_app/api/urnik/ura.dart';
+import 'package:intl/intl.dart';
 
 enum ObdobjaUrType { trenutno, naslednje, normalno }
 
@@ -9,6 +10,7 @@ class ObdobjaUr {
   DateTime zacetek = DateTime.now();
   DateTime konec = DateTime.now();
   List<Ura> ure = [];
+  String datum = "";
   ObdobjaUrType type = ObdobjaUrType.normalno;
 
   void fromJSON(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class ObdobjaUr {
       ura_.fromJSON(ura);
       this.ure.add(ura_);
     }
+    this.datum = DateFormat("EEE, d.M.yyyy", "sl_SI").format(DateTime.now());
   }
 
   void parseDateTimeFromTrajanje() {
@@ -48,10 +51,10 @@ class ObdobjaUr {
         "trajanje": this.trajanje,
         "ura": this.ure,
       };
-  
-  bool obdobjeJePrazno(){
-    for(Ura ura in this.ure){
-      if(ura.uraJePrazna() == false){
+
+  bool obdobjeJePrazno() {
+    for (Ura ura in this.ure) {
+      if (ura.uraJePrazna() == false) {
         return false;
       }
     }

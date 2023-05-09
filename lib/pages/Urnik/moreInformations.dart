@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/api/urnik/ura.dart';
+import 'package:scv_app/components/urnik/moreInfromations/doorUnlockBtn.dart';
 import 'package:scv_app/components/urnik/moreInfromations/lineItem.dart';
 
 import '../../icons/person_video_icons.dart';
@@ -36,11 +37,13 @@ class _UrnikMoreInformationsState extends State<UrnikMoreInformations> {
             ],
           ),
           UrnikMoreInformationsLineItem(
-              Icons.schedule, "DATUM", "PET, 12.05.2023"),
+              Icons.schedule, "DATUM", widget.obdobjeUr.datum),
           UrnikMoreInformationsLineItem(
               PersonVideo.person_video3, "PROFESOR", widget.ura.ucitelj),
           UrnikMoreInformationsLineItem(
               Icons.door_front_door, "UČILNICA", widget.ura.ucilnica),
+          if (widget.ura.smartDoorCode != null)
+            UrnikMoreInformationsDoorUnlockBtn(),
         ],
       )),
     ));
