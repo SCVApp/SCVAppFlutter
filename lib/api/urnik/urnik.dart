@@ -5,12 +5,16 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'passDoor.dart';
+import 'ura.dart';
+
 enum PoukType { zacetekPouka, konecPouka, odmor, pouk, niPouka }
 
 class Urnik {
   List<ObdobjaUr> obdobjaUr = [];
   PoukType poukType = PoukType.niPouka;
   bool loadingFromWeb = false;
+  List<PassDoor> passDoors = [];
   DateTime nazadnjePosodobljeno = DateTime.fromMillisecondsSinceEpoch(0);
 
   static final String urnikKey = "SCV-App-Urnik";
@@ -34,8 +38,28 @@ class Urnik {
     } catch (e) {
       global.showGlobalAlert(text: "Napaka pri nalaganju urnika");
     }
-
     this.loadingFromWeb = false;
+  }
+
+  Future<void> fetchPassDoor() async {
+    try {
+      final response = await http.get(
+          Uri.parse('${global.apiUrl}/pass/all_doors_user'),
+          headers: {"Authorization": global.token.accessToken});
+      if (response.statusCode == 200) {
+        List<dynamic> json = jsonDecode(response.body);
+        this.passDoors = json.map((e) => PassDoor.fromJSON(e)).toList();
+      }
+    } catch (_) {}
+    for (ObdobjaUr obdobjeUr in this.obdobjaUr) {
+      for (Ura ura in obdobjeUr.ure) {
+        for (PassDoor passDoor in this.passDoors) {
+          if (ura.ucilnica == passDoor.name_id) {
+            ura.smartDoorCode = passDoor.code;
+          }
+        }
+      }
+    }
   }
 
   Future<void> refresh({bool forceFetch = false}) async {
@@ -44,6 +68,7 @@ class Urnik {
     if (differenceFromLoadedAndNow.inHours >= 1 || forceFetch) {
       await this.fetchFromWeb(force: forceFetch);
     }
+    await this.fetchPassDoor();
     this.loadingFromWeb = false;
   }
 
