@@ -5,6 +5,6 @@
     "eAsistent": "eAsistent",
     "schedule": "Urnik",
     "settings": "Nastavitve",
-    "prompt_logout": "Ali si prepričan, da se želiš odjaviti?".
+    "prompt_logout": "Ali si prepričan, da se želiš odjaviti?",
     "device_no_settings_for_security" : "V telefonu nimaš nastavljenih varnostnih nastavitev. Zato vam nemoremo odkleniti aplikacije."
 }

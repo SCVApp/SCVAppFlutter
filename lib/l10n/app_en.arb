@@ -5,5 +5,6 @@
     "eAsistent": "eAsistent",
     "schedule": "Schedule",
     "settings": "Settings",
-    "prompt_logout": "Are you sure you want to log out?"
+    "prompt_logout": "Are you sure you want to log out?",
+    "device_no_settings_for_security" : "Your device does not have any security settings. Therefore we cannot unlock the app."
 }
