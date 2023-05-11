@@ -4,5 +4,6 @@
     "meals": "Meals",
     "eAsistent": "eAsistent",
     "schedule": "Schedule",
-    "settings": "Settings"
+    "settings": "Settings",
+    "prompt_logout": "Are you sure you want to log out?"
 }

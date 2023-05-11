@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/confirmAlert.dart';
 import 'package:scv_app/components/nastavitve/lockPage/unlockButton.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../api/biometric.dart';
 import '../store/AppState.dart';
@@ -24,7 +25,7 @@ class _LockPageState extends State<LockPage> {
   }
 
   void confirmLogout() async {
-    confirmAlert(context, "Ali si prepričan, da se želiš odjaviti?", logout,
+    confirmAlert(context, AppLocalizations.of(context).prompt_logout, logout,
         () => Navigator.pop(context));
   }
 
