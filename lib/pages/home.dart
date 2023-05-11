@@ -7,6 +7,7 @@ import 'package:scv_app/pages/Nastavitve/main.dart';
 import 'package:scv_app/pages/Urnik/main.dart';
 import 'package:scv_app/pages/easistentPage.dart';
 import 'package:scv_app/pages/schoolHomePage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../api/user.dart';
 import '../icons/ea_icon.dart';
@@ -73,23 +74,23 @@ class _HomePageState extends State<HomePage>
             items: [
               NavBarItem(
                 iconData: Icons.home_rounded,
-                label: 'Domov',
+                label: AppLocalizations.of(context).home,
               ),
               NavBarItem(
                 iconData: Icons.fastfood,
-                label: 'Malice',
+                label: AppLocalizations.of(context).meals,
               ),
               NavBarItem(
                 iconData: FluttereAIcon.ea,
-                label: 'eAsistent',
+                label: AppLocalizations.of(context).eAsistent,
               ),
               NavBarItem(
                 iconData: Icons.calendar_today_rounded,
-                label: 'Urnik',
+                label: AppLocalizations.of(context).schedule,
               ),
               NavBarItem(
                 iconData: Icons.settings,
-                label: 'Nastavitve',
+                label: AppLocalizations.of(context).settings,
               ),
             ],
             theme: FFNavigationBarTheme(

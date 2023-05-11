@@ -7,6 +7,7 @@ import 'package:scv_app/manager/pageManager.dart';
 import 'package:get/get.dart';
 import 'package:scv_app/store/AppReducer.dart';
 import 'dart:async';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/theme/Themes.dart';
@@ -46,7 +47,12 @@ class myApp extends StatelessWidget {
     return StoreProvider<AppState>(
       store: store,
       child: GetMaterialApp(
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
         title: 'ŠCVApp',
         debugShowCheckedModeBanner: false,
         theme: Themes.light,
@@ -55,8 +61,7 @@ class myApp extends StatelessWidget {
         routes: {
           "/": (context) => PageManager(),
         },
-        supportedLocales: [Locale("sl")],
-        locale: Locale("sl"),
+        supportedLocales: AppLocalizations.supportedLocales,
         themeMode: themeMode,
       ),
     );

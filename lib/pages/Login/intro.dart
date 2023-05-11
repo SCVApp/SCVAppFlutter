@@ -6,6 +6,7 @@ import 'package:scv_app/components/alertContainer.dart';
 import '../../api/user.dart';
 import '../../extension/hexColor.dart';
 import '../../store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginIntro extends StatelessWidget {
   @override
@@ -26,7 +27,7 @@ class LoginIntro extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'Dobrodošel/a v aplikaciji ŠCVApp!',
+              title: AppLocalizations.of(context).welcome,
               body: '',
               image: buildImage(Theme.of(context).primaryColor == Colors.black
                   ? 'assets/images/school_logo.png'
