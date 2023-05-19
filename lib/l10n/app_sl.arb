@@ -68,7 +68,18 @@
     "logout":"Odjava",
     "logout_app":"Odjava iz aplikacije",
     "coming_soon":"Kmalu na voljo",
-    "":""
+    "door_unlock_success":"Vrata so uspešno odklenjena",
+    "door_no_class_hour":"Trenutno nimaš pouka v tej učilnici",
+    "door_wait_unlock":"Prosim počakaj za ponovno odklepanje vrat",
+    "door_classroom_nonexistent":"Učilnica ne obstaja",
+    "door_locked":"Vrata so zaklenjena",
+    "door_unlock_unsuccessful":"Vrata niso bila odprta",
+    "unknown_error":"Neznana napaka.",
+    "try_again":"Prosim, poskusi ponovno",
+    "door_max_unlocks":"Pazi, prehitro odklepaš!",
+    "door_click_lock":"Pritisni ključavnico za odklep vrat",
+    "door_not_found":"Vrata niso bila najdena. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
+    "something_went_wrong":
 
     
 
