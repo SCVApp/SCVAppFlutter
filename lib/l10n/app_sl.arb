@@ -79,9 +79,29 @@
     "door_max_unlocks":"Pazi, prehitro odklepaš!",
     "door_click_lock":"Pritisni ključavnico za odklep vrat",
     "door_not_found":"Vrata niso bila najdena. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
-    "something_went_wrong":
-
-    
+    "something_went_wrong":"Prišlo je do napake. Prosim, poskusi znova",
+    "todays_class_hours":"Današnji urnik",
+    "date":"Datum",
+    "profesor":"Profesor",
+    "classroom":"Učilnica",
+    "start_of_class_hour":"Začetek pouka",
+    "next_hour":"naslednje ure",
+    "end_of_class_hours":"Konec pouka",
+    "no_class":"Ni pouka",
+    "error_no_security_features":"V telefonu nimaš nastavljenih varnostnih nastavitev, zaradi tega ni možno odkleniti aplikacije.",
+    "login_scvapp":"Prijava v aplikacijo ŠCVApp",
+    "email":"E-pošta",
+    "email_shape":"E-poštni naslov je v obliki ime.priimek@scv.si",
+    "password":"Geslo",
+    "password_info":"Geslo za dostop do malic",
+    "all_tools_one_place":"Vsa orodja na enem mestu.",
+    "tools_description":"Dijakom koristna orodja, zbrana na enem mestu.",
+    "simple_and_safe":"Preprosto in varno",
+    "login_microsoft_description":"Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.",
+    "login":"Prijava",
+    "skip":"Preskoči",
+    "error_login":"Napaka pri prijavi. Prosim, poskusi ponovno.",
+    "wait_login":"Prosim počakaj, prijava poteka...",
 
 
 }
