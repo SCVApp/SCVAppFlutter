@@ -5,6 +5,7 @@ import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
+import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
@@ -18,6 +19,7 @@ class AppState {
   final GlobalAlert globalAlert;
   final WindowManager windowManager;
   final ExtensionManager extensionManager;
+  final Malica malica;
 
   AppState({
     @required this.user,
@@ -27,6 +29,7 @@ class AppState {
     @required this.globalAlert,
     @required this.windowManager,
     @required this.extensionManager,
+    @required this.malica,
   });
 
   factory AppState.initial() {
@@ -38,6 +41,7 @@ class AppState {
       globalAlert: new GlobalAlert(),
       windowManager: new WindowManager(),
       extensionManager: new ExtensionManager(),
+      malica: new Malica(),
     );
   }
 }

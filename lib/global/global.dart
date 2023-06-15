@@ -23,6 +23,8 @@ final String appVersion = "2.3.1";
 
 Connectivity connectivity = new Connectivity();
 
+String malicaAccessToken = "";
+
 Future<void> logOutUser(BuildContext context) async {
   try {
     User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
