@@ -12,11 +12,6 @@ Widget TodayForMeal(BuildContext context) {
       converter: (store) => store.state.malica,
       builder: (context, malica) {
         MalicaDan dan = malica.getDay(0);
-        if (dan != null) {
-          for (MalicaMeni meni in dan.meniji) {
-            print(meni.opis);
-          }
-        }
         MalicaMeni meni = dan?.getSelectedMenu();
         return Container(
           decoration: mealsBoxDecoration(context),

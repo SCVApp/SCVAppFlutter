@@ -5,6 +5,8 @@ import 'package:scv_app/components/malice/home/todayForMeal.dart';
 import 'package:scv_app/extension/withSpaceBetween.dart';
 
 import '../../api/malice/malica.dart';
+import '../../api/malice/malicaDan.dart';
+import '../../api/malice/malicaMeni.dart';
 import '../../store/AppState.dart';
 
 class MaliceHomePage extends StatefulWidget {
@@ -24,6 +26,8 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
     return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
+        MalicaDan dan = malica.getDay(0);
+        MalicaMeni meni = dan?.getSelectedMenu();
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: ListView(
@@ -31,8 +35,8 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
             children: [
               TodayForMeal(context),
               MealInfoBox(context, "PIN:", malica.maliceUser.pinNumber),
-              MealInfoBox(context, "Malica za jutri:",
-                  "Perutničke z medom, dušen riž, solata",
+              MealInfoBox(
+                  context, "Malica za jutri:", meni?.opis ?? "Brez malice",
                   textAlignForValue: TextAlign.center),
               MealInfoBox(context, "Stanje na računu:",
                   "${malica.maliceUser.budget.toStringAsFixed(2)}€"),
