@@ -49,8 +49,8 @@
     "biometric_unlock":"Biometrični odklep aplikacije",
     "no_biometrics":"V telefonu nimaš nastavljenih varnostnih nastavitev, zato ni možno spremeniti nastavitve biometričnega odklepanja.",
     "info":"informacije",
-    "Available":"Dosegljiv/-a",
-    "Away":"Odsoten/-a",
+    "available":"Dosegljiv/-a",
+    "away":"Odsoten/-a",
     "brb":"Takoj bom nazaj",
     "busy":"Zaseden/-a",
     "dnd":"Ne moti",
@@ -101,7 +101,5 @@
     "login":"Prijava",
     "skip":"Preskoči",
     "error_login":"Napaka pri prijavi. Prosim, poskusi ponovno.",
-    "wait_login":"Prosim počakaj, prijava poteka...",
-
-
+    "wait_login":"Prosim počakaj, prijava poteka..."
 }
