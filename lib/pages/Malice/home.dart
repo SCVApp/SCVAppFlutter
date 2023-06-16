@@ -36,7 +36,7 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
               TodayForMeal(context),
               MealInfoBox(context, "PIN:", malica.maliceUser.pinNumber),
               MealInfoBox(
-                  context, "Malica za jutri:", meni?.opis ?? "Brez malice",
+                  context, "Malica za jutri:", MalicaDan.getOpisMenija(meni),
                   textAlignForValue: TextAlign.center),
               MealInfoBox(context, "Stanje na računu:",
                   "${malica.maliceUser.budget.toStringAsFixed(2)}€"),

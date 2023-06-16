@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 import 'package:scv_app/pages/Malice/home.dart';
 import 'package:scv_app/pages/Malice/login.dart';
 import 'package:scv_app/pages/Malice/otherInformations.dart';
@@ -28,7 +27,7 @@ class _MalicePageState extends State<MalicePage> {
   }
 
   void goToSelectMenu() {
-    _pageController.jumpToPage(2);
+    _pageController.jumpToPage(1);
   }
 
   void goToHomePage() {
@@ -36,7 +35,7 @@ class _MalicePageState extends State<MalicePage> {
   }
 
   void goToOtherInformations() {
-    _pageController.jumpToPage(3);
+    _pageController.jumpToPage(2);
   }
 
   void loadData() async {
