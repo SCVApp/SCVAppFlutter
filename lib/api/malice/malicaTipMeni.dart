@@ -5,7 +5,7 @@ class MalicaTipMeni {
 
   MalicaTipMeni.fromJson(Map<String, dynamic> json) {
     id = json["id"];
-    naziv = json["naziv"];
+    naziv = json["title"];
     picture_url =
         naziv.replaceAll(" ", "_").replaceAll("č", "c").toLowerCase() + ".png";
   }

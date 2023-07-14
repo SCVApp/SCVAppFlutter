@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/api/malice/malicaDan.dart';
+import 'package:scv_app/api/malice/malicaMeni.dart';
+import 'package:scv_app/api/malice/malicaTipMeni.dart';
 import 'package:scv_app/components/malice/mealsBoxDecoration.dart';
 
-Widget MealSelectBox(BuildContext context) {
+Widget MealSelectBox(BuildContext context, MalicaDan dan, MalicaMeni meni,
+    {bool isSelected = false}) {
+  MalicaTipMeni tip =
+      dan.tipiMenijev.firstWhere((element) => element.id == meni.tip_id);
   return Container(
-    decoration: mealsBoxDecoration(context),
+    decoration: mealsBoxDecoration(context, isSelected: isSelected),
     padding: EdgeInsets.all(15),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -11,11 +17,10 @@ Widget MealSelectBox(BuildContext context) {
       children: [
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
-            child: Image(
-                image: AssetImage("assets/images/slikeMalica/mesni_meni.png"))),
+            child: Image(image: AssetImage(MalicaDan.getPictureUrl(tip)))),
         Padding(padding: EdgeInsets.only(top: 10)),
         Text(
-          "Perutničke z medom, dušen riž, solata",
+          MalicaDan.getOpisMenija(meni),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ],

@@ -15,6 +15,7 @@ class MaliceSelectMenus extends StatefulWidget {
 
 class _MaliceSelectMenusState extends State<MaliceSelectMenus> {
   bool isCalanderOpen = false;
+  int selectedDate = 0;
 
   void toggleCalander() {
     setState(() {
@@ -40,7 +41,7 @@ class _MaliceSelectMenusState extends State<MaliceSelectMenus> {
           ),
           MealsSelectedDate(toggleCalander),
           Padding(padding: EdgeInsets.only(top: 20)),
-          MealSelectMenus(context),
+          MealSelectMenus(context,selectedDate),
         ],
       ),
       Positioned(

@@ -10,6 +10,8 @@ import 'malicaTipMeni.dart';
 class MalicaDan {
   int id;
   int idNarocenegaMenija = 0;
+  bool canOrder = false;
+  bool canCancel = false;
 
   MalicaDan(this.id);
 
@@ -36,12 +38,16 @@ class MalicaDan {
         if (json["selected"] != null) {
           idNarocenegaMenija = int.parse(json["selected"].toString());
         }
+        if (json["can_order"] != null) {
+          canOrder = json["can_order"];
+        }
+        if (json["can_cancel"] != null) {
+          canCancel = json["can_cancel"];
+        }
       } else {
         throw Exception('Failed to load menus');
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   MalicaMeni getSelectedMenu() {
