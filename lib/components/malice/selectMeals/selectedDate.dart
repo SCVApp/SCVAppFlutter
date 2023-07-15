@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget MealsSelectedDate(Function toggleCalander) {
+Widget MealsSelectedDate(void Function() toggleCalander) {
   return Center(
       child: Row(
     crossAxisAlignment: CrossAxisAlignment.center,

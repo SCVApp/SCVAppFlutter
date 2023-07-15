@@ -7,7 +7,7 @@ import 'package:scv_app/store/AppState.dart';
 import 'package:uni_links/uni_links.dart';
 
 bool initialURILinkHandled = false;
-StreamSubscription universalLinkSubscription;
+StreamSubscription? universalLinkSubscription;
 String universalLink = "";
 var dummyDeepLinkedUrl;
 
@@ -30,10 +30,13 @@ Future<void> initURIHandler(BuildContext context) async {
 
 void incomingURIHandler() {
   try {
-    universalLinkSubscription = uriLinkStream.listen((Uri uri) {
-      universalLink = uri.toString();
-      print("Universal link: $universalLink");
-    }, onError: (Object err) {});
+    universalLinkSubscription = uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        universalLink = uri.toString();
+      }
+    }, onError: (err) {
+      print("Error while listening to incoming URI: $err");
+    });
   } catch (e) {}
 }
 
@@ -68,7 +71,9 @@ void goToEPASAdmin(BuildContext context, String uri) {
   if (chechEPASURI(uri)) {
     final WindowManager windowManager =
         StoreProvider.of<AppState>(context).state.windowManager;
-    windowManager.showWindow("EPAS", attributes: {"code": uri.replaceFirst("scvapp://app.scv.si/epas/code/", "")});
+    windowManager.showWindow("EPAS", attributes: {
+      "code": uri.replaceFirst("scvapp://app.scv.si/epas/code/", "")
+    });
     StoreProvider.of<AppState>(context).dispatch(windowManager);
   }
 }

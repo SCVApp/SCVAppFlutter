@@ -11,16 +11,15 @@ import '../../../manager/extensionManager.dart';
 
 Widget EPASWorkshopSelectionListItem(
     BuildContext context, EPASWorkshop workshop,
-    {Function onTap}) {
+    {void Function()? onTap}) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
         bool isUserJoinedInWorkshopWithName = false;
         for (EPASTimetable timetable in epasApi.timetables) {
-          EPASWorkshop selectedWorkShop = epasApi.joinedWorkshops.firstWhere(
-              (workshop) => workshop.id == timetable.selected_workshop_id,
-              orElse: () => null);
+          EPASWorkshop? selectedWorkShop = epasApi.joinedWorkshops.firstWhere(
+              (workshop) => workshop.id == timetable.selected_workshop_id);
           if (selectedWorkShop != null &&
               selectedWorkShop.name == workshop.name) {
             isUserJoinedInWorkshopWithName = true;

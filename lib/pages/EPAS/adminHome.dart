@@ -42,7 +42,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
   void setSelectedWorkshopId() {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     int workshopId = 0;
     if (epasApi.workshops.length > 0) {
       setState(() {
@@ -68,7 +68,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     getCodeFromUrl(workshopId);
   }
 
-  void setCode(int newCode, {int workshopId}) {
+  void setCode(int newCode, {int? workshopId}) {
     if (newCode.toString().length != 6) return;
     setState(() {
       userCode = newCode;
@@ -102,7 +102,7 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
   void loadMyWorkshops() async {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await Future.wait(

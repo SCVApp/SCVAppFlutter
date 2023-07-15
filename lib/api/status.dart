@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:scv_app/global/global.dart' as global;
 
 class Status {
-  String id;
-  String display;
-  String color;
-  AssetImage assetImage;
+  String id = "unknown";
+  String display = "Unknown";
+  String color = "#FFFFFF";
+  AssetImage assetImage = AssetImage("assets/images/statusIcons/unknown.png");
 
   Status() {
     this.id = "unknown";
@@ -31,7 +31,7 @@ class Status {
     await global.token.refresh();
     final response = await http.get(
         Uri.parse(global.apiUrl + "/user/get/status"),
-        headers: {"Authorization": global.token.accessToken});
+        headers: {"Authorization": global.token.getAccessToken()});
     if (response.statusCode == 200) {
       this.fromJSON(jsonDecode(response.body));
     } else {
@@ -44,7 +44,7 @@ class Status {
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/user/setStatus/$statusId'),
-          headers: {"Authorization": global.token.accessToken});
+          headers: {"Authorization": global.token.getAccessToken()});
       if (response.statusCode == 200) {
         await this.fetchData();
         global.showGlobalAlert(text: "Status uspešno spremenjen");

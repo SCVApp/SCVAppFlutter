@@ -20,14 +20,14 @@ class EPASMainPage extends StatefulWidget {
 
 class _EPASMainPageState extends State<EPASMainPage> {
   final PageController pageController = PageController(initialPage: 0);
-  Timer timer;
+  Timer? timer;
 
   void getRole() async {
     try {
       final response = await http.get(
           Uri.parse('${EPASApi.EPASapiUrl}/user/role'),
           headers: <String, String>{
-            'Authorization': '${global.token.accessToken}',
+            'Authorization': '${global.token.getAccessToken()}',
           });
       if (response.statusCode == 200) {
         if (response.body == 'vodja') {
@@ -42,7 +42,7 @@ class _EPASMainPageState extends State<EPASMainPage> {
   void refreshJoinedWorkshops() async {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     if (this.pageController.page == 1) {
       await epasApi.loadJoinedWorkshops();
     }
@@ -61,7 +61,7 @@ class _EPASMainPageState extends State<EPASMainPage> {
 
   @override
   void dispose() {
-    if (this.timer != null) this.timer.cancel();
+    if (this.timer != null) this.timer!.cancel();
     super.dispose();
   }
 

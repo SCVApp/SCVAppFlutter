@@ -3,8 +3,8 @@ import 'package:scv_app/components/malice/mealsBoxDecoration.dart';
 
 Widget MealInfoBox(BuildContext context, String info, String value,
     {TextAlign textAlignForValue = TextAlign.right,
-    Function onTap,
-    Icon icon}) {
+    void Function()? onTap,
+    Icon? icon}) {
   return GestureDetector(
     child: Container(
       decoration: mealsBoxDecoration(context),

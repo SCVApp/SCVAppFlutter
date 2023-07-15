@@ -22,14 +22,14 @@ class AppState {
   final Malica malica;
 
   AppState({
-    @required this.user,
-    @required this.appTheme,
-    @required this.biometric,
-    @required this.urnik,
-    @required this.globalAlert,
-    @required this.windowManager,
-    @required this.extensionManager,
-    @required this.malica,
+    required this.user,
+    required this.appTheme,
+    required this.biometric,
+    required this.urnik,
+    required this.globalAlert,
+    required this.windowManager,
+    required this.extensionManager,
+    required this.malica,
   });
 
   factory AppState.initial() {

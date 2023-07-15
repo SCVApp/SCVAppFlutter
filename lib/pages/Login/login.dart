@@ -11,7 +11,7 @@ import '../../manager/extensionManager.dart';
 import '../../store/AppState.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   _LoginPage createState() => _LoginPage();
 }

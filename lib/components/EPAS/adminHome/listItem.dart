@@ -20,10 +20,9 @@ Widget EPASAdminHomeListItem(BuildContext context, EPASWorkshop workshop,
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-        final EPASTimetable timetable = epasApi.timetables.firstWhere(
-            (timetable) => timetable.id == workshop.timetable_id,
-            orElse: () => null);
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASTimetable? timetable = epasApi.timetables.firstWhere(
+            (timetable) => timetable.id == workshop.timetable_id);
         final Color countColor = workshop.usersCount >= workshop.maxUsers
             ? EPASStyle.fullPlaceColor
             : EPASStyle.freePlaceColor;

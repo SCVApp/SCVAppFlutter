@@ -12,9 +12,9 @@ Widget TodayForMeal(BuildContext context) {
   return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
-        MalicaDan dan = malica.getDay(0);
-        MalicaMeni meni = dan?.getSelectedMenu();
-        MalicaTipMeni tipMenija = dan?.getTipMenija(meni);
+        MalicaDan? dan = malica.getDay(0);
+        MalicaMeni? meni = dan?.getSelectedMenu();
+        MalicaTipMeni? tipMenija = dan?.getTipMenija(meni);
         return Container(
           decoration: mealsBoxDecoration(context),
           child: Column(

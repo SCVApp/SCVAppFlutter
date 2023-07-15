@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/components/nastavitve/biomatricPage/biometricAlert.dart';
@@ -67,7 +68,10 @@ class Biometric {
   Future<void> load() async {
     final FlutterSecureStorage storage = global.token.storage;
     try {
-      String json = await storage.read(key: biometricKey);
+      String? json = await storage.read(key: biometricKey);
+      if (json == null) {
+        return;
+      }
       this.fromJson(jsonDecode(json));
     } catch (e) {
       print(e);
@@ -98,7 +102,7 @@ class Biometric {
       DateTime now = DateTime.now();
       Duration diff = now.difference(this.lastActivity);
       int minutes = diff.inMinutes;
-      if (minutes >= autoLockModeValues[this.autoLockMode]) {
+      if (minutes >= autoLockModeValues[this.autoLockMode]!) {
         this.locked = true;
       }
     } else {
@@ -128,7 +132,7 @@ class Biometric {
   }
 
   Future<bool> authenticate(BuildContext context,
-      {List<Widget> actions, String text}) async {
+      {List<Widget>? actions, String? text}) async {
     bool authenticated = false;
     try {
       authenticated = await localAuthentication.authenticate(
@@ -136,16 +140,18 @@ class Biometric {
           options:
               AuthenticationOptions(stickyAuth: true, useErrorDialogs: true));
     } catch (e) {
-      if (e.code == "NotAvailable" &&
-          e.message == "Required security features not enabled") {
-        await biometricAlert(context, actions: actions, text: text);
+      if (e is PlatformException) {
+        if (e.code == "NotAvailable" &&
+            e.message == "Required security features not enabled") {
+          await biometricAlert(context, actions: actions, text: text);
+        }
       }
     }
     return authenticated;
   }
 
   Future<void> unlock(BuildContext context,
-      {List<Widget> actions, String text}) async {
+      {List<Widget>? actions, String? text}) async {
     if (await this.authenticate(context, actions: actions, text: text) ==
         true) {
       this.locked = false;

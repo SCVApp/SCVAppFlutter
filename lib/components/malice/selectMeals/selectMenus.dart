@@ -12,9 +12,9 @@ Widget MealSelectMenus(BuildContext context, int selectedDate) {
   return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
-        MalicaDan dan = malica.getDay(selectedDate);
-        List<MalicaMeni> meniji = dan?.meniji;
-        MalicaMeni selectedMeni = dan?.getSelectedMenu();
+        MalicaDan? dan = malica.getDay(selectedDate);
+        List<MalicaMeni> meniji = dan?.meniji ?? [];
+        MalicaMeni? selectedMeni = dan?.getSelectedMenu();
         return Expanded(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30),

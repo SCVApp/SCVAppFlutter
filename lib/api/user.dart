@@ -7,22 +7,23 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
-  String id;
-  String displayName;
-  String givenName;
-  String mail;
-  String mobilePhone;
-  String surname;
-  String userPrincipalName;
-  CachedNetworkImageProvider image;
+  String id = "";
+  String displayName = "";
+  String givenName = "";
+  String mail = "";
+  String mobilePhone = "";
+  String surname = "";
+  String userPrincipalName = "";
+  CachedNetworkImageProvider image = CachedNetworkImageProvider(
+      "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png");
 
   bool loggedIn = true;
   bool logingIn = false;
   bool loading = true;
   bool loadingFromWeb = true;
 
-  School school;
-  Status status;
+  School school = new School();
+  Status status = new Status();
 
   User() {
     this.school = new School();
@@ -41,7 +42,7 @@ class User {
   Future<void> fetchData() async {
     await global.token.refresh();
     final response = await http.get(Uri.parse(global.apiUrl + "/user/get"),
-        headers: {"Authorization": global.token.accessToken});
+        headers: {"Authorization": global.token.getAccessToken()});
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       this.fromJSON(json);
@@ -49,11 +50,12 @@ class User {
       try {
         image = CachedNetworkImageProvider(
           "${global.apiUrl}/user/get/profilePicture?=${json['mail']}",
-          headers: {"Authorization": global.token.accessToken},
+          headers: {"Authorization": global.token.getAccessToken()},
           errorListener: () => print("Error in image"),
         );
       } catch (e) {
-        image = null;
+        image = CachedNetworkImageProvider(
+            "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png");
       }
       this.saveToCache();
     } else {
@@ -97,7 +99,7 @@ class User {
 
   Future<void> loadFromCache() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String user = prefs.getString("user");
+    String? user = prefs.getString("user");
     if (user != null) {
       this.fromJSON(jsonDecode(user));
       this.loading = false;

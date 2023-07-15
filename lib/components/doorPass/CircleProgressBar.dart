@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/components/doorPass/CircleProgressBarPainter.dart';
 
 class CircleProgressBar extends StatelessWidget {
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color foregroundColor;
   final double value;
   final double strokeWidth;
   final Widget child;
 
   const CircleProgressBar({
-    Key key,
+    Key? key,
     this.backgroundColor,
-    @required this.foregroundColor,
-    @required this.value,
+    required this.foregroundColor,
+    required this.value,
     this.strokeWidth = 6,
-    this.child,
+    required this.child,
   }) : super(key: key);
 
   @override

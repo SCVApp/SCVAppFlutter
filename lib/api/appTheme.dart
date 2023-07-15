@@ -13,7 +13,7 @@ class AppTheme {
 
   Future<void> load() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String typeString = prefs.getString('theme');
+    final String? typeString = prefs.getString('theme');
     if (typeString == null) {
       this.type = AppThemeType.System;
     } else {

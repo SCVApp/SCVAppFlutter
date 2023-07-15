@@ -13,7 +13,7 @@ class SchoolHomePage extends StatefulWidget {
 }
 
 class _SchoolHomePageState extends State<SchoolHomePage> {
-  WebViewController _myController;
+  late WebViewController _myController;
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 

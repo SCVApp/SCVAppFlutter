@@ -8,9 +8,9 @@ import '../../api/malice/malica.dart';
 import '../../store/AppState.dart';
 
 class MaliceOtherInformations extends StatefulWidget {
-  MaliceOtherInformations(this.goBack, {Key key}) : super(key: key);
+  MaliceOtherInformations(this.goBack, {Key? key}) : super(key: key);
 
-  final Function goBack;
+  final void Function() goBack;
 
   @override
   _MaliceOtherInformationsState createState() =>

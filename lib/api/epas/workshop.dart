@@ -8,24 +8,24 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/pages/EPAS/style.dart';
 
 class EPASWorkshop {
-  int id;
-  String name;
-  String description;
-  int timetable_id;
+  int id = 0;
+  String name = "";
+  String description = "";
+  int timetable_id = 0;
   bool attended = false;
 
   int usersCount = 0;
   int maxUsers = 0;
 
   EPASWorkshop({
-    this.id,
-    this.name,
-    this.description,
-    this.timetable_id,
-    this.attended,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.timetable_id,
+    required this.attended,
   });
 
-  static fromJSON(json, int timetable_id, {bool timetable_object = false}) {
+  static fromJSON(json, int? timetable_id, {bool timetable_object = false}) {
     final int id =
         timetable_object ? json['timetable']['id'] : json['timetable'];
     return EPASWorkshop(
@@ -41,7 +41,7 @@ class EPASWorkshop {
     try {
       final response = await http.get(
           Uri.parse("${EPASApi.EPASapiUrl}/workshop/copacity/$id"),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         this.usersCount = json['count'];

@@ -6,14 +6,14 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class School {
-  String id;
-  String urnikUrl;
-  String color;
-  String schoolUrl;
-  String name;
-  String razred;
-  Color schoolColor;
-  Color schoolSecondaryColor;
+  String id = "";
+  String urnikUrl = "";
+  String color = "#0094d9";
+  String schoolUrl = "";
+  String name = "";
+  String razred = "";
+  Color schoolColor = HexColor.fromHex("#0094d9");
+  Color schoolSecondaryColor = HexColor.fromHex("#0094d9");
 
   static final Map<String, Color> tabelaZaSvetlejseBarve = {
     "ERS": HexColor.fromHex("#85C9E9"),
@@ -35,7 +35,7 @@ class School {
 
   void setSecondaryColor() {
     if (tabelaZaSvetlejseBarve.containsKey(this.id)) {
-      this.schoolSecondaryColor = tabelaZaSvetlejseBarve[this.id];
+      this.schoolSecondaryColor = tabelaZaSvetlejseBarve[this.id]!;
     } else {
       this.schoolSecondaryColor = this.schoolColor;
     }
@@ -44,7 +44,7 @@ class School {
   Future<void> fetchData() async {
     await global.token.refresh();
     final response = await http.get(Uri.parse(global.apiUrl + "/user/school"),
-        headers: {"Authorization": global.token.accessToken});
+        headers: {"Authorization": global.token.getAccessToken()});
     if (response.statusCode == 200) {
       this.fromJSON(jsonDecode(response.body));
       this.saveToCache();

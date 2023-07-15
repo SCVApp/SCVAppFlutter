@@ -3,13 +3,13 @@ class EPASTimetable {
   String name;
   DateTime start;
   DateTime end;
-  int selected_workshop_id = null;
+  int? selected_workshop_id = null;
 
   EPASTimetable({
-    this.id,
-    this.name,
-    this.start,
-    this.end,
+    required this.id,
+    required this.name,
+    required this.start,
+    required this.end,
   });
 
   static fromJSON(json) {

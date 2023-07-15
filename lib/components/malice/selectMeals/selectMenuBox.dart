@@ -4,10 +4,10 @@ import 'package:scv_app/api/malice/malicaMeni.dart';
 import 'package:scv_app/api/malice/malicaTipMeni.dart';
 import 'package:scv_app/components/malice/mealsBoxDecoration.dart';
 
-Widget MealSelectBox(BuildContext context, MalicaDan dan, MalicaMeni meni,
+Widget MealSelectBox(BuildContext context, MalicaDan? dan, MalicaMeni? meni,
     {bool isSelected = false}) {
-  MalicaTipMeni tip =
-      dan.tipiMenijev.firstWhere((element) => element.id == meni.tip_id);
+  MalicaTipMeni? tip =
+      dan?.tipiMenijev.firstWhere((element) => element.id == meni?.tip_id);
   return Container(
     decoration: mealsBoxDecoration(context, isSelected: isSelected),
     padding: EdgeInsets.all(15),

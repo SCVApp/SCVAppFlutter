@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 
 final Token token = new Token();
 
-BuildContext globalBuildContext;
+late BuildContext globalBuildContext;
 
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
@@ -51,7 +51,7 @@ Future<void> logOutUser(BuildContext context) async {
 }
 
 void showGlobalAlert(
-    {String text = "", Widget action, int duration = 3, IconData icon}) {
+    {String text = "", Widget? action, int duration = 3, IconData? icon}) {
   if (globalBuildContext != null) {
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(globalBuildContext).state.globalAlert;

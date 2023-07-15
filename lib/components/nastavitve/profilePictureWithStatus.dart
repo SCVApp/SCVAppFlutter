@@ -28,7 +28,8 @@ Widget ProfilePictureWithStatus(BuildContext context) {
                           child: Image(
                             image: user.image ??
                                 AssetImage(
-                                    "assets/images/profile_placeholder.png"),
+                                        "assets/images/profile_placeholder.png")
+                                    as ImageProvider,
                             height: imageSize,
                           ),
                         )

@@ -5,21 +5,21 @@ import 'dart:math' as Math;
 class CircleProgressBarPainter extends CustomPainter {
   final double percentage;
   final double strokeWidth;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color foregroundColor;
 
   CircleProgressBarPainter({
     this.backgroundColor,
-    @required this.foregroundColor,
-    @required this.percentage,
-    double strokeWidth,
-  }) : this.strokeWidth = strokeWidth ?? 6;
+    required this.foregroundColor,
+    required this.percentage,
+    this.strokeWidth = 6,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final Offset center = size.center(Offset.zero);
     final Size constrainedSize =
-        size - Offset(this.strokeWidth, this.strokeWidth);
+      Size(size.width - this.strokeWidth, size.height - this.strokeWidth);
     final shortestSide =
         Math.min(constrainedSize.width, constrainedSize.height);
     final foregroundPaint = Paint()
@@ -36,7 +36,7 @@ class CircleProgressBarPainter extends CustomPainter {
     // Don't draw the background if we don't have a background color
     if (this.backgroundColor != null) {
       final backgroundPaint = Paint()
-        ..color = this.backgroundColor
+        ..color = this.backgroundColor!
         ..strokeWidth = this.strokeWidth
         ..style = PaintingStyle.stroke;
       canvas.drawCircle(center, radius, backgroundPaint);

@@ -2,7 +2,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 
 Future<void> biometricAlert(BuildContext context,
-    {List<Widget> actions, String text}) async {
+    {List<Widget>? actions, String? text}) async {
       void pojdiVNastavitve() {
     Navigator.pop(context);
     AppSettings.openSecuritySettings();

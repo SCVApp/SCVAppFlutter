@@ -31,7 +31,7 @@ class _EPASHomePageState extends State<EPASHomePage> {
   void loadTimetables() async {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await Future.wait([epasApi.loadTimetables(), epasApi.loadUserCode()]);

@@ -5,7 +5,7 @@ import 'package:scv_app/pages/EPAS/style.dart';
 
 Widget EPASAdminHomeCard(
     BuildContext context, int currentSelectedWorkshopId, Function setCode) {
-  int code;
+  int? code;
 
   void showInput() {
     showDialog(

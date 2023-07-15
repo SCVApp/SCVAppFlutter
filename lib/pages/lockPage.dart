@@ -25,7 +25,7 @@ class _LockPageState extends State<LockPage> {
   }
 
   void confirmLogout() async {
-    confirmAlert(context, AppLocalizations.of(context).prompt_logout, logout,
+    confirmAlert(context, AppLocalizations.of(context)!.prompt_logout, logout,
         () => Navigator.pop(context));
   }
 

@@ -10,26 +10,24 @@ import '../../../pages/EPAS/style.dart';
 
 Widget EPASTimetableSelectionButton(BuildContext context,
     int currentSelectedTimetableId, int currentSelectedWorkshopId,
-    {Function onTap}) {
+    {void Function()? onTap}) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-        final EPASTimetable currentSelectedTimetable = epasApi.timetables
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASTimetable? currentSelectedTimetable = epasApi.timetables
             .firstWhere(
-                (timetable) => timetable.id == currentSelectedTimetableId,
-                orElse: () => null);
-        final EPASWorkshop currentSelectedWorkshop = epasApi.workshops
-            .firstWhere((workshop) => workshop.id == currentSelectedWorkshopId,
-                orElse: () => null);
+                (timetable) => timetable.id == currentSelectedTimetableId);
+        final EPASWorkshop? currentSelectedWorkshop = epasApi.workshops
+            .firstWhere((workshop) => workshop.id == currentSelectedWorkshopId);
         String textForButton =
             "PRIJAVI SE NA DELAVNICO (${currentSelectedTimetable?.getStartHour() ?? "--.--"})";
         Color colorForButton = EPASStyle.backgroundColor;
-        if (currentSelectedTimetable.selected_workshop_id ==
+        if (currentSelectedTimetable?.selected_workshop_id ==
             currentSelectedWorkshopId) {
           textForButton = "NA TO DELAVNICO SI ŽE PRIJAVLJEN/NA";
           colorForButton = EPASStyle.alreadyJoinedColor;
-        } else if (currentSelectedWorkshop.usersCount >=
+        } else if (currentSelectedWorkshop!.usersCount >=
             currentSelectedWorkshop.maxUsers) {
           textForButton = "DELAVNICA JE POLNA";
           colorForButton = EPASStyle.fullPlaceColor;

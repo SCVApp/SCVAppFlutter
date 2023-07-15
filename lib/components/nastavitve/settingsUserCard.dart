@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/components/nastavitve/profilePictureWithStatus.dart';
 
 class SettingsUserCard extends StatelessWidget {
-  Color cardColor;
-  double cardRadius;
-  Color backgroundMotifColor;
-  Widget cardActionWidget;
-  String userName;
-  Widget userMoreInfo;
+  final Color cardColor;
+  final double cardRadius;
+  final Color backgroundMotifColor;
+  final Widget? cardActionWidget;
+  final String userName;
+  final Widget? userMoreInfo;
 
   SettingsUserCard({
-    this.cardColor,
+    required this.cardColor,
     this.cardRadius = 30,
-    this.userName,
+    required this.userName,
     this.backgroundMotifColor = Colors.white,
     this.cardActionWidget,
     this.userMoreInfo,
@@ -23,7 +23,6 @@ class SettingsUserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQueryHeight = MediaQuery.of(context).size.height;
-    if (this.userMoreInfo == null) this.userMoreInfo = Container();
     return Container(
       height: max(mediaQueryHeight / 4, 140),
       margin: EdgeInsets.only(bottom: 20),
@@ -75,7 +74,7 @@ class SettingsUserCard extends StatelessWidget {
                             ),
                             textAlign: TextAlign.right,
                           ),
-                          userMoreInfo,
+                          userMoreInfo ?? SizedBox(),
                         ],
                       ),
                     ),

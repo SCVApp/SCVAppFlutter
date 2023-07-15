@@ -29,7 +29,7 @@ class PageManager extends StatefulWidget {
 }
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
-  StreamSubscription<ConnectivityResult> connectivity;
+  StreamSubscription<ConnectivityResult>? connectivity;
   final PageController pageControllerForLock = PageController();
 
   @override
@@ -56,9 +56,9 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-    if (connectivity != null) connectivity.cancel();
+    if (connectivity != null) connectivity!.cancel();
     if (universalLinks.universalLinkSubscription != null)
-      universalLinks.universalLinkSubscription.cancel();
+      universalLinks.universalLinkSubscription!.cancel();
   }
 
   void onWidgetDidBuild() {
@@ -71,7 +71,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   }
 
   void onStateChange() {
-    final int currentPage = pageControllerForLock.page.round();
+    final int currentPage = pageControllerForLock.page!.round();
     final bool locked =
         StoreProvider.of<AppState>(context).state.biometric.locked;
     int nextPage = locked ? 1 : 0;
@@ -115,7 +115,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   void loadToken() async {
     await global.token.loadToken();
     universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
-    if (global.token.accessToken != null) {
+    if (global.token.getAccessToken() != null) {
       await loadFromCache();
       if (await global.canConnectToNetwork() == false) {
         handleConnectivityChange();
@@ -196,13 +196,12 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
       universalLinks.universalLink = "";
       await global.token.refresh();
-      await Future.wait(
-          [refreshUrnik()]);
+      await Future.wait([refreshUrnik()]);
     } else if (state == AppLifecycleState.paused) {
       universalLinks.universalLink = "";
       universalLinks.goToUnlockPassDoor(context, "", close: true);
       final Biometric biometric =
-          StoreProvider.of<AppState>(context).state.biometric;  
+          StoreProvider.of<AppState>(context).state.biometric;
       await biometric.updateLastActivity(isPaused: true);
       StoreProvider.of<AppState>(context).dispatch(biometric);
     }

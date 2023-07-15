@@ -19,7 +19,7 @@ class UrnikPage extends StatefulWidget {
 
 class _UrnikPageState extends State<UrnikPage> {
   final double gap = 15;
-  Timer timerZaUrnik;
+  late Timer timerZaUrnik;
 
   @override
   void initState() {
@@ -60,11 +60,8 @@ class _UrnikPageState extends State<UrnikPage> {
                   urnik.poukType == PoukType.pouk && urnik.obdobjaUr.length > 0
                       ? ViewForObdobjeUre(
                           viewSizes: UrnikStyle.viewStyleBig,
-                          obdobjeUr: urnik.obdobjaUr.firstWhere(
-                                  (obdobjeUr) =>
-                                      obdobjeUr.type == ObdobjaUrType.trenutno,
-                                  orElse: () => null) ??
-                              null,
+                          obdobjeUr: urnik.obdobjaUr.firstWhere((obdobjeUr) =>
+                              obdobjeUr.type == ObdobjaUrType.trenutno),
                         )
                       : Padding(
                           padding: EdgeInsets.only(left: 25, right: 25),

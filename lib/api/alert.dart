@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class GlobalAlert {
   bool isShow = false;
   String text = '';
-  Widget action;
-  IconData icon;
+  late Widget? action;
+  late IconData? icon;
 
-  bool show(String text, Widget action, IconData icon) {
+  bool show(String text, Widget? action, IconData? icon) {
     if (isShow == true) {
       return false;
     }

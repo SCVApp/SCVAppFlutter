@@ -10,11 +10,11 @@ import '../../api/malice/malicaMeni.dart';
 import '../../store/AppState.dart';
 
 class MaliceHomePage extends StatefulWidget {
-  MaliceHomePage(this.goToSelectMenu, this.goToOtherInformations, {Key key})
+  MaliceHomePage(this.goToSelectMenu, this.goToOtherInformations, {Key? key})
       : super(key: key);
 
-  final Function goToSelectMenu;
-  final Function goToOtherInformations;
+  final void Function() goToSelectMenu;
+  final void Function() goToOtherInformations;
 
   @override
   _MaliceHomePageState createState() => _MaliceHomePageState();
@@ -26,8 +26,8 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
     return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
-        MalicaDan dan = malica.getDay(0);
-        MalicaMeni meni = dan?.getSelectedMenu();
+        MalicaDan? dan = malica.getDay(0);
+        MalicaMeni? meni = dan?.getSelectedMenu();
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: ListView(

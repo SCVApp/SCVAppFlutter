@@ -13,7 +13,7 @@ import 'package:scv_app/store/AppState.dart';
 import '../../api/epas/EPAS.dart';
 
 class EPASTimetableSelection extends StatefulWidget {
-  EPASTimetableSelection(this.timetableId, this.workshopId, {Key key})
+  EPASTimetableSelection(this.timetableId, this.workshopId, {Key? key})
       : super(key: key);
   final int workshopId;
   final int timetableId;
@@ -47,14 +47,13 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
     loadWorkshopsWithSameName();
   }
 
-  void loadWorkshopsWithSameName() async {
+  Future<void> loadWorkshopsWithSameName() async {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-    final EPASWorkshop workshop = epasApi.workshops.firstWhere(
-        (workshop) => workshop.id == widget.workshopId,
-        orElse: () => null);
-    final String workshopName = workshop.name;
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+    final EPASWorkshop? workshop = epasApi.workshops
+        .firstWhere((workshop) => workshop.id == widget.workshopId);
+    final String workshopName = workshop?.name ?? "";
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await epasApi.loadWorkshopsByName(workshopName);
@@ -110,7 +109,8 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
       if (await EPASApi.joinWorkshop(selectedWorkshopId)) {
         final ExtensionManager extensionManager =
             StoreProvider.of<AppState>(context).state.extensionManager;
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        final EPASApi epasApi =
+            extensionManager.getExtensions("EPAS") as EPASApi;
         EPASApi.showAlert(successMessage, true);
         StoreProvider.of<AppState>(context).dispatch(extensionManager);
         await epasApi.loadJoinedWorkshops();
@@ -136,10 +136,9 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
           child: StoreConnector<AppState, ExtensionManager>(
               converter: (store) => store.state.extensionManager,
               builder: (context, extensionManager) {
-                final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-                final EPASWorkshop workshop = epasApi.workshops.firstWhere(
-                    (workshop) => workshop.id == widget.workshopId,
-                    orElse: () => null);
+                final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+                final EPASWorkshop? workshop = epasApi.workshops.firstWhere(
+                    (workshop) => workshop.id == widget.workshopId);
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -154,7 +153,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            workshop.name.toUpperCase(),
+                            workshop?.name.toUpperCase() ?? "",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,

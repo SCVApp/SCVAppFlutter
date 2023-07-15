@@ -21,7 +21,7 @@ class UrnikStyle {
       case PoukType.odmor:
         return "naslednje ure";
       default:
-        break;
+        return "";
     }
   }
 
@@ -36,7 +36,7 @@ class UrnikStyle {
       case UraType.zaposlitev:
         return "assets/images/urnikIcons/zaposlitev.png";
       default:
-        break;
+        return "";
     }
   }
 

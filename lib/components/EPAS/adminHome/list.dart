@@ -15,7 +15,7 @@ Widget EPASAdminHomeList(
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
 
         return HalfScreenCard(context,
             rightPadding: 25,

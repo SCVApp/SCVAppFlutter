@@ -50,23 +50,22 @@ class MalicaDan {
     } catch (e) {}
   }
 
-  MalicaMeni getSelectedMenu() {
-    return meniji.firstWhere((element) => element.id == idNarocenegaMenija,
-        orElse: () => null);
+  MalicaMeni? getSelectedMenu() {
+    return meniji.firstWhere((element) => element.id == idNarocenegaMenija);
   }
 
-  MalicaTipMeni getTipMenija(MalicaMeni meni) {
-    return tipiMenijev.firstWhere((element) => element.id == meni?.tip_id ?? 0,
-        orElse: () => null);
+  MalicaTipMeni? getTipMenija(MalicaMeni? meni) {
+    return tipiMenijev
+        .firstWhere((element) => element.id == (meni?.tip_id ?? 0));
   }
 
-  static String getOpisMenija(MalicaMeni meni) {
+  static String getOpisMenija(MalicaMeni? meni) {
     return meni?.opis ?? "Brez malice";
   }
 
-  static String getPictureUrl(MalicaTipMeni tip) {
+  static String getPictureUrl(MalicaTipMeni? tip) {
     return tip?.picture_url != null
-        ? "assets/images/slikeMalica/" + tip.picture_url
+        ? "assets/images/slikeMalica/" + tip!.picture_url
         : "assets/images/slikeMalica/brez_malice.png";
   }
 }

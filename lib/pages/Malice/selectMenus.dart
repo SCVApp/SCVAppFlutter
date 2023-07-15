@@ -7,8 +7,8 @@ import '../../components/malice/selectMeals/selectMenuBox.dart';
 import '../../components/malice/selectMeals/selectedDate.dart';
 
 class MaliceSelectMenus extends StatefulWidget {
-  MaliceSelectMenus(this.goToHomePage, {Key key}) : super(key: key);
-  final Function goToHomePage;
+  MaliceSelectMenus(this.goToHomePage, {Key? key}) : super(key: key);
+  final void Function() goToHomePage;
   @override
   _MaliceSelectMenusState createState() => _MaliceSelectMenusState();
 }

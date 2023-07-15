@@ -20,11 +20,7 @@ Widget mainTitle() {
           urnik.poukType != PoukType.konecPouka &&
                   urnik.poukType != PoukType.niPouka
               ? Text(
-                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhere(
-                        (obdobjeUr) =>
-                            obdobjeUr.type == ObdobjaUrType.naslednje,
-                        orElse: () => null,
-                      ) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
+                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhere((obdobjeUr) => obdobjeUr.type == ObdobjaUrType.naslednje) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
                 )
               : SizedBox(),
         ],

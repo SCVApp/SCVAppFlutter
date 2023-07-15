@@ -16,7 +16,7 @@ import 'package:scv_app/pages/EPAS/style.dart';
 import '../../store/AppState.dart';
 
 class EPASAdminWorkshopJoinList extends StatefulWidget {
-  EPASAdminWorkshopJoinList(this.workshopId, {Key key}) : super(key: key);
+  EPASAdminWorkshopJoinList(this.workshopId, {Key? key}) : super(key: key);
   final int workshopId;
   @override
   _EPASAdminWorkshopJoinListState createState() =>
@@ -35,7 +35,7 @@ class _EPASAdminWorkshopJoinListState extends State<EPASAdminWorkshopJoinList> {
       final response = await http.get(
           Uri.parse(
               "${EPASApi.EPASapiUrl}/user/myworkshop/${widget.workshopId}/joinlist"),
-          headers: {"Authorization": "${global.token.accessToken}"});
+          headers: {"Authorization": "${global.token.getAccessToken()}"});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         print(json);
@@ -70,13 +70,12 @@ class _EPASAdminWorkshopJoinListState extends State<EPASAdminWorkshopJoinList> {
             child: StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-        final EPASWorkshop workshop = epasApi.workshops.firstWhere(
-            (element) => element.id == widget.workshopId,
-            orElse: () => null);
-        final EPASTimetable timetable = epasApi.timetables.firstWhere(
-            (timetable) => timetable.id == workshop?.timetable_id,
-            orElse: () => null);
+        final EPASApi epasApi =
+            extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASWorkshop? workshop = epasApi.workshops
+            .firstWhere((element) => element.id == widget.workshopId);
+        final EPASTimetable? timetable = epasApi.timetables
+            .firstWhere((timetable) => timetable.id == workshop?.timetable_id);
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

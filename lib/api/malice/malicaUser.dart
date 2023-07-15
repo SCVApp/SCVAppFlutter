@@ -24,7 +24,7 @@ class MalicaUser {
       await global.token.refresh();
     }
     try {
-      JWT json = JWT.decode(global.token.accessToken);
+      JWT json = JWT.decode(global.token.getAccessToken());
       return json.payload["accessToken"];
     } catch (e) {
       return "";
@@ -59,7 +59,7 @@ class MalicaUser {
     };
   }
 
-  void save() async {
+  Future<void> save() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("malicaUser", jsonEncode(this.toJson()));
@@ -67,7 +67,7 @@ class MalicaUser {
     } catch (e) {}
   }
 
-  void load() async {
+  Future<void> load() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final String malicaUserJson = prefs.getString("malicaUser") ?? "";

@@ -14,11 +14,11 @@ import '../../../manager/extensionManager.dart';
 
 Widget EPASTimetableSelectionList(
     BuildContext context, int currentSelectedTimetableId, int currentSelectedWorkshopId,
-    {Function changeSelectedTimetableId, Function joinWorkshop}) {
+    {Function? changeSelectedTimetableId, void Function()?  joinWorkshop}) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
         return HalfScreenCard(context,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

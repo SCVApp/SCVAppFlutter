@@ -6,7 +6,7 @@ import '../../global/global.dart' as global;
 import '../../components/backButton.dart';
 
 class AboutAppPage extends StatefulWidget {
-  AboutAppPage({Key key}) : super(key: key);
+  AboutAppPage({Key? key}) : super(key: key);
 
   _AboutAppPage createState() => _AboutAppPage();
 }

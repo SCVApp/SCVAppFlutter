@@ -1,7 +1,7 @@
 class MalicaTipMeni {
-  int id;
-  String naziv;
-  String picture_url;
+  int id = 0;
+  String naziv = "";
+  String picture_url = "";
 
   MalicaTipMeni.fromJson(Map<String, dynamic> json) {
     id = json["id"];

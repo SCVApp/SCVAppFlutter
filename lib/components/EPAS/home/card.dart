@@ -10,17 +10,17 @@ Widget EPASHomeCard(BuildContext context) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
 
         return FloatingCard(
           context,
           child: Column(
             children: <Widget>[
-              QrImage(
-                data: "scvapp://app.scv.si/epas/code/${epasApi.userCode}",
-                size: 170,
-                foregroundColor: Theme.of(context).primaryColor,
-              ),
+              // QrImage(
+              //   data: "scvapp://app.scv.si/epas/code/${epasApi.userCode}",
+              //   size: 170,
+              //   foregroundColor: Theme.of(context).primaryColor,
+              // ),
               Padding(padding: EdgeInsets.only(top: 20)),
               Wrap(
                 children: [

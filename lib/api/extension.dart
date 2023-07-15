@@ -1,5 +1,5 @@
 abstract class Extension {
-  String name;
+  String name = "";
   bool enabled = true;
   bool authorised = false;
 

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Window {
   final String name;
   bool isShown = false;
@@ -7,5 +5,5 @@ class Window {
 
   Map<String, dynamic> attributes = {};
 
-  Window({@required this.name, @required this.pageViewIndex});
+  Window({required this.name, required this.pageViewIndex});
 }

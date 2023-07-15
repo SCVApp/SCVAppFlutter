@@ -5,10 +5,9 @@ import 'package:scv_app/extension/hexColor.dart';
 
 Widget EPASHomeListItem(
     int number, EPASTimetable timetable, List<EPASWorkshop> joinedWorkshops,
-    {Function onTap}) {
-  final EPASWorkshop workshop = joinedWorkshops.firstWhere(
-      (workshop) => workshop.id == timetable.selected_workshop_id,
-      orElse: () => null);
+    {void Function()? onTap}) {
+  final EPASWorkshop? workshop = joinedWorkshops.firstWhere(
+      (workshop) => workshop.id == timetable.selected_workshop_id);
   return GestureDetector(
       onTap: onTap,
       child: Row(

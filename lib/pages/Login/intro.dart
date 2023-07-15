@@ -27,7 +27,7 @@ class LoginIntro extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: AppLocalizations.of(context).welcome,
+              title: AppLocalizations.of(context)!.welcome,
               body: '',
               image: buildImage(Theme.of(context).primaryColor == Colors.black
                   ? 'assets/images/school_logo.png'

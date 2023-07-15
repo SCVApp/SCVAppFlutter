@@ -8,7 +8,7 @@ class Ura {
   bool nadomescanje = false;
   bool zaposlitev = false;
   bool odpadlo = false;
-  String smartDoorCode = null;
+  String? smartDoorCode = null;
   UraType type = UraType.normalno;
 
   void fromJSON(Map<String, dynamic> json) {

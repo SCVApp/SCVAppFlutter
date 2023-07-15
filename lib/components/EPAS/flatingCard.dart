@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget FloatingCard(BuildContext context, {Widget child, double padding = 40}) {
+Widget FloatingCard(BuildContext context, {Widget? child, double padding = 40}) {
   return Container(
     padding: EdgeInsets.all(20),
     decoration: BoxDecoration(

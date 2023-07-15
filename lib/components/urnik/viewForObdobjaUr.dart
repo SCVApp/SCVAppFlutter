@@ -11,7 +11,7 @@ import 'package:scv_app/store/AppState.dart';
 class ViewForObdobjaUr extends StatefulWidget {
   final double gap;
 
-  ViewForObdobjaUr({Key key, this.gap}) : super(key: key);
+  ViewForObdobjaUr({Key? key, required this.gap}) : super(key: key);
 
   @override
   _viewForObdobjaUrState createState() => _viewForObdobjaUrState();
@@ -39,8 +39,8 @@ class _viewForObdobjaUrState extends State<ViewForObdobjaUr> {
       return;
     }
     try {
-      double height =
-          listKey.currentContext.findRenderObject().paintBounds.height;
+      double? height =
+          listKey.currentContext?.findRenderObject()?.paintBounds.height;
       if (height != null) {
         setState(() {
           spaceAtTheEnd = max(height - UrnikStyle.viewStyleSmall.height, 100);

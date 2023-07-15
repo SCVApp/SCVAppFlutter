@@ -1,24 +1,22 @@
-import 'package:babstrap_settings_screen/src/babs_component_settings_item.dart';
 import 'package:babstrap_settings_screen/src/settings_screen_utils.dart';
 import 'package:flutter/material.dart';
 
 class NastavitveGroup extends StatelessWidget {
-  String settingsGroupTitle;
-  TextStyle settingsGroupTitleStyle;
-  List<Widget> items;
+  final String? settingsGroupTitle;
+  final TextStyle? settingsGroupTitleStyle;
+  final List<Widget> items;
   // Icons size
-  double iconItemSize;
+  final double iconItemSize;
 
   NastavitveGroup(
       {this.settingsGroupTitle,
       this.settingsGroupTitleStyle,
-      this.items,
+      this.items = const [],
       this.iconItemSize = 25});
 
   @override
   Widget build(BuildContext context) {
-    if (this.iconItemSize != null)
-      SettingsScreenUtils.settingsGroupIconSize = iconItemSize;
+    SettingsScreenUtils.settingsGroupIconSize = iconItemSize;
 
     return Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -32,7 +30,7 @@ class NastavitveGroup extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    settingsGroupTitle,
+                    settingsGroupTitle!,
                     style: (settingsGroupTitleStyle == null)
                         ? TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
                         : settingsGroupTitleStyle,

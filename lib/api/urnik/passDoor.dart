@@ -1,8 +1,8 @@
 class PassDoor {
-  String name_id;
-  String code;
+  String name_id = "";
+  String code = "";
 
-  PassDoor({this.name_id, this.code});
+  PassDoor({required this.name_id, required this.code});
 
   static PassDoor fromJSON(Map<String, dynamic> json) {
     return PassDoor(

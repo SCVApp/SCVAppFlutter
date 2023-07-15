@@ -1,4 +1,4 @@
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:ff_navigation_bar_plus/ff_navigation_bar_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/components/NavBarItem.dart';
@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 }
 
 class _HomePageState extends State<HomePage>
@@ -74,23 +74,23 @@ class _HomePageState extends State<HomePage>
             items: [
               NavBarItem(
                 iconData: Icons.home_rounded,
-                label: AppLocalizations.of(context).home,
+                label: AppLocalizations.of(context)!.home,
               ),
               NavBarItem(
                 iconData: Icons.fastfood,
-                label: AppLocalizations.of(context).meals,
+                label: AppLocalizations.of(context)!.meals,
               ),
               NavBarItem(
                 iconData: FluttereAIcon.ea,
-                label: AppLocalizations.of(context).eAsistent,
+                label: AppLocalizations.of(context)!.eAsistent,
               ),
               NavBarItem(
                 iconData: Icons.calendar_today_rounded,
-                label: AppLocalizations.of(context).schedule,
+                label: AppLocalizations.of(context)!.schedule,
               ),
               NavBarItem(
                 iconData: Icons.settings,
-                label: AppLocalizations.of(context).settings,
+                label: AppLocalizations.of(context)!.settings,
               ),
             ],
             theme: FFNavigationBarTheme(

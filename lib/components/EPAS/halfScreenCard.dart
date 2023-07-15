@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 Widget HalfScreenCard(BuildContext context,
-    {Widget child, double leftPadding = 25, double rightPadding = 10}) {
+    {Widget? child, double leftPadding = 25, double rightPadding = 10}) {
   return Container(
     padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
     width: MediaQuery.of(context).size.width,

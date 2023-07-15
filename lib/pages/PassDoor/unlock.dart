@@ -19,8 +19,8 @@ class UnlockedPassDoor extends StatefulWidget {
 
 class _UnlockedPassDoorState extends State<UnlockedPassDoor>
     with TickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> procentageAnimation;
+  late AnimationController animationController;
+  late Animation<double> procentageAnimation;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
     final respons = await http.get(
         Uri.parse("${global.apiUrl}/pass/get_door/${this.doorCode}"),
         headers: {
-          'Authorization': '${global.token.accessToken}',
+          'Authorization': '${global.token.getAccessToken()}',
         });
     if (respons.statusCode == 200) {
       this.doorNameId = respons.body ?? this.doorNameId;
@@ -94,7 +94,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
     final respons = await http.get(
         Uri.parse("${global.apiUrl}/pass/open_door/${this.doorCode}"),
         headers: {
-          'Authorization': '${global.token.accessToken}',
+          'Authorization': '${global.token.getAccessToken()}',
         });
     if (respons.statusCode == 200) {
       setStatus(ThemeColorForStatus.success);

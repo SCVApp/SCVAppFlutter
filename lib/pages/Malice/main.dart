@@ -51,7 +51,7 @@ class _MalicePageState extends State<MalicePage> {
     await tryMicrosoftLogin();
   }
 
-  void tryMicrosoftLogin() async {
+  Future<void> tryMicrosoftLogin() async {
     final Malica malica = StoreProvider.of<AppState>(context).state.malica;
     if (malica.maliceUser.isLoggedIn() == true) {
       return;

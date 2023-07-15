@@ -6,28 +6,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../api/user.dart';
 
-class StatusItem extends SettingsItem {
-  ImageProvider imageProvider;
-  String title;
-  String statusId;
-  TextStyle titleStyle;
-  String subtitle;
-  TextStyle subtitleStyle;
-  Widget trailing;
-  SharedPreferences prefs;
-  VoidCallback onTap;
+class StatusItem extends StatelessWidget {
+  final ImageProvider imageProvider;
+  final String title;
+  final String statusId;
+  final TextStyle? titleStyle;
+  final String subtitle;
+  final TextStyle? subtitleStyle;
+  final Widget? trailing;
+  final SharedPreferences? prefs;
+  void Function()? onTap;
 
   StatusItem(
-      {this.imageProvider,
-      this.title,
+      {required this.imageProvider,
+      required this.title,
       this.titleStyle,
       this.subtitle = "",
       this.subtitleStyle,
       this.trailing,
-      this.statusId,
-      this.prefs});
-  
-  
+      required this.statusId,
+      this.prefs,
+      this.onTap})
+      : super(key: UniqueKey());
 
   @override
   Widget build(BuildContext context) {

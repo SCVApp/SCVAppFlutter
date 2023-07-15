@@ -26,7 +26,7 @@ class Urnik {
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/user/schedule'),
-          headers: {"Authorization": global.token.accessToken});
+          headers: {"Authorization": global.token.getAccessToken()});
       if (response.statusCode == 200) {
         this.fromJSON(jsonDecode(response.body));
         this.nazadnjePosodobljeno = DateTime.now();
@@ -45,7 +45,7 @@ class Urnik {
     try {
       final response = await http.get(
           Uri.parse('${global.apiUrl}/pass/all_doors_user'),
-          headers: {"Authorization": global.token.accessToken});
+          headers: {"Authorization": global.token.getAccessToken()});
       if (response.statusCode == 200) {
         List<dynamic> json = jsonDecode(response.body);
         this.passDoors = json.map((e) => PassDoor.fromJSON(e)).toList();
@@ -118,7 +118,7 @@ class Urnik {
   Future<void> load() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String urnik = prefs.getString(urnikKey);
+      String? urnik = prefs.getString(urnikKey);
       if (urnik != null) {
         this.fromJSON(jsonDecode(urnik));
       }
@@ -185,10 +185,9 @@ class Urnik {
 
   void minutesAndSecundsToNextObdobjeUr() {
     DateTime now = DateTime.now();
-    ObdobjaUr naslednjeObdobje = this.obdobjaUr.firstWhere(
-          (element) => element.type == ObdobjaUrType.naslednje,
-          orElse: () => null,
-        );
+    ObdobjaUr? naslednjeObdobje = this
+        .obdobjaUr
+        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
     if (naslednjeObdobje != null) {
       Duration duration = naslednjeObdobje.zacetek.difference(now);
       if (duration.inSeconds < 0) {
@@ -198,10 +197,9 @@ class Urnik {
       this.doNaslednjeUre =
           "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
     } else {
-      ObdobjaUr trenutnoObdobje = this.obdobjaUr.firstWhere(
-            (element) => element.type == ObdobjaUrType.trenutno,
-            orElse: () => null,
-          );
+      ObdobjaUr? trenutnoObdobje = this
+          .obdobjaUr
+          .firstWhere((element) => element.type == ObdobjaUrType.trenutno);
       if (trenutnoObdobje != null) {
         Duration duration = trenutnoObdobje.konec.difference(now);
         if (duration.inSeconds < 0) {
@@ -217,10 +215,8 @@ class Urnik {
   }
 
   String zacetekNaslednjegaObdobja() {
-    ObdobjaUr naslednjeObdobje = this.obdobjaUr.firstWhere(
-          (element) => element.type == ObdobjaUrType.naslednje,
-          orElse: () => null,
-        );
+    ObdobjaUr? naslednjeObdobje = this.obdobjaUr.firstWhere(
+          (element) => element.type == ObdobjaUrType.naslednje);
     if (naslednjeObdobje == null) return "";
     if (naslednjeObdobje.obdobjeJePrazno()) {
       for (int i = this.obdobjaUr.indexOf(naslednjeObdobje);
@@ -232,7 +228,7 @@ class Urnik {
         }
       }
     }
-    String hours = naslednjeObdobje.zacetek.hour.toString();
+    String hours = naslednjeObdobje!.zacetek.hour.toString();
     if (hours.length == 1) hours = "0$hours";
     String minutes = naslednjeObdobje.zacetek.minute.toString();
     if (minutes.length == 1) minutes = "0$minutes";

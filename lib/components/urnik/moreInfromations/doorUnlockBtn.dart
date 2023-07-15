@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/components/doorPass/CircleProgressBar.dart';
 
 Widget UrnikMoreInformationsDoorUnlockBtn(
-    Function onTap, bool currentAvailable) {
+    void Function() onTap, bool currentAvailable) {
   return Padding(
       child: GestureDetector(
         child: Row(

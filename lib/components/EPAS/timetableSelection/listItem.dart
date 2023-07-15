@@ -10,20 +10,19 @@ import '../../../api/epas/EPAS.dart';
 
 Widget EPASTimetableSelectionListItem(
     BuildContext context, EPASWorkshop workshop, int currentSelectedTimetableId,
-    {Function changeSelectedTimetableId}) {
+    {Function? changeSelectedTimetableId}) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-        final EPASTimetable timetable = epasApi.timetables.firstWhere(
-            (timetable) => timetable.id == workshop.timetable_id,
-            orElse: () => null);
+        final EPASApi epasApi =
+            extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASTimetable? timetable = epasApi.timetables
+            .firstWhere((timetable) => timetable.id == workshop.timetable_id);
         final bool alreadyJoined = epasApi.joinedWorkshops.firstWhere(
-                (joinedWorkshop) => joinedWorkshop.id == workshop.id,
-                orElse: () => null) !=
+                (joinedWorkshop) => joinedWorkshop.id == workshop.id) !=
             null;
         final TextDecoration decoration =
-            timetable.id == currentSelectedTimetableId
+            timetable?.id == currentSelectedTimetableId
                 ? TextDecoration.underline
                 : TextDecoration.none;
         return GestureDetector(
@@ -51,7 +50,8 @@ Widget EPASTimetableSelectionListItem(
             ],
           ),
           onTap: () {
-            changeSelectedTimetableId(timetable.id, workshop.id);
+            if (changeSelectedTimetableId == null) return;
+            changeSelectedTimetableId(timetable?.id, workshop.id);
           },
         );
       });

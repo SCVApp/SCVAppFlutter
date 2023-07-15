@@ -12,7 +12,7 @@ import '../../manager/extensionManager.dart';
 import '../../store/AppState.dart';
 
 class EPASWorkshopSelection extends StatefulWidget {
-  EPASWorkshopSelection(this.timetableId, {Key key}) : super(key: key);
+  EPASWorkshopSelection(this.timetableId, {Key? key}) : super(key: key);
   final int timetableId;
   @override
   _EPASWorkshopSelectionState createState() => _EPASWorkshopSelectionState();
@@ -38,7 +38,7 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
   void loadWorkShops() async {
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions("EPAS");
+    final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
     await epasApi.loadWorkshops(widget.timetableId);
@@ -59,10 +59,9 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
           child: StoreConnector<AppState, ExtensionManager>(
               converter: (store) => store.state.extensionManager,
               builder: (context, extensionManager) {
-                final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-                final EPASTimetable timetable = epasApi.timetables.firstWhere(
-                    (timetable) => timetable.id == widget.timetableId,
-                    orElse: () => null);
+                final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+                final EPASTimetable? timetable = epasApi.timetables.firstWhere(
+                    (timetable) => timetable.id == widget.timetableId);
                 return Column(
                   children: [
                     Stack(

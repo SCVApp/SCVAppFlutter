@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 
 class EPASUserListItem {
-  String azureId;
+  String azureId = "";
   bool attended = false;
   String displayName = "";
 
@@ -19,7 +19,7 @@ class EPASUserListItem {
       final response = await http.get(
           Uri.parse("${global.apiUrl}/search/specificUser/$azureId"),
           headers: {
-            'Authorization': '${global.token.accessToken}',
+            'Authorization': '${global.token.getAccessToken()}',
             'Content-Type': 'application/json'
           });
       if (response.statusCode == 200) {

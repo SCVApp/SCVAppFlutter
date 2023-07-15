@@ -16,7 +16,7 @@ import 'package:scv_app/global/global.dart' as global;
 import '../../store/AppState.dart';
 
 class EPASAdminChechView extends StatefulWidget {
-  EPASAdminChechView(this.code, this.workshopId, {Key key}) : super(key: key);
+  EPASAdminChechView(this.code, this.workshopId, {Key? key}) : super(key: key);
   final int code;
   final int workshopId;
   @override
@@ -25,10 +25,10 @@ class EPASAdminChechView extends StatefulWidget {
 
 class _EPASAdminChechViewState extends State<EPASAdminChechView> {
   Color backgroundColor = EPASStyle.alreadyJoinedColor;
-  EPASWorkshop otherWorkshop;
-  EPASTimetable otherTimetable;
+  EPASWorkshop? otherWorkshop;
+  EPASTimetable? otherTimetable;
   bool isJoinedAtWorkshop = false;
-  String userAzureId;
+  String? userAzureId;
   bool loading = false;
   String username = "/";
 
@@ -40,7 +40,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
       final response = await http.post(
           Uri.parse('${EPASApi.EPASapiUrl}/user/chech_join_workshop'),
           headers: <String, String>{
-            'Authorization': '${global.token.accessToken}',
+            'Authorization': '${global.token.getAccessToken()}',
             'Content-Type': 'application/json'
           },
           body: jsonEncode({
@@ -70,10 +70,10 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
           });
           final ExtensionManager extensionManager =
               StoreProvider.of<AppState>(context).state.extensionManager;
-          final EPASApi epasApi = extensionManager.getExtensions("EPAS");
-          final EPASTimetable timetable = epasApi.timetables.firstWhere(
-              (element) => element.id == otherWorkshop.timetable_id,
-              orElse: () => null);
+          final EPASApi epasApi =
+              extensionManager.getExtensions("EPAS") as EPASApi;
+          final EPASTimetable? timetable = epasApi.timetables.firstWhere(
+              (element) => element.id == otherWorkshop?.timetable_id);
           setState(() {
             this.otherTimetable = timetable;
           });
@@ -88,13 +88,13 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
     });
   }
 
-  void getUsername(String azureId) async {
+  void getUsername(String? azureId) async {
     if (azureId == null) return;
     try {
       final response = await http.get(
           Uri.parse("${global.apiUrl}/search/specificUser/$azureId"),
           headers: {
-            'Authorization': '${global.token.accessToken}',
+            'Authorization': '${global.token.getAccessToken()}',
             'Content-Type': 'application/json'
           });
       if (response.statusCode == 200) {
@@ -132,7 +132,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
       final response = await http.post(
           Uri.parse('${EPASApi.EPASapiUrl}/user/approve_attendenc'),
           headers: <String, String>{
-            'Authorization': '${global.token.accessToken}',
+            'Authorization': '${global.token.getAccessToken()}',
             'Content-Type': 'application/json'
           },
           body: jsonEncode({
@@ -206,19 +206,17 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                         store.state.extensionManager,
                                     builder: (context, extensionManager) {
                                       final EPASApi epasApi = extensionManager
-                                          .getExtensions("EPAS");
-                                      final EPASWorkshop workshop =
+                                          .getExtensions("EPAS") as EPASApi;
+                                      final EPASWorkshop? workshop =
                                           epasApi.workshops.firstWhere(
                                               (element) =>
                                                   element.id ==
-                                                  widget.workshopId,
-                                              orElse: () => null);
-                                      final EPASTimetable timetable =
+                                                  widget.workshopId);
+                                      final EPASTimetable? timetable =
                                           epasApi.timetables.firstWhere(
                                               (element) =>
                                                   element.id ==
-                                                  workshop?.timetable_id,
-                                              orElse: () => null);
+                                                  workshop?.timetable_id);
                                       return Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -247,7 +245,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        "Uporabnik je prijavljen na delavnico ${this.otherWorkshop.name.toUpperCase()}, ob ${this.otherTimetable?.getStartHour() ?? ""}",
+                                        "Uporabnik je prijavljen na delavnico ${this.otherWorkshop?.name.toUpperCase()}, ob ${this.otherTimetable?.getStartHour() ?? ""}",
                                         textAlign: TextAlign.left,
                                       ))
                                     ],

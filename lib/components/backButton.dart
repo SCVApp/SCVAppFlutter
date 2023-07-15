@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget backButton(BuildContext context,
-    {IconData icon = Icons.arrow_back_ios, Function onPressed}) {
+    {IconData icon = Icons.arrow_back_ios, void Function()? onPressed}) {
   void handleClose() {
     try {
       Navigator.pop(context);

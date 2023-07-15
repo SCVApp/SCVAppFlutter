@@ -16,7 +16,7 @@ class Malica {
     await Future.wait(promises);
   }
 
-  MalicaDan getDay(int id) {
-    return dnevi.firstWhere((element) => element.id == id, orElse: () => null);
+  MalicaDan? getDay(int id) {
+    return dnevi.firstWhere((element) => element.id == id);
   }
 }

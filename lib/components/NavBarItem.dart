@@ -1,5 +1,5 @@
-import 'package:ff_navigation_bar/ff_navigation_bar_item.dart';
-import 'package:ff_navigation_bar/ff_navigation_bar_theme.dart';
+import 'package:ff_navigation_bar_plus/ff_navigation_bar_item.dart';
+import 'package:ff_navigation_bar_plus/ff_navigation_bar_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,14 +17,14 @@ class NavBarItem extends FFNavigationBarItem {
   final String label;
   final IconData iconData;
   final Duration animationDuration;
-  Color selectedBackgroundColor;
-  Color selectedForegroundColor;
-  Color selectedLabelColor;
+  Color? selectedBackgroundColor;
+  Color? selectedForegroundColor;
+  Color? selectedLabelColor;
 
-  int index;
-  int selectedIndex;
-  FFNavigationBarTheme theme;
-  bool showSelectedItemShadow;
+  late int index;
+  late int selectedIndex;
+  late FFNavigationBarTheme theme;
+  late bool showSelectedItemShadow;
   double itemWidth;
 
   void setIndex(int index) {
@@ -32,7 +32,9 @@ class NavBarItem extends FFNavigationBarItem {
   }
 
   Color _getDerivedBorderColor() {
-    return theme.selectedItemBorderColor ?? theme.barBackgroundColor;
+    return theme.selectedItemBorderColor ??
+        theme.barBackgroundColor ??
+        Colors.transparent;
   }
 
   Color _getBorderColor(bool isOn) {
@@ -46,13 +48,13 @@ class NavBarItem extends FFNavigationBarItem {
   static const kDefaultAnimationDuration = Duration(milliseconds: 1500);
 
   NavBarItem({
-    Key key,
-    this.label,
+    Key? key,
+    required this.label,
     this.itemWidth = 60,
     this.selectedBackgroundColor,
     this.selectedForegroundColor,
     this.selectedLabelColor,
-    this.iconData,
+    required this.iconData,
     this.animationDuration = kDefaultAnimationDuration,
   }) : super(key: key);
 

@@ -29,7 +29,7 @@ class EPASApi extends Extension {
   Future<void> checkAuth() async {
     try {
       final response = await http.get(Uri.parse('${EPASapiUrl}/user'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         this.authorised = true;
       }
@@ -39,7 +39,7 @@ class EPASApi extends Extension {
   Future<void> loadTimetables() async {
     try {
       final response = await http.get(Uri.parse('${EPASapiUrl}/timetable/all'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         this.timetables = json
@@ -51,12 +51,12 @@ class EPASApi extends Extension {
     loading = false;
   }
 
-  void loadWorkshops(int timetable_id) async {
+  Future<void> loadWorkshops(int? timetable_id) async {
     if (timetable_id == null) return;
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/workshop/timetable/$timetable_id'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         this.workshops = json
@@ -71,12 +71,12 @@ class EPASApi extends Extension {
     loading = false;
   }
 
-  Future<void> loadWorkshopsByName(String name) async {
+  Future<void> loadWorkshopsByName(String? name) async {
     if (name == null) return;
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/workshop/name/$name'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         this.workshops = json
@@ -92,7 +92,7 @@ class EPASApi extends Extension {
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/user/myworkshops'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         this.workshops = json
@@ -108,7 +108,7 @@ class EPASApi extends Extension {
     try {
       final response = await http.get(
           Uri.parse('${EPASapiUrl}/user/joinedworkshops'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         final List<dynamic> json = jsonDecode(response.body);
         this.joinedWorkshops = json
@@ -130,7 +130,7 @@ class EPASApi extends Extension {
   Future<void> loadUserCode() async {
     try {
       final response = await http.get(Uri.parse('${EPASapiUrl}/user/code'),
-          headers: {'Authorization': global.token.accessToken});
+          headers: {'Authorization': global.token.getAccessToken()});
       if (response.statusCode == 200) {
         this.userCode = int.parse(response.body);
       }
@@ -142,7 +142,7 @@ class EPASApi extends Extension {
     try {
       final response = await http.post(
           Uri.parse('${EPASapiUrl}/user/joinworkshop'),
-          headers: {'Authorization': global.token.accessToken},
+          headers: {'Authorization': global.token.getAccessToken()},
           body: {'workshopId': workshop_id.toString()});
       if (response.statusCode == 200) {
         return true;
@@ -158,7 +158,7 @@ class EPASApi extends Extension {
     try {
       final response = await http.post(
           Uri.parse('${EPASapiUrl}/user/leaveworkshop'),
-          headers: {'Authorization': global.token.accessToken},
+          headers: {'Authorization': global.token.getAccessToken()},
           body: {'workshopId': workshop_id.toString()});
       if (response.statusCode == 200) {
         return true;
@@ -172,7 +172,7 @@ class EPASApi extends Extension {
         StoreProvider.of<AppState>(global.globalBuildContext)
             .state
             .extensionManager;
-    final EPASApi epasApi = extensionManager.getExtensions('EPAS');
+    final EPASApi epasApi = extensionManager.getExtensions('EPAS') as EPASApi;
     epasApi.alert.show(info, isOk);
     StoreProvider.of<AppState>(global.globalBuildContext)
         .dispatch(extensionManager);
