@@ -1,4 +1,5 @@
 import 'package:scv_app/api/malice/malicaDan.dart';
+import 'package:collection/collection.dart';
 
 import 'malicaUser.dart';
 
@@ -17,6 +18,6 @@ class Malica {
   }
 
   MalicaDan? getDay(int id) {
-    return dnevi.firstWhere((element) => element.id == id);
+    return dnevi.firstWhereOrNull((element) => element.id == id);
   }
 }

@@ -24,7 +24,7 @@ class CircleProgressBar extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: CustomPaint(
-        child: Center(child: this.child) ?? Container(),
+        child: Center(child: this.child),
         foregroundPainter: CircleProgressBarPainter(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,

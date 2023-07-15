@@ -16,7 +16,13 @@ class MalicaUser {
   String accessToken = "";
 
   bool isLoggedIn() {
-    return accessToken != "";
+    if (accessToken == "") return false;
+    try {
+      final token = JWT.decode(accessToken);
+      return token.payload["exp"] > DateTime.now().millisecondsSinceEpoch;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<String> getMicrosoftAccessToken() async {

@@ -7,7 +7,7 @@ enum AppThemeType { Light, Dark, System }
 class AppTheme {
   AppThemeType type = AppThemeType.System;
 
-  AppTheme(){
+  AppTheme() {
     this.type = AppThemeType.System;
   }
 
@@ -17,9 +17,10 @@ class AppTheme {
     if (typeString == null) {
       this.type = AppThemeType.System;
     } else {
-      this.type = AppThemeType.values.firstWhere((AppThemeType type) {
-        return type.toString() == typeString;
-      });
+      this.type = AppThemeType.values.firstWhereOrNull((AppThemeType type) {
+            return type.toString() == typeString;
+          }) ??
+          AppThemeType.System;
     }
     this.setTo();
   }
@@ -74,7 +75,8 @@ class AppTheme {
         return 'Temni način';
       case AppThemeType.System:
         return 'Sistemsko';
+      default:
+        return '';
     }
-    return '';
   }
 }

@@ -5,18 +5,19 @@ import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
-Widget EPASAdminHomeTitle(
-    BuildContext context, void Function() goBack, int currentSelectedWorkshopId) {
+Widget EPASAdminHomeTitle(BuildContext context, void Function() goBack,
+    int currentSelectedWorkshopId) {
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
         final EPASApi epasApi =
             extensionManager.getExtensions("EPAS") as EPASApi;
-        final EPASWorkshop? workshop = epasApi.workshops
-            .firstWhere((element) => element.id == currentSelectedWorkshopId);
-        final EPASTimetable? timetable = epasApi.timetables
-            .firstWhere((element) => element.id == workshop?.timetable_id);
+        final EPASWorkshop? workshop = epasApi.workshops.firstWhereOrNull(
+            (element) => element.id == currentSelectedWorkshopId);
+        final EPASTimetable? timetable = epasApi.timetables.firstWhereOrNull(
+            (element) => element.id == workshop?.timetable_id);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

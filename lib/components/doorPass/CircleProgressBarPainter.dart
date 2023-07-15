@@ -31,7 +31,7 @@ class CircleProgressBarPainter extends CustomPainter {
 
     // Start at the top. 0 radians represents the right edge
     final double startAngle = -(2 * Math.pi * 0.25);
-    final double sweepAngle = (2 * Math.pi * (this.percentage ?? 0));
+    final double sweepAngle = (2 * Math.pi * (this.percentage));
 
     // Don't draw the background if we don't have a background color
     if (this.backgroundColor != null) {

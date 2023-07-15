@@ -12,6 +12,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/pages/EPAS/style.dart';
+import 'package:collection/collection.dart';
 
 import '../../store/AppState.dart';
 
@@ -73,9 +74,9 @@ class _EPASAdminWorkshopJoinListState extends State<EPASAdminWorkshopJoinList> {
         final EPASApi epasApi =
             extensionManager.getExtensions("EPAS") as EPASApi;
         final EPASWorkshop? workshop = epasApi.workshops
-            .firstWhere((element) => element.id == widget.workshopId);
-        final EPASTimetable? timetable = epasApi.timetables
-            .firstWhere((timetable) => timetable.id == workshop?.timetable_id);
+            .firstWhereOrNull((element) => element.id == widget.workshopId);
+        final EPASTimetable? timetable = epasApi.timetables.firstWhereOrNull(
+            (timetable) => timetable.id == workshop?.timetable_id);
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

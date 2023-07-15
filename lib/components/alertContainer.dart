@@ -30,7 +30,7 @@ class _AlertContainerState extends State<AlertContainer> {
                         : SizedBox(),
                     Expanded(
                       child: Text(
-                        state.globalAlert.text ?? "",
+                        state.globalAlert.text,
                         style: TextStyle(
                           fontSize: 16,
                         ),

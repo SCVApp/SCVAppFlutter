@@ -5,6 +5,7 @@ import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 import '../../../api/epas/EPAS.dart';
 
@@ -16,9 +17,9 @@ Widget EPASTimetableSelectionListItem(
       builder: (context, extensionManager) {
         final EPASApi epasApi =
             extensionManager.getExtensions("EPAS") as EPASApi;
-        final EPASTimetable? timetable = epasApi.timetables
-            .firstWhere((timetable) => timetable.id == workshop.timetable_id);
-        final bool alreadyJoined = epasApi.joinedWorkshops.firstWhere(
+        final EPASTimetable? timetable = epasApi.timetables.firstWhereOrNull(
+            (timetable) => timetable.id == workshop.timetable_id);
+        final bool alreadyJoined = epasApi.joinedWorkshops.firstWhereOrNull(
                 (joinedWorkshop) => joinedWorkshop.id == workshop.id) !=
             null;
         final TextDecoration decoration =

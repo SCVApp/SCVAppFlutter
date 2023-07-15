@@ -4,6 +4,7 @@ import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/api/malice/malicaMeni.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'package:http/http.dart' as http;
+import 'package:collection/collection.dart';
 
 import 'malicaTipMeni.dart';
 
@@ -51,12 +52,13 @@ class MalicaDan {
   }
 
   MalicaMeni? getSelectedMenu() {
-    return meniji.firstWhere((element) => element.id == idNarocenegaMenija);
+    return meniji
+        .firstWhereOrNull((element) => element.id == idNarocenegaMenija);
   }
 
   MalicaTipMeni? getTipMenija(MalicaMeni? meni) {
     return tipiMenijev
-        .firstWhere((element) => element.id == (meni?.tip_id ?? 0));
+        .firstWhereOrNull((element) => element.id == (meni?.tip_id ?? 0));
   }
 
   static String getOpisMenija(MalicaMeni? meni) {

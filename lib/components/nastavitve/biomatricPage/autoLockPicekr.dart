@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/api/biometric.dart';
-import 'package:scv_app/global/global.dart' as global;
 
 void autoLockPicker(BuildContext context, onConfirm, Biometric biometric) {
   Picker picker = new Picker(

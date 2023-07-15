@@ -94,10 +94,12 @@ class _HomePageState extends State<HomePage>
               ),
             ],
             theme: FFNavigationBarTheme(
-              barBackgroundColor: Theme.of(context).bottomAppBarColor,
-              selectedItemBorderColor: Theme.of(context).bottomAppBarColor,
+              barBackgroundColor: Theme.of(context).bottomAppBarTheme.color,
+              selectedItemBorderColor:
+                  Theme.of(context).bottomAppBarTheme.color,
               selectedItemBackgroundColor: user.school.schoolColor,
-              selectedItemIconColor: Theme.of(context).bottomAppBarColor,
+              selectedItemIconColor:
+                  Theme.of(context).bottomAppBarTheme.color ?? Colors.white,
               selectedItemLabelColor: Theme.of(context).primaryColor,
             ),
           ),

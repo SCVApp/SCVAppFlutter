@@ -4,6 +4,7 @@ import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:collection/collection.dart';
 
 import 'passDoor.dart';
 import 'ura.dart';
@@ -187,7 +188,7 @@ class Urnik {
     DateTime now = DateTime.now();
     ObdobjaUr? naslednjeObdobje = this
         .obdobjaUr
-        .firstWhere((element) => element.type == ObdobjaUrType.naslednje);
+        .firstWhereOrNull((element) => element.type == ObdobjaUrType.naslednje);
     if (naslednjeObdobje != null) {
       Duration duration = naslednjeObdobje.zacetek.difference(now);
       if (duration.inSeconds < 0) {
@@ -197,9 +198,8 @@ class Urnik {
       this.doNaslednjeUre =
           "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
     } else {
-      ObdobjaUr? trenutnoObdobje = this
-          .obdobjaUr
-          .firstWhere((element) => element.type == ObdobjaUrType.trenutno);
+      ObdobjaUr? trenutnoObdobje = this.obdobjaUr.firstWhereOrNull(
+          (element) => element.type == ObdobjaUrType.trenutno);
       if (trenutnoObdobje != null) {
         Duration duration = trenutnoObdobje.konec.difference(now);
         if (duration.inSeconds < 0) {
@@ -215,8 +215,9 @@ class Urnik {
   }
 
   String zacetekNaslednjegaObdobja() {
-    ObdobjaUr? naslednjeObdobje = this.obdobjaUr.firstWhere(
-          (element) => element.type == ObdobjaUrType.naslednje);
+    ObdobjaUr? naslednjeObdobje = this
+        .obdobjaUr
+        .firstWhereOrNull((element) => element.type == ObdobjaUrType.naslednje);
     if (naslednjeObdobje == null) return "";
     if (naslednjeObdobje.obdobjeJePrazno()) {
       for (int i = this.obdobjaUr.indexOf(naslednjeObdobje);

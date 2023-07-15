@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/timetable.dart';
 import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 import '../../../api/epas/EPAS.dart';
 import '../../../manager/extensionManager.dart';
@@ -14,12 +15,14 @@ Widget EPASTimetableSelectionButton(BuildContext context,
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASApi epasApi =
+            extensionManager.getExtensions("EPAS") as EPASApi;
         final EPASTimetable? currentSelectedTimetable = epasApi.timetables
-            .firstWhere(
+            .firstWhereOrNull(
                 (timetable) => timetable.id == currentSelectedTimetableId);
         final EPASWorkshop? currentSelectedWorkshop = epasApi.workshops
-            .firstWhere((workshop) => workshop.id == currentSelectedWorkshopId);
+            .firstWhereOrNull(
+                (workshop) => workshop.id == currentSelectedWorkshopId);
         String textForButton =
             "PRIJAVI SE NA DELAVNICO (${currentSelectedTimetable?.getStartHour() ?? "--.--"})";
         Color colorForButton = EPASStyle.backgroundColor;

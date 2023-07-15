@@ -26,7 +26,7 @@ class EPASWorkshop {
   });
 
   static fromJSON(json, int? timetable_id, {bool timetable_object = false}) {
-    final int id =
+    final int? id =
         timetable_object ? json['timetable']['id'] : json['timetable'];
     return EPASWorkshop(
       id: json['id'],

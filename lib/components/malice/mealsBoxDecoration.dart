@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../extension/hexColor.dart';
-
 BoxDecoration mealsBoxDecoration(BuildContext context,
     {bool isSelected = false}) {
   return BoxDecoration(

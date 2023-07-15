@@ -4,6 +4,7 @@ import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 Widget mainTitle() {
   return StoreConnector<AppState, Urnik>(
@@ -20,7 +21,7 @@ Widget mainTitle() {
           urnik.poukType != PoukType.konecPouka &&
                   urnik.poukType != PoukType.niPouka
               ? Text(
-                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhere((obdobjeUr) => obdobjeUr.type == ObdobjaUrType.naslednje) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
+                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhereOrNull((obdobjeUr) => obdobjeUr.type == ObdobjaUrType.naslednje) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
                 )
               : SizedBox(),
         ],

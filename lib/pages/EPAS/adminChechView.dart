@@ -12,6 +12,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
+import 'package:collection/collection.dart';
 
 import '../../store/AppState.dart';
 
@@ -72,7 +73,7 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
               StoreProvider.of<AppState>(context).state.extensionManager;
           final EPASApi epasApi =
               extensionManager.getExtensions("EPAS") as EPASApi;
-          final EPASTimetable? timetable = epasApi.timetables.firstWhere(
+          final EPASTimetable? timetable = epasApi.timetables.firstWhereOrNull(
               (element) => element.id == otherWorkshop?.timetable_id);
           setState(() {
             this.otherTimetable = timetable;
@@ -207,16 +208,15 @@ class _EPASAdminChechViewState extends State<EPASAdminChechView> {
                                     builder: (context, extensionManager) {
                                       final EPASApi epasApi = extensionManager
                                           .getExtensions("EPAS") as EPASApi;
-                                      final EPASWorkshop? workshop =
-                                          epasApi.workshops.firstWhere(
-                                              (element) =>
-                                                  element.id ==
-                                                  widget.workshopId);
-                                      final EPASTimetable? timetable =
-                                          epasApi.timetables.firstWhere(
-                                              (element) =>
-                                                  element.id ==
-                                                  workshop?.timetable_id);
+                                      final EPASWorkshop? workshop = epasApi
+                                          .workshops
+                                          .firstWhereOrNull((element) =>
+                                              element.id == widget.workshopId);
+                                      final EPASTimetable? timetable = epasApi
+                                          .timetables
+                                          .firstWhereOrNull((element) =>
+                                              element.id ==
+                                              workshop?.timetable_id);
                                       return Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,

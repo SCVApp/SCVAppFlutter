@@ -30,7 +30,7 @@ Widget EPASAlertContainer() {
                   ),
                   Expanded(
                     child: Text(
-                      epasApi.alert.info ?? "",
+                      epasApi.alert.info,
                       style: TextStyle(
                         fontSize: 16,
                         color: epasApi.alert.isOk ? Colors.green : Colors.red,

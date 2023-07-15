@@ -5,6 +5,7 @@ import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/components/EPAS/alert.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
+import 'package:collection/collection.dart';
 
 import '../../api/epas/EPAS.dart';
 import '../../components/EPAS/workshopSelection/list.dart';
@@ -59,9 +60,11 @@ class _EPASWorkshopSelectionState extends State<EPASWorkshopSelection> {
           child: StoreConnector<AppState, ExtensionManager>(
               converter: (store) => store.state.extensionManager,
               builder: (context, extensionManager) {
-                final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
-                final EPASTimetable? timetable = epasApi.timetables.firstWhere(
-                    (timetable) => timetable.id == widget.timetableId);
+                final EPASApi epasApi =
+                    extensionManager.getExtensions("EPAS") as EPASApi;
+                final EPASTimetable? timetable = epasApi.timetables
+                    .firstWhereOrNull(
+                        (timetable) => timetable.id == widget.timetableId);
                 return Column(
                   children: [
                     Stack(

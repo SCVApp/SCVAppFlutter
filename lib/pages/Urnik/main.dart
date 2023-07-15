@@ -11,6 +11,7 @@ import 'package:scv_app/components/urnik/viewForObdobjaUr.dart';
 import 'package:scv_app/components/urnik/viewForObdobjeUre.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 class UrnikPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class UrnikPage extends StatefulWidget {
 
 class _UrnikPageState extends State<UrnikPage> {
   final double gap = 15;
-  late Timer timerZaUrnik;
+  Timer? timerZaUrnik;
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _UrnikPageState extends State<UrnikPage> {
   void dispose() {
     super.dispose();
     if (timerZaUrnik != null) {
-      timerZaUrnik.cancel();
+      timerZaUrnik!.cancel();
     }
   }
 
@@ -60,8 +61,9 @@ class _UrnikPageState extends State<UrnikPage> {
                   urnik.poukType == PoukType.pouk && urnik.obdobjaUr.length > 0
                       ? ViewForObdobjeUre(
                           viewSizes: UrnikStyle.viewStyleBig,
-                          obdobjeUr: urnik.obdobjaUr.firstWhere((obdobjeUr) =>
-                              obdobjeUr.type == ObdobjaUrType.trenutno),
+                          obdobjeUr: urnik.obdobjaUr.firstWhereOrNull(
+                              (obdobjeUr) =>
+                                  obdobjeUr.type == ObdobjaUrType.trenutno),
                         )
                       : Padding(
                           padding: EdgeInsets.only(left: 25, right: 25),

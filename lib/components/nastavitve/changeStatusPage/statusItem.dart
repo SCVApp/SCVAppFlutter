@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:shared_preferences/shared_preferences.dart';

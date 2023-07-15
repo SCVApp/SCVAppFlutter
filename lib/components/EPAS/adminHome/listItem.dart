@@ -7,6 +7,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/adminWorkshopJoinList.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 Widget EPASAdminHomeListItem(BuildContext context, EPASWorkshop workshop,
     Function changeSelectedWorkshopId, int currentSelectedWorkshopId) {
@@ -20,8 +21,9 @@ Widget EPASAdminHomeListItem(BuildContext context, EPASWorkshop workshop,
   return StoreConnector<AppState, ExtensionManager>(
       converter: (store) => store.state.extensionManager,
       builder: (context, extensionManager) {
-        final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
-        final EPASTimetable? timetable = epasApi.timetables.firstWhere(
+        final EPASApi epasApi =
+            extensionManager.getExtensions("EPAS") as EPASApi;
+        final EPASTimetable? timetable = epasApi.timetables.firstWhereOrNull(
             (timetable) => timetable.id == workshop.timetable_id);
         final Color countColor = workshop.usersCount >= workshop.maxUsers
             ? EPASStyle.fullPlaceColor

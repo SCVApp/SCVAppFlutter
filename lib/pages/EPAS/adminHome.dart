@@ -10,6 +10,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/adminChechView.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 class EPASAdminHome extends StatefulWidget {
   @override
@@ -52,8 +53,9 @@ class _EPASAdminHomeState extends State<EPASAdminHome> {
     }
 
     for (EPASWorkshop workshop in epasApi.workshops) {
-      final EPASTimetable timetable = epasApi.timetables
-          .firstWhere((element) => element.id == workshop.timetable_id);
+      final EPASTimetable? timetable = epasApi.timetables
+          .firstWhereOrNull((element) => element.id == workshop.timetable_id);
+      if (timetable == null) continue;
       DateTime now = DateTime.now();
 
       DateTime start = timetable.start.subtract(Duration(minutes: 10));

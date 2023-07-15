@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class School {
   String id = "";
   String urnikUrl = "";
-  String color = "#0094d9";
+  String color = "#85C9E9";
   String schoolUrl = "";
   String name = "";
   String razred = "";
-  Color schoolColor = HexColor.fromHex("#0094d9");
-  Color schoolSecondaryColor = HexColor.fromHex("#0094d9");
+  Color schoolColor = HexColor.fromHex("#85C9E9");
+  Color schoolSecondaryColor = HexColor.fromHex("#85C9E9");
 
   static final Map<String, Color> tabelaZaSvetlejseBarve = {
     "ERS": HexColor.fromHex("#85C9E9"),
@@ -22,16 +22,7 @@ class School {
     "SSGO": HexColor.fromHex("#D4E8A6"),
   };
 
-  School() {
-    this.color = "#0094d9";
-    this.schoolColor = HexColor.fromHex("#0094d9");
-    this.schoolSecondaryColor = HexColor.fromHex("#0094d9");
-    this.id = "";
-    this.urnikUrl = "";
-    this.schoolUrl = "";
-    this.name = "";
-    this.razred = "";
-  }
+  School();
 
   void setSecondaryColor() {
     if (tabelaZaSvetlejseBarve.containsKey(this.id)) {

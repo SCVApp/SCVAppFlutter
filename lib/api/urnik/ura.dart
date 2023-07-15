@@ -47,7 +47,7 @@ class Ura {
       };
 
   String shortenTeacherName() {
-    if (this.ucitelj == null || this.ucitelj == "") return "";
+    if (this.ucitelj == "") return "";
     List<String> teacherNameSplit = this.ucitelj.split(" ");
     if (teacherNameSplit.length <= 0) return ", ${this.ucitelj}";
     String shortenedName = ", ";

@@ -4,6 +4,7 @@ import 'package:scv_app/pages/Malice/home.dart';
 import 'package:scv_app/pages/Malice/login.dart';
 import 'package:scv_app/pages/Malice/otherInformations.dart';
 import 'package:scv_app/pages/Malice/selectMenus.dart';
+import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/store/AppState.dart';
 
 import '../../api/malice/malica.dart';
@@ -16,14 +17,16 @@ class MalicePage extends StatefulWidget {
 class _MalicePageState extends State<MalicePage> {
   PageController _pageController = PageController(initialPage: 0);
 
+  bool isLoaded = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => onStateBuild());
   }
 
-  void onStateBuild() {
-    loadData();
+  void onStateBuild() async {
+    await loadData();
   }
 
   void goToSelectMenu() {
@@ -38,14 +41,18 @@ class _MalicePageState extends State<MalicePage> {
     _pageController.jumpToPage(2);
   }
 
-  void loadData() async {
+  Future<void> loadData() async {
     final Malica malica = StoreProvider.of<AppState>(context).state.malica;
     await malica.maliceUser.load();
     StoreProvider.of<AppState>(context).dispatch(malica);
     if (malica.maliceUser.isLoggedIn() == true) {
       await Future.wait(
           [malica.maliceUser.loadDataFromWeb(), malica.loadFirstDays()]);
+      if (!mounted) return;
       StoreProvider.of<AppState>(context).dispatch(malica);
+      setState(() {
+        isLoaded = true;
+      });
       return;
     }
     await tryMicrosoftLogin();
@@ -56,10 +63,11 @@ class _MalicePageState extends State<MalicePage> {
     if (malica.maliceUser.isLoggedIn() == true) {
       return;
     }
-    print("Trying to login with microsoft token");
     await malica.maliceUser.loginWithMicrosoftToken();
     StoreProvider.of<AppState>(context).dispatch(malica);
-    setState(() {});
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   @override
@@ -70,17 +78,19 @@ class _MalicePageState extends State<MalicePage> {
       builder: (context, malica) {
         return Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            body: malica.maliceUser.isLoggedIn() == false
-                ? MaliceLoginPage()
-                : PageView(
-                    controller: _pageController,
-                    children: <Widget>[
-                      MaliceHomePage(goToSelectMenu, goToOtherInformations),
-                      MaliceSelectMenus(goToHomePage),
-                      MaliceOtherInformations(goToHomePage),
-                    ],
-                    physics: NeverScrollableScrollPhysics(),
-                  ));
+            body: !isLoaded
+                ? LoadingPage()
+                : malica.maliceUser.isLoggedIn() != false
+                    ? MaliceLoginPage()
+                    : PageView(
+                        controller: _pageController,
+                        children: <Widget>[
+                          MaliceHomePage(goToSelectMenu, goToOtherInformations),
+                          MaliceSelectMenus(goToHomePage),
+                          MaliceOtherInformations(goToHomePage),
+                        ],
+                        physics: NeverScrollableScrollPhysics(),
+                      ));
       },
     );
   }

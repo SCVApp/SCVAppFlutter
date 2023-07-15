@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/epas/EPAS.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:collection/collection.dart';
 
 import '../api/extension.dart';
 import '../store/AppState.dart';
@@ -10,22 +11,22 @@ class ExtensionManager {
   bool initialised = false;
   List<Extension> extensions = [new EPASApi()];
 
-  Extension getExtensions(String name) {
+  Extension? getExtensions(String name) {
     return extensions
-        .firstWhere((Extension extension) => extension.name == name);
+        .firstWhereOrNull((Extension extension) => extension.name == name);
   }
 
   bool getExtensionEnabled(String name) {
     return extensions
-            .firstWhere((Extension extension) => extension.name == name)
-            .enabled ??
+            .firstWhereOrNull((Extension extension) => extension.name == name)
+            ?.enabled ??
         false;
   }
 
   bool getExtensionAuthorised(String name) {
     return extensions
-            .firstWhere((Extension extension) => extension.name == name)
-            .authorised ??
+            .firstWhereOrNull((Extension extension) => extension.name == name)
+            ?.authorised ??
         false;
   }
 
@@ -40,7 +41,7 @@ class ExtensionManager {
   }
 
   static Future<void> loadExtenstions(BuildContext context) async {
-    if (global.token?.accessToken == null) return;
+    if (global.token.accessToken == null) return;
     final ExtensionManager extensionManager =
         StoreProvider.of<AppState>(context).state.extensionManager;
     if (extensionManager.initialised) return;

@@ -9,6 +9,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/pages/EPAS/workshopSelection.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 import '../../api/epas/EPAS.dart';
 
@@ -52,7 +53,7 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
         StoreProvider.of<AppState>(context).state.extensionManager;
     final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
     final EPASWorkshop? workshop = epasApi.workshops
-        .firstWhere((workshop) => workshop.id == widget.workshopId);
+        .firstWhereOrNull((workshop) => workshop.id == widget.workshopId);
     final String workshopName = workshop?.name ?? "";
     epasApi.loading = true;
     StoreProvider.of<AppState>(context).dispatch(extensionManager);
@@ -136,9 +137,11 @@ class _EPASTimetableSelectionState extends State<EPASTimetableSelection> {
           child: StoreConnector<AppState, ExtensionManager>(
               converter: (store) => store.state.extensionManager,
               builder: (context, extensionManager) {
-                final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
-                final EPASWorkshop? workshop = epasApi.workshops.firstWhere(
-                    (workshop) => workshop.id == widget.workshopId);
+                final EPASApi epasApi =
+                    extensionManager.getExtensions("EPAS") as EPASApi;
+                final EPASWorkshop? workshop = epasApi.workshops
+                    .firstWhereOrNull(
+                        (workshop) => workshop.id == widget.workshopId);
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

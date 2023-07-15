@@ -21,7 +21,7 @@ Future<void> confirmAlert(BuildContext context, String text,
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(text ?? ''),
+              Text(text),
             ],
           ),
         ),

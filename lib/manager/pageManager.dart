@@ -115,7 +115,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   void loadToken() async {
     await global.token.loadToken();
     universalLinks.goToUnlockPassDoor(context, universalLinks.universalLink);
-    if (global.token.getAccessToken() != null) {
+    if (global.token.accessToken != null) {
       await loadFromCache();
       if (await global.canConnectToNetwork() == false) {
         handleConnectivityChange();

@@ -6,6 +6,7 @@ import 'package:scv_app/api/epas/workshop.dart';
 import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:collection/collection.dart';
 
 import '../../../manager/extensionManager.dart';
 
@@ -18,7 +19,7 @@ Widget EPASWorkshopSelectionListItem(
         final EPASApi epasApi = extensionManager.getExtensions("EPAS") as EPASApi;
         bool isUserJoinedInWorkshopWithName = false;
         for (EPASTimetable timetable in epasApi.timetables) {
-          EPASWorkshop? selectedWorkShop = epasApi.joinedWorkshops.firstWhere(
+          EPASWorkshop? selectedWorkShop = epasApi.joinedWorkshops.firstWhereOrNull(
               (workshop) => workshop.id == timetable.selected_workshop_id);
           if (selectedWorkShop != null &&
               selectedWorkShop.name == workshop.name) {

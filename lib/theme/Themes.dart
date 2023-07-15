@@ -7,7 +7,9 @@ class Themes {
     backgroundColor: Colors.white, //Barva upper menu bar
     primaryColor: Colors.black, //Barva za text
     scaffoldBackgroundColor: Colors.white, //Tema za ozadje v nastavitvah
-    bottomAppBarColor: Colors.white, //Menu bar spodnji
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: Colors.white, //Barva za spodnji menu bar
+    ),
     cardColor: HexColor.fromHex("#FAFAFA"), //Barva oblački
     hintColor: Colors.white, //Barva za ikone v oblčkih
     shadowColor: Colors.grey.withOpacity(0.5), //Barva senc
@@ -17,7 +19,9 @@ class Themes {
     backgroundColor: Colors.black,
     scaffoldBackgroundColor: HexColor.fromHex("#121212"),
     primaryColor: Colors.white,
-    bottomAppBarColor: HexColor.fromHex("#1C1C1E"),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: HexColor.fromHex("#1C1C1E"), //Barva za spodnji menu bar
+    ),
     cardColor: HexColor.fromHex("#1C1C1E"),
     hintColor: HexColor.fromHex("#1C1C1E"),
     shadowColor: Color.fromARGB(255, 32, 32, 32).withOpacity(0),
