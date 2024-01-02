@@ -93,7 +93,7 @@
     "something_went_wrong": "An error has occurred. Please try again",
     "todays_class_hours": "Today's schedule",
     "date": "Date",
-    "professor": "Professor",
+    "profesor": "Professor",
     "classroom": "Classroom",
     "start_of_class_hour": "Start of class",
     "next_hour": "next class",
@@ -120,12 +120,13 @@
     "end_of_class_hours":"End of class",
     "no_class":"No class",
     "start_of_class_hour":"Start of class at",
-    "break":"Break until",
+    "school_break":"Break until",
     "until":"until",
     "and":"and",
     "all_tools_one_place_title":"All tools in one place.",
     "tools_description":"Tools for students, all in one place.",
     "simple_and_safe_title":"Simple and safe",
     "login_microsoft_description":"Log in with your school account to access all the features of the ŠCVApp.",
-    "skip":"Skip"
+    "skip":"Skip",
+    "eAsistent": "eAsistent"
 }
