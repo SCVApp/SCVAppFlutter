@@ -79,12 +79,12 @@ class User {
 
   void fromJSON(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.displayName = map['displayName'];
-    this.givenName = map['givenName'];
-    this.mail = map['mail'];
-    this.mobilePhone = map['mobilePhone'];
-    this.surname = map['surname'];
-    this.userPrincipalName = map['userPrincipalName'];
+    this.displayName = map['displayName'] ?? "";
+    this.givenName = map['givenName'] ?? "";
+    this.mail = map['mail'] ?? "";
+    this.mobilePhone = map['mobilePhone'] ?? "";
+    this.surname = map['surname'] ?? "";
+    this.userPrincipalName = map['userPrincipalName'] ?? "";
   }
 
   Future<void> saveToCache() async {
