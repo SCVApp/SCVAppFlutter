@@ -20,8 +20,6 @@ Future<void> _onOpen(LinkableElement link) async {
 }
 
 class _AboutAppPage extends State<AboutAppPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   int selectedPickerItem = 0;
 
   String token = "";
@@ -34,8 +32,6 @@ class _AboutAppPage extends State<AboutAppPage> {
 
     WidgetsBinding.instance.addPostFrameCallback(_afterBuild);
   }
-
-  bool _value = true;
 
   bool isListViewBigger = true;
 

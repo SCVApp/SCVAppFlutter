@@ -1,8 +1,10 @@
 import 'dart:math';
-import 'package:app_settings/app_settings.dart';
+
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/components/loadingItem.dart';
@@ -13,8 +15,7 @@ import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
 import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
-import 'package:get/get.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../api/user.dart';
 import '../../api/windowManager/windowManager.dart';
 import '../../extension/hexColor.dart';
