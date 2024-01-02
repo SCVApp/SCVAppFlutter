@@ -126,5 +126,7 @@
     "tools_description":"Dijakom koristna orodja, zbrana na enem mestu.",
     "simple_and_safe_title":"Preprosto in varno",
     "login_microsoft_description":"Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.",
-    "skip":"Preskoči"
+    "skip":"Preskoči",
+    "meals_login":"Prijava v malice",
+    "meals_auto_login":"Samodejna prijava"
 }

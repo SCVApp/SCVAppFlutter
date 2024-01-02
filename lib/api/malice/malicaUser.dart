@@ -1,19 +1,17 @@
 import 'dart:convert';
 
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'package:http/http.dart' as http;
+import 'package:scv_app/store/AppState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MalicaUser {
-  String email = "";
-  String firstName = "";
-  String lastName = "";
-  double budget = 0;
-  String pinNumber = "";
-
   String accessToken = "";
+  bool enabled = true;
 
   bool isLoggedIn() {
     if (accessToken == "") return false;
@@ -43,11 +41,9 @@ class MalicaUser {
       if (json["access_token"] != null) {
         this.accessToken = json["access_token"];
       }
-      this.email = json["student"]['email'];
-      this.firstName = json["student"]['first_name'];
-      this.lastName = json["student"]['last_name'];
-      this.budget = double.parse(json["student"]['budget'].toString());
-      this.pinNumber = json["student"]['pin_number'].toString();
+      if (json["enabled"] != null) {
+        this.enabled = json["enabled"];
+      }
     } catch (e) {
       print(e);
     }
@@ -55,13 +51,7 @@ class MalicaUser {
 
   Map<String, dynamic> toJson() {
     return {
-      "student": {
-        "email": this.email,
-        "first_name": this.firstName,
-        "last_name": this.lastName,
-        "budget": this.budget.toString(),
-        "pin_number": this.pinNumber,
-      },
+      "enabled": this.enabled,
       "access_token": this.accessToken,
     };
   }
@@ -124,5 +114,12 @@ class MalicaUser {
     } catch (e) {
       accessToken = "";
     }
+  }
+
+  static Future<void> toggleEnable(BuildContext context, bool enabled) async {
+    final Malica malica = StoreProvider.of<AppState>(context).state.malica;
+    malica.maliceUser.enabled = enabled;
+    await malica.maliceUser.save();
+    StoreProvider.of<AppState>(context).dispatch(malica);
   }
 }

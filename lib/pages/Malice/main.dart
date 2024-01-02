@@ -47,6 +47,13 @@ class _MalicePageState extends State<MalicePage> {
     final Malica malica = StoreProvider.of<AppState>(context).state.malica;
     await malica.maliceUser.load();
     StoreProvider.of<AppState>(context).dispatch(malica);
+    if (malica.maliceUser.enabled == false) {
+      setState(() {
+        isLoaded = true;
+      });
+      _controller..loadRequest(Uri.parse('https://malice.scv.si/'));
+      return;
+    }
     if (malica.maliceUser.isLoggedIn() == true) {
       setState(() {
         isLoaded = true;

@@ -7,6 +7,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/malice/malica.dart';
+import 'package:scv_app/api/malice/malicaUser.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
@@ -110,21 +112,45 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           icons: Icons.change_circle,
                           onTap: goToChangeStatusPage,
                           title: (AppLocalizations.of(context)!.status),
-                          subtitle: (AppLocalizations.of(context)!.change_status),
+                          subtitle:
+                              (AppLocalizations.of(context)!.change_status),
                         )
                       : loadingItem(user.school.schoolColor),
-                  !user.loadingFromWeb
-                      ? SettingsItem(
-                          icons: Icons.construction,
-                          iconStyle: IconStyle(
-                            iconsColor: Theme.of(context).hintColor,
-                            backgroundColor: HexColor.fromHex("#0094d9"),
-                          ),
-                          title: (AppLocalizations.of(context)!.other_tools),
-                          subtitle: (AppLocalizations.of(context)!.school_tools),
-                          onTap: goToOtherToolsPage,
-                        )
-                      : loadingItem(user.school.schoolColor),
+                  StoreConnector<AppState, Malica>(
+                      converter: (store) => store.state.malica,
+                      builder: (context, malica) {
+                        MalicaUser malicaUser = malica.maliceUser;
+                        malicaUser.load();
+                        return SettingsItem(
+                            icons: Icons.fastfood,
+                            iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              backgroundColor: HexColor.fromHex("#0094d9"),
+                            ),
+                            title: AppLocalizations.of(context)!.meals_login,
+                            subtitle:
+                                AppLocalizations.of(context)!.meals_auto_login,
+                            onTap: () {},
+                            trailing: Switch.adaptive(
+                                activeColor: HexColor.fromHex("#0094d9"),
+                                value: malicaUser.enabled,
+                                onChanged: (value) =>
+                                    MalicaUser.toggleEnable(context, value)));
+                      }),
+                  StoreConnector<AppState, Biometric>(
+                      converter: ((store) => store.state.biometric),
+                      builder: (context, biometric) => SettingsItem(
+                            icons: Icons.fingerprint,
+                            iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor: HexColor.fromHex("#EE5BA0"),
+                            ),
+                            title: (AppLocalizations.of(context)!
+                                .biometric_unlock),
+                            subtitle: biometric.displayName(),
+                            onTap: goToBiomericPage,
+                          )),
                   StoreConnector<AppState, AppTheme>(
                       converter: (store) => store.state.appTheme,
                       builder: (context, appTheme) => SettingsItem(
@@ -134,24 +160,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             iconStyle: IconStyle(
                               iconsColor: Theme.of(context).hintColor,
                               withBackground: true,
-                              backgroundColor: HexColor.fromHex("#EE5BA0"),
+                              backgroundColor: HexColor.fromHex("#FFCA05"),
                             ),
                             title: (AppLocalizations.of(context)!.app_look),
                             subtitle: appTheme.displayName(),
                             onTap: goToAppAppearance,
-                          )),
-                  StoreConnector<AppState, Biometric>(
-                      converter: ((store) => store.state.biometric),
-                      builder: (context, biometric) => SettingsItem(
-                            icons: Icons.fingerprint,
-                            iconStyle: IconStyle(
-                              iconsColor: Theme.of(context).hintColor,
-                              withBackground: true,
-                              backgroundColor: HexColor.fromHex("#FFCA05"),
-                            ),
-                            title: (AppLocalizations.of(context)!.biometric_unlock),
-                            subtitle: biometric.displayName(),
-                            onTap: goToBiomericPage,
                           )),
                   SettingsItem(
                     icons: Icons.info_rounded,
@@ -169,7 +182,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   converter: (store) => store.state.extensionManager,
                   builder: (context, extensionManager) {
                     return NastavitveGroup(
-                      settingsGroupTitle: (AppLocalizations.of(context)!.account),
+                      settingsGroupTitle:
+                          (AppLocalizations.of(context)!.account),
                       items: [
                         SettingsItem(
                           onTap: odjava,
