@@ -38,7 +38,7 @@ dependencies:
   open_mail_app: ^0.4.5
   syncfusion_flutter_datepicker: ^20.1.57
   local_auth: ^2.1.0
-  webview_flutter: ^3.0.4
+  webview_flutter: ^4.4.2
   shared_preferences: ^2.0.15
   introduction_screen: ^3.0.2
   http: ^0.13.4

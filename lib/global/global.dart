@@ -3,14 +3,15 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import '../api/token.dart';
-import 'package:get/get.dart';
 
 final Token token = new Token();
 
@@ -38,7 +39,7 @@ Future<void> logOutUser(BuildContext context) async {
         StoreProvider.of<AppState>(globalBuildContext).state.appTheme;
     await appTheme.delete();
     StoreProvider.of<AppState>(globalBuildContext).dispatch(appTheme);
-    await CookieManager().clearCookies();
+    await WebViewCookieManager().clearCookies();
     await token.deleteToken();
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       Get.changeThemeMode(ThemeMode.dark);
@@ -52,7 +53,7 @@ Future<void> logOutUser(BuildContext context) async {
 
 void showGlobalAlert(
     {String text = "", Widget? action, int duration = 3, IconData? icon}) {
-  if (globalBuildContext != null) {
+  if (globalBuildContext.mounted) {
     GlobalAlert globalAlert =
         StoreProvider.of<AppState>(globalBuildContext).state.globalAlert;
     if (globalAlert.show(text, action, icon)) {

@@ -107,7 +107,6 @@ class MalicaUser {
   Future<void> loginWithMicrosoftToken() async {
     final String microsoftAccessToken = await getMicrosoftAccessToken();
     if (microsoftAccessToken == "") {
-      print("Failed to get microsoft access token");
       return;
     }
     final String url = Malica.apiURL + "/auth/microsoft";
@@ -119,7 +118,6 @@ class MalicaUser {
         final Map<String, dynamic> json = jsonDecode(response.body);
         this.fromJson(json);
         await save();
-        print("Logged in with microsoft token");
       } else {
         throw Exception('Failed to login');
       }

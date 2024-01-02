@@ -51,8 +51,7 @@ class School {
   void fromJSON(Map<String, dynamic> json) {
     this.id = json['id'].toString();
     this.urnikUrl = json['urnikUrl'].toString();
-    // this.color = json['color'].toString();
-    this.color = "#FFCA05";
+    this.color = json['color'].toString();
     this.schoolUrl = json['schoolUrl'].toString();
     this.name = json['name'].toString();
     this.razred = json['razred'].toString();

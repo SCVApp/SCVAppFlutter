@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:scv_app/pages/Malice/home.dart';
-import 'package:scv_app/pages/Malice/login.dart';
-import 'package:scv_app/pages/Malice/otherInformations.dart';
-import 'package:scv_app/pages/Malice/selectMenus.dart';
+import 'package:scv_app/api/malice/malicaUser.dart';
+import 'package:scv_app/api/webview.dart';
 import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../api/malice/malica.dart';
 
@@ -15,9 +14,9 @@ class MalicePage extends StatefulWidget {
 }
 
 class _MalicePageState extends State<MalicePage> {
-  PageController _pageController = PageController(initialPage: 0);
-
+  late final WebViewController _controller = getWebViewController();
   bool isLoaded = false;
+  bool webViewLoaded = false;
 
   @override
   void initState() {
@@ -26,19 +25,22 @@ class _MalicePageState extends State<MalicePage> {
   }
 
   void onStateBuild() async {
+    _controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..enableZoom(false)
+      ..setNavigationDelegate(getNavigationDelegate());
     await loadData();
   }
 
-  void goToSelectMenu() {
-    _pageController.jumpToPage(1);
-  }
-
-  void goToHomePage() {
-    _pageController.jumpToPage(0);
-  }
-
-  void goToOtherInformations() {
-    _pageController.jumpToPage(2);
+  NavigationDelegate getNavigationDelegate() {
+    return NavigationDelegate(
+      onPageFinished: (url) {
+        if (!mounted) return;
+        setState(() {
+          webViewLoaded = true;
+        });
+      },
+    );
   }
 
   Future<void> loadData() async {
@@ -46,13 +48,10 @@ class _MalicePageState extends State<MalicePage> {
     await malica.maliceUser.load();
     StoreProvider.of<AppState>(context).dispatch(malica);
     if (malica.maliceUser.isLoggedIn() == true) {
-      await Future.wait(
-          [malica.maliceUser.loadDataFromWeb(), malica.loadFirstDays()]);
-      if (!mounted) return;
-      StoreProvider.of<AppState>(context).dispatch(malica);
       setState(() {
         isLoaded = true;
       });
+      loadSiteMalica(malica.maliceUser);
       return;
     }
     await tryMicrosoftLogin();
@@ -60,19 +59,27 @@ class _MalicePageState extends State<MalicePage> {
 
   Future<void> tryMicrosoftLogin() async {
     final Malica malica = StoreProvider.of<AppState>(context).state.malica;
-    if (malica.maliceUser.isLoggedIn() == true) {
-      return;
-    }
     await malica.maliceUser.loginWithMicrosoftToken();
     StoreProvider.of<AppState>(context).dispatch(malica);
     setState(() {
       isLoaded = true;
     });
+    loadSiteMalica(malica.maliceUser);
+  }
+
+  void loadSiteMalica(MalicaUser malicaUser) {
+    bool loggedIn = malicaUser.isLoggedIn();
+    if (loggedIn) {
+      _controller
+        ..loadRequest(Uri.parse('https://malice.scv.si/api/v2/auth/api_login'),
+            headers: {'Authorization': 'Bearer ${malicaUser.accessToken}'});
+    } else {
+      _controller..loadRequest(Uri.parse('https://malice.scv.si/'));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // return MaliceWebPage();
     return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
@@ -80,17 +87,15 @@ class _MalicePageState extends State<MalicePage> {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: !isLoaded
                 ? LoadingPage()
-                : malica.maliceUser.isLoggedIn() == false
-                    ? MaliceLoginPage()
-                    : PageView(
-                        controller: _pageController,
-                        children: <Widget>[
-                          MaliceHomePage(goToSelectMenu, goToOtherInformations),
-                          MaliceSelectMenus(goToHomePage),
-                          MaliceOtherInformations(goToHomePage),
-                        ],
-                        physics: NeverScrollableScrollPhysics(),
-                      ));
+                : Stack(
+                    children: [
+                      WebViewWidget(controller: _controller),
+                      if (webViewLoaded == false)
+                        Center(
+                          child: CircularProgressIndicator(color: Colors.blue),
+                        ),
+                    ],
+                  ));
       },
     );
   }
