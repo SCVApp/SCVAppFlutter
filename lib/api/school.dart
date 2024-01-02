@@ -1,8 +1,12 @@
 import 'dart:convert';
-import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
+import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:scv_app/store/AppState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class School {
@@ -47,7 +51,8 @@ class School {
   void fromJSON(Map<String, dynamic> json) {
     this.id = json['id'].toString();
     this.urnikUrl = json['urnikUrl'].toString();
-    this.color = json['color'].toString();
+    // this.color = json['color'].toString();
+    this.color = "#FFCA05";
     this.schoolUrl = json['schoolUrl'].toString();
     this.name = json['name'].toString();
     this.razred = json['razred'].toString();
@@ -56,6 +61,14 @@ class School {
     }
     this.schoolColor = HexColor.fromHex(this.color);
     this.setSecondaryColor();
+    if (global.globalBuildContext.mounted) {
+      final ColorScheme colorScheme =
+          ColorScheme.fromSeed(seedColor: this.schoolColor);
+      final AppTheme appTheme =
+          StoreProvider.of<AppState>(global.globalBuildContext).state.appTheme;
+      appTheme.setColorScheme(colorScheme);
+      StoreProvider.of<AppState>(global.globalBuildContext).dispatch(appTheme);
+    }
   }
 
   Map<String, dynamic> toJSON() {

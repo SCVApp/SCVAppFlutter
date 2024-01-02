@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/global/global.dart';
+import 'package:scv_app/theme/Themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +8,7 @@ enum AppThemeType { Light, Dark, System }
 
 class AppTheme {
   AppThemeType type = AppThemeType.System;
+  ColorScheme colorScheme = ColorScheme.light();
 
   AppTheme() {
     this.type = AppThemeType.System;
@@ -23,6 +26,11 @@ class AppTheme {
           AppThemeType.System;
     }
     this.setTo();
+  }
+
+  void setColorScheme(ColorScheme colorScheme) {
+    this.colorScheme = colorScheme;
+    this.applyColorScheme();
   }
 
   Future<void> save() async {
@@ -55,16 +63,26 @@ class AppTheme {
     }
   }
 
-  static void changeToSystemTheme() {
+  void changeToSystemTheme() {
     Get.changeThemeMode(ThemeMode.system);
   }
 
-  static void changeToLightTheme() {
+  void changeToLightTheme() {
     Get.changeThemeMode(ThemeMode.light);
   }
 
-  static void changeToDarkTheme() {
+  void changeToDarkTheme() {
     Get.changeThemeMode(ThemeMode.dark);
+  }
+
+  void applyColorScheme() {
+    if (!globalBuildContext.mounted) {
+      return;
+    }
+    final ThemeData themeDataLight = Themes.light.copyWith(
+      colorScheme: colorScheme,
+    );
+    Get.changeTheme(themeDataLight);
   }
 
   String displayName() {
