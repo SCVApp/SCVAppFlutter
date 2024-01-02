@@ -46,7 +46,7 @@
     "pick_theme":"Izberi temo",
     "about_biometrics":"Z omogočanjem te nastavitve lahko nato v aplikacijo vstopiš preko biometričnih podatkov (prepoznava obraza ali Face ID, prepoznava prstnega odtisa ali Touch ID ter PIN ali geslo telefona). V primeru, da na telefonu nimaš nič od navedenega, te aplikacija opozori, da dodaš vsaj en varnostni pogoj, naveden zgoraj.",
     "lock_app":"Zaklep aplikacije v ozadju po",
-    "biometric_unlock":"Biometrični odklep aplikacije",
+    "biometric_unlock":"Biometrično odklepanje",
     "no_biometrics":"V telefonu nimaš nastavljenih varnostnih nastavitev, zato ni možno spremeniti nastavitve biometričnega odklepanja.",
     "info":"informacije",
     "available":"Dosegljiv/-a",
