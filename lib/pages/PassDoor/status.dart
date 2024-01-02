@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:scv_app/global/global.dart';
 
 enum ThemeColorForStatus {
   success,
@@ -52,32 +54,32 @@ extension ThemeColorForStatusExtension on ThemeColorForStatus {
   String get message {
     switch (this) {
       case ThemeColorForStatus.success:
-        return "Vrata so uspešno odklenjena";
+        return AppLocalizations.of(globalBuildContext)!.door_unlock_success;
       case ThemeColorForStatus.promisson_denied:
-        return "Trenutno nimaš pouka v tej učilnici";
+        return AppLocalizations.of(globalBuildContext)!.door_no_class_hour;
       case ThemeColorForStatus.time_out:
-        return "Malo počakaj, da lahko ponovno odkleneš vrata";
+        return AppLocalizations.of(globalBuildContext)!.door_wait_unlock;
       case ThemeColorForStatus.error:
-        return "Učilnica ne obstaja";
+        return AppLocalizations.of(globalBuildContext)!.door_classroom_nonexistent;
       case ThemeColorForStatus.lock_status:
-        return "Vrata so zaklenjena";
+        return AppLocalizations.of(globalBuildContext)!.door_locked;
       case ThemeColorForStatus.door_not_opened:
-        return "Vrata niso bila odprta";
+        return AppLocalizations.of(globalBuildContext)!.door_unlock_unsuccessful;
       case ThemeColorForStatus.unknown:
-        return "Neznana napaka";
+        return AppLocalizations.of(globalBuildContext)!.unknown_error;
       default:
-        return "Neznana napaka";
+        return AppLocalizations.of(globalBuildContext)!.unknown_error;
     }
   }
 
   String get infoMessage {
     if (this == ThemeColorForStatus.error) {
-      return "Prosim poskusite ponovno";
+      return AppLocalizations.of(globalBuildContext)!.try_again;
     } else if (this == ThemeColorForStatus.success) {
       return "";
     } else if (this == ThemeColorForStatus.time_out) {
-      return "Presegli ste število odklepanj v določenem času";
+      return AppLocalizations.of(globalBuildContext)!.door_unlock_limit_reached;
     }
-    return "Pritisni ključavnico za odklep";
+    return AppLocalizations.of(globalBuildContext)!.door_press_lock;
   }
 }

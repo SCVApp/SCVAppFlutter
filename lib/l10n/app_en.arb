@@ -1,5 +1,5 @@
 {
-    "welcome": "Welcome to the ŠCVApp!",
+    "welcome": "Welcome to ŠCVApp!",
     "home" : "Home",
     "meals" : "Meals",
     "eAsistant" : "eAsistant",
@@ -81,8 +81,12 @@
     "door_classroom_nonexistent": "Classroom does not exist",
     "door_locked": "The door is locked",
     "door_unlock_unsuccessful": "The door was not opened",
+    "door_unlock_limit_reached":"You have reached the limit of unlocks. Please try again later.",
+    "door_press_lock":"Press the lock to unlock the door",
     "unknown_error": "Unknown error.",
     "try_again": "Please try again",
+    "try_again_r":"Try again",
+    "error_login_witout_try":"An error has occurred.",
     "door_max_unlocks": "Watch out, you're unlocking too fast!",
     "door_click_lock": "Press the lock to unlock the door",
     "door_not_found": "Door not found. Please try again. If the problem persists, please contact your application administrator.",
@@ -118,6 +122,11 @@
     "start_of_class_hour":"Start of class at",
     "break":"Break until",
     "until":"until",
-    "and":"and"
+    "and":"and",
+    "all_tools_one_place_title":"All tools in one place.",
+    "tools_description":"Tools for students, all in one place.",
+    "simple_and_safe_title":"Simple and safe",
+    "login_microsoft_description":"Log in with your school account to access all the features of the ŠCVApp.",
+    "skip":"Skip"
 
 }

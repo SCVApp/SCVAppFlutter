@@ -81,7 +81,7 @@ class _LoginPage extends State<LoginPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Napaka pri prijavi!'),
+          title: Text(AppLocalizations.of(context)!.error_login_witout_try),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -91,7 +91,7 @@ class _LoginPage extends State<LoginPage> {
           ),
           actions: <Widget>[
             TextButton(
-                child: Text(AppLocalizations.of(context)!.try_again,
+                child: Text(AppLocalizations.of(context)!.try_again_r,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     )),

@@ -80,8 +80,11 @@
     "door_classroom_nonexistent":"Učilnica ne obstaja",
     "door_locked":"Vrata so zaklenjena",
     "door_unlock_unsuccessful":"Vrata niso bila odprta",
+    "door_unlock_limit_reached":"Presegel/a si število dovoljenih odklepov vrat. Prosim, počakaj nekaj časa.",
+    "door_press_lock":"Pritisni ključavnico za odklep vrat",
     "unknown_error":"Neznana napaka.",
     "try_again":"Prosim, poskusi ponovno",
+    "try_again_r":"poskusi znova.",
     "door_max_unlocks":"Pazi, prehitro odklepaš!",
     "door_click_lock":"Pritisni ključavnico za odklep vrat",
     "door_not_found":"Vrata niso bila najdena. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
@@ -107,6 +110,7 @@
     "login":"Prijava",
     "skip":"Preskoči",
     "error_login":"Napaka pri prijavi. Prosim, poskusi ponovno.",
+    "error_login_witout_try":"Napaka pri prijavi.",
     "wait_login":"Prosim počakaj, prijava poteka...",
     "selected_classroom":"Izbrana učilnica:",
     "no_biometrics_when_unlock":"V telefonu nimaš nastavljenih varnostnih nastavitev, zato ni možno odkleniti aplikacije.",
@@ -117,6 +121,13 @@
     "start_of_class_hour":"Začetek pouka ob",
     "school_break":"Odmor do",
     "until":"do",
-    "and":"in"
+    "and":"in",
+    "all_tools_one_place_title":"Vsa orodja na enem mestu.",
+    "tools_description":"Dijakom koristna orodja, zbrana na enem mestu.",
+    "simple_and_safe_title":"Preprosto in varno",
+    "login_microsoft_description":"Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.",
+    "skip":"Preskoči"
+    
+
 
 }

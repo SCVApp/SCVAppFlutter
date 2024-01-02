@@ -112,7 +112,8 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
       if (message == "Door not found") {
         setStatus(ThemeColorForStatus.error);
         ShowError(
-            "Vrata niso bila najdena. Poskusite znova. Ali pa se obrnite na skrbnika sistema.");
+          (AppLocalizations.of(context)!.door_not_found),
+        );
       } else if (message == "User doesn't have access to this door") {
         setStatus(ThemeColorForStatus.promisson_denied);
       } else if (message == "User is in timeout") {
@@ -121,7 +122,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
         setStatus(ThemeColorForStatus.door_not_opened);
       } else {
         setStatus(ThemeColorForStatus.unknown);
-        ShowError("Nekaj je šlo narobe. Prosim poskusite ponovno.");
+        ShowError(AppLocalizations.of(context)!.something_went_wrong);
       }
       return;
     }
@@ -142,7 +143,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext contextOfDialog) {
         return AlertDialog(
-          title: const Text('Napaka!'),
+          title: Text(AppLocalizations.of(context)!.error),
           content: Text("$napaka"),
           actions: <Widget>[
             TextButton(
