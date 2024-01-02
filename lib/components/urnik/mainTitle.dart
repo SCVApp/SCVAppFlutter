@@ -22,7 +22,7 @@ Widget mainTitle() {
           urnik.poukType != PoukType.konecPouka &&
                   urnik.poukType != PoukType.niPouka
               ? Text(
-                  "(${urnik.doNaslednjeUre} do ${urnik.obdobjaUr.firstWhereOrNull((obdobjeUr) => obdobjeUr.type == ObdobjaUrType.naslednje) != null ? UrnikStyle.mainTitle(urnik.poukType) : "konca pouka"}):",
+                  "(${urnik.doNaslednjeUre} ${AppLocalizations.of(context)!.until} ${urnik.obdobjaUr.firstWhereOrNull((obdobjeUr) => obdobjeUr.type == ObdobjaUrType.naslednje) != null ? UrnikStyle.mainTitle(urnik.poukType) : AppLocalizations.of(context)!.end_of_schedule}):",
                 )
               : SizedBox(),
         ],

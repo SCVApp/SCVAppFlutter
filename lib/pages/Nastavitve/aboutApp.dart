@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../components/backButton.dart';
 import '../../global/global.dart' as global;
 
@@ -75,15 +75,8 @@ class _AboutAppPage extends State<AboutAppPage> {
                   padding: const EdgeInsets.symmetric(),
                   child: Linkify(
                     onOpen: odpriLink,
-                    text:
-                        '''Aplikacija ŠCVApp je namenjena dijakom in učiteljem Šolskega centra Velenje. Ustvarila sta jo Blaž Osredkar in Urban Krepel.
-                      \nAplikacija vsebuje naslednja orodja:
-• dostop do sistema za prijavo na malico,
-• urnik za obiskovan razred,
-• hiter dostop do domače spletne strani šole,
-• spletni dostop do aplikacije eAsistent,
-ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
-                      \nV aplikacijo bova še naprej dodajala več uporabnih orodij. Za vsa vprašanja in pripombe sva na voljo na e-poštnem naslovu info.app@scv.si.''',
+                    text: (AppLocalizations.of(context)!.about_app_desc)
+                        
                     // textAlign: TextAlign.justify,
                   )),
               Padding(
@@ -92,7 +85,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Uporabne povezave",
+                    Text((AppLocalizations.of(context)!.useful_links),
                         style: TextStyle(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left)
                   ],
@@ -106,7 +99,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
                   ? Column(children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
                       Text(
-                        "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
+                        "ŠCVApp, $currentYear. ${(AppLocalizations.of(context)!.all_rights_reserved)} v${global.appVersion}",
                         textAlign: TextAlign.center,
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 20))
@@ -118,7 +111,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           !isListViewBigger
               ? Column(children: [
                   Text(
-                    "ŠCVApp, $currentYear. Vse pravice pridržane. v${global.appVersion}",
+                    "ŠCVApp, $currentYear. ${(AppLocalizations.of(context)!.all_rights_reserved)} v${global.appVersion}",
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 5))
@@ -151,7 +144,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Spletni portal ŠCVApp"),
+            Text((AppLocalizations.of(context)!.web_page)),
             Padding(padding: EdgeInsets.only(bottom: 10)),
             GestureDetector(
               child: Text(
@@ -175,11 +168,11 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Vodič za uporabo ŠCVApp-a"),
+            Text((AppLocalizations.of(context)!.user_guide)),
             Padding(padding: EdgeInsets.only(bottom: 10)),
             GestureDetector(
               child: Text(
-                "Klikni tukaj",
+                (AppLocalizations.of(context)!.click_here),
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: Colors.blueAccent,
@@ -199,11 +192,11 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Pravilnik o zasebnosti"),
+            Text((AppLocalizations.of(context)!.privacy_policy)),
             Padding(padding: EdgeInsets.only(bottom: 10)),
             GestureDetector(
               child: Text(
-                "Klikni tukaj",
+                (AppLocalizations.of(context)!.click_here),
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: Colors.blueAccent,
@@ -228,7 +221,7 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Spletni portal ŠCVApp"),
+            Text((AppLocalizations.of(context)!.web_page)),
             GestureDetector(
               child: Text(
                 "https://app.scv.si",
@@ -251,10 +244,10 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Vodič za uporabo ŠCVApp-a"),
+            Text((AppLocalizations.of(context)!.user_guide)),
             GestureDetector(
               child: Text(
-                "Klikni tukaj",
+                (AppLocalizations.of(context)!.click_here),
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: Colors.blueAccent,
@@ -274,10 +267,10 @@ ter nekaj uporabnih bližnjic do nastavitev šolskega uporabniškega računa.
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Pravilnik o zasebnosti"),
+            Text((AppLocalizations.of(context)!.privacy_policy)),
             GestureDetector(
               child: Text(
-                "Klikni tukaj",
+                (AppLocalizations.of(context)!.click_here),
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: Colors.blueAccent,

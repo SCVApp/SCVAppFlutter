@@ -42,7 +42,7 @@ class _LockPageState extends State<LockPage> {
         StoreProvider.of<AppState>(context).state.biometric;
     await biometric.unlock(context,
         text:
-            "V telefonu nimaš nastavljenih varnostnih nastavitev. Zato vam nemoremo odkleniti aplikacije.",
+            (AppLocalizations.of(context)!.no_biometrics_when_unlock),
         actions: [
           TextButton(
               onPressed: confirmLogout,
@@ -75,7 +75,7 @@ class _LockPageState extends State<LockPage> {
           ),
           Padding(padding: EdgeInsets.only(bottom: 25)),
           Text(
-            "Prijava v sistem ŠCVApp",
+            (AppLocalizations.of(context)!.login_scvapp),
           ),
           Padding(
               padding: EdgeInsets.only(

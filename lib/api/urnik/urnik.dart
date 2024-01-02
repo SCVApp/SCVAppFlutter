@@ -5,6 +5,7 @@ import 'package:scv_app/global/global.dart' as global;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'passDoor.dart';
 import 'ura.dart';
@@ -196,7 +197,7 @@ class Urnik {
         return;
       }
       this.doNaslednjeUre =
-          "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
+          "${duration.inMinutes}min ${AppLocalizations.of(global.globalBuildContext)!.and} ${duration.inSeconds % 60}s";
     } else {
       ObdobjaUr? trenutnoObdobje = this.obdobjaUr.firstWhereOrNull(
           (element) => element.type == ObdobjaUrType.trenutno);
@@ -207,7 +208,7 @@ class Urnik {
           return;
         }
         this.doNaslednjeUre =
-            "${duration.inMinutes}min in ${duration.inSeconds % 60}s";
+            "${duration.inMinutes}min ${AppLocalizations.of(global.globalBuildContext)!.and} ${duration.inSeconds % 60}s";
       } else {
         this.doNaslednjeUre = "";
       }

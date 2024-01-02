@@ -18,7 +18,7 @@ class UrnikStyle {
   static String mainTitle(PoukType type) {
     switch (type) {
       case PoukType.zacetekPouka:
-        return "začetek pouka";
+        return AppLocalizations.of(globalBuildContext)!.start_of_class_hour.toLowerCase();
       case PoukType.pouk:
         return AppLocalizations.of(globalBuildContext)!.next_hour;
       case PoukType.odmor:
@@ -99,13 +99,13 @@ class UrnikStyle {
       builder: (context, state) {
         String text = "";
         if (state.urnik.poukType == PoukType.konecPouka) {
-          text = "Konec pouka";
+          text = AppLocalizations.of(globalBuildContext)!.end_of_class_hours;
         } else if (state.urnik.poukType == PoukType.odmor) {
-          text = "Odmor do ${state.urnik.zacetekNaslednjegaObdobja()}";
+          text = "${AppLocalizations.of(globalBuildContext)!.school_break} ${state.urnik.zacetekNaslednjegaObdobja()}";
         } else if (state.urnik.poukType == PoukType.zacetekPouka) {
-          text = "Začetek pouka ob ${state.urnik.zacetekNaslednjegaObdobja()}";
+          text = "${AppLocalizations.of(globalBuildContext)!.start_of_class_hour} ${state.urnik.zacetekNaslednjegaObdobja()}";
         } else if (state.urnik.poukType == PoukType.niPouka) {
-          text = "Ni pouka";
+          text = AppLocalizations.of(globalBuildContext)!.no_class;
         }
 
         return Text(

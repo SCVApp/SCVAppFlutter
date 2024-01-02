@@ -3,6 +3,7 @@ import 'package:scv_app/global/global.dart';
 import 'package:scv_app/theme/Themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum AppThemeType { Light, Dark, System }
 
@@ -88,11 +89,11 @@ class AppTheme {
   String displayName() {
     switch (this.type) {
       case AppThemeType.Light:
-        return 'Svetli način';
+        return (AppLocalizations.of(globalBuildContext)!.light_mode);
       case AppThemeType.Dark:
-        return 'Temni način';
+        return (AppLocalizations.of(globalBuildContext)!.dark_mode);
       case AppThemeType.System:
-        return 'Sistemsko';
+        return (AppLocalizations.of(globalBuildContext)!.system_theme);
       default:
         return '';
     }

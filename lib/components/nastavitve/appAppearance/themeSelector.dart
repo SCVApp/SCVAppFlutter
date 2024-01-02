@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scv_app/api/appTheme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget ThemesSelector(
     BuildContext context, AppThemeType appThemeType, Function handleThemeChange,
@@ -24,18 +25,18 @@ Widget ThemesSelector(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Teme, ki so na voljo:",
+          (AppLocalizations.of(context)!.available_themes),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         Padding(padding: EdgeInsets.only(bottom: 20)),
         ThemeSelector(appThemeType, handleThemeChange,
-            theme: AppThemeType.Light, ime: "Svetla"),
+            theme: AppThemeType.Light, ime: (AppLocalizations.of(context)!.light_theme)),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         ThemeSelector(appThemeType, handleThemeChange,
-            theme: AppThemeType.Dark, ime: "Temna"),
+            theme: AppThemeType.Dark, ime: (AppLocalizations.of(context)!.dark_theme)),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         ThemeSelector(appThemeType, handleThemeChange,
-            theme: AppThemeType.System, ime: "Sistemsko"),
+            theme: AppThemeType.System, ime: (AppLocalizations.of(context)!.system_theme)),
       ],
     ),
     padding: EdgeInsets.only(

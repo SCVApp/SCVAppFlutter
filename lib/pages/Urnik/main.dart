@@ -12,6 +12,7 @@ import 'package:scv_app/components/urnik/viewForObdobjeUre.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UrnikPage extends StatefulWidget {
   @override
@@ -73,7 +74,7 @@ class _UrnikPageState extends State<UrnikPage> {
                   Padding(
                     child: Align(
                       child: Text(
-                        "Današnji urnik",
+                        AppLocalizations.of(context)!.todays_class_hours,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       alignment: Alignment.centerLeft,

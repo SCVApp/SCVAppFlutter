@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../extension/hexColor.dart';
 
 Widget unlockButton(BuildContext context, Function onStartUp) {
@@ -17,7 +17,7 @@ Widget unlockButton(BuildContext context, Function onStartUp) {
           height: height,
           child: Center(
               child: Text(
-            "Avtorizacija",
+            (AppLocalizations.of(context)!.authorization),
             style: TextStyle(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 fontSize: textSize),

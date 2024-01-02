@@ -126,9 +126,9 @@ class Biometric {
 
   String displayName() {
     if (biometric == true) {
-      return "Vklopljeno";
+      return (AppLocalizations.of(global.globalBuildContext)!.turned_on);
     } else {
-      return "Izklopljeno";
+      return (AppLocalizations.of(global.globalBuildContext)!.turned_off);
     }
   }
 
@@ -137,7 +137,7 @@ class Biometric {
     bool authenticated = false;
     try {
       authenticated = await localAuthentication.authenticate(
-          localizedReason: "Prijavite se z biometrično varnostjo",
+          localizedReason: (AppLocalizations.of(global.globalBuildContext)!.login_with_biometrics),
           options:
               AuthenticationOptions(stickyAuth: true, useErrorDialogs: true));
     } catch (e) {

@@ -14,7 +14,7 @@ import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
 import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../api/user.dart';
 import '../../api/windowManager/windowManager.dart';
 import '../../extension/hexColor.dart';
@@ -108,8 +108,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           ),
                           icons: Icons.change_circle,
                           onTap: goToChangeStatusPage,
-                          title: "Status",
-                          subtitle: "Spremeni status",
+                          title: (AppLocalizations.of(context)!.status),
+                          subtitle: (AppLocalizations.of(context)!.change_status),
                         )
                       : loadingItem(user.school.schoolColor),
                   !user.loadingFromWeb
@@ -119,8 +119,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             iconsColor: Theme.of(context).hintColor,
                             backgroundColor: HexColor.fromHex("#0094d9"),
                           ),
-                          title: 'Ostala orodja',
-                          subtitle: "Orodja za šolo",
+                          title: (AppLocalizations.of(context)!.other_tools),
+                          subtitle: (AppLocalizations.of(context)!.school_tools),
                           onTap: goToOtherToolsPage,
                         )
                       : loadingItem(user.school.schoolColor),
@@ -135,8 +135,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                               withBackground: true,
                               backgroundColor: HexColor.fromHex("#EE5BA0"),
                             ),
-                            title: 'Videz aplikacije',
-                            subtitle: appTheme.displayName() ?? "",
+                            title: (AppLocalizations.of(context)!.app_look),
+                            subtitle: appTheme.displayName(),
                             onTap: goToAppAppearance,
                           )),
                   StoreConnector<AppState, Biometric>(
@@ -148,8 +148,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                               withBackground: true,
                               backgroundColor: HexColor.fromHex("#FFCA05"),
                             ),
-                            title: 'Biometrično odklepanje',
-                            subtitle: biometric.displayName() ?? "",
+                            title: (AppLocalizations.of(context)!.biometric_unlock),
+                            subtitle: biometric.displayName(),
                             onTap: goToBiomericPage,
                           )),
                   SettingsItem(
@@ -158,8 +158,8 @@ class _NastavitvePageState extends State<NastavitvePage> {
                       iconsColor: Theme.of(context).hintColor,
                       backgroundColor: HexColor.fromHex("#8DD7F7"),
                     ),
-                    title: 'O aplikaciji',
-                    subtitle: "Podatki o aplikaciji",
+                    title: (AppLocalizations.of(context)!.about_scvapp),
+                    subtitle: (AppLocalizations.of(context)!.about_app),
                     onTap: goToAboutPage,
                   ),
                 ],
@@ -168,13 +168,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
                   converter: (store) => store.state.extensionManager,
                   builder: (context, extensionManager) {
                     return NastavitveGroup(
-                      settingsGroupTitle: "Račun",
+                      settingsGroupTitle: (AppLocalizations.of(context)!.account),
                       items: [
                         SettingsItem(
                           onTap: odjava,
                           icons: Icons.logout,
-                          title: "Odjava",
-                          subtitle: "Odjava iz aplikacije",
+                          title: (AppLocalizations.of(context)!.logout),
+                          subtitle: (AppLocalizations.of(context)!.logout_app),
                           iconStyle: IconStyle(
                               iconsColor: Theme.of(context).hintColor,
                               withBackground: true,

@@ -7,6 +7,7 @@ import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/backButton.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../components/nastavitve/appAppearance/moonIcon.dart';
 import '../../components/nastavitve/appAppearance/sunIcon.dart';
@@ -57,7 +58,8 @@ class _AppAppearanceState extends State<AppAppearance> {
                                 200, MediaQuery.of(context).size.width * 0.5)),
                     SizedBox(height: spaceInView),
                     Text(
-                      "Izberi temo",
+                      (AppLocalizations.of(context)!
+                          .pick_theme),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),

@@ -32,7 +32,7 @@ class _BiometicPageState extends State<BiometicPage> {
       return;
     }
     final String text =
-        "V telefonu nimaš nastavljenih varnostnih nastavitev, zato vam nemoremo spremeniti nastavitve biometričnega odklepanja.";
+        (AppLocalizations.of(context)!.error_no_security_features);
     if (await biometric.authenticate(context, text: text) == true) {
       await biometric.setBiometric(value);
       StoreProvider.of<AppState>(context).dispatch(biometric);

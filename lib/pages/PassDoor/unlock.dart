@@ -11,6 +11,7 @@ import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
 import 'package:scv_app/pages/PassDoor/status.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnlockedPassDoor extends StatefulWidget {
   @override
@@ -184,7 +185,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    "Izbrana učilnica:",
+                    (AppLocalizations.of(context)!.selected_classroom),
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(

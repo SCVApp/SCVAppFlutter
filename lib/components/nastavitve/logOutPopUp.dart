@@ -20,12 +20,12 @@ Future<void> logOutPopup(BuildContext context) async {
     barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Odjava'),
+        title: Text((AppLocalizations.of(context)!.logout)),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const <Widget>[
+            children: <Widget>[
               Text(
-                'Si prepričan, da se želiš odjaviti iz aplikacije ŠCVApp?',
+                 (AppLocalizations.of(context)!.prompt_logout),
               ),
             ],
           ),
