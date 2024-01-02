@@ -1,0 +1,7 @@
+{
+  "en": [
+    "eAsistent",
+    "profesor",
+    "school_break"
+  ]
+}
