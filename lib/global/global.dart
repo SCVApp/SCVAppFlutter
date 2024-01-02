@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -20,7 +21,7 @@ late BuildContext globalBuildContext;
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
 
-final String appVersion = "2.4.1";
+final String appVersion = "2.4.2";
 
 Connectivity connectivity = new Connectivity();
 
@@ -41,6 +42,8 @@ Future<void> logOutUser(BuildContext context) async {
     StoreProvider.of<AppState>(globalBuildContext).dispatch(appTheme);
     await WebViewCookieManager().clearCookies();
     await token.deleteToken();
+    Malica malica = StoreProvider.of<AppState>(globalBuildContext).state.malica;
+    await malica.maliceUser.logout();
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       Get.changeThemeMode(ThemeMode.dark);
     } else {

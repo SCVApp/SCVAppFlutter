@@ -116,6 +116,12 @@ class MalicaUser {
     }
   }
 
+  Future<void> logout() async {
+    accessToken = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("malicaUser");
+  }
+
   static Future<void> toggleEnable(BuildContext context, bool enabled) async {
     final Malica malica = StoreProvider.of<AppState>(context).state.malica;
     malica.maliceUser.enabled = enabled;
