@@ -3,7 +3,7 @@ import 'package:scv_app/components/alertContainer.dart';
 
 class LoadingPage extends StatelessWidget {
   LoadingPage({Key? key, this.color = Colors.blue}) : super(key: key);
-  Color color = Colors.blue;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

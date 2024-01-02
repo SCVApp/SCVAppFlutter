@@ -19,7 +19,8 @@ class MalicaUser {
     if (accessToken == "") return false;
     try {
       final token = JWT.decode(accessToken);
-      return token.payload["exp"] > DateTime.now().millisecondsSinceEpoch;
+      return int.parse(token.payload["exp"].toString()) * 1000 >
+          DateTime.now().millisecondsSinceEpoch;
     } catch (e) {
       return false;
     }
@@ -106,6 +107,7 @@ class MalicaUser {
   Future<void> loginWithMicrosoftToken() async {
     final String microsoftAccessToken = await getMicrosoftAccessToken();
     if (microsoftAccessToken == "") {
+      print("Failed to get microsoft access token");
       return;
     }
     final String url = Malica.apiURL + "/auth/microsoft";
@@ -117,11 +119,11 @@ class MalicaUser {
         final Map<String, dynamic> json = jsonDecode(response.body);
         this.fromJson(json);
         await save();
+        print("Logged in with microsoft token");
       } else {
         throw Exception('Failed to login');
       }
     } catch (e) {
-      print(e);
       accessToken = "";
     }
   }

@@ -80,7 +80,7 @@ class _MalicePageState extends State<MalicePage> {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: !isLoaded
                 ? LoadingPage()
-                : malica.maliceUser.isLoggedIn() != false
+                : malica.maliceUser.isLoggedIn() == false
                     ? MaliceLoginPage()
                     : PageView(
                         controller: _pageController,

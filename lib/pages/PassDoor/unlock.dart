@@ -56,7 +56,7 @@ class _UnlockedPassDoorState extends State<UnlockedPassDoor>
         StoreProvider.of<AppState>(context).state.windowManager;
     final attributes = windowManager.getAttributes("PassDoor");
 
-    if (attributes == null) {
+    if (attributes == {}) {
       close();
       return;
     }

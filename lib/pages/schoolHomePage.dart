@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,8 +12,6 @@ class SchoolHomePage extends StatefulWidget {
 
 class _SchoolHomePageState extends State<SchoolHomePage> {
   late WebViewController _myController;
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
 
   void changeUrl() {
     final User user = StoreProvider.of<AppState>(context).state.user;

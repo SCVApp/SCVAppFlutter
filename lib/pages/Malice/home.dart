@@ -26,7 +26,7 @@ class _MaliceHomePageState extends State<MaliceHomePage> {
     return StoreConnector<AppState, Malica>(
       converter: (store) => store.state.malica,
       builder: (context, malica) {
-        MalicaDan? dan = malica.getDay(0);
+        MalicaDan? dan = malica.getDay(1);
         MalicaMeni? meni = dan?.getSelectedMenu();
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

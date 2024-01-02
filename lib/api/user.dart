@@ -49,10 +49,9 @@ class User {
       this.loggedIn = true;
       try {
         image = CachedNetworkImageProvider(
-          "${global.apiUrl}/user/get/profilePicture?=${json['mail']}",
-          headers: {"Authorization": global.token.getAccessToken()},
-          errorListener: () => print("Error in image"),
-        );
+            "${global.apiUrl}/user/get/profilePicture?=${json['mail']}",
+            headers: {"Authorization": global.token.getAccessToken()},
+            errorListener: ((p0) => print(p0)));
       } catch (e) {
         image = CachedNetworkImageProvider(
             "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png");

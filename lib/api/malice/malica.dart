@@ -10,7 +10,7 @@ class Malica {
 
   Future<void> loadFirstDays() async {
     final promises = <Future>[];
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
       dnevi.add(new MalicaDan(i));
       promises.add(dnevi[i].loadMenus());
     }
