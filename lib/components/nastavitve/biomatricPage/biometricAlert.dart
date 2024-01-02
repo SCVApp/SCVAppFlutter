@@ -1,12 +1,14 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> biometricAlert(BuildContext context,
     {List<Widget>? actions, String? text}) async {
-      void pojdiVNastavitve() {
+  void pojdiVNastavitve() {
     Navigator.pop(context);
     AppSettings.openSecuritySettings();
   }
+
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -22,14 +24,14 @@ Future<void> biometricAlert(BuildContext context,
         ),
         actions: <Widget>[
           TextButton(
-              child: const Text('Prekliči'),
+              child: Text(AppLocalizations.of(context)!.cancel),
               onPressed: () => Navigator.pop(context)),
-              TextButton(
-                  child: const Text('Odpri nastavitve',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onPressed: pojdiVNastavitve),
+          TextButton(
+              child: Text(AppLocalizations.of(context)!.open_settings,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  )),
+              onPressed: pojdiVNastavitve),
           ...actions ?? [],
         ],
       );

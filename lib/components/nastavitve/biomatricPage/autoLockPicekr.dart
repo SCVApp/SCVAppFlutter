@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:scv_app/global/global.dart';
 
 void autoLockPicker(BuildContext context, onConfirm, Biometric biometric) {
   Picker picker = new Picker(
-    confirmText: "Izberi",
-    cancelText: "Prekliči",
+    confirmText: AppLocalizations.of(globalBuildContext)!.pick,
+    cancelText: AppLocalizations.of(globalBuildContext)!.cancel,
     backgroundColor: Theme.of(context).backgroundColor,
     adapter: PickerDataAdapter(data: createPickerItems()),
     onConfirm: onConfirm,

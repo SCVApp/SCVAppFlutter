@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/pages/Urnik/otherDays.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget seeOtherDays(double gap, BuildContext context) {
   void goToOtherDays() {
@@ -12,7 +13,7 @@ Widget seeOtherDays(double gap, BuildContext context) {
     child: GestureDetector(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(
-          "Ogled urnika za ostale dni",
+          AppLocalizations.of(context)!.schedule_other_days,
           style: TextStyle(fontSize: 15),
         ),
         Icon(

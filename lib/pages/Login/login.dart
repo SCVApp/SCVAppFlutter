@@ -4,6 +4,7 @@ import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../api/user.dart';
 import '../../manager/extensionManager.dart';
@@ -83,21 +84,21 @@ class _LoginPage extends State<LoginPage> {
           title: const Text('Napaka pri prijavi!'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
-                Text('Napaka pri prijavi. Prosim, poskusi znova'),
+              children: <Widget>[
+                Text(AppLocalizations.of(context)!.error_login),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-                child: const Text('Poskusi znova',
-                    style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.try_again,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     )),
                 onPressed: reTryLogin),
             TextButton(
-                child: const Text('Prekliči',
-                    style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.cancel,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     )),
                 onPressed: (() {
@@ -125,12 +126,14 @@ class _LoginPage extends State<LoginPage> {
             ),
             Padding(padding: EdgeInsets.only(bottom: 20)),
             isLoginIn
-                ? Text("Prosim počakaj, prijava poteka...",
+                ? Text(AppLocalizations.of(context)!.wait_login,
                     style: TextStyle(fontSize: 17))
-                : Text("Napaka pri prijavi. Prosim, poskusi znova",
+                : Text(AppLocalizations.of(context)!.error_login,
                     style: TextStyle(fontSize: 17)),
             Padding(padding: EdgeInsets.only(bottom: 20)),
-            TextButton(onPressed: goToOnBoardPage, child: Text("Prekliči")),
+            TextButton(
+                onPressed: goToOnBoardPage,
+                child: Text(AppLocalizations.of(context)!.cancel)),
             Padding(padding: EdgeInsets.only(bottom: 20)),
             isLoginIn == true ? loadingItem(Colors.blue) : SizedBox(),
           ]),

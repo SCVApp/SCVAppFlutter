@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scv_app/components/EPAS/flatingCard.dart';
 import 'package:scv_app/pages/EPAS/style.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget EPASAdminHomeCard(
     BuildContext context, int currentSelectedWorkshopId, Function setCode) {
@@ -40,7 +41,7 @@ Widget EPASAdminHomeCard(
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Prekliči",
+                    AppLocalizations.of(context)!.cancel,
                     style: TextStyle(color: EPASStyle.backgroundColor),
                   )),
               TextButton(

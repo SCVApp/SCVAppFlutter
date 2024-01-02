@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Status {
   String id = "unknown";
@@ -52,7 +53,9 @@ class Status {
         throw Exception('Failed to change status');
       }
     } catch (e) {
-      global.showGlobalAlert(text: "Napaka pri spremembi statusa");
+      global.showGlobalAlert(
+          text: AppLocalizations.of(global.globalBuildContext)!
+              .error_status_load);
     }
   }
 }

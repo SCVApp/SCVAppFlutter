@@ -4,7 +4,10 @@ import 'package:scv_app/api/school.dart';
 import 'package:scv_app/api/urnik/ura.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/extension/hexColor.dart';
+import 'package:scv_app/global/global.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../api/urnik/obdobjaUr.dart';
 
@@ -17,9 +20,9 @@ class UrnikStyle {
       case PoukType.zacetekPouka:
         return "začetek pouka";
       case PoukType.pouk:
-        return "naslednje ure";
+        return AppLocalizations.of(globalBuildContext)!.next_hour;
       case PoukType.odmor:
-        return "naslednje ure";
+        return AppLocalizations.of(globalBuildContext)!.next_hour;
       default:
         return "";
     }

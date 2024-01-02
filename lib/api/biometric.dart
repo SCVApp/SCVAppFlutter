@@ -6,17 +6,18 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:scv_app/components/nastavitve/biomatricPage/biometricAlert.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Biometric {
   bool locked = false;
   bool biometric = false;
   static final Map<int, String> autoLockModes = {
-    0: "Takoj",
-    1: "1 minuta",
-    2: "5 minut",
-    3: "10 minut",
-    4: "15 minut",
-    5: "30 minut"
+    0: AppLocalizations.of(global.globalBuildContext)!.instant_lock,
+    1: AppLocalizations.of(global.globalBuildContext)!.one_minute,
+    2: "5 ${AppLocalizations.of(global.globalBuildContext)!.five_or_more_minutes}",
+    3: "10 ${AppLocalizations.of(global.globalBuildContext)!.five_or_more_minutes}",
+    4: "15 ${AppLocalizations.of(global.globalBuildContext)!.five_or_more_minutes}",
+    5: "30 ${AppLocalizations.of(global.globalBuildContext)!.five_or_more_minutes}"
   };
 
   static final Map<int, int> autoLockModeValues = {

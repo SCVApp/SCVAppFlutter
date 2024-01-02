@@ -6,6 +6,7 @@ import 'package:scv_app/api/windowManager/windowManager.dart';
 import 'package:scv_app/components/urnik/moreInfromations/doorUnlockBtn.dart';
 import 'package:scv_app/components/urnik/moreInfromations/lineItem.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../icons/person_video_icons.dart';
 
@@ -49,11 +50,17 @@ class _UrnikMoreInformationsState extends State<UrnikMoreInformations> {
             ],
           ),
           UrnikMoreInformationsLineItem(
-              Icons.schedule, "DATUM", widget.obdobjeUr.datum),
+              Icons.schedule,
+              AppLocalizations.of(context)!.date.toUpperCase(),
+              widget.obdobjeUr.datum),
           UrnikMoreInformationsLineItem(
-              PersonVideo.person_video3, "PROFESOR", widget.ura.ucitelj),
+              PersonVideo.person_video3,
+              AppLocalizations.of(context)!.profesor.toUpperCase(),
+              widget.ura.ucitelj),
           UrnikMoreInformationsLineItem(
-              Icons.door_front_door, "UČILNICA", widget.ura.ucilnica),
+              Icons.door_front_door,
+              AppLocalizations.of(context)!.classroom.toUpperCase(),
+              widget.ura.ucilnica),
           if (widget.ura.smartDoorCode != null)
             UrnikMoreInformationsDoorUnlockBtn(goToDoorUnlock,
                 widget.obdobjeUr.type == ObdobjaUrType.trenutno),

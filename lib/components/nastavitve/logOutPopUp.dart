@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/global/global.dart' as global;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../api/user.dart';
 import '../../store/AppState.dart';
@@ -31,11 +32,11 @@ Future<void> logOutPopup(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-              child: const Text('Ne, prekliči'),
+              child: Text(AppLocalizations.of(context)!.no_cancel),
               onPressed: () => Navigator.pop(context, 'Cancel')),
           TextButton(
-              child: const Text('Da, odjavi me.',
-                  style: TextStyle(
+              child: Text(AppLocalizations.of(context)!.confirm_logout,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   )),
               onPressed: odjava),

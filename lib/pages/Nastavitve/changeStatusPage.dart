@@ -4,7 +4,9 @@ import 'package:scv_app/components/alertContainer.dart';
 import 'package:scv_app/components/backButton.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/components/nastavitve/changeStatusPage/statusItem.dart';
+import 'package:scv_app/global/global.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../api/user.dart';
 import '../../components/nastavitve/nastavitveGroup.dart';
@@ -32,32 +34,32 @@ class _ChangeStatusPageState extends State<ChangeStatusPage> {
 
   List<StatusItem> status = [
     StatusItem(
-      title: "Dosegljiv/-a",
+      title: AppLocalizations.of(globalBuildContext)!.available,
       imageProvider: AssetImage("assets/images/statusIcons/available.png"),
       statusId: "available",
     ),
     StatusItem(
-      title: "Odsoten/-a",
+      title: AppLocalizations.of(globalBuildContext)!.away,
       imageProvider: AssetImage("assets/images/statusIcons/away.png"),
       statusId: "away",
     ),
     StatusItem(
-      title: "Takoj bom nazaj",
+      title: AppLocalizations.of(globalBuildContext)!.brb,
       imageProvider: AssetImage("assets/images/statusIcons/brb.png"),
       statusId: "brb",
     ),
     StatusItem(
-      title: "Zaseden/-a",
+      title: AppLocalizations.of(globalBuildContext)!.busy,
       imageProvider: AssetImage("assets/images/statusIcons/busy.png"),
       statusId: "busy",
     ),
     StatusItem(
-      title: "Ne moti",
+      title: AppLocalizations.of(globalBuildContext)!.dnd,
       imageProvider: AssetImage("assets/images/statusIcons/dnd.png"),
       statusId: "dnd",
     ),
     StatusItem(
-      title: "Nedosegljiv/-a",
+      title: AppLocalizations.of(globalBuildContext)!.offline,
       imageProvider: AssetImage("assets/images/statusIcons/offline.png"),
       statusId: "offline",
     ),
@@ -95,7 +97,7 @@ class _ChangeStatusPageState extends State<ChangeStatusPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 40, top: 10),
                       child: Text(
-                        "Izberi prikazan status:",
+                        AppLocalizations.of(context)!.pick_status,
                         style: TextStyle(
                             fontSize:
                                 22 * MediaQuery.of(context).textScaleFactor,

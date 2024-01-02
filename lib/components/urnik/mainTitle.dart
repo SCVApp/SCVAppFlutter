@@ -5,6 +5,7 @@ import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/pages/Urnik/style.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget mainTitle() {
   return StoreConnector<AppState, Urnik>(
@@ -14,7 +15,7 @@ Widget mainTitle() {
         alignment: WrapAlignment.center,
         children: <Widget>[
           Text(
-            "Trenutno na urniku",
+            AppLocalizations.of(context)!.now_on_schedule,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Padding(padding: EdgeInsets.only(left: 5)),
