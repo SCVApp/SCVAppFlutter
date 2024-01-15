@@ -11,6 +11,8 @@ import 'package:scv_app/manager/pageManager.dart';
 import 'package:scv_app/store/AppReducer.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/theme/Themes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() {
   final store = Store<AppState>(
@@ -18,8 +20,11 @@ void main() {
     initialState: AppState.initial(),
   );
 
-  runZonedGuarded(() {
+  runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     FlutterError.onError = (FlutterErrorDetails errorDetails) {
       print("Will log here ${errorDetails.exception.toString()}");
     };

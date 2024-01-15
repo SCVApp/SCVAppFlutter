@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyADzYZEbH8MgVEvORUrVuAD2n2YIENzcp0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>475172001324</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.SCVApp.si</string>
+	<key>PROJECT_ID</key>
+	<string>scvapp-704a1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>scvapp-704a1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:475172001324:ios:68dc641d9a5fd9ca0a2389</string>
+</dict>
+</plist>

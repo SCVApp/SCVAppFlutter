@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "475172001324",
+    "project_id": "scvapp-704a1",
+    "storage_bucket": "scvapp-704a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475172001324:android:cd399ca5f4d4f1480a2389",
+        "android_client_info": {
+          "package_name": "com.scvapp.si"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBblh8uFYt7h0w9cleR4GlU5ozSSCo4ow0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
