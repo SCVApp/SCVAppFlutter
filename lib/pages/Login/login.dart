@@ -45,6 +45,8 @@ class _LoginPage extends State<LoginPage> {
 
       await global.token.saveToken();
 
+      await global.token.refresh(force: true);
+
       ExtensionManager.loadExtenstions(context);
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,9 @@ class Token {
   String? accessToken;
   String? refreshToken;
   String? expiresOn;
+  String? notificationToken;
   final FlutterSecureStorage storage = new FlutterSecureStorage();
+  final FirebaseMessaging messaging = FirebaseMessaging.instance;
   final String publicKey =
       "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwuYUBLI1w19N3LG8nMt9kpmI/un0jToxDUZMIfRsL93u2vi4gR/UZ1vUlYdxJE6YObCsZRImrXoS5ZZr469L1Iua3FvfdZS1HpSNc5l0Vi4Ui/NFDYxGfcmPXYGsgc5Hoe1rYh0H9Z7FQuldVLIY06vPmf+qWCoOonHtizJke61wsXBOPO0Wriy54yJRtPtZMCO0xcovAiQJ18xSb8MpY0OI1bKAfLsv3/PqAKutkKoSZ/JsE1d7HMgjdXoL2gqb7bWdNqEdW2uwDbRLFCm/GAk6GQt4QlxkTFnG/pSIX0bRo8NCEXZ2HtmAIxN3bWNJ0gCR62aULJWzRSTtW0DDUMiOfDnYo/M/ljOtP72FcF9poOcB+ZQSXslI15NVXm8iN94yTcO3Ke0a12BTso2gOwrCLecoGrozDDpOQzOWRp/JI3GgDvkNALvFVgqqk1iYArcW/5q/l/Z4dE3yywKESNM7yxWIFwkYO5Rq4XK52GuGEgKpyk1TjZYzA7MfsSBkU/NNbzB8JpxeSOhzXEB4SUl4yRxRRlfFxkhkTbM5IBi46oJXyQo6+JLu+QqoXkdjxQGRsA2F7SVMukiAuhvf6fp0aipYJ3UZZuQHT7g8FfCcXP4xV1PYpdpXT9gqNMtI7WOErlI/QB0JwXT6ezbM+aI9SL7+pVB1UOLGvDcPNXcCAwEAAQ==\n-----END PUBLIC KEY-----";
 
@@ -31,7 +34,7 @@ class Token {
     await storage.write(key: expiresKey, value: expiresOn.toString());
   }
 
-  String getAccessToken(){
+  String getAccessToken() {
     return this.accessToken ?? "";
   }
 
@@ -41,6 +44,7 @@ class Token {
       refreshToken = await storage.read(key: refreshTokenKey);
       expiresOn = await storage.read(key: expiresKey);
       chechTokens();
+      notificationToken = await messaging.getToken();
     } catch (e) {
       print(e);
     }
@@ -70,6 +74,7 @@ class Token {
       'accessToken': this.accessToken,
       'refreshToken': this.refreshToken,
       'expiresOn': this.expiresOn,
+      'notificationToken': this.notificationToken
     };
   }
 
@@ -82,7 +87,7 @@ class Token {
   }
 
   bool isExpired() {
-    if(this.accessToken == null){
+    if (this.accessToken == null) {
       return true;
     }
     try {
@@ -93,7 +98,7 @@ class Token {
     return false;
   }
 
-  Future<void> refresh({int depth = 0}) async {
+  Future<void> refresh({int depth = 0, bool force = false}) async {
     if (!(await global.canConnectToNetwork())) {
       return;
     }
@@ -102,7 +107,7 @@ class Token {
           .parse(this.expiresOn ?? "")
           .toUtc()
           .subtract(Duration(minutes: 3));
-      if (expires.isBefore(DateTime.now().toUtc()) || isExpired()) {
+      if (expires.isBefore(DateTime.now().toUtc()) || isExpired() || force) {
         final respons = await http.post(
             Uri.parse("${global.apiUrl}/auth/refreshToken/"),
             body: this.toJSON());

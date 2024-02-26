@@ -19,6 +19,7 @@ import 'package:scv_app/pages/PassDoor/unlock.dart';
 import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/pages/lockPage.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../api/appTheme.dart';
 import '../pages/home.dart';
@@ -61,7 +62,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       universalLinks.universalLinkSubscription!.cancel();
   }
 
-  void onWidgetDidBuild() {
+  void onWidgetDidBuild() async {
     StoreProvider.of<AppState>(context).onChange.listen((state) {
       onStateChange();
     });
@@ -132,6 +133,8 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       StoreProvider.of<AppState>(context).dispatch(user);
       await Future.wait(
           [refreshUrnik(), ExtensionManager.loadExtenstions(context)]);
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      await messaging.requestPermission();
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;
