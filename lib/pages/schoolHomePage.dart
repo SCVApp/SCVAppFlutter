@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/webview.dart';
@@ -13,6 +15,7 @@ class SchoolHomePage extends StatefulWidget {
 
 class _SchoolHomePageState extends State<SchoolHomePage> {
   late final WebViewController _controller = getWebViewController();
+  late final StreamSubscription<AppState> subscription;
 
   void changeUrl() {
     final User user = StoreProvider.of<AppState>(context).state.user;
@@ -31,7 +34,20 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
     final User user = StoreProvider.of<AppState>(context).state.user;
     _controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(user.school.schoolUrl));
+      ..loadRequest(Uri.parse(user.school.getLoadUrl()));
+    // subscription = user.
+    // listen for user.school.newsUrl changes
+    subscription = StoreProvider.of<AppState>(context).onChange.listen((state) {
+      if (state.user.school.newsUrl != null) {
+        _controller..loadRequest(Uri.parse(state.user.school.newsUrl!));
+        state.user.school.removeNewsUrl();
+      }
+    });
+  }
+
+  dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   @override

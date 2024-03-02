@@ -69,6 +69,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     loadToken();
     loadAppTheme();
     loadBiometric();
+    checkIfAppOpenedFromNotification();
   }
 
   void onStateChange() {
@@ -156,6 +157,17 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
           text: "Prišlo je do napake pri nalaganju podatkov.");
     }
     StoreProvider.of<AppState>(context).dispatch(user);
+  }
+
+  void checkIfAppOpenedFromNotification() async {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.data.containsKey('newsUrl')) {
+        User user = StoreProvider.of<AppState>(context).state.user;
+        user.school.setNewsUrl(message.data['newsUrl']);
+        user.setTab(0);
+        StoreProvider.of<AppState>(context).dispatch(user);
+      }
+    });
   }
 
   void loadAppTheme() async {

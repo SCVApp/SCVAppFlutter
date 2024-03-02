@@ -14,6 +14,7 @@ class School {
   String urnikUrl = "";
   String color = "#85C9E9";
   String schoolUrl = "";
+  String? newsUrl;
   String name = "";
   String razred = "";
   Color schoolColor = HexColor.fromHex("#85C9E9");
@@ -92,5 +93,21 @@ class School {
     if (school != null) {
       this.fromJSON(jsonDecode(school));
     }
+  }
+
+  String getLoadUrl(){
+    if (this.newsUrl != null) {
+      return this.newsUrl!;
+    }
+    return this.schoolUrl;
+  
+  }
+
+  void setNewsUrl(String newsUrl) {
+    this.newsUrl = newsUrl;
+  }
+
+  void removeNewsUrl() {
+    this.newsUrl = null;
   }
 }

@@ -58,7 +58,7 @@ void goToUnlockPassDoor(BuildContext context, String uri,
   }
 }
 
-bool chechURI(String uri) {
+bool chechURI(String? uri) {
   if (uri == null) return false;
   if (uri.startsWith("scvapp://app.scv.si/open_door/")) {
     return true;
@@ -78,7 +78,7 @@ void goToEPASAdmin(BuildContext context, String uri) {
   }
 }
 
-bool chechEPASURI(String uri) {
+bool chechEPASURI(String? uri) {
   if (uri == null) return false;
   if (uri.startsWith("scvapp://app.scv.si/epas/code/")) {
     return true;

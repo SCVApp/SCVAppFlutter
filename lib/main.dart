@@ -13,6 +13,7 @@ import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/theme/Themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 void main() {
   final store = Store<AppState>(
@@ -25,6 +26,8 @@ void main() {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    analytics.logAppOpen();
     FlutterError.onError = (FlutterErrorDetails errorDetails) {
       print("Will log here ${errorDetails.exception.toString()}");
     };

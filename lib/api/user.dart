@@ -25,6 +25,8 @@ class User {
   School school = new School();
   Status status = new Status();
 
+  int selectedTab = 0;
+
   User() {
     this.school = new School();
     this.status = new Status();
@@ -111,5 +113,9 @@ class User {
       this.school.fetchData(),
       this.status.fetchData(),
     ]);
+  }
+
+  void setTab(int index) {
+    this.selectedTab = index;
   }
 }
