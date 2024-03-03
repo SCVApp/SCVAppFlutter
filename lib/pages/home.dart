@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      subscription = StoreProvider.of<AppState>(context).onChange.listen((state) {
+      subscription =
+          StoreProvider.of<AppState>(context).onChange.listen((state) {
         if (state.user.selectedTab != _pageController.page!.toInt()) {
           _pageController.jumpToPage(state.user.selectedTab);
         }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/malice/malica.dart';
@@ -75,6 +76,13 @@ class _NastavitvePageState extends State<NastavitvePage> {
         StoreProvider.of<AppState>(context).state.windowManager;
     windowManager.showWindow("EPAS");
     StoreProvider.of<AppState>(context).dispatch(windowManager);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    EventTracking.trackScreenView("nastavitvePage", "NastavitvePage");
   }
 
   @override

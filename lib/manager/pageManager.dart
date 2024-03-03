@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
@@ -19,7 +21,6 @@ import 'package:scv_app/pages/PassDoor/unlock.dart';
 import 'package:scv_app/pages/loading.dart';
 import 'package:scv_app/pages/lockPage.dart';
 import 'package:scv_app/store/AppState.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../api/appTheme.dart';
 import '../pages/home.dart';
@@ -136,6 +137,8 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
           [refreshUrnik(), ExtensionManager.loadExtenstions(context)]);
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       await messaging.requestPermission();
+      await EventTracking.setUserProperties("schoolID", user.school.id);
+      await EventTracking.setUserProperties("classID", user.school.razred);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;

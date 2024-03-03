@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/malice/malicaUser.dart';
 import 'package:scv_app/api/webview.dart';
 import 'package:scv_app/pages/loading.dart';
@@ -21,6 +22,7 @@ class _MalicePageState extends State<MalicePage> {
   @override
   void initState() {
     super.initState();
+    EventTracking.trackScreenView("malicePage", "MalicePage");
     WidgetsBinding.instance.addPostFrameCallback((_) => onStateBuild());
   }
 

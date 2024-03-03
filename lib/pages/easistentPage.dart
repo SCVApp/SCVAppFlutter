@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -12,6 +13,7 @@ class _EasistentPageState extends State<EasistentPage> {
   @override
   void initState() {
     super.initState();
+    EventTracking.trackScreenView("easistentPage", "EasistentPage");
     WidgetsBinding.instance.addPostFrameCallback((_) => onBuild());
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -27,6 +28,7 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
   @override
   void initState() {
     super.initState();
+    EventTracking.trackScreenView("schoolHomePage", "SchoolHomePage");
     WidgetsBinding.instance.addPostFrameCallback((_) => onBuild());
   }
 

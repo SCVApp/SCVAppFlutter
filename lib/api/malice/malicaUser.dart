@@ -120,8 +120,9 @@ class MalicaUser {
 
   Future<void> logout() async {
     accessToken = "";
+    this.enabled = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("malicaUser");
+    await prefs.remove("malicaUser");
   }
 
   static Future<void> toggleEnable(BuildContext context, bool enabled) async {
