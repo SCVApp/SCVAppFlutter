@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
@@ -30,6 +29,7 @@ String malicaAccessToken = "";
 
 Future<void> logOutUser(BuildContext context) async {
   try {
+    await token.removeNotificationToken();
     User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
     user.loggedIn = false;
     user.selectedTab = 0;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -6,12 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
 import 'package:intl/intl.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class Token {
   String? accessToken;
   String? refreshToken;
   String? expiresOn;
   String? notificationToken;
+  String? deviceId;
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
   final String publicKey =
@@ -45,6 +48,7 @@ class Token {
       expiresOn = await storage.read(key: expiresKey);
       chechTokens();
       notificationToken = await messaging.getToken();
+      deviceId = await getDeviceId() ?? '';
     } catch (e) {
       print(e);
     }
@@ -74,7 +78,8 @@ class Token {
       'accessToken': this.accessToken,
       'refreshToken': this.refreshToken,
       'expiresOn': this.expiresOn,
-      'notificationToken': this.notificationToken
+      'notificationToken': this.notificationToken,
+      'deviceId': this.deviceId
     };
   }
 
@@ -148,6 +153,38 @@ class Token {
           await this.refresh(depth: depth + 1);
         }
       }
+    }
+  }
+
+  static Future<String?> getDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.id; // unique ID on Android
+    }
+    return null;
+  }
+
+  Future<void> removeNotificationToken() async {
+    try {
+      final Uri uri = Uri.parse("${global.apiUrl}/auth/logout");
+      final Map<String, String> headers = {
+        "Authorization": "${this.getAccessToken()}"
+      };
+      final Map<String, String> body = {
+        "notificationToken": this.notificationToken ?? "",
+      };
+      final http.Response response =
+          await http.post(uri, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        this.notificationToken = null;
+      }
+    } catch (e) {
+      print("Error in removeNotificationToken: $e");
     }
   }
 }
