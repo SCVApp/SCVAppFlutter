@@ -18,10 +18,10 @@ final Token token = new Token();
 
 late BuildContext globalBuildContext;
 
-final String apiUrl = "http://localhost:5050";
-// final String apiUrl = "https://backend.app.scv.si";
+// final String apiUrl = "http://localhost:5050";
+final String apiUrl = "https://backend.app.scv.si";
 
-final String appVersion = "2.4.2";
+final String appVersion = "2.5.0";
 
 Connectivity connectivity = new Connectivity();
 
