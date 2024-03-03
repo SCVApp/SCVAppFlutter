@@ -1,11 +1,9 @@
 import UIKit
 import Flutter
-import WatchConnectivity
+import Firebase
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
-    private var session:WCSession?;
-    private var channel:FlutterMethodChannel?;
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
