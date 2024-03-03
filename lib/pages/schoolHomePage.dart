@@ -46,7 +46,7 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
   }
 
   dispose() {
-    subscription.cancel();
+    if (subscription != null) subscription.cancel();
     super.dispose();
   }
 

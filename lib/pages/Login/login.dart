@@ -1,10 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/loadingItem.dart';
 import 'package:scv_app/global/global.dart' as global;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../api/user.dart';
 import '../../manager/extensionManager.dart';
@@ -47,9 +48,11 @@ class _LoginPage extends State<LoginPage> {
 
       await global.token.refresh(force: true);
 
-      ExtensionManager.loadExtenstions(context);
+      await ExtensionManager.loadExtenstions(context);
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      await messaging.requestPermission();
       StoreProvider.of<AppState>(context).dispatch(user);
       final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
       await urnik.refresh();

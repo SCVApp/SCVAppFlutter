@@ -39,9 +39,10 @@ class User {
     this.userPrincipalName = "";
     this.loggedIn = true;
     this.logingIn = false;
+    this.selectedTab = 0;
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData({bool fetching_all = false}) async {
     await global.token.refresh();
     final response = await http.get(Uri.parse(global.apiUrl + "/user/get"),
         headers: {"Authorization": global.token.getAccessToken()});
@@ -62,9 +63,11 @@ class User {
     } else {
       throw Exception('Failed to load user');
     }
-    this.logingIn = false;
-    this.loading = false;
-    this.loadingFromWeb = false;
+    if (!fetching_all) {
+      this.logingIn = false;
+      this.loading = false;
+      this.loadingFromWeb = false;
+    }
   }
 
   Map<String, dynamic> toJSON() {
@@ -109,10 +112,13 @@ class User {
 
   Future<void> fetchAll() async {
     await Future.wait([
-      this.fetchData(),
+      this.fetchData(fetching_all: true),
       this.school.fetchData(),
       this.status.fetchData(),
     ]);
+    this.logingIn = false;
+    this.loading = false;
+    this.loadingFromWeb = false;
   }
 
   void setTab(int index) {

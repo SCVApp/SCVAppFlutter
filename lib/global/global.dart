@@ -31,6 +31,7 @@ Future<void> logOutUser(BuildContext context) async {
   try {
     User user = StoreProvider.of<AppState>(globalBuildContext).state.user;
     user.loggedIn = false;
+    user.selectedTab = 0;
     StoreProvider.of<AppState>(globalBuildContext).dispatch(user);
     Biometric biometric =
         StoreProvider.of<AppState>(globalBuildContext).state.biometric;

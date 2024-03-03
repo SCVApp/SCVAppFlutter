@@ -113,6 +113,8 @@ class MalicaUser {
       }
     } catch (e) {
       accessToken = "";
+      this.enabled = false;
+      this.save();
     }
   }
 
