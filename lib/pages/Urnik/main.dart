@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/urnik/obdobjaUr.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/components/urnik/mainTitle.dart';
@@ -26,6 +27,7 @@ class _UrnikPageState extends State<UrnikPage> {
   @override
   void initState() {
     super.initState();
+    EventTracking.trackScreenView("urnikPage", "UrnikPage");
     timerZaUrnik =
         Timer.periodic(Duration(seconds: 1), (Timer t) => refreshUrnik());
   }
