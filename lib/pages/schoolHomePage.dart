@@ -16,7 +16,7 @@ class SchoolHomePage extends StatefulWidget {
 
 class _SchoolHomePageState extends State<SchoolHomePage> {
   late final WebViewController _controller = getWebViewController();
-  late final StreamSubscription<AppState> subscription;
+  StreamSubscription<AppState>? subscription;
 
   void changeUrl() {
     final User user = StoreProvider.of<AppState>(context).state.user;
@@ -48,7 +48,10 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
   }
 
   dispose() {
-    if (subscription != null) subscription.cancel();
+    // check if subscription is defined
+    if (subscription != null) {
+      subscription!.cancel();
+    }
     super.dispose();
   }
 
