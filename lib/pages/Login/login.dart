@@ -52,7 +52,7 @@ class _LoginPage extends State<LoginPage> {
       await ExtensionManager.loadExtenstions(context);
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
-      await EventTracking.loginEvent(user.school.id, user.school.razred);
+      await EventTracking.loginEvent(user.school.id);
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       await messaging.requestPermission(); 
       StoreProvider.of<AppState>(context).dispatch(user);

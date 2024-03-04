@@ -13,9 +13,8 @@ class EventTracking {
     await FirebaseAnalytics.instance.setUserProperty(name: name, value: value);
   }
 
-  static Future<void> loginEvent(String schoolID, String classID) async {
+  static Future<void> loginEvent(String schoolID) async {
     await FirebaseAnalytics.instance.logLogin();
     await setUserProperties("schoolID", schoolID);
-    await setUserProperties("classID", classID);
   }
 }

@@ -138,7 +138,6 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       await messaging.requestPermission();
       await EventTracking.setUserProperties("schoolID", user.school.id);
-      await EventTracking.setUserProperties("classID", user.school.razred);
     } else {
       final User user = StoreProvider.of<AppState>(context).state.user;
       user.loggedIn = false;
