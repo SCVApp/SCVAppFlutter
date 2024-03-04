@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/api/windowManager/windowManager.dart';
 import 'package:scv_app/components/backButton.dart';
 import 'package:scv_app/components/doorPass/CircleProgressBar.dart';
 import 'package:scv_app/extension/withSpaceBetween.dart';
+import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/manager/universalLinks.dart' as universalLinks;
 import 'package:scv_app/pages/PassDoor/status.dart';
-import 'package:scv_app/global/global.dart' as global;
 import 'package:scv_app/store/AppState.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnlockedPassDoor extends StatefulWidget {
   @override

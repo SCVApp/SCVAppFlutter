@@ -53,9 +53,9 @@ class _LoginPage extends State<LoginPage> {
       final User user = StoreProvider.of<AppState>(context).state.user;
       await user.fetchAll();
       await EventTracking.loginEvent(user.school.id, user.school.razred);
-      StoreProvider.of<AppState>(context).dispatch(user);
       FirebaseMessaging messaging = FirebaseMessaging.instance;
-      await messaging.requestPermission();
+      await messaging.requestPermission(); 
+      StoreProvider.of<AppState>(context).dispatch(user);
       final Urnik urnik = StoreProvider.of<AppState>(context).state.urnik;
       await urnik.refresh();
       StoreProvider.of<AppState>(context).dispatch(urnik);
