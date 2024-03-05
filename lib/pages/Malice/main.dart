@@ -18,6 +18,7 @@ class _MalicePageState extends State<MalicePage> {
   late final WebViewController _controller = getWebViewController();
   bool isLoaded = false;
   bool webViewLoaded = false;
+  bool firstLoad = true;
 
   @override
   void initState() {
@@ -38,9 +39,19 @@ class _MalicePageState extends State<MalicePage> {
     return NavigationDelegate(
       onPageFinished: (url) {
         if (!mounted) return;
-        setState(() {
-          webViewLoaded = true;
-        });
+        if (firstLoad == true) {
+          loadSiteAfterLogin();
+        }
+        if (firstLoad == false) {
+          setState(() {
+            webViewLoaded = true;
+          });
+        } else {
+          setState(() {
+            firstLoad = false;
+            webViewLoaded = true;
+          });
+        }
       },
     );
   }
@@ -60,7 +71,7 @@ class _MalicePageState extends State<MalicePage> {
       setState(() {
         isLoaded = true;
       });
-      loadSiteMalica(malica.maliceUser);
+      loadSiteMalica(malica.maliceUser, malica);
       return;
     }
     await tryMicrosoftLogin();
@@ -73,10 +84,19 @@ class _MalicePageState extends State<MalicePage> {
     setState(() {
       isLoaded = true;
     });
-    loadSiteMalica(malica.maliceUser);
+    loadSiteMalica(malica.maliceUser, malica);
   }
 
-  void loadSiteMalica(MalicaUser malicaUser) {
+  void loadSiteAfterLogin() {
+    final Malica malica = StoreProvider.of<AppState>(context).state.malica;
+    if (malica.afterLoginURL != null) {
+      _controller..loadRequest(Uri.parse(malica.afterLoginURL!));
+      malica.resetAfterLoginURL();
+      StoreProvider.of<AppState>(context).dispatch(malica);
+    }
+  }
+
+  void loadSiteMalica(MalicaUser malicaUser, Malica malica) {
     bool loggedIn = malicaUser.isLoggedIn();
     if (loggedIn) {
       _controller

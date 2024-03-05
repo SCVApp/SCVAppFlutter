@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/EventTracking.dart';
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/api/windowManager/windowManager.dart';
@@ -168,6 +169,13 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
         User user = StoreProvider.of<AppState>(context).state.user;
         user.school.setNewsUrl(message.data['newsUrl']);
         user.setTab(0);
+        StoreProvider.of<AppState>(context).dispatch(user);
+      } else if (message.data.containsKey("maliceUrl")) {
+        User user = StoreProvider.of<AppState>(context).state.user;
+        Malica malica = StoreProvider.of<AppState>(context).state.malica;
+        malica.setAfterLoginURL(message.data['maliceUrl']);
+        StoreProvider.of<AppState>(context).dispatch(malica);
+        user.setTab(1);
         StoreProvider.of<AppState>(context).dispatch(user);
       }
     });
