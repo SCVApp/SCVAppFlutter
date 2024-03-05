@@ -47,6 +47,15 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
     });
   }
 
+  goBack() {
+    _controller.goBack();
+  }
+
+  reload() {
+    _controller.reload();
+  }
+
+  @override
   dispose() {
     // check if subscription is defined
     if (subscription != null) {
@@ -61,16 +70,27 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
         converter: (store) => store.state.user,
         builder: (context, user) {
           return Scaffold(
+              appBar: AppBar(
+                leading: Row(children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: goBack,
+                  ),
+                  SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(Icons.refresh),
+                    onPressed: reload,
+                  ),
+                ]),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: changeUrl,
+                  )
+                ],
+              ),
               body: WebViewWidget(
                 controller: _controller,
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: changeUrl,
-                child: Icon(
-                  Icons.home,
-                  color: Colors.white,
-                ),
-                backgroundColor: user.school.schoolColor,
               ));
         });
   }
