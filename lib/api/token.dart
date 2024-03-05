@@ -130,9 +130,6 @@ class Token {
         return;
       }
       final bool is402Error = e.toString() == 'Exception: 402';
-      if (depth == 0) {
-        global.showGlobalAlert(text: "Napaka pri osveževanju podatkov");
-      }
       if (!is402Error) {
         if (!(await global.canConnectToNetwork())) {
           return;

@@ -129,6 +129,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
       try {
         await user.fetchAll();
       } catch (e) {
+        print("User fetchAll error: $e");
         global.showGlobalAlert(
             text: "Prišlo je do napake pri nalaganju podatkov.");
       }
