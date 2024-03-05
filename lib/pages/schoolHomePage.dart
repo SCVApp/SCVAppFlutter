@@ -71,23 +71,28 @@ class _SchoolHomePageState extends State<SchoolHomePage> {
         builder: (context, user) {
           return Scaffold(
               appBar: AppBar(
+                backgroundColor: user.school.schoolColor,
                 leading: Row(children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back),
+                    color: Colors.white,
                     onPressed: goBack,
                   ),
                   SizedBox(width: 10),
                   IconButton(
                     icon: Icon(Icons.refresh),
+                    color: Colors.white,
                     onPressed: reload,
                   ),
                 ]),
                 actions: [
                   IconButton(
                     icon: Icon(Icons.home),
+                    color: Colors.white,
                     onPressed: changeUrl,
                   )
                 ],
+                leadingWidth: 400,
               ),
               body: WebViewWidget(
                 controller: _controller,
