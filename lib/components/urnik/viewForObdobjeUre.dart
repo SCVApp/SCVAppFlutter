@@ -8,7 +8,8 @@ import 'package:scv_app/pages/Urnik/style.dart';
 class ViewForObdobjeUre extends StatefulWidget {
   final ViewSizes viewSizes;
   final ObdobjaUr? obdobjeUr;
-  ViewForObdobjeUre({Key? key, this.obdobjeUr, required this.viewSizes})
+  ViewForObdobjeUre(
+      {Key? key, this.obdobjeUr, required this.viewSizes})
       : super(key: key);
 
   @override
@@ -36,21 +37,20 @@ class _viewForObdobjeUreState extends State<ViewForObdobjeUre> {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                viewForUre(widget.obdobjeUr!, changeIzbranaUra,
-                    widget.viewSizes, context),
+                viewForUre(widget.obdobjeUr!, changeIzbranaUra, widget.viewSizes,
+                    context),
                 Positioned(
                   child: widget.obdobjeUr!.ure.length > 1
                       ? DotsIndicator(
                           decorator: DotsDecorator(
                             activeColor: UrnikStyle.colorForUraViewText(
-                                widget.obdobjeUr!.ure[izbranaUra].type,
-                                context),
+                                widget.obdobjeUr!.ure[izbranaUra].type, context),
                             color: Colors.grey.withOpacity(0.4),
                             size: widget.viewSizes.sizeOfDots,
                             activeSize: widget.viewSizes.sizeOfDots,
                           ),
                           dotsCount: widget.obdobjeUr!.ure.length,
-                          position: izbranaUra,
+                          position: izbranaUra.toDouble(),
                         )
                       : SizedBox(),
                 )
