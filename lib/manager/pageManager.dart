@@ -32,7 +32,7 @@ class PageManager extends StatefulWidget {
 }
 
 class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
-  StreamSubscription<ConnectivityResult>? connectivity;
+  StreamSubscription<List<ConnectivityResult>>? connectivity;
   final PageController pageControllerForLock = PageController();
 
   @override
@@ -47,7 +47,7 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
     try {
       connectivity = Connectivity()
           .onConnectivityChanged
-          .listen((ConnectivityResult result) {
+          .listen((List<ConnectivityResult> result) {
         handleConnectivityChange();
       });
     } catch (e) {}

@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  desktop_webview_window
   firebase_core
   flutter_secure_storage_windows
   local_auth_windows

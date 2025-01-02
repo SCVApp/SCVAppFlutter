@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:scv_app/api/biometric.dart';
 import 'package:scv_app/components/alertContainer.dart';
@@ -18,10 +17,10 @@ class BiometicPage extends StatefulWidget {
 }
 
 class _BiometicPageState extends State<BiometicPage> {
-  void handleChangeAutoLock(Picker picker, List<int> list) async {
+  void handleChangeAutoLock(int value) async {
     final Biometric biometric =
         StoreProvider.of<AppState>(context).state.biometric;
-    await biometric.setAutoLockMode(list[0]);
+    await biometric.setAutoLockMode(value);
     StoreProvider.of<AppState>(context).dispatch(biometric);
   }
 
