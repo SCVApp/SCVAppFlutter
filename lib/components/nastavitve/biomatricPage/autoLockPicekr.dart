@@ -8,7 +8,7 @@ void autoLockPicker(BuildContext context, onConfirm, Biometric biometric) {
   Picker picker = new Picker(
     confirmText: AppLocalizations.of(globalBuildContext)!.pick,
     cancelText: AppLocalizations.of(globalBuildContext)!.cancel,
-    backgroundColor: Theme.of(context).backgroundColor,
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     adapter: PickerDataAdapter(data: createPickerItems()),
     onConfirm: onConfirm,
     selecteds: [biometric.autoLockMode],

@@ -6,7 +6,7 @@ Future<void> biometricAlert(BuildContext context,
     {List<Widget>? actions, String? text}) async {
   void pojdiVNastavitve() {
     Navigator.pop(context);
-    AppSettings.openSecuritySettings();
+    AppSettings.openAppSettings();
   }
 
   return showDialog<void>(
