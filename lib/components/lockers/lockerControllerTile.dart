@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/api/lockers/lockerController.dart';
 
-ListTile LockerControllerTile(onTap) {
+ListTile LockerControllerTile(LockerController controller, {onTap}) {
   return ListTile(
-    title: Text('C500 omarice - ime'),
-    subtitle: Text('Proste omarice: 5'),
+    title: Text(controller.name),
+    subtitle: Text('Proste omarice: ${controller.freeLockers}'),
     trailing: Icon(Icons.shelves),
     onTap: onTap,
   );

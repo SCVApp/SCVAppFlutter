@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scv_app/api/lockers/lockerController.dart';
 import 'package:scv_app/components/lockers/lockerControllerTile.dart';
 import 'package:scv_app/pages/Lockers/controller.dart';
 
@@ -8,12 +9,27 @@ class LockerPage extends StatefulWidget {
 }
 
 class _LockerPageState extends State<LockerPage> {
+  List<LockerController> controllers = [];
+
+  initState() {
+    super.initState();
+    loadControllers();
+  }
+
   void showControllerPage() {
     Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
         builder: (context) => LockerControllerPage(),
       ),
     );
+  }
+
+  void loadControllers() async {
+    List<LockerController> fetchedControllers =
+        await LockerController.fetchControllers();
+    setState(() {
+      controllers = fetchedControllers;
+    });
   }
 
   @override
@@ -23,9 +39,10 @@ class _LockerPageState extends State<LockerPage> {
         title: Text("Omarice"),
       ),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: controllers.length,
         itemBuilder: (context, index) {
-          return LockerControllerTile(showControllerPage);
+          LockerController controller = controllers[index];
+          return LockerControllerTile(controller, onTap: showControllerPage);
         },
       ),
     );
