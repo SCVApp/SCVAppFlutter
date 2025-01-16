@@ -15,6 +15,7 @@ import 'package:scv_app/components/nastavitve/logOutPopUp.dart';
 import 'package:scv_app/components/nastavitve/nastavitveGroup.dart';
 import 'package:scv_app/components/nastavitve/settingsUserCard.dart';
 import 'package:scv_app/manager/extensionManager.dart';
+import 'package:scv_app/pages/Lockers/main.dart';
 import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
 import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
@@ -76,6 +77,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
         StoreProvider.of<AppState>(context).state.windowManager;
     windowManager.showWindow("EPAS");
     StoreProvider.of<AppState>(context).dispatch(windowManager);
+  }
+
+  void goToLockers() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LockerPage()));
   }
 
   @override
@@ -198,6 +204,18 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           icons: Icons.logout,
                           title: (AppLocalizations.of(context)!.logout),
                           subtitle: (AppLocalizations.of(context)!.logout_app),
+                          iconStyle: IconStyle(
+                              iconsColor: Theme.of(context).hintColor,
+                              withBackground: true,
+                              backgroundColor:
+                                  user.school.schoolColor //Barva šole
+                              ),
+                        ),
+                        SettingsItem(
+                          onTap: goToLockers,
+                          icons: Icons.shelves,
+                          title: "Omarice",
+                          subtitle: "Omarice za shranjevanje stvari",
                           iconStyle: IconStyle(
                               iconsColor: Theme.of(context).hintColor,
                               withBackground: true,
