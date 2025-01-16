@@ -16,15 +16,15 @@ class _LockerPageState extends State<LockerPage> {
     loadControllers();
   }
 
-  void showControllerPage() {
+  void showControllerPage(LockerController controller) {
     Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (context) => LockerControllerPage(),
+        builder: (context) => LockerControllerPage(controller: controller),
       ),
     );
   }
 
-  void loadControllers() async {
+  Future<void> loadControllers() async {
     List<LockerController> fetchedControllers =
         await LockerController.fetchControllers();
     setState(() {
@@ -35,16 +35,19 @@ class _LockerPageState extends State<LockerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Omarice"),
-      ),
-      body: ListView.builder(
-        itemCount: controllers.length,
-        itemBuilder: (context, index) {
-          LockerController controller = controllers[index];
-          return LockerControllerTile(controller, onTap: showControllerPage);
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Omarice"),
+        ),
+        body: RefreshIndicator(
+          onRefresh: loadControllers,
+          child: ListView.builder(
+            itemCount: controllers.length,
+            itemBuilder: (context, index) {
+              LockerController controller = controllers[index];
+              return LockerControllerTile(controller,
+                  onTap: () => showControllerPage(controller));
+            },
+          ),
+        ));
   }
 }

@@ -12,9 +12,12 @@ class LockerController {
       {required this.id, required this.name, required this.freeLockers});
 
   static Future<List<LockerController>> fetchControllers() async {
+    await global.token.refresh();
+    final accessToken = global.token.getAccessToken();
     final url = global.apiUrl + "/lockers/controllers";
-    final response = await http.get(Uri.parse(url));
-    print(response.body);
+    final response = await http.get(Uri.parse(url), headers: {
+      'Authorization': accessToken,
+    });
     if (response.statusCode == 200) {
       final List<dynamic> json = jsonDecode(response.body);
       return json.map((e) => LockerController.fromJson(e)).toList();
