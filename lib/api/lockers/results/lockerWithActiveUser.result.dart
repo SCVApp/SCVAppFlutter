@@ -1,3 +1,7 @@
+import 'package:scv_app/api/lockers/locker.dart';
+import 'package:scv_app/api/lockers/results/endLocker.result.dart';
+import 'package:scv_app/api/lockers/results/openLocker.result.dart';
+
 class ActiveUserType {
   String azureId = "";
   DateTime startTime = DateTime.now();
@@ -31,5 +35,13 @@ class LockerWithActiveUserResult {
     if (json['current_user'] != null) {
       activeUser = ActiveUserType.fromJson(json['current_user']);
     }
+  }
+
+  Future<OpenLockerResult> openLocker() async {
+    return await Locker.openLockerAdmin(this.lockerId);
+  }
+
+  Future<EndLockerResult> endLocker() async {
+    return await Locker.endLockerAdmin(this.lockerId);
   }
 }

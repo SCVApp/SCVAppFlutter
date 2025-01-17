@@ -68,6 +68,46 @@ class Locker {
     return result;
   }
 
+  static Future<OpenLockerResult> openLockerAdmin(int lockerId) async {
+    await global.token.refresh();
+    final accessToken = global.token.getAccessToken();
+    final url = global.apiUrl + "/lockers/open/$lockerId";
+    final response = await http.post(Uri.parse(url), headers: {
+      'Authorization': accessToken,
+    });
+    final result = OpenLockerResult();
+    if (response.statusCode == 200) {
+      result.success = true;
+      result.message = "Omarica je uspešno odprta.";
+    } else {
+      final json = jsonDecode(response.body);
+      if (json['message'] != null) {
+        result.message = json['message'];
+      }
+    }
+    return result;
+  }
+
+  static Future<EndLockerResult> endLockerAdmin(int lockerId) async {
+    await global.token.refresh();
+    final accessToken = global.token.getAccessToken();
+    final url = global.apiUrl + "/lockers/end/$lockerId";
+    final response = await http.post(Uri.parse(url), headers: {
+      'Authorization': accessToken,
+    });
+    final result = EndLockerResult();
+    if (response.statusCode == 200) {
+      result.success = true;
+      result.message = "Omarica je uspešno odprta in vrnjena.";
+    } else {
+      final json = jsonDecode(response.body);
+      if (json['message'] != null) {
+        result.message = json['message'];
+      }
+    }
+    return result;
+  }
+
   Locker.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     controllerId = json['controller']['id'];

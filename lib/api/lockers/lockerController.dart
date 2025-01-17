@@ -36,7 +36,7 @@ class LockerController {
       fetchLockersWithActiveUsers() async {
     await global.token.refresh();
     final accessToken = global.token.getAccessToken();
-    final url = global.apiUrl + "/lockers/${this.id}";
+    final url = global.apiUrl + "/lockers/controller/${this.id}";
     final response = await http.get(Uri.parse(url), headers: {
       'Authorization': accessToken,
     });

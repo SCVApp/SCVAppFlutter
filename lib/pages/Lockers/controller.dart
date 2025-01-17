@@ -64,8 +64,9 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
       });
     }
     if (result.message != null)
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(result.message!)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(result.message!),
+          backgroundColor: result.success ? Colors.blueGrey : Colors.red));
   }
 
   Future<void> endLocker() async {
@@ -81,8 +82,9 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
       });
     }
     if (result.message != null) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(result.message!)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(result.message!),
+          backgroundColor: result.success ? Colors.blueGrey : Colors.red));
     }
     Navigator.pop(context);
   }
