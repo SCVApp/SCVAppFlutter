@@ -84,6 +84,7 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(result.message!)));
     }
+    Navigator.pop(context);
   }
 
   @override
@@ -100,10 +101,11 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
               onPressed: goToLockers,
             )
         ]),
-        body: isLoading
-            ? Text("loading")
-            : myLocker == null
-                ? NotLockerView(context, openLocker)
-                : LockerView(context, myLocker!, openLocker, endLocker));
+        body: SafeArea(
+            child: isLoading
+                ? Text("loading")
+                : myLocker == null
+                    ? NotLockerView(context, openLocker)
+                    : LockerView(context, myLocker!, openLocker, endLocker)));
   }
 }

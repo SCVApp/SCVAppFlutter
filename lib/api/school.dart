@@ -95,12 +95,11 @@ class School {
     }
   }
 
-  String getLoadUrl(){
+  String getLoadUrl() {
     if (this.newsUrl != null) {
       return this.newsUrl!;
     }
     return this.schoolUrl;
-  
   }
 
   void setNewsUrl(String newsUrl) {
