@@ -38,6 +38,7 @@ class Locker {
     final result = OpenLockerResult();
     if (response.statusCode == 200) {
       result.success = true;
+      result.message = "Omarica je uspešno odprta.";
     } else {
       final json = jsonDecode(response.body);
       if (json['message'] != null) {

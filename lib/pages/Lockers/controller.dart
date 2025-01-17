@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/lockerController.dart';
 import 'package:scv_app/api/lockers/results/endLocker.result.dart';
+import 'package:scv_app/api/lockers/results/lockerWithActiveUser.result.dart';
 import 'package:scv_app/api/lockers/results/openLocker.result.dart';
 import 'package:scv_app/components/lockers/lockerView.dart';
 import 'package:scv_app/components/lockers/notLockerView.dart';
+import 'package:scv_app/pages/Lockers/lockers.dart';
 
 class LockerControllerPage extends StatefulWidget {
   LockerControllerPage({required this.controller}) : super();
@@ -16,11 +18,29 @@ class LockerControllerPage extends StatefulWidget {
 
 class _LockerControllerPageState extends State<LockerControllerPage> {
   Locker? myLocker;
+  List<LockerWithActiveUserResult>? lockers;
   bool isLoading = true;
 
   initState() {
     super.initState();
     loadMyLocker();
+    loadLockersFromController();
+  }
+
+  void loadLockersFromController() async {
+    List<LockerWithActiveUserResult>? lockers =
+        await widget.controller.fetchLockersWithActiveUsers();
+    setState(() {
+      this.lockers = lockers;
+    });
+  }
+
+  void goToLockers() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LockersPage(lockers: lockers!, controller: widget.controller)));
   }
 
   void loadMyLocker() async {
@@ -42,9 +62,10 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(result.message)));
     }
+    if (result.message != null)
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.message!)));
   }
 
   Future<void> endLocker() async {
@@ -68,9 +89,17 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.controller.name),
-        ),
+        appBar: AppBar(title: Text(widget.controller.name), actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: loadMyLocker,
+          ),
+          if (lockers != null)
+            IconButton(
+              icon: Icon(Icons.storage),
+              onPressed: goToLockers,
+            )
+        ]),
         body: isLoading
             ? Text("loading")
             : myLocker == null
