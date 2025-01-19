@@ -73,8 +73,12 @@ class LockerWithActiveUserResult {
         await http.get(Uri.parse(url), headers: {'Authorization': accessToken});
 
     if (result.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(result.body);
-      return UserResult.fromJson(json);
+      try {
+        final Map<String, dynamic> json = jsonDecode(result.body);
+        return UserResult.fromJson(json);
+      } catch (e) {
+        return null;
+      }
     }
 
     return null;

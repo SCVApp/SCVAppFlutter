@@ -66,7 +66,7 @@ Widget LockerTile(
                       Text("Email: ${activeUserData.email}"),
                     Text(
                         "Čas začetka: ${locker.activeUser!.startTime.toLocal()}"),
-                    Text("Čas konca: ${locker.activeUser!.endTime}"),
+                    Text("Čas konca: ${locker.activeUser!.endTime?.toLocal()}"),
                   ],
                 ),
               ),
