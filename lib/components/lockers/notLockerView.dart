@@ -13,7 +13,7 @@ Widget NotLockerView(BuildContext context, onTap) {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 20),
-            child: Text("Trenutno nimaš izbrane omarice",
+            child: Text("Trenutno nimaš rezervirane omarice",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ Widget NotLockerView(BuildContext context, onTap) {
                         onTap();
                         controller.reset();
                       },
-                      text: "Rezervijaj in odpri omarico",
+                      text: "Rezerviraj in odpri omarico",
                       backgroundColor: user.school.schoolColor,
                       sliderColor: user.school.schoolSecondaryColor,
                       controller: controller));

@@ -48,7 +48,8 @@ class _LockersPageState extends State<LockersPage> {
                   itemCount: this.lockers!.length,
                   itemBuilder: (context, index) {
                     LockerWithActiveUserResult locker = lockers![index];
-                    return LockerTile(context, locker);
+                    return LockerTile(
+                        context, locker, loadLockersFromController);
                   },
                 ),
         ));
