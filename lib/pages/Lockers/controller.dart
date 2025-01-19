@@ -7,6 +7,7 @@ import 'package:scv_app/api/lockers/results/openLocker.result.dart';
 import 'package:scv_app/components/lockers/lockerView.dart';
 import 'package:scv_app/components/lockers/notLockerView.dart';
 import 'package:scv_app/pages/Lockers/lockers.dart';
+import 'package:scv_app/pages/loading.dart';
 
 class LockerControllerPage extends StatefulWidget {
   LockerControllerPage({required this.controller}) : super();
@@ -95,7 +96,12 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
         appBar: AppBar(title: Text(widget.controller.name), actions: [
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: loadMyLocker,
+            onPressed: () {
+              setState(() {
+                isLoading = true;
+              });
+              loadMyLocker();
+            },
           ),
           if (lockers != null)
             IconButton(
@@ -105,7 +111,7 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
         ]),
         body: SafeArea(
             child: isLoading
-                ? Text("loading")
+                ? LoadingPage()
                 : myLocker == null
                     ? NotLockerView(context, openLocker)
                     : LockerView(context, myLocker!, openLocker, endLocker)));
