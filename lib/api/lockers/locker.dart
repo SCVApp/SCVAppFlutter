@@ -8,9 +8,13 @@ class Locker {
   int id = 0;
   int controllerId = 0;
   String identifier = "";
+  bool used = false;
 
   Locker(
-      {required this.id, required this.controllerId, required this.identifier});
+      {required this.id,
+      required this.controllerId,
+      required this.identifier,
+      this.used = false});
 
   static Future<Locker?> fetchMyLocker() async {
     await global.token.refresh();
@@ -26,14 +30,14 @@ class Locker {
     return null;
   }
 
-  static Future<OpenLockerResult> openLocker(int controllerId) async {
+  Future<OpenLockerResult> openLocker() async {
     await global.token.refresh();
     final accessToken = global.token.getAccessToken();
     final url = global.apiUrl + "/lockers/open";
     final response = await http.post(Uri.parse(url), headers: {
       'Authorization': accessToken,
     }, body: {
-      'controllerId': controllerId.toString(),
+      'lockerId': this.id.toString(),
     });
     final result = OpenLockerResult();
     if (response.statusCode == 200) {
@@ -48,7 +52,7 @@ class Locker {
     return result;
   }
 
-  static Future<EndLockerResult> endLocker() async {
+  Future<EndLockerResult> endLocker() async {
     await global.token.refresh();
     final accessToken = global.token.getAccessToken();
     final url = global.apiUrl + "/lockers/end";
@@ -108,9 +112,13 @@ class Locker {
     return result;
   }
 
-  Locker.fromJson(Map<String, dynamic> json) {
+  Locker.fromJson(Map<String, dynamic> json, {int controllerId = 0}) {
     id = json['id'];
-    controllerId = json['controller']['id'];
+    controllerId = controllerId;
+    if (json['controller'] != null) {
+      controllerId = json['controller']['id'];
+    }
     identifier = json['identifier'];
+    used = json['used'] ?? false;
   }
 }

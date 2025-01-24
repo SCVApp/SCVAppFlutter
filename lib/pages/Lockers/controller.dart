@@ -4,8 +4,8 @@ import 'package:scv_app/api/lockers/lockerController.dart';
 import 'package:scv_app/api/lockers/results/endLocker.result.dart';
 import 'package:scv_app/api/lockers/results/lockerWithActiveUser.result.dart';
 import 'package:scv_app/api/lockers/results/openLocker.result.dart';
-import 'package:scv_app/components/lockers/lockerView.dart';
-import 'package:scv_app/components/lockers/notLockerView.dart';
+import 'package:scv_app/components/lockers/lockedLocker.dart';
+import 'package:scv_app/components/lockers/lockerSlidable.dart';
 import 'package:scv_app/pages/Lockers/lockers.dart';
 import 'package:scv_app/pages/loading.dart';
 
@@ -19,18 +19,27 @@ class LockerControllerPage extends StatefulWidget {
 
 class _LockerControllerPageState extends State<LockerControllerPage> {
   Locker? myLocker;
-  List<LockerWithActiveUserResult>? lockers;
+  List<LockerWithActiveUserResult>? lockersAdmin;
+  List<Locker>? lockers;
   bool isLoading = true;
 
   initState() {
     super.initState();
     loadMyLocker();
     loadLockersFromController();
+    loadLockersFromControllerAdmin();
+  }
+
+  void loadLockersFromControllerAdmin() async {
+    List<LockerWithActiveUserResult>? lockers =
+        await widget.controller.fetchLockersWithActiveUsers();
+    setState(() {
+      this.lockersAdmin = lockers;
+    });
   }
 
   void loadLockersFromController() async {
-    List<LockerWithActiveUserResult>? lockers =
-        await widget.controller.fetchLockersWithActiveUsers();
+    List<Locker>? lockers = await widget.controller.fetchLockers();
     setState(() {
       this.lockers = lockers;
     });
@@ -40,8 +49,8 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                LockersPage(lockers: lockers!, controller: widget.controller)));
+            builder: (context) => LockersPage(
+                lockers: this.lockersAdmin!, controller: widget.controller)));
   }
 
   void loadMyLocker() async {
@@ -52,42 +61,9 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
     });
   }
 
-  Future<void> openLocker() async {
-    setState(() {
-      isLoading = true;
-    });
-    OpenLockerResult result = await Locker.openLocker(widget.controller.id);
-    if (result.success == true) {
-      loadMyLocker();
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-    }
-    if (result.message != null)
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(result.message!),
-          backgroundColor: result.success ? Colors.blueGrey : Colors.red));
-  }
-
-  Future<void> endLocker() async {
-    setState(() {
-      isLoading = true;
-    });
-    EndLockerResult result = await Locker.endLocker();
-    if (result.success == true) {
-      loadMyLocker();
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-    }
-    if (result.message != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(result.message!),
-          backgroundColor: result.success ? Colors.blueGrey : Colors.red));
-    }
-    Navigator.pop(context);
+  void refresh() {
+    loadMyLocker();
+    loadLockersFromController();
   }
 
   @override
@@ -100,20 +76,36 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
               setState(() {
                 isLoading = true;
               });
-              loadMyLocker();
+              refresh();
             },
           ),
-          if (lockers != null)
+          if (this.lockersAdmin != null)
             IconButton(
               icon: Icon(Icons.storage),
               onPressed: goToLockers,
             )
         ]),
-        body: SafeArea(
-            child: isLoading
-                ? LoadingPage()
-                : myLocker == null
-                    ? NotLockerView(context, openLocker)
-                    : LockerView(context, myLocker!, openLocker, endLocker)));
+        body: SafeArea(child: isLoading ? LoadingPage() : LockerList()));
+  }
+
+  Widget LockerList() {
+    return ListView.builder(
+      itemCount: lockers!.length,
+      itemBuilder: (context, index) {
+        final Locker locker = lockers![index];
+        final bool isUsers = myLocker != null &&
+            myLocker!.id == locker.id; //Check if this is users locker
+        final bool disabled = myLocker != null &&
+            myLocker!.id !=
+                locker.id; //If user has a locker, disable all other lockers
+        return locker.used && !isUsers
+            ? LockedLocker(locker)
+            : LockerSlidable(
+                locker: locker,
+                isUsers: isUsers,
+                refresh: refresh,
+                disabled: disabled);
+      },
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/results/lockerWithActiveUser.result.dart';
 import 'package:scv_app/global/global.dart' as global;
 
@@ -36,13 +37,29 @@ class LockerController {
       fetchLockersWithActiveUsers() async {
     await global.token.refresh();
     final accessToken = global.token.getAccessToken();
-    final url = global.apiUrl + "/lockers/controller/${this.id}";
+    final url = global.apiUrl + "/lockers/controller/${this.id}/admin";
     final response = await http.get(Uri.parse(url), headers: {
       'Authorization': accessToken,
     });
     if (response.statusCode == 200) {
       final List<dynamic> json = jsonDecode(response.body);
       return json.map((e) => LockerWithActiveUserResult.fromJson(e)).toList();
+    }
+    return null;
+  }
+
+  Future<List<Locker>?> fetchLockers() async {
+    await global.token.refresh();
+    final accessToken = global.token.getAccessToken();
+    final url = global.apiUrl + "/lockers/controller/${this.id}";
+    final response = await http.get(Uri.parse(url), headers: {
+      'Authorization': accessToken,
+    });
+    if (response.statusCode == 200) {
+      final List<dynamic> json = jsonDecode(response.body);
+      return json
+          .map((e) => Locker.fromJson(e, controllerId: this.id))
+          .toList();
     }
     return null;
   }
