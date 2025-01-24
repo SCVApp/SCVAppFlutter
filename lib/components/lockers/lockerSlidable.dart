@@ -76,6 +76,26 @@ class _LockerSlidableState extends State<LockerSlidable>
     );
   }
 
+  String statusText() {
+    if (widget.isUsers) {
+      return "Vaša omarica";
+    } else if (widget.locker.used) {
+      return "Zasedena";
+    } else {
+      return "Prosta";
+    }
+  }
+
+  Icon statusIcon() {
+    if (widget.isUsers) {
+      return Icon(Icons.person);
+    } else if (widget.locker.used) {
+      return Icon(Icons.lock);
+    } else {
+      return Icon(Icons.lock_open);
+    }
+  }
+
   Widget _buildSlidable() {
     return Slidable(
       enabled: !widget.disabled,
@@ -108,7 +128,8 @@ class _LockerSlidableState extends State<LockerSlidable>
       ),
       child: ListTile(
         title: Text(widget.locker.identifier),
-        trailing: widget.isUsers ? Icon(Icons.person) : null,
+        subtitle: Text(statusText()),
+        trailing: statusIcon(),
       ),
     );
   }
