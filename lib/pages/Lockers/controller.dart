@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/lockerController.dart';
-import 'package:scv_app/api/lockers/results/endLocker.result.dart';
 import 'package:scv_app/api/lockers/results/lockerWithActiveUser.result.dart';
-import 'package:scv_app/api/lockers/results/openLocker.result.dart';
 import 'package:scv_app/components/lockers/lockedLocker.dart';
-import 'package:scv_app/components/lockers/lockerSlidable.dart';
+import 'package:scv_app/components/lockers/lockerBox.dart';
 import 'package:scv_app/pages/Lockers/lockers.dart';
 import 'package:scv_app/pages/loading.dart';
 
@@ -18,7 +16,7 @@ class LockerControllerPage extends StatefulWidget {
 }
 
 class _LockerControllerPageState extends State<LockerControllerPage> {
-  Locker? myLocker;
+  List<Locker> myLockers = [];
   List<LockerWithActiveUserResult>? lockersAdmin;
   List<Locker>? lockers;
   bool isLoading = true;
@@ -54,16 +52,32 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
   }
 
   void loadMyLocker() async {
-    Locker? fetchedLocker = await Locker.fetchMyLocker();
+    List<Locker> fetchedLockers = await Locker.fetchMyLockers();
     setState(() {
       isLoading = false;
-      myLocker = fetchedLocker;
+      myLockers = fetchedLockers;
     });
   }
 
   void refresh() {
     loadMyLocker();
     loadLockersFromController();
+  }
+
+  bool isUsers(int lockerId) {
+    for (Locker locker in myLockers) {
+      if (locker.id == lockerId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool isDisabled(int lockerId) {
+    if (myLockers.length > 1) {
+      return !isUsers(lockerId);
+    }
+    return false;
   }
 
   @override
@@ -89,23 +103,19 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
   }
 
   Widget LockerList() {
-    return ListView.builder(
-      itemCount: lockers!.length,
-      itemBuilder: (context, index) {
-        final Locker locker = lockers![index];
-        final bool isUsers = myLocker != null &&
-            myLocker!.id == locker.id; //Check if this is users locker
-        final bool disabled = myLocker != null &&
-            myLocker!.id !=
-                locker.id; //If user has a locker, disable all other lockers
-        return locker.used && !isUsers
-            ? LockedLocker(locker)
-            : LockerSlidable(
-                locker: locker,
-                isUsers: isUsers,
-                refresh: refresh,
-                disabled: disabled);
-      },
-    );
+    return GridView.count(
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 3,
+        padding: EdgeInsets.all(10),
+        children: [
+          for (Locker locker in lockers!)
+            LockerBox(
+              locker: locker,
+              isUsers: isUsers(locker.id),
+              disabled: isDisabled(locker.id),
+              refresh: refresh,
+            ),
+        ]);
   }
 }

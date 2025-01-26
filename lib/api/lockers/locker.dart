@@ -16,7 +16,7 @@ class Locker {
       required this.identifier,
       this.used = false});
 
-  static Future<Locker?> fetchMyLocker() async {
+  static Future<List<Locker>> fetchMyLockers() async {
     await global.token.refresh();
     final accessToken = global.token.getAccessToken();
     final url = global.apiUrl + "/lockers/my";
@@ -24,10 +24,14 @@ class Locker {
       'Authorization': accessToken,
     });
     if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
-      return Locker.fromJson(json);
+      final json = jsonDecode(response.body);
+      final lockers = <Locker>[];
+      for (var locker in json) {
+        lockers.add(Locker.fromJson(locker));
+      }
+      return lockers;
     }
-    return null;
+    return [];
   }
 
   Future<OpenLockerResult> openLocker() async {
@@ -58,6 +62,8 @@ class Locker {
     final url = global.apiUrl + "/lockers/end";
     final response = await http.post(Uri.parse(url), headers: {
       'Authorization': accessToken,
+    }, body: {
+      'lockerId': this.id.toString(),
     });
     final result = EndLockerResult();
     if (response.statusCode == 200) {
