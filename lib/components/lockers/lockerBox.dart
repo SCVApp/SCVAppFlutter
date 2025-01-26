@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/results/endLocker.result.dart';
 import 'package:scv_app/api/lockers/results/openLocker.result.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LockerBox extends StatefulWidget {
   final Locker locker;
@@ -77,27 +77,28 @@ class _LockerBoxState extends State<LockerBox> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Omarica ${widget.locker.identifier}"),
-          content: Text("Vaša omarica je trenutno v uporabi."),
+          title: Text(
+              "${AppLocalizations.of(context)!.locker} ${widget.locker.identifier}"),
+          content: Text(AppLocalizations.of(context)!.your_locker_is_in_use),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 endLocker();
               },
-              child: Text("Končaj uporabo in odprite omarico"),
+              child: Text(AppLocalizations.of(context)!.end_locker_use),
             ),
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   openLocker();
                 },
-                child: Text("Samo odpri omarico")),
+                child: Text(AppLocalizations.of(context)!.open_locker)),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Nič"),
+              child: Text(AppLocalizations.of(context)!.nothing),
             ),
           ],
         );
@@ -110,21 +111,22 @@ class _LockerBoxState extends State<LockerBox> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Omarica ${widget.locker.identifier}"),
-          content: Text("Želite začeti uporabljati to omarico?"),
+          title: Text(
+              "${AppLocalizations.of(context)!.locker} ${widget.locker.identifier}"),
+          content: Text(AppLocalizations.of(context)!.start_locker_use),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 openLocker();
               },
-              child: Text("Rezerviraj in odpri omarico"),
+              child: Text(AppLocalizations.of(context)!.reserve_locker),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Ne"),
+              child: Text(AppLocalizations.of(context)!.no),
             ),
           ],
         );

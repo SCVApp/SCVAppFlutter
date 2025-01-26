@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/api/lockers/lockerController.dart';
 import 'package:scv_app/components/lockers/lockerControllerTile.dart';
 import 'package:scv_app/pages/Lockers/controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LockerPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _LockerPageState extends State<LockerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Omarice"),
+          title: Text(AppLocalizations.of(context)!.lockers),
         ),
         body: RefreshIndicator(
           onRefresh: loadControllers,

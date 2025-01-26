@@ -214,8 +214,9 @@ class _NastavitvePageState extends State<NastavitvePage> {
                         SettingsItem(
                           onTap: goToLockers,
                           icons: Icons.shelves,
-                          title: "Omarice",
-                          subtitle: "Omarice za shranjevanje stvari",
+                          title: (AppLocalizations.of(context)!.lockers),
+                          subtitle: (AppLocalizations.of(context)!
+                              .lockers_description),
                           iconStyle: IconStyle(
                               iconsColor: Theme.of(context).hintColor,
                               withBackground: true,

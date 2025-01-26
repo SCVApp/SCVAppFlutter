@@ -128,5 +128,14 @@
     "login_microsoft_description":"Za dostop do vseh funkcij aplikacije ŠCVApp se prijavi s šolskim računom.",
     "skip":"Preskoči",
     "meals_login":"Prijava v malice",
-    "meals_auto_login":"Samodejna prijava"
+    "meals_auto_login":"Samodejna prijava",
+    "lockers":"Omarice",
+    "lockers_description":"Omarice za shranjevanje stvari",
+    "locker":"Omarica",
+    "your_locker_is_in_use":"Vaša omarica je trenutno v uporabi.",
+    "end_locker_use":"Končaj uporabo in odprite omarico",
+    "open_locker":"Samo odpri omarico",
+    "reserve_locker":"Rezerviraj in odpri omarico",
+    "start_locker_use":"Želite začeti uporabljati to omarico?",
+    "nothing":"Nič"
 }

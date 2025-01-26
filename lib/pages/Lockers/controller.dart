@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/lockerController.dart';
 import 'package:scv_app/api/lockers/results/lockerWithActiveUser.result.dart';
-import 'package:scv_app/components/lockers/lockedLocker.dart';
 import 'package:scv_app/components/lockers/lockerBox.dart';
 import 'package:scv_app/pages/Lockers/lockers.dart';
 import 'package:scv_app/pages/loading.dart';

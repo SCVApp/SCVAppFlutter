@@ -130,5 +130,14 @@
     "skip":"Skip",
     "eAsistent": "eAsistent",
     "meals_login":"Login to meals",
-    "meals_auto_login":"Automatic login"
+    "meals_auto_login":"Automatic login",
+    "lockers":"Lockers",
+    "lockers_description":"Lockers for storing things",
+    "locker":"Locker",
+    "your_locker_is_in_use":"Your locker is currently in use.",
+    "end_locker_use":"End locker use",
+    "open_locker":"Just open the locker",
+    "reserve_locker":"Reserve and open the locker",
+    "start_locker_use":"Do you want to start using the locker?",
+    "nothing":"Nothing"
 }
