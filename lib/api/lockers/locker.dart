@@ -1,8 +1,10 @@
 import 'package:http/http.dart' as http;
+import 'package:scv_app/api/lockers/lockerErrors.dart';
 import 'package:scv_app/api/lockers/results/endLocker.result.dart';
 import 'package:scv_app/api/lockers/results/openLocker.result.dart';
 import 'package:scv_app/global/global.dart' as global;
 import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Locker {
   int id = 0;
@@ -46,11 +48,12 @@ class Locker {
     final result = OpenLockerResult();
     if (response.statusCode == 200) {
       result.success = true;
-      result.message = "Omarica je uspešno odprta.";
+      result.message =
+          AppLocalizations.of(global.globalBuildContext)!.locker_opened;
     } else {
       final json = jsonDecode(response.body);
       if (json['message'] != null) {
-        result.message = json['message'];
+        result.message = LockerErrors.getErrorMessage(json['message']);
       }
     }
     return result;
@@ -68,11 +71,12 @@ class Locker {
     final result = EndLockerResult();
     if (response.statusCode == 200) {
       result.success = true;
-      result.message = "Omarica je uspešno odprta in vrnjena.";
+      result.message =
+          AppLocalizations.of(global.globalBuildContext)!.locker_returned;
     } else {
       final json = jsonDecode(response.body);
       if (json['message'] != null) {
-        result.message = json['message'];
+        result.message = LockerErrors.getErrorMessage(json['message']);
       }
     }
     return result;
@@ -88,11 +92,12 @@ class Locker {
     final result = OpenLockerResult();
     if (response.statusCode == 200) {
       result.success = true;
-      result.message = "Omarica je uspešno odprta.";
+      result.message =
+          AppLocalizations.of(global.globalBuildContext)!.locker_opened;
     } else {
       final json = jsonDecode(response.body);
       if (json['message'] != null) {
-        result.message = json['message'];
+        result.message = LockerErrors.getErrorMessage(json['message']);
       }
     }
     return result;
@@ -108,11 +113,12 @@ class Locker {
     final result = EndLockerResult();
     if (response.statusCode == 200) {
       result.success = true;
-      result.message = "Omarica je uspešno odprta in vrnjena.";
+      result.message =
+          AppLocalizations.of(global.globalBuildContext)!.locker_returned;
     } else {
       final json = jsonDecode(response.body);
       if (json['message'] != null) {
-        result.message = json['message'];
+        result.message = LockerErrors.getErrorMessage(json['message']);
       }
     }
     return result;

@@ -139,5 +139,12 @@
     "open_locker":"Just open the locker",
     "reserve_locker":"Reserve and open the locker",
     "start_locker_use":"Do you want to start using the locker?",
-    "nothing":"Nothing"
+    "nothing":"Nothing",
+    "locker_not_found":"Locker not found. Please try again. If the problem persists, please contact your application administrator.",
+    "not_using_locker": "You are not using this locker.",
+    "locker_in_use":"The locker is already in use",
+    "locker_limit_reached":"You already using 2 lockers. To use this locker, you must first end the use of one of them.",
+    "failed_to_open_locker":"The locker could not be opened. Please try again. If the problem persists, please contact your application administrator.",
+    "locker_opened":"The locker has been successfully opened",
+    "locker_returned":"The locker has been successfully returned"
 }

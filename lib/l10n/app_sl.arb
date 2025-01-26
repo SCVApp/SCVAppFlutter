@@ -137,5 +137,12 @@
     "open_locker":"Samo odpri omarico",
     "reserve_locker":"Rezerviraj in odpri omarico",
     "start_locker_use":"Želite začeti uporabljati to omarico?",
-    "nothing":"Nič"
+    "nothing":"Nič",
+    "locker_not_found":"Omarica ni bila najdena. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
+    "not_using_locker": "Te omarice ne uporabljaš.",
+    "locker_in_use":"Omarica je v že uporabi",
+    "locker_limit_reached":"Že imaš 2 omarici v uporabi. Za uporabo te omarice moraš najprej končati uporabo ene od njiju.",
+    "failed_to_open_locker":"Omarice ni bilo mogoče odpreti. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
+    "locker_opened":"Omarica je bila uspešno odprta",
+    "locker_returned":"Omarica je uspešno odprta in vrnjena."
 }
