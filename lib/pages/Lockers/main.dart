@@ -45,7 +45,7 @@ class _LockerPageState extends State<LockerPage> {
             itemCount: controllers.length,
             itemBuilder: (context, index) {
               LockerController controller = controllers[index];
-              return LockerControllerTile(controller,
+              return LockerControllerTile(context, controller,
                   onTap: () => showControllerPage(controller));
             },
           ),

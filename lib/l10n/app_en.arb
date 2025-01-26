@@ -146,5 +146,6 @@
     "locker_limit_reached":"You already using 2 lockers. To use this locker, you must first end the use of one of them.",
     "failed_to_open_locker":"The locker could not be opened. Please try again. If the problem persists, please contact your application administrator.",
     "locker_opened":"The locker has been successfully opened",
-    "locker_returned":"The locker has been successfully returned"
+    "locker_returned":"The locker has been successfully returned",
+    "free_lockers":"Free lockers"
 }

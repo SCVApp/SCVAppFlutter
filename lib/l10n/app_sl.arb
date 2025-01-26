@@ -144,5 +144,6 @@
     "locker_limit_reached":"Že imaš 2 omarici v uporabi. Za uporabo te omarice moraš najprej končati uporabo ene od njiju.",
     "failed_to_open_locker":"Omarice ni bilo mogoče odpreti. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
     "locker_opened":"Omarica je bila uspešno odprta",
-    "locker_returned":"Omarica je uspešno odprta in vrnjena."
+    "locker_returned":"Omarica je uspešno odprta in vrnjena.",
+    "free_lockers":"Proste omarice"
 }
