@@ -21,7 +21,7 @@ late BuildContext globalBuildContext;
 // final String apiUrl = "http://localhost:5050";
 final String apiUrl = "https://backend.app.scv.si";
 
-final String appVersion = "2.6.2";
+final String appVersion = "2.6.3";
 
 Connectivity connectivity = new Connectivity();
 
