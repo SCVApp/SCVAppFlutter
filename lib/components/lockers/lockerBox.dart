@@ -143,14 +143,16 @@ class _LockerBoxState extends State<LockerBox> {
   }
 
   Color getBackgroundColor() {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (widget.isUsers == true) {
-      return Colors.green.shade100;
+      return isDark ? Colors.green.shade300 : Colors.green.shade100;
     } else if (widget.locker.used == true) {
-      return Colors.red.shade100;
+      return isDark ? Colors.red.shade300 : Colors.red.shade100;
     } else if (widget.disabled == true) {
-      return Colors.grey.shade200;
+      return isDark ? Colors.grey.shade600 : Colors.grey.shade100;
     }
-    return Colors.white;
+    return Theme.of(context).cardColor;
   }
 
   Icon getIcon() {
@@ -169,7 +171,7 @@ class _LockerBoxState extends State<LockerBox> {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),

@@ -108,13 +108,15 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
         crossAxisCount: 3,
         padding: EdgeInsets.all(10),
         children: [
-          for (Locker locker in lockers!)
-            LockerBox(
-              locker: locker,
-              isUsers: isUsers(locker.id),
-              disabled: isDisabled(locker.id),
-              refresh: refresh,
-            ),
+          if (lockers != null)
+            for (Locker locker in lockers!)
+              LockerBox(
+                locker: locker,
+                isUsers: isUsers(locker.id),
+                disabled: isDisabled(locker.id),
+                refresh: refresh,
+              ),
+          if (lockers == null) LoadingPage()
         ]);
   }
 }
