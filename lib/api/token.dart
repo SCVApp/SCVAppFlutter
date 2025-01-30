@@ -108,11 +108,7 @@ class Token {
       return;
     }
     try {
-      DateTime expires = new DateFormat("EEE MMM dd yyyy hh:mm:ss")
-          .parse(this.expiresOn ?? "")
-          .toUtc()
-          .subtract(Duration(minutes: 3));
-      if (expires.isBefore(DateTime.now().toUtc()) || isExpired() || force) {
+      if (isExpired() || force) {
         final respons = await http.post(
             Uri.parse("${global.apiUrl}/auth/refreshToken/"),
             body: this.toJSON());
