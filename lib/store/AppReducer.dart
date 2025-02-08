@@ -1,6 +1,7 @@
 import 'package:scv_app/store/AppState.dart';
 import 'package:scv_app/store/AppThemeReducer.dart';
 import 'package:scv_app/store/BiometricReducer.dart';
+import 'package:scv_app/store/BottomMenuReducer.dart';
 import 'package:scv_app/store/ExtensionReducer.dart';
 import 'package:scv_app/store/GlobalAlertReducer.dart';
 import 'package:scv_app/store/MaliceReducer.dart';
@@ -18,5 +19,6 @@ AppState appReducer(AppState state, action) {
     windowManager: windowManagerReducer(state.windowManager, action),
     extensionManager: extensionReducer(state.extensionManager, action),
     malica: malicaReducer(state.malica, action),
+    bottomMenu: bottomMenuReducer(state.bottomMenu, action),
   );
 }

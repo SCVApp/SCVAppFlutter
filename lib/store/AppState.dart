@@ -3,6 +3,7 @@
 import 'package:scv_app/api/alert.dart';
 import 'package:scv_app/api/appTheme.dart';
 import 'package:scv_app/api/biometric.dart';
+import 'package:scv_app/api/bottomMenu.dart';
 import 'package:scv_app/api/malice/malica.dart';
 import 'package:scv_app/api/urnik/urnik.dart';
 import 'package:scv_app/api/user.dart';
@@ -18,6 +19,7 @@ class AppState {
   final WindowManager windowManager;
   final ExtensionManager extensionManager;
   final Malica malica;
+  final BottomMenu bottomMenu;
 
   AppState({
     required this.user,
@@ -28,6 +30,7 @@ class AppState {
     required this.windowManager,
     required this.extensionManager,
     required this.malica,
+    required this.bottomMenu,
   });
 
   factory AppState.initial() {
@@ -40,6 +43,7 @@ class AppState {
       windowManager: new WindowManager(),
       extensionManager: new ExtensionManager(),
       malica: new Malica(),
+      bottomMenu: new BottomMenu(),
     );
   }
 }

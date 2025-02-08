@@ -2,19 +2,14 @@ import 'dart:async';
 
 import 'package:ff_navigation_bar_plus/ff_navigation_bar_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scv_app/api/bottomMenu.dart';
 import 'package:scv_app/components/NavBarItem.dart';
 import 'package:scv_app/components/alertContainer.dart';
-import 'package:scv_app/pages/Nastavitve/main.dart';
-import 'package:scv_app/pages/Urnik/main.dart';
-import 'package:scv_app/pages/easistentPage.dart';
-import 'package:scv_app/pages/schoolHomePage.dart';
+import 'package:scv_app/pages/loading.dart';
 
 import '../api/user.dart';
-import '../icons/ea_icon.dart';
 import '../store/AppState.dart';
-import 'Malice/main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -40,6 +35,16 @@ class _HomePageState extends State<HomePage>
         }
       });
     });
+    loadBottomMenu();
+  }
+
+  void loadBottomMenu() async {
+    BottomMenu bottomMenu =
+        StoreProvider.of<AppState>(context, listen: false).state.bottomMenu;
+    await Future.wait(
+        [bottomMenu.getMainMenuItems(), bottomMenu.getMoreMenuItems()]);
+
+    StoreProvider.of<AppState>(context, listen: false).dispatch(bottomMenu);
   }
 
   void onSelectTab(int index) {
@@ -54,66 +59,47 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  final List<Widget> _children = [
-    SchoolHomePage(),
-    MalicePage(),
-    EasistentPage(),
-    UrnikPage(),
-    NastavitvePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return StoreConnector<AppState, User>(
-      converter: (store) => store.state.user,
-      builder: (context, user) {
+    return StoreConnector<AppState, AppState>(
+      converter: (store) => store.state,
+      builder: (context, state) {
         return Scaffold(
-          backgroundColor: user.selectedTab == 0
-              ? user.school.schoolColor
+          backgroundColor: state.user.selectedTab == 0
+              ? state.user.school.schoolColor
               : Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
               child: PageView(
             controller: _pageController,
-            children: _children,
+            children: state.bottomMenu.pages,
             physics: NeverScrollableScrollPhysics(),
           )),
           bottomSheet: AlertContainer(),
-          bottomNavigationBar: FFNavigationBar(
-            onSelectTab: onSelectTab,
-            selectedIndex: user.selectedTab,
-            items: [
-              NavBarItem(
-                iconData: Icons.home_rounded,
-                label: AppLocalizations.of(context)!.home,
-              ),
-              NavBarItem(
-                iconData: Icons.fastfood,
-                label: AppLocalizations.of(context)!.meals,
-              ),
-              NavBarItem(
-                iconData: FluttereAIcon.ea,
-                label: AppLocalizations.of(context)!.eAsistent,
-              ),
-              NavBarItem(
-                iconData: Icons.calendar_today_rounded,
-                label: AppLocalizations.of(context)!.schedule,
-              ),
-              NavBarItem(
-                iconData: Icons.settings,
-                label: AppLocalizations.of(context)!.settings,
-              ),
-            ],
-            theme: FFNavigationBarTheme(
-              barBackgroundColor: Theme.of(context).bottomAppBarTheme.color,
-              selectedItemBorderColor:
-                  Theme.of(context).bottomAppBarTheme.color,
-              selectedItemBackgroundColor: user.school.schoolColor,
-              selectedItemIconColor:
-                  Theme.of(context).bottomAppBarTheme.color ?? Colors.white,
-              selectedItemLabelColor: Theme.of(context).primaryColor,
-            ),
-          ),
+          bottomNavigationBar: state.bottomMenu.mainMenu.length < 2
+              ? LoadingPage(color: state.user.school.schoolColor)
+              : FFNavigationBar(
+                  onSelectTab: onSelectTab,
+                  selectedIndex: state.user.selectedTab,
+                  items: [
+                    for (BottomMenuItem item in state.bottomMenu.mainMenu)
+                      NavBarItem(
+                        iconData: item.icon,
+                        label: item.title,
+                      ),
+                  ],
+                  theme: FFNavigationBarTheme(
+                    barBackgroundColor:
+                        Theme.of(context).bottomAppBarTheme.color,
+                    selectedItemBorderColor:
+                        Theme.of(context).bottomAppBarTheme.color,
+                    selectedItemBackgroundColor: state.user.school.schoolColor,
+                    selectedItemIconColor:
+                        Theme.of(context).bottomAppBarTheme.color ??
+                            Colors.white,
+                    selectedItemLabelColor: Theme.of(context).primaryColor,
+                  ),
+                ),
         );
       },
     );

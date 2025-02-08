@@ -17,6 +17,7 @@ import 'package:scv_app/components/nastavitve/settingsUserCard.dart';
 import 'package:scv_app/manager/extensionManager.dart';
 import 'package:scv_app/pages/Lockers/main.dart';
 import 'package:scv_app/pages/Nastavitve/appAppearance.dart';
+import 'package:scv_app/pages/Nastavitve/bottomMenuSettings.dart';
 import 'package:scv_app/pages/Nastavitve/changeStatusPage.dart';
 import 'package:scv_app/store/AppState.dart';
 
@@ -84,6 +85,11 @@ class _NastavitvePageState extends State<NastavitvePage> {
         context, MaterialPageRoute(builder: (context) => LockerPage()));
   }
 
+  void goToBottomMenuSettings() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => BottomMenuSettings()));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -124,7 +130,7 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             backgroundColor: HexColor.fromHex("#A6CE39"),
                           ),
                           icons: Icons.change_circle,
-                          onTap: goToChangeStatusPage,
+                          onTap: goToBottomMenuSettings,
                           title: (AppLocalizations.of(context)!.status),
                           subtitle:
                               (AppLocalizations.of(context)!.change_status),
