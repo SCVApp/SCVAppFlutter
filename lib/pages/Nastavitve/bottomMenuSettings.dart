@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:scv_app/api/bottomMenu.dart';
 import 'package:scv_app/components/confirmAlert.dart';
+import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/store/AppState.dart';
 
 class BottomMenuSettings extends StatefulWidget {
@@ -31,9 +32,9 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
   void askToSave() {
     confirmAlert(
         context,
-        "Aplikacija se bo morala zaradi te spremembe znova zagnati. Ali res želite shraniti?",
+        "Želite shraniti spremembe? Če jih shranite, se bo aplikacija ponovno zagnala.",
         saveMainMenu,
-        () {});
+        goBack);
   }
 
   void saveMainMenu() {
@@ -57,17 +58,12 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text("Nastavitve spodnjega menija"),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: goBack,
+            onPressed: askToSave,
           ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.save),
-              onPressed: askToSave,
-            )
-          ],
         ),
         body: StoreConnector<AppState, BottomMenu>(
             converter: (store) => store.state.bottomMenu,
@@ -116,10 +112,11 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
   Widget _buildMenuItem(BottomMenuItem item) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 5),
+      color: Theme.of(context).cardColor,
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.red[100],
-          child: Icon(item.icon, color: Colors.red),
+          backgroundColor: Theme.of(context).cardColor,
+          child: Icon(item.icon, color: HexColor.fromHex("#A6CE39")),
         ),
         title: Text(item.title),
         trailing: Icon(Icons.drag_handle, color: Colors.grey),

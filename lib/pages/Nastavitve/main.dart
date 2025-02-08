@@ -129,11 +129,10 @@ class _NastavitvePageState extends State<NastavitvePage> {
                             withBackground: true,
                             backgroundColor: HexColor.fromHex("#A6CE39"),
                           ),
-                          icons: Icons.change_circle,
+                          icons: Icons.menu,
                           onTap: goToBottomMenuSettings,
-                          title: (AppLocalizations.of(context)!.status),
-                          subtitle:
-                              (AppLocalizations.of(context)!.change_status),
+                          title: "Meni",
+                          subtitle: "Uredi si spodnji meni",
                         )
                       : loadingItem(user.school.schoolColor),
                   StoreConnector<AppState, Malica>(
