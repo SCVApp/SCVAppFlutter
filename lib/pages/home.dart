@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage>
                     for (BottomMenuItem item in state.bottomMenu.mainMenu)
                       NavBarItem(
                         iconData: item.icon,
-                        label: item.title,
+                        label: item.label(context),
                       ),
                   ],
                   theme: FFNavigationBarTheme(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:intl/intl.dart';
 import 'package:scv_app/api/user.dart';
 import 'package:scv_app/icons/ea_icon.dart';
 import 'package:scv_app/pages/Lockers/main.dart';
@@ -10,56 +11,58 @@ import 'package:scv_app/pages/easistentPage.dart';
 import 'package:scv_app/pages/schoolHomePage.dart';
 import 'package:scv_app/store/AppState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomMenuItem {
   final String id;
-  final String title;
   final IconData icon;
   final bool settings;
   final Widget page;
   BottomMenuItem({
-    required this.title,
     required this.icon,
     required this.page,
     required this.id,
     this.settings = false,
   });
+
+  String label(BuildContext context) {
+    switch (this.id) {
+      case "home":
+        return AppLocalizations.of(context)!.home;
+      case "malice":
+        return AppLocalizations.of(context)!.meals;
+      case "urniki":
+        return AppLocalizations.of(context)!.schedule;
+      case "easistent":
+        return AppLocalizations.of(context)!.eAsistent;
+      case "nastavitve":
+        return AppLocalizations.of(context)!.settings;
+      case "lockers":
+        return AppLocalizations.of(context)!.lockers;
+      default:
+        return "N/A";
+    }
+  }
 }
 
 class BottomMenu {
   static final List<BottomMenuItem> allItems = [
     BottomMenuItem(
-        title: "Domov",
-        icon: Icons.home_rounded,
-        id: "home",
-        page: SchoolHomePage()),
+        icon: Icons.home_rounded, id: "home", page: SchoolHomePage()),
+    BottomMenuItem(icon: Icons.fastfood, id: "malice", page: MalicePage()),
     BottomMenuItem(
-        title: "Malice",
-        icon: Icons.fastfood,
-        id: "malice",
-        page: MalicePage()),
-    BottomMenuItem(
-      title: "Urniki",
       icon: Icons.calendar_today_rounded,
       id: "urniki",
       page: UrnikPage(),
     ),
     BottomMenuItem(
-        title: "eAsistent",
-        icon: FluttereAIcon.ea,
-        id: "easistent",
-        page: EasistentPage()),
+        icon: FluttereAIcon.ea, id: "easistent", page: EasistentPage()),
     BottomMenuItem(
-        title: "Nastavitve",
         icon: Icons.settings,
         settings: true,
         id: "nastavitve",
         page: NastavitvePage()),
-    BottomMenuItem(
-        title: "Omarice",
-        icon: Icons.shelves,
-        id: "lockers",
-        page: LockerPage()),
+    BottomMenuItem(icon: Icons.shelves, id: "lockers", page: LockerPage()),
   ];
 
   List<BottomMenuItem> mainMenu = [];
@@ -93,7 +96,7 @@ class BottomMenu {
     for (String id in ids) {
       BottomMenuItem? item = allItems.firstWhere((element) => element.id == id,
           orElse: () => BottomMenuItem(
-              title: "N/A", icon: Icons.error, id: "error", page: Container()));
+              icon: Icons.error, id: "error", page: Container()));
       items.add(item);
       pages.add(item.page);
     }

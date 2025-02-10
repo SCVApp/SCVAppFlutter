@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:scv_app/api/bottomMenu.dart';
@@ -118,7 +117,7 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
           backgroundColor: Theme.of(context).cardColor,
           child: Icon(item.icon, color: HexColor.fromHex("#A6CE39")),
         ),
-        title: Text(item.title),
+        title: Text(item.label(context)),
         trailing: Icon(Icons.drag_handle, color: Colors.grey),
       ),
     );
