@@ -82,7 +82,8 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
                     children: [
                       _buildDraggableList(
                           AppLocalizations.of(context)!.bottom_menu,
-                          bottomMenu.mainMenu),
+                          bottomMenu.mainMenu,
+                          isMain: true),
                       _buildDraggableList(AppLocalizations.of(context)!.more,
                           bottomMenu.moreMenu),
                     ],
@@ -92,11 +93,11 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
                 })));
   }
 
-  DragAndDropList _buildDraggableList(
-      String title, List<BottomMenuItem> items) {
+  DragAndDropList _buildDraggableList(String title, List<BottomMenuItem> items,
+      {bool isMain = false}) {
     return DragAndDropList(
       canDrag: false,
-      header: _sectionTitle(title),
+      header: _sectionTitle(title, isMain, items.length),
       children: items.map((item) {
         return DragAndDropItem(
           child: _buildMenuItem(item),
@@ -105,7 +106,7 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
     );
   }
 
-  Widget _sectionTitle(String title) {
+  Widget _sectionTitle(String title, bool isMain, int count) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -115,6 +116,11 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Spacer(),
+          if (isMain)
+            Text(
+              "$count/5",
+              style: TextStyle(color: Colors.grey),
+            ),
         ],
       ),
     );

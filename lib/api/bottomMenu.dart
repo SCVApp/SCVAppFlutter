@@ -146,7 +146,15 @@ class BottomMenu {
       }
       // Limits the number of main menu items to maximum 5
       if (this.mainMenu.length >= 5) {
-        return;
+        // remove the last item from main menu but that isn't the settings
+        BottomMenuItem? removedItem;
+        if (this.mainMenu.last.settings == true) {
+          removedItem = this.mainMenu.removeAt(this.mainMenu.length - 2);
+        } else {
+          removedItem = this.mainMenu.removeLast();
+        }
+
+        this.moreMenu.insert(oldIndex + 1, removedItem);
       }
 
       this.moreMenu.removeAt(oldIndex);
