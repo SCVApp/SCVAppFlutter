@@ -131,8 +131,9 @@ class _NastavitvePageState extends State<NastavitvePage> {
                           ),
                           icons: Icons.menu,
                           onTap: goToBottomMenuSettings,
-                          title: "Meni",
-                          subtitle: "Uredi si spodnji meni",
+                          title: AppLocalizations.of(context)!.menu,
+                          subtitle:
+                              AppLocalizations.of(context)!.edit_bottom_menu,
                         )
                       : loadingItem(user.school.schoolColor),
                   StoreConnector<AppState, Malica>(

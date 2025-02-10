@@ -147,5 +147,13 @@
     "failed_to_open_locker":"The locker could not be opened. Please try again. If the problem persists, please contact your application administrator.",
     "locker_opened":"The locker has been successfully opened",
     "locker_returned":"The locker has been successfully returned",
-    "free_lockers":"Free lockers"
+    "free_lockers":"Free lockers",
+    "save_bottom_menu_popup": "Do you want to save the changes? If you save them, the app will restart.",
+    "saved": "Saved",
+    "click_open_app": "Click to open the app",
+    "bottom_menu_settings": "Bottom menu settings",
+    "bottom_menu": "Bottom menu",
+    "more": "More",
+    "menu": "Menu",
+    "edit_bottom_menu": "Edit your bottom menu"
 }

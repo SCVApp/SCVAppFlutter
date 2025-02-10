@@ -145,5 +145,13 @@
     "failed_to_open_locker":"Omarice ni bilo mogoče odpreti. Prosim, poskusi znova. Če težava ni odpravljena, se obrni na skrbnika aplikacije.",
     "locker_opened":"Omarica je bila uspešno odprta",
     "locker_returned":"Omarica je uspešno odprta in vrnjena.",
-    "free_lockers":"Proste omarice"
+    "free_lockers":"Proste omarice",
+    "save_bottom_menu_popup":"Želite shraniti spremembe? Če jih shranite, se bo aplikacija ponovno zagnala.",
+    "saved":"Shranjeno",
+    "click_open_app":"Kliknite, da odprete aplikacijo",
+    "bottom_menu_settings":"Nastavitve spodnjega menija",
+    "bottom_menu":"Spodnji meni",
+    "more":"Več",
+    "menu":"Meni",
+    "edit_bottom_menu":"Uredi si spodnji meni"
 }

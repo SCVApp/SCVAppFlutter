@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:intl/intl.dart';
-import 'package:scv_app/api/user.dart';
 import 'package:scv_app/icons/ea_icon.dart';
 import 'package:scv_app/pages/Lockers/main.dart';
 import 'package:scv_app/pages/Malice/main.dart';
@@ -9,7 +6,6 @@ import 'package:scv_app/pages/Nastavitve/main.dart';
 import 'package:scv_app/pages/Urnik/main.dart';
 import 'package:scv_app/pages/easistentPage.dart';
 import 'package:scv_app/pages/schoolHomePage.dart';
-import 'package:scv_app/store/AppState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

@@ -6,6 +6,7 @@ import 'package:scv_app/api/bottomMenu.dart';
 import 'package:scv_app/components/confirmAlert.dart';
 import 'package:scv_app/extension/hexColor.dart';
 import 'package:scv_app/store/AppState.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomMenuSettings extends StatefulWidget {
   @override
@@ -29,11 +30,8 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
   }
 
   void askToSave() {
-    confirmAlert(
-        context,
-        "Želite shraniti spremembe? Če jih shranite, se bo aplikacija ponovno zagnala.",
-        saveMainMenu,
-        goBack);
+    confirmAlert(context, AppLocalizations.of(context)!.save_bottom_menu_popup,
+        saveMainMenu, goBack);
   }
 
   void saveMainMenu() {
@@ -43,8 +41,8 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
 
     // restart the app
     Restart.restartApp(
-      notificationTitle: 'Shranjeno',
-      notificationBody: 'Kliknite, da odprete aplikacijo',
+      notificationTitle: AppLocalizations.of(context)!.saved,
+      notificationBody: AppLocalizations.of(context)!.click_open_app,
     );
   }
 
@@ -58,7 +56,7 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text("Nastavitve spodnjega menija"),
+          title: Text(AppLocalizations.of(context)!.bottom_menu_settings),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: askToSave,
@@ -71,8 +69,10 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
                 axis: Axis.vertical,
                 listPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 children: [
-                  _buildDraggableList("Glavni menu", bottomMenu.mainMenu),
-                  _buildDraggableList("Več", bottomMenu.moreMenu),
+                  _buildDraggableList(AppLocalizations.of(context)!.bottom_menu,
+                      bottomMenu.mainMenu),
+                  _buildDraggableList(
+                      AppLocalizations.of(context)!.more, bottomMenu.moreMenu),
                 ],
                 onItemReorder: _onReorder,
                 onListReorder: (oldIndex, newIndex) {}, // Not needed here
