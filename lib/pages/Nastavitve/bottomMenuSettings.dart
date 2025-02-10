@@ -53,31 +53,43 @@ class _BottomMenuSettingsState extends State<BottomMenuSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text(AppLocalizations.of(context)!.bottom_menu_settings),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: askToSave,
-          ),
-        ),
-        body: StoreConnector<AppState, BottomMenu>(
-            converter: (store) => store.state.bottomMenu,
-            builder: (context, bottomMenu) {
-              return DragAndDropLists(
-                axis: Axis.vertical,
-                listPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                children: [
-                  _buildDraggableList(AppLocalizations.of(context)!.bottom_menu,
-                      bottomMenu.mainMenu),
-                  _buildDraggableList(
-                      AppLocalizations.of(context)!.more, bottomMenu.moreMenu),
-                ],
-                onItemReorder: _onReorder,
-                onListReorder: (oldIndex, newIndex) {}, // Not needed here
-              );
-            }));
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) async {
+          if (didPop) {
+            await loadMenuItems();
+            return;
+          }
+
+          askToSave();
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title: Text(AppLocalizations.of(context)!.bottom_menu_settings),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: askToSave,
+              ),
+            ),
+            body: StoreConnector<AppState, BottomMenu>(
+                converter: (store) => store.state.bottomMenu,
+                builder: (context, bottomMenu) {
+                  return DragAndDropLists(
+                    axis: Axis.vertical,
+                    listPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    children: [
+                      _buildDraggableList(
+                          AppLocalizations.of(context)!.bottom_menu,
+                          bottomMenu.mainMenu),
+                      _buildDraggableList(AppLocalizations.of(context)!.more,
+                          bottomMenu.moreMenu),
+                    ],
+                    onItemReorder: _onReorder,
+                    onListReorder: (oldIndex, newIndex) {}, // Not needed here
+                  );
+                })));
   }
 
   DragAndDropList _buildDraggableList(
