@@ -38,11 +38,11 @@ class _PageManagerState extends State<PageManager> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    global.globalBuildContext = context;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       onWidgetDidBuild();
     });
     WidgetsBinding.instance.addObserver(this);
-    global.globalBuildContext = context;
 
     try {
       connectivity = Connectivity()

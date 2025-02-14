@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:scv_app/global/global.dart' as global;
-import 'package:intl/intl.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
@@ -59,10 +58,10 @@ class Token {
       try {
         JWT.verify(refreshToken!, RSAPublicKey(publicKey));
       } catch (e) {
-        print(e);
         accessToken = null;
         expiresOn = null;
         refreshToken = null;
+        global.logOutUser(global.globalBuildContext);
       }
     }
   }
