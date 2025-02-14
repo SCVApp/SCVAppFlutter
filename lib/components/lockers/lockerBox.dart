@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scv_app/api/lockers/locker.dart';
 import 'package:scv_app/api/lockers/results/endLocker.result.dart';
 import 'package:scv_app/api/lockers/results/openLocker.result.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LockerBox extends StatefulWidget {
   final Locker locker;
@@ -23,6 +24,10 @@ class LockerBox extends StatefulWidget {
 }
 
 class _LockerBoxState extends State<LockerBox> {
+  bool loading = false;
+  OverlayEntry? overlayEntry;
+  Timer? timer;
+
   @override
   void initState() {
     super.initState();
@@ -30,16 +35,24 @@ class _LockerBoxState extends State<LockerBox> {
 
   @override
   void dispose() {
+    hideOverlay();
+    timer?.cancel();
     super.dispose();
   }
 
-  void openPopup() {
+  void openOrEndLocker() async {
     if (widget.disabled == true ||
         (widget.locker.used == true && widget.isUsers == false)) {
       return;
     }
-
-    this.displayPopup();
+    setState(() {
+      loading = true;
+    });
+    if (widget.isUsers == true) {
+      endLocker();
+    } else {
+      openLocker();
+    }
   }
 
   void openLocker() async {
@@ -64,80 +77,57 @@ class _LockerBoxState extends State<LockerBox> {
     widget.refresh();
   }
 
-  void displayPopup() {
-    if (widget.isUsers == true) {
-      usersDialog();
+  void showOverlay(String text) {
+    hideOverlay();
+    timer?.cancel();
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        bottom: 100,
+        right: MediaQuery.of(context).size.width / 2 -
+            MediaQuery.of(context).size.width / 4,
+        width: MediaQuery.of(context).size.width / 2,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(overlayEntry!);
+    timer = Timer(Duration(seconds: 2), hideOverlay);
+  }
+
+  void hideOverlay() {
+    overlayEntry?.remove();
+    overlayEntry = null;
+  }
+
+  void showInfo() {
+    if (widget.locker.used == true && widget.isUsers == false) {
+      showOverlay("Ta omarica je zasedena");
+    } else if (widget.disabled == true) {
+      showOverlay("Ta omarica je onemogočena");
     } else {
-      notUsersDialog();
+      showOverlay("Za odklep klikni in pridrži");
     }
-  }
-
-  void usersDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-              "${AppLocalizations.of(context)!.locker} ${widget.locker.identifier}"),
-          content: Text(AppLocalizations.of(context)!.your_locker_is_in_use),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                endLocker();
-              },
-              child: Text(AppLocalizations.of(context)!.end_locker_use),
-            ),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  openLocker();
-                },
-                child: Text(AppLocalizations.of(context)!.open_locker)),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.nothing),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void notUsersDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-              "${AppLocalizations.of(context)!.locker} ${widget.locker.identifier}"),
-          content: Text(AppLocalizations.of(context)!.start_locker_use),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                openLocker();
-              },
-              child: Text(AppLocalizations.of(context)!.reserve_locker),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.no),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: openPopup,
+      onTap: showInfo,
+      onLongPress: openOrEndLocker,
       child: _buildBox(),
     );
   }
@@ -178,12 +168,15 @@ class _LockerBoxState extends State<LockerBox> {
             ),
           ],
         ),
-        child: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(widget.locker.identifier,
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          getIcon()
-        ])));
+        child: loading
+            ? Center(child: CircularProgressIndicator())
+            : Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Text(widget.locker.identifier,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    getIcon()
+                  ])));
   }
 }

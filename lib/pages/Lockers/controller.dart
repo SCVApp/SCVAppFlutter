@@ -60,7 +60,6 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
 
   void refresh() {
     loadMyLocker();
-    loadLockersFromController();
   }
 
   bool isUsers(int lockerId) {
@@ -85,12 +84,7 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
         appBar: AppBar(title: Text(widget.controller.name), actions: [
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: () {
-              setState(() {
-                isLoading = true;
-              });
-              refresh();
-            },
+            onPressed: refresh,
           ),
           if (this.lockersAdmin != null)
             IconButton(

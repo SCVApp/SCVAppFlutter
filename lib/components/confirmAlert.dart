@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> confirmAlert(BuildContext context, String text,
     Function confirmFunction, Function discardFunction) async {
@@ -26,8 +27,12 @@ Future<void> confirmAlert(BuildContext context, String text,
           ),
         ),
         actions: <Widget>[
-          TextButton(child: const Text('Yes'), onPressed: yesFunction),
-          TextButton(child: const Text('No'), onPressed: noFunction),
+          TextButton(
+              child: Text(AppLocalizations.of(context)!.yes),
+              onPressed: yesFunction),
+          TextButton(
+              child: Text(AppLocalizations.of(context)!.no),
+              onPressed: noFunction),
         ],
       );
     },
