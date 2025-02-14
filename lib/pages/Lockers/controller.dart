@@ -60,6 +60,7 @@ class _LockerControllerPageState extends State<LockerControllerPage> {
 
   void refresh() {
     loadMyLocker();
+    loadLockersFromController();
   }
 
   bool isUsers(int lockerId) {

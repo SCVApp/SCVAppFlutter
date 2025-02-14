@@ -63,6 +63,9 @@ class _LockerBoxState extends State<LockerBox> {
         backgroundColor: result.success ? Colors.blueGrey : Colors.red,
       ));
     }
+    setState(() {
+      loading = false;
+    });
     widget.refresh();
   }
 
@@ -74,6 +77,9 @@ class _LockerBoxState extends State<LockerBox> {
         backgroundColor: result.success ? Colors.blueGrey : Colors.red,
       ));
     }
+    setState(() {
+      loading = false;
+    });
     widget.refresh();
   }
 
