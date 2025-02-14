@@ -48,6 +48,7 @@ class _LockerBoxState extends State<LockerBox> {
     setState(() {
       loading = true;
     });
+    hideOverlay();
     if (widget.isUsers == true) {
       endLocker();
     } else {
@@ -85,7 +86,6 @@ class _LockerBoxState extends State<LockerBox> {
 
   void showOverlay(String text) {
     hideOverlay();
-    timer?.cancel();
     overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         bottom: 100,
@@ -115,6 +115,7 @@ class _LockerBoxState extends State<LockerBox> {
   }
 
   void hideOverlay() {
+    timer?.cancel();
     overlayEntry?.remove();
     overlayEntry = null;
   }
