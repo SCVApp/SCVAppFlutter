@@ -123,9 +123,7 @@ class _LockerBoxState extends State<LockerBox> {
   void showInfo() {
     if (widget.locker.used == true && widget.isUsers == false) {
       showOverlay("Ta omarica je zasedena");
-    } else if (widget.disabled == true) {
-      showOverlay("Ta omarica je onemogočena");
-    } else {
+    } else if (widget.disabled == false) {
       showOverlay("Za odklep klikni in pridrži");
     }
   }
